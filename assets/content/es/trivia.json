@@ -1,0 +1,1644 @@
+{
+ "version": 1,
+ "items": [
+  {
+   "id": "his01",
+   "cat": "historia",
+   "q": "¿En qué año llegó Colón a América?",
+   "a": "1492",
+   "w": [
+    "1453",
+    "1512",
+    "1519"
+   ]
+  },
+  {
+   "id": "his02",
+   "cat": "historia",
+   "q": "¿En qué año cayó el Muro de Berlín?",
+   "a": "1989",
+   "w": [
+    "1991",
+    "1985",
+    "1979"
+   ]
+  },
+  {
+   "id": "his03",
+   "cat": "historia",
+   "q": "¿Quién fue el primer presidente de Estados Unidos?",
+   "a": "George Washington",
+   "w": [
+    "Thomas Jefferson",
+    "Abraham Lincoln",
+    "John Adams"
+   ]
+  },
+  {
+   "id": "his04",
+   "cat": "historia",
+   "q": "¿En qué año comenzó la Guerra Civil española?",
+   "a": "1936",
+   "w": [
+    "1931",
+    "1939",
+    "1923"
+   ]
+  },
+  {
+   "id": "his05",
+   "cat": "historia",
+   "q": "¿Qué civilización construyó Machu Picchu?",
+   "a": "Inca",
+   "w": [
+    "Maya",
+    "Azteca",
+    "Olmeca"
+   ]
+  },
+  {
+   "id": "his06",
+   "cat": "historia",
+   "q": "¿Qué ciudad quedó sepultada por la erupción del Vesubio en el año 79?",
+   "a": "Pompeya",
+   "w": [
+    "Roma",
+    "Atenas",
+    "Cartago"
+   ]
+  },
+  {
+   "id": "his07",
+   "cat": "historia",
+   "q": "¿Qué reina de Castilla apoyó el viaje de Colón?",
+   "a": "Isabel I",
+   "w": [
+    "Juana I",
+    "Isabel II",
+    "Catalina de Aragón"
+   ]
+  },
+  {
+   "id": "his08",
+   "cat": "historia",
+   "q": "¿En qué año estalló la Revolución Francesa?",
+   "a": "1789",
+   "w": [
+    "1776",
+    "1804",
+    "1815"
+   ]
+  },
+  {
+   "id": "his09",
+   "cat": "historia",
+   "q": "¿En qué año terminó la primera vuelta al mundo de Magallanes y Elcano?",
+   "a": "1522",
+   "w": [
+    "1492",
+    "1550",
+    "1498"
+   ]
+  },
+  {
+   "id": "his10",
+   "cat": "historia",
+   "q": "¿Quién fue el Libertador de Venezuela, Colombia y otros países sudamericanos?",
+   "a": "Simón Bolívar",
+   "w": [
+    "José de San Martín",
+    "Benito Juárez",
+    "Francisco Pizarro"
+   ]
+  },
+  {
+   "id": "his11",
+   "cat": "historia",
+   "q": "¿En qué año pisó el ser humano la Luna por primera vez?",
+   "a": "1969",
+   "w": [
+    "1965",
+    "1972",
+    "1961"
+   ]
+  },
+  {
+   "id": "his12",
+   "cat": "historia",
+   "q": "¿Qué país lanzó el primer satélite artificial, el Sputnik?",
+   "a": "Unión Soviética",
+   "w": [
+    "Estados Unidos",
+    "Alemania",
+    "China"
+   ]
+  },
+  {
+   "id": "his13",
+   "cat": "historia",
+   "q": "¿Qué guerra terminó tras las bombas atómicas sobre Hiroshima y Nagasaki?",
+   "a": "Segunda Guerra Mundial",
+   "w": [
+    "Primera Guerra Mundial",
+    "Guerra de Corea",
+    "Guerra de Vietnam"
+   ]
+  },
+  {
+   "id": "his14",
+   "cat": "historia",
+   "q": "¿Qué general cartaginés cruzó los Alpes con elefantes?",
+   "a": "Aníbal",
+   "w": [
+    "Escipión",
+    "Julio César",
+    "Leónidas"
+   ]
+  },
+  {
+   "id": "his15",
+   "cat": "historia",
+   "q": "¿En qué año murió Francisco Franco?",
+   "a": "1975",
+   "w": [
+    "1978",
+    "1969",
+    "1981"
+   ]
+  },
+  {
+   "id": "his16",
+   "cat": "historia",
+   "q": "¿En qué año se aprobó la actual Constitución española?",
+   "a": "1978",
+   "w": [
+    "1975",
+    "1981",
+    "1982"
+   ]
+  },
+  {
+   "id": "his17",
+   "cat": "historia",
+   "q": "¿Qué rey francés fue apodado el Rey Sol?",
+   "a": "Luis XIV",
+   "w": [
+    "Luis XVI",
+    "Luis XV",
+    "Enrique IV"
+   ]
+  },
+  {
+   "id": "his18",
+   "cat": "historia",
+   "q": "¿Qué imperio tenía por capital Tenochtitlan?",
+   "a": "Azteca",
+   "w": [
+    "Inca",
+    "Maya",
+    "Romano"
+   ]
+  },
+  {
+   "id": "his19",
+   "cat": "historia",
+   "q": "¿En qué año se hundió el Titanic?",
+   "a": "1912",
+   "w": [
+    "1905",
+    "1920",
+    "1898"
+   ]
+  },
+  {
+   "id": "his20",
+   "cat": "historia",
+   "q": "¿Qué faraón es famoso por su tumba hallada casi intacta en 1922?",
+   "a": "Tutankamón",
+   "w": [
+    "Ramsés II",
+    "Keops",
+    "Akenatón"
+   ]
+  },
+  {
+   "id": "his21",
+   "cat": "historia",
+   "q": "¿En qué año comenzó la Primera Guerra Mundial?",
+   "a": "1914",
+   "w": [
+    "1918",
+    "1905",
+    "1939"
+   ]
+  },
+  {
+   "id": "his22",
+   "cat": "historia",
+   "q": "¿Quién ganó el Nobel de Física y el de Química?",
+   "a": "Marie Curie",
+   "w": [
+    "Rosalind Franklin",
+    "Ada Lovelace",
+    "Lise Meitner"
+   ]
+  },
+  {
+   "id": "cie01",
+   "cat": "ciencia",
+   "q": "¿Cuál es el símbolo químico del oro?",
+   "a": "Au",
+   "w": [
+    "Ag",
+    "Or",
+    "Go"
+   ]
+  },
+  {
+   "id": "cie02",
+   "cat": "ciencia",
+   "q": "¿Cuántos planetas tiene el sistema solar?",
+   "a": "8",
+   "w": [
+    "9",
+    "7",
+    "10"
+   ]
+  },
+  {
+   "id": "cie03",
+   "cat": "ciencia",
+   "q": "¿Cuál es el planeta más grande del sistema solar?",
+   "a": "Júpiter",
+   "w": [
+    "Saturno",
+    "Neptuno",
+    "La Tierra"
+   ]
+  },
+  {
+   "id": "cie04",
+   "cat": "ciencia",
+   "q": "¿Qué gas es el más abundante en la atmósfera terrestre?",
+   "a": "Nitrógeno",
+   "w": [
+    "Oxígeno",
+    "Dióxido de carbono",
+    "Argón"
+   ]
+  },
+  {
+   "id": "cie05",
+   "cat": "ciencia",
+   "q": "¿Cuál es la fórmula química del agua?",
+   "a": "H₂O",
+   "w": [
+    "CO₂",
+    "H₂O₂",
+    "NaCl"
+   ]
+  },
+  {
+   "id": "cie06",
+   "cat": "ciencia",
+   "q": "¿Cuántos huesos tiene un adulto?",
+   "a": "206",
+   "w": [
+    "186",
+    "256",
+    "306"
+   ]
+  },
+  {
+   "id": "cie07",
+   "cat": "ciencia",
+   "q": "¿Quién formuló la teoría de la relatividad?",
+   "a": "Albert Einstein",
+   "w": [
+    "Isaac Newton",
+    "Niels Bohr",
+    "Stephen Hawking"
+   ]
+  },
+  {
+   "id": "cie08",
+   "cat": "ciencia",
+   "q": "¿Quién formuló la ley de la gravitación universal?",
+   "a": "Isaac Newton",
+   "w": [
+    "Galileo Galilei",
+    "Johannes Kepler",
+    "Nicolás Copérnico"
+   ]
+  },
+  {
+   "id": "cie09",
+   "cat": "ciencia",
+   "q": "¿Cuál es el hueso más largo del cuerpo humano?",
+   "a": "Fémur",
+   "w": [
+    "Tibia",
+    "Húmero",
+    "Peroné"
+   ]
+  },
+  {
+   "id": "cie10",
+   "cat": "ciencia",
+   "q": "¿Cuál es el órgano más grande del cuerpo humano?",
+   "a": "La piel",
+   "w": [
+    "El hígado",
+    "Los pulmones",
+    "El intestino"
+   ]
+  },
+  {
+   "id": "cie11",
+   "cat": "ciencia",
+   "q": "¿Qué planeta es conocido como el planeta rojo?",
+   "a": "Marte",
+   "w": [
+    "Venus",
+    "Mercurio",
+    "Júpiter"
+   ]
+  },
+  {
+   "id": "cie12",
+   "cat": "ciencia",
+   "q": "¿A qué temperatura hierve el agua a nivel del mar?",
+   "a": "100 °C",
+   "w": [
+    "90 °C",
+    "120 °C",
+    "80 °C"
+   ]
+  },
+  {
+   "id": "cie13",
+   "cat": "ciencia",
+   "q": "¿Cuál es el elemento químico más ligero?",
+   "a": "Hidrógeno",
+   "w": [
+    "Helio",
+    "Litio",
+    "Oxígeno"
+   ]
+  },
+  {
+   "id": "cie14",
+   "cat": "ciencia",
+   "q": "¿Quién descubrió la penicilina?",
+   "a": "Alexander Fleming",
+   "w": [
+    "Louis Pasteur",
+    "Robert Koch",
+    "Marie Curie"
+   ]
+  },
+  {
+   "id": "cie15",
+   "cat": "ciencia",
+   "q": "¿Cómo se llama nuestra galaxia?",
+   "a": "Vía Láctea",
+   "w": [
+    "Andrómeda",
+    "Sombrero",
+    "Triángulo"
+   ]
+  },
+  {
+   "id": "cie16",
+   "cat": "ciencia",
+   "q": "¿Qué unidad mide la frecuencia?",
+   "a": "Hercio",
+   "w": [
+    "Vatio",
+    "Voltio",
+    "Newton"
+   ]
+  },
+  {
+   "id": "cie17",
+   "cat": "ciencia",
+   "q": "¿Cuántos cromosomas tiene una célula humana normal?",
+   "a": "46",
+   "w": [
+    "23",
+    "44",
+    "48"
+   ]
+  },
+  {
+   "id": "cie18",
+   "cat": "ciencia",
+   "q": "¿Qué vitamina produce la piel con la luz del sol?",
+   "a": "Vitamina D",
+   "w": [
+    "Vitamina C",
+    "Vitamina A",
+    "Vitamina B12"
+   ]
+  },
+  {
+   "id": "cie19",
+   "cat": "ciencia",
+   "q": "¿Qué metal es líquido a temperatura ambiente?",
+   "a": "Mercurio",
+   "w": [
+    "Estaño",
+    "Plomo",
+    "Cobre"
+   ]
+  },
+  {
+   "id": "cie20",
+   "cat": "ciencia",
+   "q": "¿Cuál es el símbolo químico del sodio?",
+   "a": "Na",
+   "w": [
+    "So",
+    "S",
+    "Sd"
+   ]
+  },
+  {
+   "id": "cie21",
+   "cat": "ciencia",
+   "q": "¿Qué parte de la célula contiene el ADN?",
+   "a": "El núcleo",
+   "w": [
+    "La mitocondria",
+    "El ribosoma",
+    "La membrana"
+   ]
+  },
+  {
+   "id": "cie22",
+   "cat": "ciencia",
+   "q": "¿Qué significan las siglas USB?",
+   "a": "Universal Serial Bus",
+   "w": [
+    "United System Board",
+    "Universal Signal Bridge",
+    "Unified Serial Block"
+   ]
+  },
+  {
+   "id": "cie23",
+   "cat": "ciencia",
+   "q": "¿Cuál es el planeta más cercano al Sol?",
+   "a": "Mercurio",
+   "w": [
+    "Venus",
+    "Marte",
+    "La Tierra"
+   ]
+  },
+  {
+   "id": "nat01",
+   "cat": "naturaleza",
+   "q": "¿Cuál es el animal terrestre más grande?",
+   "a": "Elefante africano",
+   "w": [
+    "Jirafa",
+    "Rinoceronte blanco",
+    "Hipopótamo"
+   ]
+  },
+  {
+   "id": "nat02",
+   "cat": "naturaleza",
+   "q": "¿Cuál es el animal terrestre más rápido?",
+   "a": "Guepardo",
+   "w": [
+    "León",
+    "Antílope",
+    "Caballo"
+   ]
+  },
+  {
+   "id": "nat03",
+   "cat": "naturaleza",
+   "q": "¿Cuántas patas tiene una araña?",
+   "a": "8",
+   "w": [
+    "6",
+    "10",
+    "12"
+   ]
+  },
+  {
+   "id": "nat04",
+   "cat": "naturaleza",
+   "q": "¿Qué mamífero pone huevos?",
+   "a": "Ornitorrinco",
+   "w": [
+    "Canguro",
+    "Koala",
+    "Murciélago"
+   ]
+  },
+  {
+   "id": "nat05",
+   "cat": "naturaleza",
+   "q": "¿Cuál es el océano más grande?",
+   "a": "Pacífico",
+   "w": [
+    "Atlántico",
+    "Índico",
+    "Ártico"
+   ]
+  },
+  {
+   "id": "nat06",
+   "cat": "naturaleza",
+   "q": "¿Qué río atraviesa Zaragoza?",
+   "a": "Ebro",
+   "w": [
+    "Tajo",
+    "Duero",
+    "Guadalquivir"
+   ]
+  },
+  {
+   "id": "nat07",
+   "cat": "naturaleza",
+   "q": "¿Cuál es la montaña más alta de la Tierra?",
+   "a": "Everest",
+   "w": [
+    "K2",
+    "Mont Blanc",
+    "Aconcagua"
+   ]
+  },
+  {
+   "id": "nat08",
+   "cat": "naturaleza",
+   "q": "¿Cuál es el pico más alto de España?",
+   "a": "Teide",
+   "w": [
+    "Mulhacén",
+    "Aneto",
+    "Veleta"
+   ]
+  },
+  {
+   "id": "nat09",
+   "cat": "naturaleza",
+   "q": "¿Cuál es el desierto cálido más grande del mundo?",
+   "a": "Sahara",
+   "w": [
+    "Gobi",
+    "Kalahari",
+    "Atacama"
+   ]
+  },
+  {
+   "id": "nat10",
+   "cat": "naturaleza",
+   "q": "¿Cuál es el animal más grande del planeta?",
+   "a": "Ballena azul",
+   "w": [
+    "Elefante africano",
+    "Tiburón ballena",
+    "Cachalote"
+   ]
+  },
+  {
+   "id": "nat11",
+   "cat": "naturaleza",
+   "q": "¿Cuántos corazones tiene un pulpo?",
+   "a": "3",
+   "w": [
+    "1",
+    "2",
+    "8"
+   ]
+  },
+  {
+   "id": "nat12",
+   "cat": "naturaleza",
+   "q": "¿De qué se alimenta principalmente el panda gigante?",
+   "a": "Bambú",
+   "w": [
+    "Eucalipto",
+    "Hierba",
+    "Frutas"
+   ]
+  },
+  {
+   "id": "nat13",
+   "cat": "naturaleza",
+   "q": "¿Qué ave no vuela y vive en la Antártida?",
+   "a": "Pingüino",
+   "w": [
+    "Albatros",
+    "Cormorán",
+    "Petrel"
+   ]
+  },
+  {
+   "id": "nat14",
+   "cat": "naturaleza",
+   "q": "¿Cuál es el continente más grande?",
+   "a": "Asia",
+   "w": [
+    "África",
+    "América",
+    "Europa"
+   ]
+  },
+  {
+   "id": "nat15",
+   "cat": "naturaleza",
+   "q": "¿En qué océano está la fosa de las Marianas?",
+   "a": "Pacífico",
+   "w": [
+    "Atlántico",
+    "Índico",
+    "Ártico"
+   ]
+  },
+  {
+   "id": "nat16",
+   "cat": "naturaleza",
+   "q": "¿A qué clase de animales pertenecen las ballenas?",
+   "a": "Mamíferos",
+   "w": [
+    "Peces",
+    "Reptiles",
+    "Anfibios"
+   ]
+  },
+  {
+   "id": "nat17",
+   "cat": "naturaleza",
+   "q": "¿Cuál es el único mamífero capaz de volar?",
+   "a": "Murciélago",
+   "w": [
+    "Ardilla voladora",
+    "Colibrí",
+    "Libélula"
+   ]
+  },
+  {
+   "id": "nat18",
+   "cat": "naturaleza",
+   "q": "El dragón de Komodo es un…",
+   "a": "Lagarto",
+   "w": [
+    "Serpiente",
+    "Cocodrilo",
+    "Dinosaurio"
+   ]
+  },
+  {
+   "id": "nat19",
+   "cat": "naturaleza",
+   "q": "¿Cuál es la isla más grande del mundo?",
+   "a": "Groenlandia",
+   "w": [
+    "Madagascar",
+    "Borneo",
+    "Nueva Guinea"
+   ]
+  },
+  {
+   "id": "nat20",
+   "cat": "naturaleza",
+   "q": "¿Cuántos colores tiene el arcoíris tradicionalmente?",
+   "a": "7",
+   "w": [
+    "5",
+    "6",
+    "8"
+   ]
+  },
+  {
+   "id": "nat21",
+   "cat": "naturaleza",
+   "q": "¿Qué insecto produce la miel?",
+   "a": "La abeja",
+   "w": [
+    "La avispa",
+    "El abejorro",
+    "La hormiga"
+   ]
+  },
+  {
+   "id": "art01",
+   "cat": "arte",
+   "q": "¿Quién pintó La Gioconda?",
+   "a": "Leonardo da Vinci",
+   "w": [
+    "Miguel Ángel",
+    "Rafael",
+    "Botticelli"
+   ]
+  },
+  {
+   "id": "art02",
+   "cat": "arte",
+   "q": "¿Quién escribió Don Quijote de la Mancha?",
+   "a": "Miguel de Cervantes",
+   "w": [
+    "Lope de Vega",
+    "Quevedo",
+    "Calderón de la Barca"
+   ]
+  },
+  {
+   "id": "art03",
+   "cat": "arte",
+   "q": "¿Quién pintó el Guernica?",
+   "a": "Pablo Picasso",
+   "w": [
+    "Salvador Dalí",
+    "Joan Miró",
+    "Francisco de Goya"
+   ]
+  },
+  {
+   "id": "art04",
+   "cat": "arte",
+   "q": "¿Quién pintó La noche estrellada?",
+   "a": "Vincent van Gogh",
+   "w": [
+    "Claude Monet",
+    "Paul Gauguin",
+    "Edvard Munch"
+   ]
+  },
+  {
+   "id": "art05",
+   "cat": "arte",
+   "q": "¿Quién escribió Cien años de soledad?",
+   "a": "Gabriel García Márquez",
+   "w": [
+    "Mario Vargas Llosa",
+    "Julio Cortázar",
+    "Jorge Luis Borges"
+   ]
+  },
+  {
+   "id": "art06",
+   "cat": "arte",
+   "q": "¿Quién compuso la Quinta Sinfonía, la «del destino»?",
+   "a": "Beethoven",
+   "w": [
+    "Mozart",
+    "Bach",
+    "Chaikovski"
+   ]
+  },
+  {
+   "id": "art07",
+   "cat": "arte",
+   "q": "¿Quién pintó Las Meninas?",
+   "a": "Diego Velázquez",
+   "w": [
+    "Francisco de Goya",
+    "El Greco",
+    "Murillo"
+   ]
+  },
+  {
+   "id": "art08",
+   "cat": "arte",
+   "q": "¿Quién escribió Romeo y Julieta?",
+   "a": "William Shakespeare",
+   "w": [
+    "Charles Dickens",
+    "Molière",
+    "Dante Alighieri"
+   ]
+  },
+  {
+   "id": "art09",
+   "cat": "arte",
+   "q": "¿Quién escribió El Principito?",
+   "a": "Antoine de Saint-Exupéry",
+   "w": [
+    "Victor Hugo",
+    "Julio Verne",
+    "Albert Camus"
+   ]
+  },
+  {
+   "id": "art10",
+   "cat": "arte",
+   "q": "¿Quién esculpió el David de Florencia?",
+   "a": "Miguel Ángel",
+   "w": [
+    "Donatello",
+    "Bernini",
+    "Rodin"
+   ]
+  },
+  {
+   "id": "art11",
+   "cat": "arte",
+   "q": "¿De qué país era el pintor Salvador Dalí?",
+   "a": "España",
+   "w": [
+    "Francia",
+    "México",
+    "Italia"
+   ]
+  },
+  {
+   "id": "art12",
+   "cat": "arte",
+   "q": "¿Quién escribió 1984?",
+   "a": "George Orwell",
+   "w": [
+    "Aldous Huxley",
+    "Ray Bradbury",
+    "H. G. Wells"
+   ]
+  },
+  {
+   "id": "art13",
+   "cat": "arte",
+   "q": "¿Quién escribió la saga de Harry Potter?",
+   "a": "J. K. Rowling",
+   "w": [
+    "J. R. R. Tolkien",
+    "Suzanne Collins",
+    "C. S. Lewis"
+   ]
+  },
+  {
+   "id": "art14",
+   "cat": "arte",
+   "q": "¿Cuántas teclas tiene un piano estándar?",
+   "a": "88",
+   "w": [
+    "76",
+    "96",
+    "64"
+   ]
+  },
+  {
+   "id": "art15",
+   "cat": "arte",
+   "q": "¿Quién pintó El grito?",
+   "a": "Edvard Munch",
+   "w": [
+    "Gustav Klimt",
+    "Egon Schiele",
+    "Marc Chagall"
+   ]
+  },
+  {
+   "id": "art16",
+   "cat": "arte",
+   "q": "¿Quién escribió el Romancero gitano?",
+   "a": "Federico García Lorca",
+   "w": [
+    "Antonio Machado",
+    "Rafael Alberti",
+    "Miguel Hernández"
+   ]
+  },
+  {
+   "id": "art17",
+   "cat": "arte",
+   "q": "¿Cuántas cuerdas tiene una guitarra clásica?",
+   "a": "6",
+   "w": [
+    "4",
+    "5",
+    "7"
+   ]
+  },
+  {
+   "id": "art18",
+   "cat": "arte",
+   "q": "¿Quién escribió El Señor de los Anillos?",
+   "a": "J. R. R. Tolkien",
+   "w": [
+    "C. S. Lewis",
+    "George R. R. Martin",
+    "J. K. Rowling"
+   ]
+  },
+  {
+   "id": "art19",
+   "cat": "arte",
+   "q": "¿Quién diseñó la Sagrada Familia?",
+   "a": "Antoni Gaudí",
+   "w": [
+    "Santiago Calatrava",
+    "Ricardo Bofill",
+    "Josep Puig i Cadafalch"
+   ]
+  },
+  {
+   "id": "art20",
+   "cat": "arte",
+   "q": "¿En qué ciudad está el Museo del Louvre?",
+   "a": "París",
+   "w": [
+    "Londres",
+    "Roma",
+    "Madrid"
+   ]
+  },
+  {
+   "id": "art21",
+   "cat": "arte",
+   "q": "¿Quién escribió La sombra del viento?",
+   "a": "Carlos Ruiz Zafón",
+   "w": [
+    "Arturo Pérez-Reverte",
+    "Javier Marías",
+    "Eduardo Mendoza"
+   ]
+  },
+  {
+   "id": "dep01",
+   "cat": "deporte",
+   "q": "¿Cada cuántos años se celebran los Juegos Olímpicos de verano?",
+   "a": "4",
+   "w": [
+    "2",
+    "3",
+    "5"
+   ]
+  },
+  {
+   "id": "dep02",
+   "cat": "deporte",
+   "q": "¿Cuántos jugadores de cada equipo hay en el campo en un partido de fútbol?",
+   "a": "11",
+   "w": [
+    "9",
+    "10",
+    "12"
+   ]
+  },
+  {
+   "id": "dep03",
+   "cat": "deporte",
+   "q": "¿Qué selección ganó el Mundial de fútbol de 2010?",
+   "a": "España",
+   "w": [
+    "Países Bajos",
+    "Alemania",
+    "Brasil"
+   ]
+  },
+  {
+   "id": "dep04",
+   "cat": "deporte",
+   "q": "¿Qué tenista ha ganado 14 veces Roland Garros?",
+   "a": "Rafa Nadal",
+   "w": [
+    "Novak Djokovic",
+    "Roger Federer",
+    "Carlos Alcaraz"
+   ]
+  },
+  {
+   "id": "dep05",
+   "cat": "deporte",
+   "q": "¿En qué ciudad se celebraron los Juegos Olímpicos de 1992?",
+   "a": "Barcelona",
+   "w": [
+    "Madrid",
+    "Sevilla",
+    "Atlanta"
+   ]
+  },
+  {
+   "id": "dep06",
+   "cat": "deporte",
+   "q": "¿Qué selección ha ganado más Mundiales de fútbol?",
+   "a": "Brasil",
+   "w": [
+    "Alemania",
+    "Italia",
+    "Argentina"
+   ]
+  },
+  {
+   "id": "dep07",
+   "cat": "deporte",
+   "q": "¿Cuántos aros tiene la bandera olímpica?",
+   "a": "5",
+   "w": [
+    "4",
+    "6",
+    "7"
+   ]
+  },
+  {
+   "id": "dep08",
+   "cat": "deporte",
+   "q": "¿Cuánto mide una maratón?",
+   "a": "42,195 km",
+   "w": [
+    "40 km",
+    "45 km",
+    "50 km"
+   ]
+  },
+  {
+   "id": "dep09",
+   "cat": "deporte",
+   "q": "¿En qué deporte destacó Michael Jordan?",
+   "a": "Baloncesto",
+   "w": [
+    "Béisbol",
+    "Fútbol americano",
+    "Tenis"
+   ]
+  },
+  {
+   "id": "dep10",
+   "cat": "deporte",
+   "q": "¿Qué piloto español ganó el Mundial de F1 en 2005 y 2006?",
+   "a": "Fernando Alonso",
+   "w": [
+    "Carlos Sainz",
+    "Pedro de la Rosa",
+    "Jorge Lorenzo"
+   ]
+  },
+  {
+   "id": "dep11",
+   "cat": "deporte",
+   "q": "¿Cuántos jugadores de un equipo hay en pista en baloncesto?",
+   "a": "5",
+   "w": [
+    "6",
+    "7",
+    "4"
+   ]
+  },
+  {
+   "id": "dep12",
+   "cat": "deporte",
+   "q": "¿Qué club ha ganado más Copas de Europa de fútbol?",
+   "a": "Real Madrid",
+   "w": [
+    "FC Barcelona",
+    "AC Milan",
+    "Bayern de Múnich"
+   ]
+  },
+  {
+   "id": "dep13",
+   "cat": "deporte",
+   "q": "¿En qué deporte se disputa la Copa Davis?",
+   "a": "Tenis",
+   "w": [
+    "Golf",
+    "Rugby",
+    "Voleibol"
+   ]
+  },
+  {
+   "id": "dep14",
+   "cat": "deporte",
+   "q": "¿Qué color de maillot lleva el líder del Tour de Francia?",
+   "a": "Amarillo",
+   "w": [
+    "Rojo",
+    "Verde",
+    "Rosa"
+   ]
+  },
+  {
+   "id": "dep15",
+   "cat": "deporte",
+   "q": "¿De qué país es Lionel Messi?",
+   "a": "Argentina",
+   "w": [
+    "Uruguay",
+    "Brasil",
+    "España"
+   ]
+  },
+  {
+   "id": "dep16",
+   "cat": "deporte",
+   "q": "¿En qué deporte se consigue un «hoyo en uno»?",
+   "a": "Golf",
+   "w": [
+    "Bolos",
+    "Billar",
+    "Curling"
+   ]
+  },
+  {
+   "id": "dep17",
+   "cat": "deporte",
+   "q": "¿Qué selección ganó el Mundial de fútbol de 2022?",
+   "a": "Argentina",
+   "w": [
+    "Francia",
+    "Croacia",
+    "Brasil"
+   ]
+  },
+  {
+   "id": "dep18",
+   "cat": "deporte",
+   "q": "¿Cuántos jugadores de un equipo hay en pista en voleibol?",
+   "a": "6",
+   "w": [
+    "5",
+    "7",
+    "8"
+   ]
+  },
+  {
+   "id": "dep19",
+   "cat": "deporte",
+   "q": "¿Qué selección ganó la Eurocopa de 2024?",
+   "a": "España",
+   "w": [
+    "Inglaterra",
+    "Francia",
+    "Italia"
+   ]
+  },
+  {
+   "id": "dep20",
+   "cat": "deporte",
+   "q": "¿Qué deporte se juega en Wimbledon?",
+   "a": "Tenis",
+   "w": [
+    "Críquet",
+    "Golf",
+    "Rugby"
+   ]
+  },
+  {
+   "id": "dep21",
+   "cat": "deporte",
+   "q": "¿Cuántos hoyos tiene un campo de golf estándar?",
+   "a": "18",
+   "w": [
+    "9",
+    "12",
+    "24"
+   ]
+  },
+  {
+   "id": "oci01",
+   "cat": "ocio",
+   "q": "¿Quién dirigió Titanic?",
+   "a": "James Cameron",
+   "w": [
+    "Steven Spielberg",
+    "Ridley Scott",
+    "Christopher Nolan"
+   ]
+  },
+  {
+   "id": "oci02",
+   "cat": "ocio",
+   "q": "¿Qué actor interpreta a Jack Sparrow en Piratas del Caribe?",
+   "a": "Johnny Depp",
+   "w": [
+    "Orlando Bloom",
+    "Brad Pitt",
+    "Tom Cruise"
+   ]
+  },
+  {
+   "id": "oci03",
+   "cat": "ocio",
+   "q": "¿Qué banda cantó Bohemian Rhapsody?",
+   "a": "Queen",
+   "w": [
+    "The Beatles",
+    "Led Zeppelin",
+    "Pink Floyd"
+   ]
+  },
+  {
+   "id": "oci04",
+   "cat": "ocio",
+   "q": "¿En qué película aparece el personaje de Simba?",
+   "a": "El Rey León",
+   "w": [
+    "Tarzán",
+    "Bambi",
+    "Aladdín"
+   ]
+  },
+  {
+   "id": "oci05",
+   "cat": "ocio",
+   "q": "¿Quién dirigió Pulp Fiction?",
+   "a": "Quentin Tarantino",
+   "w": [
+    "Martin Scorsese",
+    "Stanley Kubrick",
+    "Wes Anderson"
+   ]
+  },
+  {
+   "id": "oci06",
+   "cat": "ocio",
+   "q": "¿Qué director español dirigió Volver y Todo sobre mi madre?",
+   "a": "Pedro Almodóvar",
+   "w": [
+    "Alejandro Amenábar",
+    "Guillermo del Toro",
+    "J. A. Bayona"
+   ]
+  },
+  {
+   "id": "oci07",
+   "cat": "ocio",
+   "q": "¿Cómo se llama el protagonista de Matrix?",
+   "a": "Neo",
+   "w": [
+    "Morfeo",
+    "Trinity",
+    "Cypher"
+   ]
+  },
+  {
+   "id": "oci08",
+   "cat": "ocio",
+   "q": "¿Quién cantó Hips Don't Lie?",
+   "a": "Shakira",
+   "w": [
+    "Jennifer Lopez",
+    "Beyoncé",
+    "Rihanna"
+   ]
+  },
+  {
+   "id": "oci09",
+   "cat": "ocio",
+   "q": "¿En qué serie aparece Walter White?",
+   "a": "Breaking Bad",
+   "w": [
+    "The Wire",
+    "Los Soprano",
+    "Dexter"
+   ]
+  },
+  {
+   "id": "oci10",
+   "cat": "ocio",
+   "q": "¿Qué actor interpretó a Iron Man en el universo Marvel?",
+   "a": "Robert Downey Jr.",
+   "w": [
+    "Chris Evans",
+    "Chris Hemsworth",
+    "Mark Ruffalo"
+   ]
+  },
+  {
+   "id": "oci11",
+   "cat": "ocio",
+   "q": "¿Cómo se llama el reino de Elsa y Anna en Frozen?",
+   "a": "Arendelle",
+   "w": [
+    "Corona",
+    "Agrabah",
+    "Atlántica"
+   ]
+  },
+  {
+   "id": "oci12",
+   "cat": "ocio",
+   "q": "¿Qué artista es conocido como el Rey del Pop?",
+   "a": "Michael Jackson",
+   "w": [
+    "Elvis Presley",
+    "Prince",
+    "Justin Timberlake"
+   ]
+  },
+  {
+   "id": "oci13",
+   "cat": "ocio",
+   "q": "¿Cuántos miembros tenían The Beatles?",
+   "a": "4",
+   "w": [
+    "3",
+    "5",
+    "6"
+   ]
+  },
+  {
+   "id": "oci14",
+   "cat": "ocio",
+   "q": "¿Cómo se llama el villano de Star Wars con casco negro y respiración ronca?",
+   "a": "Darth Vader",
+   "w": [
+    "Kylo Ren",
+    "Palpatine",
+    "Boba Fett"
+   ]
+  },
+  {
+   "id": "oci15",
+   "cat": "ocio",
+   "q": "¿Qué serie española gira en torno a un atraco a la Fábrica Nacional de Moneda y Timbre?",
+   "a": "La casa de papel",
+   "w": [
+    "Élite",
+    "Vis a vis",
+    "Las chicas del cable"
+   ]
+  },
+  {
+   "id": "oci16",
+   "cat": "ocio",
+   "q": "¿Qué grupo cantó Hotel California?",
+   "a": "Eagles",
+   "w": [
+    "Fleetwood Mac",
+    "The Doors",
+    "Journey"
+   ]
+  },
+  {
+   "id": "oci17",
+   "cat": "ocio",
+   "q": "¿Quién creó a Mickey Mouse?",
+   "a": "Walt Disney",
+   "w": [
+    "Walter Lantz",
+    "Max Fleischer",
+    "Hanna-Barbera"
+   ]
+  },
+  {
+   "id": "oci18",
+   "cat": "ocio",
+   "q": "¿Cómo se llama el robot de Pixar que limpia la Tierra?",
+   "a": "WALL·E",
+   "w": [
+    "EVE",
+    "R2-D2",
+    "Baymax"
+   ]
+  },
+  {
+   "id": "oci19",
+   "cat": "ocio",
+   "q": "¿Qué actor interpreta a Forrest Gump?",
+   "a": "Tom Hanks",
+   "w": [
+    "Tom Cruise",
+    "Kevin Costner",
+    "Robin Williams"
+   ]
+  },
+  {
+   "id": "oci20",
+   "cat": "ocio",
+   "q": "¿En qué ciudad viven Los Simpson?",
+   "a": "Springfield",
+   "w": [
+    "Quahog",
+    "South Park",
+    "Shelbyville"
+   ]
+  },
+  {
+   "id": "oci21",
+   "cat": "ocio",
+   "q": "¿Quién es el cantante de U2?",
+   "a": "Bono",
+   "w": [
+    "Sting",
+    "Bruce Springsteen",
+    "Freddie Mercury"
+   ]
+  },
+  {
+   "id": "cur01",
+   "cat": "curiosidades",
+   "q": "¿De qué país es originaria la pizza?",
+   "a": "Italia",
+   "w": [
+    "Francia",
+    "Grecia",
+    "Estados Unidos"
+   ]
+  },
+  {
+   "id": "cur02",
+   "cat": "curiosidades",
+   "q": "¿Cuál es el ingrediente principal del guacamole?",
+   "a": "Aguacate",
+   "w": [
+    "Tomate",
+    "Pepino",
+    "Lima"
+   ]
+  },
+  {
+   "id": "cur03",
+   "cat": "curiosidades",
+   "q": "¿Qué ingrediente lleva la paella valenciana tradicional?",
+   "a": "Garrofón",
+   "w": [
+    "Chorizo",
+    "Gambas",
+    "Calamares"
+   ]
+  },
+  {
+   "id": "cur04",
+   "cat": "curiosidades",
+   "q": "¿Qué ingrediente base lleva el sushi?",
+   "a": "Arroz",
+   "w": [
+    "Pasta",
+    "Pan",
+    "Quinoa"
+   ]
+  },
+  {
+   "id": "cur05",
+   "cat": "curiosidades",
+   "q": "¿De qué país es originario el tequila?",
+   "a": "México",
+   "w": [
+    "España",
+    "Cuba",
+    "Perú"
+   ]
+  },
+  {
+   "id": "cur06",
+   "cat": "curiosidades",
+   "q": "¿De qué región es típico el pulpo a feira?",
+   "a": "Galicia",
+   "w": [
+    "Asturias",
+    "Andalucía",
+    "Cataluña"
+   ]
+  },
+  {
+   "id": "cur07",
+   "cat": "curiosidades",
+   "q": "¿Cuál es el ingrediente principal del gazpacho?",
+   "a": "Tomate",
+   "w": [
+    "Pepino",
+    "Pimiento",
+    "Cebolla"
+   ]
+  },
+  {
+   "id": "cur08",
+   "cat": "curiosidades",
+   "q": "¿Cuál es el país más pequeño del mundo?",
+   "a": "Ciudad del Vaticano",
+   "w": [
+    "Mónaco",
+    "San Marino",
+    "Liechtenstein"
+   ]
+  },
+  {
+   "id": "cur09",
+   "cat": "curiosidades",
+   "q": "¿Cuántos minutos tiene un día?",
+   "a": "1440",
+   "w": [
+    "1240",
+    "1400",
+    "1660"
+   ]
+  },
+  {
+   "id": "cur10",
+   "cat": "curiosidades",
+   "q": "¿Cuántos lados tiene un hexágono?",
+   "a": "6",
+   "w": [
+    "5",
+    "7",
+    "8"
+   ]
+  },
+  {
+   "id": "cur11",
+   "cat": "curiosidades",
+   "q": "¿Cuál es el idioma con más hablantes nativos del mundo?",
+   "a": "Chino mandarín",
+   "w": [
+    "Inglés",
+    "Español",
+    "Hindi"
+   ]
+  },
+  {
+   "id": "cur12",
+   "cat": "curiosidades",
+   "q": "¿Cuál es la moneda de Japón?",
+   "a": "Yen",
+   "w": [
+    "Won",
+    "Yuan",
+    "Rupia"
+   ]
+  },
+  {
+   "id": "cur13",
+   "cat": "curiosidades",
+   "q": "¿De qué color es la «caja negra» de un avión?",
+   "a": "Naranja",
+   "w": [
+    "Negra",
+    "Roja",
+    "Amarilla"
+   ]
+  },
+  {
+   "id": "cur14",
+   "cat": "curiosidades",
+   "q": "¿Cuántos días tiene un año bisiesto?",
+   "a": "366",
+   "w": [
+    "365",
+    "364",
+    "367"
+   ]
+  },
+  {
+   "id": "cur15",
+   "cat": "curiosidades",
+   "q": "¿Qué número representa la letra L en números romanos?",
+   "a": "50",
+   "w": [
+    "5",
+    "100",
+    "500"
+   ]
+  },
+  {
+   "id": "cur16",
+   "cat": "curiosidades",
+   "q": "¿Qué número representa la letra M en números romanos?",
+   "a": "1000",
+   "w": [
+    "100",
+    "500",
+    "5000"
+   ]
+  },
+  {
+   "id": "cur17",
+   "cat": "curiosidades",
+   "q": "¿Qué ciudad es conocida como la Ciudad Eterna?",
+   "a": "Roma",
+   "w": [
+    "Atenas",
+    "París",
+    "Jerusalén"
+   ]
+  },
+  {
+   "id": "cur18",
+   "cat": "curiosidades",
+   "q": "¿En qué país se encuentra la Torre de Pisa?",
+   "a": "Italia",
+   "w": [
+    "Francia",
+    "España",
+    "Grecia"
+   ]
+  },
+  {
+   "id": "cur19",
+   "cat": "curiosidades",
+   "q": "¿Cuál es la capital de Australia?",
+   "a": "Canberra",
+   "w": [
+    "Sídney",
+    "Melbourne",
+    "Perth"
+   ]
+  },
+  {
+   "id": "cur20",
+   "cat": "curiosidades",
+   "q": "¿Qué país tiene forma de bota?",
+   "a": "Italia",
+   "w": [
+    "Portugal",
+    "Grecia",
+    "Croacia"
+   ]
+  }
+ ]
+}

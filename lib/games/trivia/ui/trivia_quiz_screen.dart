@@ -77,7 +77,7 @@ class _TriviaQuizScreenState extends ConsumerState<TriviaQuizScreen> {
           final setup = ref.read(triviaSetupProvider);
           WidgetsBinding.instance.addPostFrameCallback((_) {
             if (mounted && _questions == null) {
-              setState(() => _questions = generateTrivia(b, setup.categories, setup.count, Random()));
+              setState(() => _questions = generateTrivia(b, setup.categories, setup.count, Random(), level: setup.level));
             }
           });
           return const Scaffold(body: Center(child: CircularProgressIndicator()));
@@ -186,6 +186,8 @@ class _Option extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Tamaño constante en todos los estados: mismo borde, mismo hueco para el icono y altura mínima,
+    // para que al responder no se desplace nada.
     final (border, fill, icon) = switch (state) {
       _OptionState.correct => (AppColors.success, AppColors.success.withValues(alpha: 0.2), Icons.check_circle_rounded),
       _OptionState.wrong => (AppColors.danger, AppColors.danger.withValues(alpha: 0.2), Icons.cancel_rounded),
@@ -193,23 +195,40 @@ class _Option extends StatelessWidget {
     };
     return AnimatedOpacity(
       opacity: state == _OptionState.dimmed ? 0.35 : 1,
-      duration: const Duration(milliseconds: 200),
+      duration: const Duration(milliseconds: 250),
       child: Material(
         color: Colors.transparent,
         child: InkWell(
           borderRadius: BorderRadius.circular(16),
           onTap: onTap,
-          child: Ink(
-            padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 16),
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 250),
+            curve: Curves.easeOut,
+            constraints: const BoxConstraints(minHeight: 58),
+            padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
             decoration: BoxDecoration(
               color: fill,
               borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: border, width: state == _OptionState.idle ? 1 : 2),
+              border: Border.all(color: border, width: 2),
             ),
             child: Row(
               children: [
                 Expanded(child: Text(label, style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w700))),
-                if (icon != null) Icon(icon, color: border),
+                SizedBox(
+                  width: 28,
+                  height: 24,
+                  child: AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 250),
+                    transitionBuilder: (c, anim) => ScaleTransition(scale: anim, child: c),
+                    child: icon == null
+                        ? const SizedBox.shrink(key: ValueKey('none'))
+                        : Align(
+                            key: ValueKey(icon),
+                            alignment: Alignment.centerRight,
+                            child: Icon(icon, color: border),
+                          ),
+                  ),
+                ),
               ],
             ),
           ),

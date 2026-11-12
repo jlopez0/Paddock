@@ -28,4 +28,14 @@ void main() {
     }
     expect(generateTrivia(bank, TriviaCategory.values.toSet(), 0, Random(1)).length, bank.length);
   });
+
+  test('nivel: normal excluye difíciles y difícil solo las difíciles', () {
+    final bank = parseTrivia(File('assets/content/es/trivia.json').readAsStringSync());
+    final all = TriviaCategory.values.toSet();
+    final normal = generateTrivia(bank, all, 0, Random(1), level: TriviaLevel.normal);
+    final hard = generateTrivia(bank, all, 0, Random(1), level: TriviaLevel.hard);
+    expect(normal.any((q) => q.hard), isFalse);
+    expect(hard.isNotEmpty && hard.every((q) => q.hard), isTrue);
+    expect(normal.length + hard.length, bank.length);
+  });
 }

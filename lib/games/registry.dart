@@ -4,6 +4,7 @@ import 'game_module.dart';
 import 'geography/geography_module.dart';
 import 'horse_race/horse_race_module.dart';
 import 'prompt_deck/prompt_deck_module.dart';
+import 'rosco/rosco_module.dart';
 import 'trivia/trivia_module.dart';
 
 /// Juegos disponibles, en el orden en que aparecen en el menú.
@@ -11,6 +12,7 @@ const List<GameModule> gameModules = [
   HorseRaceModule(),
   GeographyModule(),
   TriviaModule(),
+  RoscoModule(),
   PromptDeckModule(
     id: 'yo-nunca',
     title: 'Yo nunca',
@@ -22,14 +24,15 @@ const List<GameModule> gameModules = [
     prefix: 'Yo nunca',
     rule: 'Quien lo haya hecho, bebe 🍺',
   ),
-  PromptDeckModule(
-    id: 'que-preferirias',
-    title: '¿Qué preferirías?',
-    subtitle: 'Dos opciones, ninguna buena',
-    emoji: '🤔',
-    color: Color(0xFFB57BEE),
-    contentAsset: 'assets/content/es/que_preferirias.json',
-    style: PromptCardStyle.choice,
-    rule: 'A la de tres, todos eligen. La minoría bebe 🍺',
-  ),
+  // Desactivado por ahora (el contenido sigue en assets/content/es/que_preferirias.json):
+  // PromptDeckModule(
+  //   id: 'que-preferirias',
+  //   title: '¿Qué preferirías?',
+  //   subtitle: 'Dos opciones, ninguna buena',
+  //   emoji: '🤔',
+  //   color: Color(0xFFB57BEE),
+  //   contentAsset: 'assets/content/es/que_preferirias.json',
+  //   style: PromptCardStyle.choice,
+  //   rule: 'A la de tres, todos eligen. La minoría bebe 🍺',
+  // ),
 ];

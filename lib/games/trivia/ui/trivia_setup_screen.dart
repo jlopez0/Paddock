@@ -13,7 +13,7 @@ class TriviaSetupScreen extends ConsumerWidget {
     final setup = ref.watch(triviaSetupProvider);
     final bank = ref.watch(triviaBankProvider);
     final controller = ref.read(triviaSetupProvider.notifier);
-    final available = bank.whenOrNull(data: (b) => b.where((q) => setup.categories.contains(q.category)).length) ?? 0;
+    final available = bank.whenOrNull(data: (b) => b.where((q) => setup.categories.contains(q.category) && setup.level.accepts(q)).length) ?? 0;
     final questions = setup.count == 0 ? available : available.clamp(0, setup.count);
 
     final theme = Theme.of(context);
@@ -54,6 +54,13 @@ class TriviaSetupScreen extends ConsumerWidget {
                     }),
                   ),
               ],
+            ),
+            const _Title('Nivel'),
+            SegmentedButton<TriviaLevel>(
+              showSelectedIcon: false,
+              segments: [for (final l in TriviaLevel.values) ButtonSegment(value: l, label: Text(l.label))],
+              selected: {setup.level},
+              onSelectionChanged: (v) => controller.update((s) => s.copyWith(level: v.first)),
             ),
             const _Title('Preguntas'),
             SegmentedButton<int>(

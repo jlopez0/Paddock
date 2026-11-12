@@ -24,6 +24,22 @@ enum TriviaCategory {
   final String emoji;
 }
 
+enum TriviaLevel {
+  normal('Normal'),
+  hard('Difícil'),
+  all('Todas');
+
+  const TriviaLevel(this.label);
+
+  final String label;
+
+  bool accepts(TriviaQuestion q) => switch (this) {
+        TriviaLevel.normal => !q.hard,
+        TriviaLevel.hard => q.hard,
+        TriviaLevel.all => true,
+      };
+}
+
 class TriviaQuestion {
   const TriviaQuestion({
     required this.id,
@@ -31,6 +47,7 @@ class TriviaQuestion {
     required this.text,
     required this.answer,
     required this.wrong,
+    this.hard = false,
     this.options = const [],
   });
 
@@ -39,6 +56,9 @@ class TriviaQuestion {
   final String text;
   final String answer;
   final List<String> wrong;
+
+  /// Pregunta de nivel difícil (`"dif": "dificil"` en el JSON).
+  final bool hard;
 
   /// Las 4 opciones ya mezcladas (vacío en el banco sin preparar).
   final List<String> options;
@@ -49,6 +69,7 @@ class TriviaQuestion {
         text: j['q'] as String,
         answer: j['a'] as String,
         wrong: (j['w'] as List).cast<String>(),
+        hard: j['dif'] == 'dificil',
       );
 
   TriviaQuestion shuffled(Random random) => TriviaQuestion(
@@ -57,6 +78,7 @@ class TriviaQuestion {
         text: text,
         answer: answer,
         wrong: wrong,
+        hard: hard,
         options: [answer, ...wrong]..shuffle(random),
       );
 }
@@ -71,26 +93,33 @@ final triviaBankProvider =
 
 /// Elige [count] preguntas (0 = todas) de las categorías dadas, mezcladas y con las opciones barajadas.
 List<TriviaQuestion> generateTrivia(
-    List<TriviaQuestion> bank, Set<TriviaCategory> categories, int count, Random random) {
-  final pool = bank.where((q) => categories.contains(q.category)).toList()..shuffle(random);
+    List<TriviaQuestion> bank, Set<TriviaCategory> categories, int count, Random random,
+    {TriviaLevel level = TriviaLevel.all}) {
+  final pool = bank.where((q) => categories.contains(q.category) && level.accepts(q)).toList()..shuffle(random);
   final picked = count == 0 ? pool : pool.take(count);
   return [for (final q in picked) q.shuffled(random)];
 }
 
 class TriviaSetup {
-  const TriviaSetup({this.categories = const {...TriviaCategory.values}, this.count = 10});
+  const TriviaSetup({
+    this.categories = const {...TriviaCategory.values},
+    this.count = 10,
+    this.level = TriviaLevel.all,
+  });
 
   final Set<TriviaCategory> categories;
   final int count;
+  final TriviaLevel level;
 
-  TriviaSetup copyWith({Set<TriviaCategory>? categories, int? count}) =>
-      TriviaSetup(categories: categories ?? this.categories, count: count ?? this.count);
+  TriviaSetup copyWith({Set<TriviaCategory>? categories, int? count, TriviaLevel? level}) => TriviaSetup(
+      categories: categories ?? this.categories, count: count ?? this.count, level: level ?? this.level);
 
-  Map<String, dynamic> toJson() => {'cats': categories.map((c) => c.name).toList(), 'count': count};
+  Map<String, dynamic> toJson() => {'cats': categories.map((c) => c.name).toList(), 'count': count, 'level': level.name};
 
   factory TriviaSetup.fromJson(Map<String, dynamic> j) {
     final cats = (j['cats'] as List).cast<String>().map(TriviaCategory.values.byName).toSet();
-    return TriviaSetup(categories: cats.isEmpty ? const {...TriviaCategory.values} : cats, count: j['count'] as int);
+    return TriviaSetup(categories: cats.isEmpty ? const {...TriviaCategory.values} : cats, count: j['count'] as int,
+        level: TriviaLevel.values.asNameMap()[j['level']] ?? TriviaLevel.all);
   }
 }
 

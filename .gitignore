@@ -46,3 +46,6 @@ app.*.map.json
 
 # APK original (no versionar)
 *.apk
+Paddock-ipa.zip
+siguientes-pasos.md
+Paddock-ipa/Paddock.ipa

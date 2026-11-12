@@ -1639,6 +1639,582 @@
     "Grecia",
     "Croacia"
    ]
+  },
+  {
+   "id": "ot-his01",
+   "cat": "historia",
+   "dif": "dificil",
+   "q": "¿Qué antiguo reino ibérico, además de Castilla, León y Aragón, aparece en el escudo del rey de España?",
+   "a": "Navarra",
+   "w": [
+    "Galicia",
+    "Granada",
+    "Cataluña"
+   ]
+  },
+  {
+   "id": "ot-his02",
+   "cat": "historia",
+   "dif": "dificil",
+   "q": "¿Qué emperador bizantino mandó construir Santa Sofía?",
+   "a": "Justiniano I",
+   "w": [
+    "Constantino IV",
+    "Arcadio",
+    "Teodosio el Grande"
+   ]
+  },
+  {
+   "id": "ot-his03",
+   "cat": "historia",
+   "dif": "dificil",
+   "q": "¿Quién fue el último emperador de México?",
+   "a": "Maximiliano de Habsburgo",
+   "w": [
+    "Agustín de Iturbide",
+    "Napoleón III",
+    "Benito Juárez"
+   ]
+  },
+  {
+   "id": "ot-his04",
+   "cat": "historia",
+   "dif": "dificil",
+   "q": "¿En qué año se adoptó por primera vez el calendario gregoriano?",
+   "a": "1582",
+   "w": [
+    "1623",
+    "1501",
+    "1555"
+   ]
+  },
+  {
+   "id": "ot-his05",
+   "cat": "historia",
+   "dif": "dificil",
+   "q": "¿En qué país se cultivaron originalmente las patatas?",
+   "a": "Perú",
+   "w": [
+    "Irlanda",
+    "Estados Unidos",
+    "Nueva Zelanda"
+   ]
+  },
+  {
+   "id": "ot-his06",
+   "cat": "historia",
+   "dif": "dificil",
+   "q": "¿Qué día de enero de 1933 fue nombrado Hitler canciller de Alemania?",
+   "a": "30",
+   "w": [
+    "12",
+    "7",
+    "25"
+   ]
+  },
+  {
+   "id": "ot-his07",
+   "cat": "historia",
+   "dif": "dificil",
+   "q": "¿Quién asesinó al presidente estadounidense James A. Garfield?",
+   "a": "Charles Guiteau",
+   "w": [
+    "Leon Czolgosz",
+    "John Wilkes Booth",
+    "Sirhan Sirhan"
+   ]
+  },
+  {
+   "id": "ot-cie01",
+   "cat": "ciencia",
+   "dif": "dificil",
+   "q": "¿Cuál es la unidad del SI para la intensidad luminosa?",
+   "a": "Candela",
+   "w": [
+    "Lumen",
+    "Faradio",
+    "Culombio"
+   ]
+  },
+  {
+   "id": "ot-cie02",
+   "cat": "ciencia",
+   "dif": "dificil",
+   "q": "¿Cuál es la unidad de inductancia eléctrica?",
+   "a": "Henrio",
+   "w": [
+    "Weber",
+    "Culombio",
+    "Mho"
+   ]
+  },
+  {
+   "id": "ot-cie03",
+   "cat": "ciencia",
+   "dif": "dificil",
+   "q": "¿Cómo se llama la envoltura gaseosa de un cometa que origina su cola?",
+   "a": "Coma",
+   "w": [
+    "Estela",
+    "Corona",
+    "Halo"
+   ]
+  },
+  {
+   "id": "ot-cie04",
+   "cat": "ciencia",
+   "dif": "dificil",
+   "q": "¿Qué es un «gosipiboma»?",
+   "a": "Gasa olvidada dentro del cuerpo tras una cirugía",
+   "w": [
+    "Tumor benigno del estómago",
+    "Fractura por estrés",
+    "Cálculo en la vesícula"
+   ]
+  },
+  {
+   "id": "ot-cie05",
+   "cat": "ciencia",
+   "dif": "dificil",
+   "q": "¿Cuál es el nombre científico del «dolor de cabeza por helado»?",
+   "a": "Neuralgia del ganglio esfenopalatino",
+   "w": [
+    "Cefalea de Horton",
+    "Neuralgia del trigémino",
+    "Migraña trigeminal"
+   ]
+  },
+  {
+   "id": "ot-cie06",
+   "cat": "ciencia",
+   "dif": "dificil",
+   "q": "¿Cuál es la fórmula molecular de la glucosa?",
+   "a": "C6H12O6",
+   "w": [
+    "C2H4O2",
+    "CH4",
+    "C12H22O11"
+   ]
+  },
+  {
+   "id": "ot-nat01",
+   "cat": "naturaleza",
+   "dif": "dificil",
+   "q": "¿Qué ave nace con garras en los dedos de las alas?",
+   "a": "Hoacín",
+   "w": [
+    "Casuario",
+    "Cormorán",
+    "Secretario"
+   ]
+  },
+  {
+   "id": "ot-nat02",
+   "cat": "naturaleza",
+   "dif": "dificil",
+   "q": "¿Cuántas especies vivas de hiena se conocen?",
+   "a": "4",
+   "w": [
+    "2",
+    "6",
+    "8"
+   ]
+  },
+  {
+   "id": "ot-nat03",
+   "cat": "naturaleza",
+   "dif": "dificil",
+   "q": "¿Cuál de estos animales NO es un lagarto?",
+   "a": "Tuátara",
+   "w": [
+    "Dragón de Komodo",
+    "Monstruo de Gila",
+    "Iguana verde"
+   ]
+  },
+  {
+   "id": "ot-nat04",
+   "cat": "naturaleza",
+   "dif": "dificil",
+   "q": "¿Qué es una carabela portuguesa?",
+   "a": "Una colonia de pólipos, no una medusa",
+   "w": [
+    "Una medusa gigante",
+    "Un tipo de coral",
+    "Un molusco"
+   ]
+  },
+  {
+   "id": "ot-nat05",
+   "cat": "naturaleza",
+   "dif": "dificil",
+   "q": "La caquexia crónica (enfermedad del ciervo zombi) solo afecta a los…",
+   "a": "Cérvidos",
+   "w": [
+    "Homínidos",
+    "Félidos",
+    "Cánidos"
+   ]
+  },
+  {
+   "id": "ot-nat06",
+   "cat": "naturaleza",
+   "dif": "dificil",
+   "q": "¿Cuál es el nombre científico del lobo gris?",
+   "a": "Canis lupus",
+   "w": [
+    "Canis aureus",
+    "Canis latrans",
+    "Vulpes lupus"
+   ]
+  },
+  {
+   "id": "ot-art01",
+   "cat": "arte",
+   "dif": "dificil",
+   "q": "¿En qué año pintó Dalí «La persistencia de la memoria»?",
+   "a": "1931",
+   "w": [
+    "1929",
+    "1932",
+    "1934"
+   ]
+  },
+  {
+   "id": "ot-art02",
+   "cat": "arte",
+   "dif": "dificil",
+   "q": "¿A qué movimiento perteneció Piet Mondrian?",
+   "a": "Neoplasticismo",
+   "w": [
+    "Cubismo",
+    "Impresionismo",
+    "Precisionismo"
+   ]
+  },
+  {
+   "id": "ot-art03",
+   "cat": "arte",
+   "dif": "dificil",
+   "q": "¿A qué lugar se mudó Paul Gauguin en 1895?",
+   "a": "Tahití",
+   "w": [
+    "Francia",
+    "Lituania",
+    "Madagascar"
+   ]
+  },
+  {
+   "id": "ot-art04",
+   "cat": "arte",
+   "dif": "dificil",
+   "q": "¿Cuántas versiones al óleo y pastel de «El grito» se cree que pintó Edvard Munch?",
+   "a": "4",
+   "w": [
+    "1",
+    "2",
+    "3"
+   ]
+  },
+  {
+   "id": "ot-art05",
+   "cat": "arte",
+   "dif": "dificil",
+   "q": "¿Quién pintó «Gótico americano»?",
+   "a": "Grant Wood",
+   "w": [
+    "Edward Hopper",
+    "Marc Chagall",
+    "Norman Rockwell"
+   ]
+  },
+  {
+   "id": "ot-art06",
+   "cat": "arte",
+   "dif": "dificil",
+   "q": "¿Quién era la hija del rey Minos en la mitología griega?",
+   "a": "Ariadna",
+   "w": [
+    "Atenea",
+    "Ariel",
+    "Alana"
+   ]
+  },
+  {
+   "id": "ot-art07",
+   "cat": "arte",
+   "dif": "dificil",
+   "q": "¿Qué dios nórdico tiene un caballo llamado Sleipnir?",
+   "a": "Odín",
+   "w": [
+    "Thor",
+    "Frigg",
+    "Balder"
+   ]
+  },
+  {
+   "id": "ot-art08",
+   "cat": "arte",
+   "dif": "dificil",
+   "q": "¿De qué isla era protector Talos, el gigante de bronce?",
+   "a": "Creta",
+   "w": [
+    "Sicilia",
+    "Cerdeña",
+    "Chipre"
+   ]
+  },
+  {
+   "id": "ot-art09",
+   "cat": "arte",
+   "dif": "dificil",
+   "q": "¿A quién venció Hipómenes en una carrera a pie?",
+   "a": "Atalanta",
+   "w": [
+    "Teseo",
+    "Jasón",
+    "Peleo"
+   ]
+  },
+  {
+   "id": "ot-art10",
+   "cat": "arte",
+   "dif": "dificil",
+   "q": "¿De qué mitología proviene la criatura Nidhogg?",
+   "a": "Nórdica",
+   "w": [
+    "Egipcia",
+    "Griega",
+    "Hindú"
+   ]
+  },
+  {
+   "id": "ot-dep01",
+   "cat": "deporte",
+   "dif": "dificil",
+   "q": "¿Cuál es el nombre completo de Cristiano Ronaldo?",
+   "a": "Cristiano Ronaldo dos Santos Aveiro",
+   "w": [
+    "Cristiano Armando Diego Ronaldo",
+    "Cristiano Luis Armando Ronaldo",
+    "Cristiano Ronaldo los Santos Diego"
+   ]
+  },
+  {
+   "id": "ot-dep02",
+   "cat": "deporte",
+   "dif": "dificil",
+   "q": "¿Cuál es «el deporte de los reyes»?",
+   "a": "La hípica",
+   "w": [
+    "El ajedrez",
+    "La esgrima",
+    "Las justas"
+   ]
+  },
+  {
+   "id": "ot-dep03",
+   "cat": "deporte",
+   "dif": "dificil",
+   "q": "¿Qué futbolista le dio una patada de kung-fu a un aficionado del Crystal Palace en 1995?",
+   "a": "Eric Cantona",
+   "w": [
+    "Mark Hughes",
+    "Ashley Cole",
+    "David Seaman"
+   ]
+  },
+  {
+   "id": "ot-dep04",
+   "cat": "deporte",
+   "dif": "dificil",
+   "q": "¿En qué carrera se decidió el Mundial de F1 de 2018?",
+   "a": "Gran Premio de México",
+   "w": [
+    "Abu Dabi",
+    "Bélgica",
+    "Estados Unidos"
+   ]
+  },
+  {
+   "id": "ot-oci01",
+   "cat": "ocio",
+   "dif": "dificil",
+   "q": "¿Cómo se llama la especie del Depredador en la película «Depredador» (1987)?",
+   "a": "Yautja",
+   "w": [
+    "Xenomorfo",
+    "Praetoriano",
+    "Phocrex"
+   ]
+  },
+  {
+   "id": "ot-oci02",
+   "cat": "ocio",
+   "dif": "dificil",
+   "q": "¿Cuál era el segundo nombre de Humphrey Bogart?",
+   "a": "DeForest",
+   "w": [
+    "DeWinter",
+    "Steven",
+    "Bryce"
+   ]
+  },
+  {
+   "id": "ot-oci03",
+   "cat": "ocio",
+   "dif": "dificil",
+   "q": "¿Cómo se llama el asesino de la primera película de «Hellboy»?",
+   "a": "Karl Ruprecht Kroenen",
+   "w": [
+    "Klaus Werner von Krupt",
+    "Ilsa Haupstein",
+    "Grigori Rasputín"
+   ]
+  },
+  {
+   "id": "ot-oci04",
+   "cat": "ocio",
+   "dif": "dificil",
+   "q": "¿Cuál era la clave del wifi que le dieron a Stephen Strange en «Doctor Strange»?",
+   "a": "Shambala",
+   "w": [
+    "Peace",
+    "Chakra",
+    "Ancient"
+   ]
+  },
+  {
+   "id": "ot-oci05",
+   "cat": "ocio",
+   "dif": "dificil",
+   "q": "¿De qué banda de metal alternativo es cantante Chino Moreno?",
+   "a": "Deftones",
+   "w": [
+    "Tool",
+    "Korn",
+    "Type O Negative"
+   ]
+  },
+  {
+   "id": "ot-oci06",
+   "cat": "ocio",
+   "dif": "dificil",
+   "q": "¿Cómo se llamaba la banda de rock de Nobuo Uematsu que tocaba temas de Final Fantasy?",
+   "a": "The Black Mages",
+   "w": [
+    "The Espers",
+    "The Final Fantasies",
+    "The Rock Summoners"
+   ]
+  },
+  {
+   "id": "ot-oci07",
+   "cat": "ocio",
+   "dif": "dificil",
+   "q": "¿Cuál es el nombre artístico de la cantante neozelandesa Pip Brown?",
+   "a": "Ladyhawke",
+   "w": [
+    "Lorde",
+    "Kesha",
+    "Anika Moa"
+   ]
+  },
+  {
+   "id": "ot-oci08",
+   "cat": "ocio",
+   "dif": "dificil",
+   "q": "¿Qué canción de Elton John empieza con «When are you gonna come down»?",
+   "a": "Goodbye Yellow Brick Road",
+   "w": [
+    "Rocket Man",
+    "Crocodile Rock",
+    "Bennie and the Jets"
+   ]
+  },
+  {
+   "id": "ot-oci09",
+   "cat": "ocio",
+   "dif": "dificil",
+   "q": "¿Qué canción de los Bee Gees (1978) versionaron Steps veinte años después?",
+   "a": "Tragedy",
+   "w": [
+    "Night Fever",
+    "Stayin' Alive",
+    "You Should Be Dancing"
+   ]
+  },
+  {
+   "id": "ot-oci10",
+   "cat": "ocio",
+   "dif": "dificil",
+   "q": "¿Qué boxeador golpeaba el gong en la introducción de las películas de J. Arthur Rank?",
+   "a": "Bombardier Billy Wells",
+   "w": [
+    "Freddie Mills",
+    "Terry Spinks",
+    "Don Cockell"
+   ]
+  },
+  {
+   "id": "ot-cur01",
+   "cat": "curiosidades",
+   "dif": "dificil",
+   "q": "¿Qué significan las siglas TCAS en los sistemas de vuelo?",
+   "a": "Sistema de alerta de tráfico y anticolisión",
+   "w": [
+    "Sistema de control de altitud",
+    "Sistema de comunicaciones aéreas",
+    "Sistema de aterrizaje automático"
+   ]
+  },
+  {
+   "id": "ot-cur02",
+   "cat": "curiosidades",
+   "dif": "dificil",
+   "q": "¿Qué presidente de EE. UU. inauguró oficialmente el canal de Panamá?",
+   "a": "Woodrow Wilson",
+   "w": [
+    "Theodore Roosevelt",
+    "Calvin Coolidge",
+    "Herbert Hoover"
+   ]
+  },
+  {
+   "id": "ot-cur03",
+   "cat": "curiosidades",
+   "dif": "dificil",
+   "q": "¿Qué es la «nefelococigia»?",
+   "a": "Buscar formas en las nubes",
+   "w": [
+    "Dormir con los ojos abiertos",
+    "Romper cristales con la voz",
+    "Nadar en agua helada"
+   ]
+  },
+  {
+   "id": "ot-cur04",
+   "cat": "curiosidades",
+   "dif": "dificil",
+   "q": "¿Qué monarca británico nunca apareció en una moneda de libra esterlina en circulación?",
+   "a": "Eduardo VIII",
+   "w": [
+    "Victoria",
+    "Jorge VI",
+    "Carlos II"
+   ]
+  },
+  {
+   "id": "ot-cur05",
+   "cat": "curiosidades",
+   "dif": "dificil",
+   "q": "¿Quién fundó la Khan Academy?",
+   "a": "Sal Khan",
+   "w": [
+    "Ben Khan",
+    "Kitt Khan",
+    "Adel Khan"
+   ]
   }
  ]
 }

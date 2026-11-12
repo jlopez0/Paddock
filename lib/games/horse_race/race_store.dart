@@ -8,7 +8,7 @@ import 'domain/cards.dart';
 import 'domain/race_engine.dart';
 
 class RaceSettings {
-  const RaceSettings({this.length = 6, this.obstacles = true, this.doubleForWinners = false});
+  const RaceSettings({this.length = 6, this.obstacles = true, this.doubleForWinners = false, this.music = true});
 
   final int length;
   final bool obstacles;
@@ -16,22 +16,27 @@ class RaceSettings {
   /// Si está activo, quien acierta reparte el doble de lo apostado.
   final bool doubleForWinners;
 
+  /// Suena la obertura de Guillermo Tell durante la carrera.
+  final bool music;
+
   RaceConfig get config => RaceConfig(length: length, obstacles: obstacles);
   int get winMultiplier => doubleForWinners ? 2 : 1;
 
-  RaceSettings copyWith({int? length, bool? obstacles, bool? doubleForWinners}) => RaceSettings(
+  RaceSettings copyWith({int? length, bool? obstacles, bool? doubleForWinners, bool? music}) => RaceSettings(
         length: length ?? this.length,
         obstacles: obstacles ?? this.obstacles,
         doubleForWinners: doubleForWinners ?? this.doubleForWinners,
+        music: music ?? this.music,
       );
 
   Map<String, dynamic> toJson() =>
-      {'length': length, 'obstacles': obstacles, 'double': doubleForWinners};
+      {'length': length, 'obstacles': obstacles, 'double': doubleForWinners, 'music': music};
 
   factory RaceSettings.fromJson(Map<String, dynamic> j) => RaceSettings(
         length: j['length'] as int? ?? 6,
         obstacles: j['obstacles'] as bool? ?? true,
         doubleForWinners: j['double'] as bool? ?? false,
+        music: j['music'] as bool? ?? true,
       );
 }
 

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -39,18 +40,37 @@ class _RaceScreenState extends ConsumerState<RaceScreen> {
   Suit? _winner;
   bool _busy = false;
   bool _auto = false;
+  AudioPlayer? _music;
 
   @override
   void initState() {
     super.initState();
     SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft, DeviceOrientation.landscapeRight]);
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+    if (_setup.settings.music) _startMusic();
+  }
+
+  Future<void> _startMusic() async {
+    try {
+      final p = _music = AudioPlayer();
+      await p.setReleaseMode(ReleaseMode.loop);
+      await p.play(AssetSource('audio/guillermo_tell.ogg'), volume: 0.8);
+    } catch (_) {
+      // Sin audio la carrera funciona igual.
+    }
+  }
+
+  void _stopMusic() {
+    final p = _music;
+    _music = null;
+    if (p != null) unawaited(p.stop().then((_) => p.dispose()).catchError((_) {}));
   }
 
   @override
   void dispose() {
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+    _stopMusic();
     super.dispose();
   }
 
@@ -108,6 +128,7 @@ class _RaceScreenState extends ConsumerState<RaceScreen> {
           outcomes: outcomes,
           draws: _engine.draws,
         ));
+    _stopMusic();
     setState(() {
       _winner = winner;
       _auto = false;

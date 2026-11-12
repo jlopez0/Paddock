@@ -34,6 +34,14 @@ class CreditsScreen extends StatelessWidget {
             style: muted,
           ),
           SizedBox(height: 24),
+          Text('Música', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700)),
+          SizedBox(height: 8),
+          Text(
+            'Obertura de Guillermo Tell (Rossini, 1829), final. Grabación de la Banda de la Marina de EE. UU. '
+            '("Grand Scenes", 2000), obra del gobierno de EE. UU. en dominio público, vía Wikimedia Commons.',
+            style: muted,
+          ),
+          SizedBox(height: 24),
           Text('Juega con responsabilidad', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700)),
           SizedBox(height: 8),
           Text(

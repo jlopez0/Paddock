@@ -146,6 +146,13 @@ class _RaceSetupScreenState extends ConsumerState<RaceSetupScreen> {
                       .read(raceSetupProvider.notifier)
                       .setSettings(settings.copyWith(doubleForWinners: v)),
                 ),
+                SwitchListTile(
+                  title: const Text('Música de carrera'),
+                  subtitle: const Text('Obertura de Guillermo Tell al empezar'),
+                  value: settings.music,
+                  onChanged: (v) =>
+                      ref.read(raceSetupProvider.notifier).setSettings(settings.copyWith(music: v)),
+                ),
               ],
             ),
           ),

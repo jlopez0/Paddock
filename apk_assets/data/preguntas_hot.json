@@ -1,0 +1,302 @@
+[
+  {
+    "texto": "{player}, haz una propuesta indecente (real o inventada) a alguien del grupo. Si no, {castigo}.",
+    "categoria": "reto",
+    "tipo": "hot",
+    "dificultad": 4
+  },
+  {
+    "texto": "Quien haya tenido sexo en un lugar donde alguien podría aparecer en cualquier momento, {castigo}.",
+    "categoria": "bebe_si",
+    "tipo": "hot",
+    "dificultad": 3
+  },
+  {
+    "texto": "{player}, describe la peor cita hot que hayas tenido. Si te da corte, {castigo}.",
+    "categoria": "pregunta_hot",
+    "tipo": "hot",
+    "dificultad": 3
+  },
+  {
+    "texto": "El grupo elige a dos personas. Simulen una conversación caliente de 5 segundos. Si se niegan, {castigo} cada uno.",
+    "categoria": "parejas",
+    "tipo": "hot",
+    "dificultad": 4
+  },
+  {
+    "texto": "{player}, si tienes un mensaje subido de tono en el móvil, léelo en voz alta o {castigo}.",
+    "categoria": "reto",
+    "tipo": "hot",
+    "dificultad": 4
+  },
+  {
+    "texto": "Imita el sonido que haces cuando te sorprenden en el acto. Si no te atreves, {castigo}.",
+    "categoria": "reto",
+    "tipo": "hot",
+    "dificultad": 4
+  },
+  {
+    "texto": "{player}, ¿cuál ha sido el sitio más raro donde lo has hecho? Si no lo cuentas, {castigo}.",
+    "categoria": "pregunta_hot",
+    "tipo": "hot",
+    "dificultad": 3
+  },
+  {
+    "texto": "Quien haya fingido un orgasmo alguna vez, {castigo}.",
+    "categoria": "bebe_si",
+    "tipo": "hot",
+    "dificultad": 3
+  },
+  {
+    "texto": "{player}, mira al jugador que más te atraiga y dile algo que solo se diría en la cama. Si no, {castigo}.",
+    "categoria": "reto",
+    "tipo": "hot",
+    "dificultad": 4
+  },
+  {
+    "texto": "{player}, haz un top 3 de personas del grupo con las que tendrías una aventura. Si no lo haces, {castigo}.",
+    "categoria": "pregunta_hot",
+    "tipo": "hot",
+    "dificultad": 4
+  },
+  {
+    "texto": "Simula una escena de película erótica con alguien del grupo. Si no, {castigo}.",
+    "categoria": "reto",
+    "tipo": "hot",
+    "dificultad": 4
+  },
+  {
+    "texto": "Quien tenga fotos comprometidas en el móvil, {castigo}.",
+    "categoria": "bebe_si",
+    "tipo": "hot",
+    "dificultad": 3
+  },
+  {
+    "texto": "{player}, si alguna vez te has grabado en la cama, {castigo}.",
+    "categoria": "bebe_si",
+    "tipo": "hot",
+    "dificultad": 4
+  },
+  {
+    "texto": "El grupo vota quién parece tener más energía en la cama. Esa persona reparte {castigo}.",
+    "categoria": "votacion",
+    "tipo": "hot",
+    "dificultad": 3
+  },
+  {
+    "texto": "{player}, muestra tu mejor gemido actuado. Si no lo haces, {castigo}.",
+    "categoria": "reto",
+    "tipo": "hot",
+    "dificultad": 4
+  },
+  {
+    "texto": "{player}, ¿cuántas veces ha sido tu récord en una noche? Si no respondes, {castigo}.",
+    "categoria": "pregunta_hot",
+    "tipo": "hot",
+    "dificultad": 3
+  },
+  {
+    "texto": "Quien haya usado juguetes sexuales, {castigo}.",
+    "categoria": "bebe_si",
+    "tipo": "hot",
+    "dificultad": 3
+  },
+  {
+    "texto": "{player}, si tu historial de navegación te delata, {castigo}.",
+    "categoria": "bebe_si",
+    "tipo": "hot",
+    "dificultad": 3
+  },
+  {
+    "texto": "{player}, ¿qué fantasía sexual no le contarías a tus padres? Si no respondes, {castigo}.",
+    "categoria": "pregunta_hot",
+    "tipo": "hot",
+    "dificultad": 4
+  },
+  {
+    "texto": "Haz un baile sexy para alguien o {castigo}.",
+    "categoria": "reto",
+    "tipo": "hot",
+    "dificultad": 4
+  },
+  {
+    "texto": "{player}, ¿a quién besarías ahora mismo del grupo? Si no lo dices, {castigo}.",
+    "categoria": "pregunta_hot",
+    "tipo": "hot",
+    "dificultad": 3
+  },
+  {
+    "texto": "Quien haya tenido una experiencia a tres bandas, {castigo}.",
+    "categoria": "bebe_si",
+    "tipo": "hot",
+    "dificultad": 4
+  },
+  {
+    "texto": "Haz una pregunta muy hot a todo el grupo. Quien no conteste, {castigo}.",
+    "categoria": "pregunta_hot",
+    "tipo": "hot",
+    "dificultad": 4
+  },
+  {
+    "texto": "{player}, elige a alguien para simular una escena de celos. Si no lo haces, {castigo}.",
+    "categoria": "parejas",
+    "tipo": "hot",
+    "dificultad": 3
+  },
+  {
+    "texto": "Reproduce tu mejor rugido de pasión. Si no puedes o no te atreves, {castigo}.",
+    "categoria": "reto",
+    "tipo": "hot",
+    "dificultad": 4
+  },
+  {
+    "texto": "{player}, ¿has enviado una nude este mes? Si sí o no quieres responder, {castigo}.",
+    "categoria": "pregunta_hot",
+    "tipo": "hot",
+    "dificultad": 3
+  },
+  {
+    "texto": "Imita cómo seducirías a alguien del grupo con solo una frase. Si no lo haces, {castigo}.",
+    "categoria": "reto",
+    "tipo": "hot",
+    "dificultad": 4
+  },
+  {
+    "texto": "Quien haya usado un disfraz en un momento íntimo, {castigo}.",
+    "categoria": "bebe_si",
+    "tipo": "hot",
+    "dificultad": 3
+  },
+  {
+    "texto": "{player}, ¿a qué edad perdiste la virginidad? Si no lo cuentas, {castigo}.",
+    "categoria": "pregunta_hot",
+    "tipo": "hot",
+    "dificultad": 3
+  },
+  {
+    "texto": "Haz un striptease de 5 segundos o bebe {castigo}.",
+    "categoria": "reto",
+    "tipo": "hot",
+    "dificultad": 4
+  },
+  {
+    "texto": "{player}, haz una propuesta indecente (real o inventada) a alguien del grupo. Si no, {castigo}.",
+    "categoria": "reto",
+    "tipo": "hot",
+    "dificultad": 4
+  },
+  {
+    "texto": "Quien haya tenido sexo en un lugar donde alguien podría aparecer en cualquier momento, {castigo}.",
+    "categoria": "bebe_si",
+    "tipo": "hot",
+    "dificultad": 3
+  },
+  {
+    "texto": "{player}, describe la peor cita hot que hayas tenido. Si te da corte, {castigo}.",
+    "categoria": "pregunta_hot",
+    "tipo": "hot",
+    "dificultad": 3
+  },
+  {
+    "texto": "El grupo elige a dos personas. Simulen una conversación caliente de 5 segundos. Si se niegan, {castigo} cada uno.",
+    "categoria": "parejas",
+    "tipo": "hot",
+    "dificultad": 4
+  },
+  {
+    "texto": "{player}, si tienes un mensaje subido de tono en el móvil, léelo en voz alta o {castigo}.",
+    "categoria": "reto",
+    "tipo": "hot",
+    "dificultad": 4
+  },
+  {
+    "texto": "{player}, haz una propuesta indecente (real o inventada) a alguien del grupo. Si no, {castigo}.",
+    "categoria": "reto",
+    "tipo": "hot",
+    "dificultad": 4
+  },
+  {
+    "texto": "Quien haya tenido sexo en un lugar donde alguien podría aparecer en cualquier momento, {castigo}.",
+    "categoria": "bebe_si",
+    "tipo": "hot",
+    "dificultad": 3
+  },
+  {
+    "texto": "{player}, describe la peor cita hot que hayas tenido. Si te da corte, {castigo}.",
+    "categoria": "pregunta_hot",
+    "tipo": "hot",
+    "dificultad": 3
+  },
+  {
+    "texto": "El grupo elige a dos personas. Simulen una conversación caliente de 5 segundos. Si se niegan, {castigo} cada uno.",
+    "categoria": "parejas",
+    "tipo": "hot",
+    "dificultad": 4
+  },
+  {
+    "texto": "{player}, si tienes un mensaje subido de tono en el móvil, léelo en voz alta o {castigo}.",
+    "categoria": "reto",
+    "tipo": "hot",
+    "dificultad": 4
+  },
+  {
+    "texto": "{player}, haz una propuesta indecente (real o inventada) a alguien del grupo. Si no, {castigo}.",
+    "categoria": "reto",
+    "tipo": "hot",
+    "dificultad": 4
+  },
+  {
+    "texto": "Quien haya tenido sexo en un lugar donde alguien podría aparecer en cualquier momento, {castigo}.",
+    "categoria": "bebe_si",
+    "tipo": "hot",
+    "dificultad": 3
+  },
+  {
+    "texto": "{player}, describe la peor cita hot que hayas tenido. Si te da corte, {castigo}.",
+    "categoria": "pregunta_hot",
+    "tipo": "hot",
+    "dificultad": 3
+  },
+  {
+    "texto": "El grupo elige a dos personas. Simulen una conversación caliente de 5 segundos. Si se niegan, {castigo} cada uno.",
+    "categoria": "parejas",
+    "tipo": "hot",
+    "dificultad": 4
+  },
+  {
+    "texto": "{player}, si tienes un mensaje subido de tono en el móvil, léelo en voz alta o {castigo}.",
+    "categoria": "reto",
+    "tipo": "hot",
+    "dificultad": 4
+  },
+  {
+    "texto": "{player}, haz una propuesta indecente (real o inventada) a alguien del grupo. Si no, {castigo}.",
+    "categoria": "reto",
+    "tipo": "hot",
+    "dificultad": 4
+  },
+  {
+    "texto": "Quien haya tenido sexo en un lugar donde alguien podría aparecer en cualquier momento, {castigo}.",
+    "categoria": "bebe_si",
+    "tipo": "hot",
+    "dificultad": 3
+  },
+  {
+    "texto": "{player}, describe la peor cita hot que hayas tenido. Si te da corte, {castigo}.",
+    "categoria": "pregunta_hot",
+    "tipo": "hot",
+    "dificultad": 3
+  },
+  {
+    "texto": "El grupo elige a dos personas. Simulen una conversación caliente de 5 segundos. Si se niegan, {castigo} cada uno.",
+    "categoria": "parejas",
+    "tipo": "hot",
+    "dificultad": 4
+  },
+  {
+    "texto": "{player}, si tienes un mensaje subido de tono en el móvil, léelo en voz alta o {castigo}.",
+    "categoria": "reto",
+    "tipo": "hot",
+    "dificultad": 4
+  }
+]

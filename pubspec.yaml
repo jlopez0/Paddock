@@ -25,5 +25,6 @@ flutter:
     - assets/cards/
     - assets/content/es/
     - assets/content/es/geografia/
+    - assets/content/es/geografia/mapas/
     - assets/geo/
     - assets/geo/flags/

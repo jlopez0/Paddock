@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../app/theme.dart';
@@ -17,14 +18,11 @@ class GeoSetupScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final setup = ref.watch(geoSetupProvider);
     final records = ref.watch(geoRecordsProvider);
-    final countries = ref.watch(countriesProvider);
+    final quiz = ref.watch(geoQuizProvider(setup.category));
     final controller = ref.read(geoSetupProvider.notifier);
 
     final available =
-        countries.whenOrNull(
-          data: (c) => QuizEngine(c).poolSize(setup.config),
-        ) ??
-        0;
+        quiz.whenOrNull(data: (q) => q.poolSize(setup.config)) ?? 0;
     final questions = setup.count == 0
         ? available
         : available.clamp(0, setup.count);
@@ -60,58 +58,19 @@ class GeoSetupScreen extends ConsumerWidget {
         body: ListView(
           padding: const EdgeInsets.fromLTRB(20, 4, 20, 24),
           children: [
-            const _Title('Qué quieres adivinar'),
-            LayoutBuilder(
-              builder: (context, box) {
-                final w = (box.maxWidth - 10) / 2;
-                return Wrap(
-                  spacing: 10,
-                  runSpacing: 10,
-                  children: [
-                    for (final c in GeoCategory.values)
-                      SizedBox(
-                        width: c == GeoCategory.mix ? box.maxWidth : w,
-                        child: _Tile(
-                          selected: setup.category == c,
-                          onTap: () =>
-                              controller.update((s) => s.copyWith(category: c)),
-                          child: Row(
-                            children: [
-                              Text(
-                                c.emoji,
-                                style: const TextStyle(fontSize: 28),
-                              ),
-                              const SizedBox(width: 12),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      c.label,
-                                      style: const TextStyle(
-                                        fontWeight: FontWeight.w800,
-                                        fontSize: 15,
-                                      ),
-                                    ),
-                                    Text(
-                                      c.description,
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: const TextStyle(
-                                        color: AppColors.textMuted,
-                                        fontSize: 12,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                  ],
-                );
-              },
+            const _Title('Países del mundo'),
+            _CategoryGrid(
+              categories: GeoCategory.values.where((c) => !c.isMap).toList(),
+              selected: setup.category,
+              onSelect: (c) =>
+                  controller.update((s) => s.copyWith(category: c)),
+            ),
+            const _Title('Mapas · adivina la región marcada'),
+            _CategoryGrid(
+              categories: GeoCategory.values.where((c) => c.isMap).toList(),
+              selected: setup.category,
+              onSelect: (c) =>
+                  controller.update((s) => s.copyWith(category: c)),
             ),
             const _Title('Dificultad'),
             Row(
@@ -144,43 +103,47 @@ class GeoSetupScreen extends ConsumerWidget {
                 ),
               ],
             ),
-            const _Title('Región'),
-            Wrap(
-              spacing: 8,
-              runSpacing: 8,
-              children: [
-                FilterChip(
-                  label: const Text('Todo el mundo'),
-                  selected: setup.regions.length == Continent.values.length,
-                  showCheckmark: false,
-                  onSelected: (_) => controller.update(
-                    (s) => s.copyWith(regions: {...Continent.values}),
-                  ),
-                ),
-                for (final r in Continent.values)
+            if (!setup.category.isMap) ...[
+              const _Title('Región'),
+              Wrap(
+                spacing: 8,
+                runSpacing: 8,
+                children: [
                   FilterChip(
-                    label: Text(r.label),
-                    selected:
-                        setup.regions.length < Continent.values.length &&
-                        setup.regions.contains(r),
+                    label: const Text('Todo el mundo'),
+                    selected: setup.regions.length == Continent.values.length,
                     showCheckmark: false,
-                    onSelected: (_) {
-                      HapticFeedback.selectionClick();
-                      controller.update((s) {
-                        // Desde "todo el mundo", tocar una región deja solo esa.
-                        if (s.regions.length == Continent.values.length) {
-                          return s.copyWith(regions: {r});
-                        }
-                        final next = {...s.regions};
-                        if (!next.remove(r)) next.add(r);
-                        return s.copyWith(
-                          regions: next.isEmpty ? {...Continent.values} : next,
-                        );
-                      });
-                    },
+                    onSelected: (_) => controller.update(
+                      (s) => s.copyWith(regions: {...Continent.values}),
+                    ),
                   ),
-              ],
-            ),
+                  for (final r in Continent.values)
+                    FilterChip(
+                      label: Text(r.label),
+                      selected:
+                          setup.regions.length < Continent.values.length &&
+                          setup.regions.contains(r),
+                      showCheckmark: false,
+                      onSelected: (_) {
+                        HapticFeedback.selectionClick();
+                        controller.update((s) {
+                          // Desde "todo el mundo", tocar una región deja solo esa.
+                          if (s.regions.length == Continent.values.length) {
+                            return s.copyWith(regions: {r});
+                          }
+                          final next = {...s.regions};
+                          if (!next.remove(r)) next.add(r);
+                          return s.copyWith(
+                            regions: next.isEmpty
+                                ? {...Continent.values}
+                                : next,
+                          );
+                        });
+                      },
+                    ),
+                ],
+              ),
+            ],
             const _Title('Preguntas'),
             SegmentedButton<int>(
               showSelectedIcon: false,
@@ -323,6 +286,87 @@ class _Difficulty extends StatelessWidget {
           ],
         ),
       ],
+    );
+  }
+}
+
+class _CategoryGrid extends StatelessWidget {
+  const _CategoryGrid({
+    required this.categories,
+    required this.selected,
+    required this.onSelect,
+  });
+
+  final List<GeoCategory> categories;
+  final GeoCategory selected;
+  final ValueChanged<GeoCategory> onSelect;
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, box) {
+        final half = (box.maxWidth - 10) / 2;
+        return Wrap(
+          spacing: 10,
+          runSpacing: 10,
+          children: [
+            for (final c in categories)
+              SizedBox(
+                // Si el número es impar, la última ocupa todo el ancho.
+                width: c == categories.last && categories.length.isOdd
+                    ? box.maxWidth
+                    : half,
+                child: _Tile(
+                  selected: selected == c,
+                  onTap: () => onSelect(c),
+                  child: Row(
+                    children: [
+                      SizedBox(
+                        width: 34,
+                        child: c.flagIso != null
+                            ? ClipRRect(
+                                borderRadius: BorderRadius.circular(4),
+                                child: SvgPicture.asset(
+                                  'assets/geo/flags/${c.flagIso}.svg',
+                                  height: 24,
+                                ),
+                              )
+                            : Text(
+                                c.emoji,
+                                style: const TextStyle(fontSize: 28),
+                              ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              c.label,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w800,
+                                fontSize: 15,
+                              ),
+                            ),
+                            Text(
+                              c.description,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                color: AppColors.textMuted,
+                                fontSize: 12,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+          ],
+        );
+      },
     );
   }
 }

@@ -5,6 +5,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'domain/country.dart';
+import 'domain/geo_map.dart';
+import 'domain/quiz.dart';
 
 final countriesProvider = FutureProvider<List<Country>>((ref) async {
   final raw = await rootBundle.loadString('assets/content/es/geografia/paises.json');
@@ -12,24 +14,39 @@ final countriesProvider = FutureProvider<List<Country>>((ref) async {
   return items.cast<Map<String, dynamic>>().map(Country.fromJson).toList(growable: false);
 });
 
-/// Forma de un país: anillos de puntos (x,y) en una caja de lado mayor 1000.
-/// Se dibujan con relleno par-impar, así los huecos (p. ej. Lesoto) salen bien.
-class Silhouette {
-  Silhouette({required this.width, required this.height, required List<List<int>> rings}) {
-    final p = Path()..fillType = PathFillType.evenOdd;
-    for (final ring in rings) {
-      p.moveTo(ring[0].toDouble(), ring[1].toDouble());
-      for (var i = 2; i < ring.length; i += 2) {
-        p.lineTo(ring[i].toDouble(), ring[i + 1].toDouble());
-      }
-      p.close();
+/// Mapa de regiones por id (`eeuu`, `espana`…).
+final geoMapProvider = FutureProvider.family<GeoMap, String>((ref, id) async {
+  final raw = await rootBundle.loadString('assets/content/es/geografia/mapas/$id.json');
+  return GeoMap.fromJson(jsonDecode(raw) as Map<String, dynamic>);
+});
+
+/// Motor de preguntas para una categoría (países del mundo o un mapa).
+final geoQuizProvider = FutureProvider.family<GeoQuiz, GeoCategory>((ref, category) async {
+  if (category.isMap) return MapQuizEngine(await ref.watch(geoMapProvider(category.mapId!).future));
+  return QuizEngine(await ref.watch(countriesProvider.future));
+});
+
+/// Construye un [Path] a partir de anillos planos x0,y0,x1,y1… (relleno par-impar).
+Path pathFromRings(Iterable<List<int>> rings) {
+  final p = Path()..fillType = PathFillType.evenOdd;
+  for (final ring in rings) {
+    p.moveTo(ring[0].toDouble(), ring[1].toDouble());
+    for (var i = 2; i < ring.length; i += 2) {
+      p.lineTo(ring[i].toDouble(), ring[i + 1].toDouble());
     }
-    path = p;
+    p.close();
   }
+  return p;
+}
+
+/// Forma de un país: anillos de puntos (x,y) en una caja de lado mayor 1000.
+class Silhouette {
+  Silhouette({required this.width, required this.height, required List<List<int>> rings})
+      : path = pathFromRings(rings);
 
   final int width;
   final int height;
-  late final Path path;
+  final Path path;
 
   factory Silhouette.fromJson(Map<String, dynamic> j) => Silhouette(
         width: j['w'] as int,

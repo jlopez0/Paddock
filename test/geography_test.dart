@@ -61,11 +61,11 @@ void main() {
     QuizEngine engine([int seed = 1]) => QuizEngine(countries, random: Random(seed));
 
     test('con opciones: 4 distintas, la correcta incluida, sin repetir país', () {
-      for (final cat in GeoCategory.values) {
+      for (final cat in GeoCategory.values.where((c) => !c.isMap)) {
         for (var seed = 0; seed < 5; seed++) {
           final qs = engine(seed).generate(config(cat));
           expect(qs, isNotEmpty);
-          expect(qs.map((q) => q.country.iso).toSet().length, qs.length, reason: 'país repetido en ${cat.name}');
+          expect(qs.map((q) => q.country!.iso).toSet().length, qs.length, reason: 'país repetido en ${cat.name}');
           for (final q in qs) {
             expect(q.options.length, 4);
             expect(q.options.map(normalizeText).toSet().length, 4);
@@ -82,17 +82,17 @@ void main() {
 
     test('respeta región, cantidad y elegibilidad', () {
       final eu = engine().generate(config(GeoCategory.flags, regions: {Continent.europa}));
-      expect(eu.every((q) => q.country.continent == Continent.europa), isTrue);
+      expect(eu.every((q) => q.country!.continent == Continent.europa), isTrue);
 
       expect(engine().generate(config(GeoCategory.flags, count: 10)).length, 10);
       expect(engine().generate(config(GeoCategory.flags)).length, 193);
 
       final sil = engine().generate(config(GeoCategory.silhouettes));
-      expect(sil.every((q) => q.country.hasSilhouette), isTrue);
+      expect(sil.every((q) => q.country!.hasSilhouette), isTrue);
 
       final cap = engine().generate(config(GeoCategory.capitals));
-      expect(cap.every((q) => q.country.hasUsableCapital), isTrue);
-      expect(cap.any((q) => q.country.name == 'Singapur'), isFalse);
+      expect(cap.every((q) => q.country!.hasUsableCapital), isTrue);
+      expect(cap.any((q) => q.country!.name == 'Singapur'), isFalse);
     });
 
     test('los distractores de capitales son del mismo continente cuando hay de sobra', () {
@@ -100,21 +100,21 @@ void main() {
       final byCapital = {for (final c in countries) c.capital: c};
       for (final q in qs) {
         for (final o in q.options) {
-          expect(byCapital[o]!.continent, q.country.continent);
+          expect(byCapital[o]!.continent, q.country!.continent);
         }
       }
     });
 
     test('mezcla usa varios tipos de pregunta', () {
       final kinds = engine().generate(config(GeoCategory.mix)).map((q) => q.kind).toSet();
-      expect(kinds.length, QuestionKind.values.length);
+      expect(kinds.length, GeoCategory.mix.kinds.length);
     });
 
     test('respuestas escritas: tildes, alias y erratas', () {
       final e = engine();
       Question q(String name, QuestionKind k) => e.generate(config(GeoCategory.mix, options: false)).firstWhere(
-            (x) => x.country.name == name && x.kind == k,
-            orElse: () => e.generate(config(GeoCategory.flags, options: false)).firstWhere((x) => x.country.name == name),
+            (x) => x.country!.name == name && x.kind == k,
+            orElse: () => e.generate(config(GeoCategory.flags, options: false)).firstWhere((x) => x.country!.name == name),
           );
 
       final mexico = q('México', QuestionKind.flag);
@@ -132,7 +132,7 @@ void main() {
     test('nunca acepta otro país parecido', () {
       final e = engine();
       final qs = e.generate(config(GeoCategory.flags, options: false));
-      Question q(String name) => qs.firstWhere((x) => x.country.name == name);
+      Question q(String name) => qs.firstWhere((x) => x.country!.name == name);
       expect(e.isCorrect(q('Níger'), 'Nigeria'), isFalse);
       expect(e.isCorrect(q('Nigeria'), 'Níger'), isFalse);
       expect(e.isCorrect(q('Austria'), 'Australia'), isFalse);
@@ -145,7 +145,7 @@ void main() {
     test('capitales con alias', () {
       final e = engine();
       final qs = e.generate(config(GeoCategory.capitals, options: false));
-      Question q(String name) => qs.firstWhere((x) => x.country.name == name);
+      Question q(String name) => qs.firstWhere((x) => x.country!.name == name);
       expect(e.isCorrect(q('Bolivia'), 'La Paz'), isTrue);
       expect(e.isCorrect(q('Bolivia'), 'sucre'), isTrue);
       expect(e.isCorrect(q('Egipto'), 'Cairo'), isTrue);

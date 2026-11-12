@@ -7,6 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../app/theme.dart';
+import '../domain/geo_map.dart';
 import '../domain/quiz.dart';
 import '../geo_data.dart';
 import '../geo_store.dart';
@@ -21,7 +22,7 @@ class GeoQuizScreen extends ConsumerStatefulWidget {
 
 class _GeoQuizScreenState extends ConsumerState<GeoQuizScreen> {
   late final GeoSetup _setup = ref.read(geoSetupProvider);
-  QuizEngine? _engine;
+  GeoQuiz? _engine;
   List<Question> _questions = const [];
 
   int _index = 0;
@@ -108,14 +109,17 @@ class _GeoQuizScreenState extends ConsumerState<GeoQuizScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final countries = ref.watch(countriesProvider);
+    final quiz = ref.watch(geoQuizProvider(_setup.category)).value;
     ref.watch(silhouettesProvider); // precarga las siluetas
-    final data = countries.value;
-    if (data == null) return const Scaffold(body: Center(child: CircularProgressIndicator()));
+    if (quiz == null) return const Scaffold(body: Center(child: CircularProgressIndicator()));
     if (_engine == null) {
-      _engine = QuizEngine(data);
-      _questions = _engine!.generate(_setup.config);
+      _engine = quiz;
+      _questions = quiz.generate(_setup.config);
     }
+    final map = switch (_engine) {
+      final MapQuizEngine m => m.map,
+      _ => null,
+    };
     if (_questions.isEmpty) return const Scaffold(body: Center(child: Text('No hay preguntas')));
 
     final q = _q;
@@ -139,7 +143,7 @@ class _GeoQuizScreenState extends ConsumerState<GeoQuizScreen> {
                     child: child,
                   ),
                 ),
-                child: KeyedSubtree(key: ValueKey(_index), child: _Prompt(question: q)),
+                child: KeyedSubtree(key: ValueKey(_index), child: _Prompt(question: q, map: map)),
               ),
             ),
             Padding(
@@ -248,18 +252,20 @@ class _Header extends StatelessWidget {
 }
 
 class _Prompt extends StatelessWidget {
-  const _Prompt({required this.question});
+  const _Prompt({required this.question, this.map});
 
   final Question question;
+  final GeoMap? map;
 
   @override
   Widget build(BuildContext context) {
     final c = question.country;
     final (label, body) = switch (question.kind) {
+      QuestionKind.region => (map!.question, _map()),
       QuestionKind.flag => ('¿De qué país es esta bandera?', _flag(context)),
       QuestionKind.silhouette => ('¿Qué país tiene esta forma?', _silhouette()),
-      QuestionKind.capital => ('¿Cuál es la capital de…?', _bigText(c.name)),
-      QuestionKind.capitalOwner => ('¿De qué país es capital…?', _bigText(c.capital)),
+      QuestionKind.capital => ('¿Cuál es la capital de…?', _bigText(c!.name)),
+      QuestionKind.capitalOwner => ('¿De qué país es capital…?', _bigText(c!.capital)),
     };
     return Padding(
       padding: const EdgeInsets.fromLTRB(24, 16, 24, 0),
@@ -276,12 +282,18 @@ class _Prompt extends StatelessWidget {
 
   Widget _flag(BuildContext context) {
     final width = min(MediaQuery.sizeOf(context).width - 72, 340.0);
-    return FlagView(question.country, width: width);
+    return FlagView(question.country!, width: width);
   }
 
   Widget _silhouette() => ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: 340, maxHeight: 300),
-        child: AspectRatio(aspectRatio: 1.15, child: SilhouetteView(question.country.iso)),
+        child: AspectRatio(aspectRatio: 1.15, child: SilhouetteView(question.country!.iso)),
+      );
+
+  /// Se puede ampliar con dos dedos para ver bien las regiones pequeñas.
+  Widget _map() => InteractiveViewer(
+        maxScale: 6,
+        child: Center(child: RegionMapView(map: map!, highlightId: question.region!.id)),
       );
 
   Widget _bigText(String text) => Text(

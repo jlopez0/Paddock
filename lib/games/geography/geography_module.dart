@@ -15,7 +15,7 @@ class GeographyModule extends GameModule {
   @override
   String get title => 'Geografía';
   @override
-  String get subtitle => 'Banderas, capitales y siluetas';
+  String get subtitle => 'Banderas, capitales, siluetas y mapas';
   @override
   String get emoji => '🌍';
   @override

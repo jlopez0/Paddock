@@ -15,6 +15,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+import { bbox, polyAreaKm2, ringArea, gap, simplify } from './geom.mjs';
+
 const src = process.argv[2];
 if (!src) throw new Error('Falta la carpeta de fuentes');
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
@@ -40,57 +42,6 @@ const countries = JSON.parse(fs.readFileSync(path.join(src, 'countries.geojson')
 const places = JSON.parse(fs.readFileSync(path.join(src, 'places.geojson'), 'utf8')).features
   .map((f) => f.properties)
   .filter((p) => p.ADM0CAP === 1);
-
-// ---------- geometría ----------
-const ringArea = (ring) => {
-  let s = 0;
-  for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
-    s += (ring[j][0] + ring[i][0]) * (ring[j][1] - ring[i][1]);
-  }
-  return Math.abs(s) / 2;
-};
-const polyAreaKm2 = (outer) => {
-  const lat = outer.reduce((a, p) => a + p[1], 0) / outer.length;
-  return ringArea(outer) * Math.cos((lat * Math.PI) / 180) * 111.19 ** 2;
-};
-const bbox = (ring) => {
-  let [x0, y0, x1, y1] = [Infinity, Infinity, -Infinity, -Infinity];
-  for (const [x, y] of ring) { x0 = Math.min(x0, x); y0 = Math.min(y0, y); x1 = Math.max(x1, x); y1 = Math.max(y1, y); }
-  return { x0, y0, x1, y1 };
-};
-const gap = (a, b) => Math.hypot(Math.max(0, a.x0 - b.x1, b.x0 - a.x1), Math.max(0, a.y0 - b.y1, b.y0 - a.y1));
-
-// Douglas-Peucker sobre una polilínea abierta.
-function simplifyOpen(points, tol) {
-  const keep = new Uint8Array(points.length);
-  keep[0] = keep[points.length - 1] = 1;
-  const stack = [[0, points.length - 1]];
-  while (stack.length) {
-    const [a, b] = stack.pop();
-    let max = 0, idx = -1;
-    const [ax, ay] = points[a], [bx, by] = points[b];
-    const dx = bx - ax, dy = by - ay, len = Math.hypot(dx, dy) || 1;
-    for (let i = a + 1; i < b; i++) {
-      const d = Math.abs(dy * points[i][0] - dx * points[i][1] + bx * ay - by * ax) / len;
-      if (d > max) { max = d; idx = i; }
-    }
-    if (max > tol) { keep[idx] = 1; stack.push([a, idx], [idx, b]); }
-  }
-  return points.filter((_, i) => keep[i]);
-}
-
-// Los anillos están cerrados (primer punto = último): se parten por el punto más lejano.
-function simplify(ring, tol) {
-  const pts = ring.slice(0, -1);
-  let m = 0, far = -1;
-  pts.forEach(([x, y], i) => {
-    const d = Math.hypot(x - pts[0][0], y - pts[0][1]);
-    if (d > far) { far = d; m = i; }
-  });
-  const a = simplifyOpen(pts.slice(0, m + 1), tol);
-  const b = simplifyOpen([...pts.slice(m), pts[0]], tol);
-  return [...a, ...b.slice(1, -1)];
-}
 
 function silhouette(geom, iso) {
   let polys = geom.type === 'Polygon' ? [geom.coordinates] : geom.coordinates;

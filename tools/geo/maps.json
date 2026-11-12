@@ -1,0 +1,76 @@
+{
+  "_ayuda": "Mapas de divisiones administrativas. insets: grupos de regiones que se dibujan en un recuadro aparte; rect = [x, y, ancho, alto] como fracción de la caja del mapa principal (y > 1 = debajo). nombres: n = nombre mostrado, a = alias extra, quitar = alias automáticos que sobran. El nombre en inglés y el de Natural Earth se añaden solos como alias.",
+  "eeuu": {
+    "adm0": "USA",
+    "titulo": "Estados de EE. UU.",
+    "pregunta": "¿Qué estado está marcado?",
+    "bandera": "us",
+    "excluir": ["US-DC"],
+    "proyeccion": { "tipo": "albers", "lon0": -96, "lat0": 37.5, "lat1": 29.5, "lat2": 45.5 },
+    "antimeridiano": true,
+    "insets": {
+      "alaska": { "ids": ["US-AK"], "rect": [0.0, 0.8, 0.21, 0.24] },
+      "hawai": { "ids": ["US-HI"], "rect": [0.21, 0.9, 0.12, 0.14] }
+    },
+    "nombres": {
+      "US-HI": { "a": ["Hawai"] }
+    }
+  },
+  "japon": {
+    "adm0": "JPN",
+    "titulo": "Prefecturas de Japón",
+    "pregunta": "¿Qué prefectura está marcada?",
+    "bandera": "jp",
+    "excluir": [],
+    "proyeccion": { "tipo": "plana" },
+    "insets": {
+      "okinawa": { "ids": ["JP-47"], "rect": [0.0, 0.0, 0.3, 0.24] }
+    },
+    "nombres": {
+      "JP-13": { "n": "Tokio", "a": ["Tokyo"] },
+      "JP-26": { "n": "Kioto", "a": ["Kyoto"] }
+    }
+  },
+  "espana": {
+    "adm0": "ESP",
+    "titulo": "Provincias de España",
+    "pregunta": "¿Qué provincia está marcada?",
+    "bandera": "es",
+    "excluir": ["ES-CE", "ES-ML"],
+    "proyeccion": { "tipo": "plana" },
+    "insets": {
+      "canarias": { "ids": ["ES-GC", "ES-TF"], "rect": [0.0, 1.03, 0.34, 0.17] }
+    },
+    "nombres": {
+      "ES-C": { "n": "A Coruña", "a": ["La Coruña", "Coruña"] },
+      "ES-GI": { "n": "Girona", "a": ["Gerona"] },
+      "ES-L": { "n": "Lleida", "a": ["Lérida"] },
+      "ES-OR": { "n": "Ourense", "a": ["Orense"] },
+      "ES-SS": { "n": "Gipuzkoa", "a": ["Guipúzcoa"] },
+      "ES-BI": { "n": "Bizkaia", "a": ["Vizcaya"] },
+      "ES-VI": { "n": "Álava", "a": ["Araba"] },
+      "ES-PM": { "n": "Islas Baleares", "a": ["Baleares", "Illes Balears"] },
+      "ES-CS": { "a": ["Castelló"] },
+      "ES-A": { "a": ["Alacant"] },
+      "ES-V": { "a": ["València"] },
+      "ES-TF": { "a": ["Tenerife"] },
+      "ES-GC": { "a": ["Gran Canaria"] }
+    }
+  },
+  "mexico": {
+    "adm0": "MEX",
+    "titulo": "Estados de México",
+    "pregunta": "¿Qué estado está marcado?",
+    "bandera": "mx",
+    "excluir": ["MX-X01~"],
+    "proyeccion": { "tipo": "plana" },
+    "insets": {},
+    "nombres": {
+      "MX-DIF": { "n": "Ciudad de México", "a": ["CDMX", "Distrito Federal", "DF"], "quitar": ["México", "Mexico"] },
+      "MX-MEX": { "n": "Estado de México", "a": ["México", "Edomex"] },
+      "MX-COA": { "n": "Coahuila", "a": ["Coahuila de Zaragoza"] },
+      "MX-VER": { "n": "Veracruz", "a": ["Estado de Veracruz"] },
+      "MX-MIC": { "a": ["Michoacán de Ocampo"] }
+    }
+  }
+}

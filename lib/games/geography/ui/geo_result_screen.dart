@@ -3,7 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../app/theme.dart';
+import '../domain/geo_map.dart';
 import '../domain/quiz.dart';
+import '../geo_data.dart';
 import '../geo_store.dart';
 import 'geo_widgets.dart';
 
@@ -16,6 +18,8 @@ class GeoResultScreen extends ConsumerWidget {
     if (r == null) {
       return Scaffold(appBar: AppBar(), body: const Center(child: Text('No hay ninguna partida')));
     }
+    final mapId = r.setup.category.mapId;
+    final map = mapId == null ? null : ref.watch(geoMapProvider(mapId)).value;
     final ratio = r.total == 0 ? 0.0 : r.correct / r.total;
     final message = switch (ratio) {
       1.0 => '¡Perfecto! 🌍',
@@ -49,7 +53,7 @@ class GeoResultScreen extends ConsumerWidget {
                 style: const TextStyle(
                     color: AppColors.textMuted, fontWeight: FontWeight.w700, letterSpacing: 1.2, fontSize: 12)),
             const SizedBox(height: 10),
-            for (final m in r.mistakes) _MistakeTile(m),
+            for (final m in r.mistakes) _MistakeTile(m, map: map),
           ],
         ],
       ),
@@ -124,17 +128,18 @@ class _ScoreRing extends StatelessWidget {
 }
 
 class _MistakeTile extends StatelessWidget {
-  const _MistakeTile(this.mistake);
+  const _MistakeTile(this.mistake, {this.map});
 
   final QuizMistake mistake;
+  final GeoMap? map;
 
   @override
   Widget build(BuildContext context) {
     final q = mistake.question;
     final (title, subtitle) = switch (q.kind) {
-      QuestionKind.flag || QuestionKind.silhouette => (q.answer, null),
-      QuestionKind.capital => ('Capital de ${q.country.name}', q.answer),
-      QuestionKind.capitalOwner => (q.country.capital, 'Es la capital de ${q.answer}'),
+      QuestionKind.flag || QuestionKind.silhouette || QuestionKind.region => (q.answer, null),
+      QuestionKind.capital => ('Capital de ${q.country!.name}', q.answer),
+      QuestionKind.capitalOwner => (q.country!.capital, 'Es la capital de ${q.answer}'),
     };
     final given = mistake.given == null || mistake.given!.trim().isEmpty ? 'Sin respuesta' : 'Dijiste: ${mistake.given!.trim()}';
     return Padding(
@@ -144,7 +149,14 @@ class _MistakeTile extends StatelessWidget {
           padding: const EdgeInsets.all(12),
           child: Row(
             children: [
-              FlagView(q.country, width: 56, radius: 6),
+              if (q.region != null)
+                SizedBox(
+                  width: 56,
+                  height: 42,
+                  child: map == null ? null : RegionMapView(map: map!, highlightId: q.region!.id),
+                )
+              else
+                FlagView(q.country!, width: 56, radius: 6),
               const SizedBox(width: 14),
               Expanded(
                 child: Column(

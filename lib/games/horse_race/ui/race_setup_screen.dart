@@ -12,9 +12,12 @@ import '../domain/cards.dart';
 import '../race_store.dart';
 
 class _Draft {
-  _Draft({this.suit, this.sips = 2});
+  _Draft({this.suit, this.sips = 2, this.hidalgo = false});
   Suit? suit;
   int sips;
+  bool hidalgo;
+
+  int get betSips => hidalgo ? Bet.hidalgo : sips;
 }
 
 class RaceSetupScreen extends ConsumerStatefulWidget {
@@ -34,7 +37,7 @@ class _RaceSetupScreenState extends ConsumerState<RaceSetupScreen> {
     final players = ref.read(playersProvider);
     final ids = players.map((p) => p.id).toSet();
     for (final b in ref.read(raceSetupProvider).bets) {
-      if (ids.contains(b.playerId)) _drafts[b.playerId] = _Draft(suit: b.suit, sips: b.sips);
+      if (ids.contains(b.playerId)) _drafts[b.playerId] = _Draft(suit: b.suit, sips: b.isHidalgo ? 2 : b.sips, hidalgo: b.isHidalgo);
     }
   }
 
@@ -48,7 +51,7 @@ class _RaceSetupScreenState extends ConsumerState<RaceSetupScreen> {
   List<Bet>? get _validBets {
     if (_drafts.isEmpty || _drafts.values.any((d) => d.suit == null)) return null;
     return [
-      for (final e in _drafts.entries) Bet(playerId: e.key, suit: e.value.suit!, sips: e.value.sips),
+      for (final e in _drafts.entries) Bet(playerId: e.key, suit: e.value.suit!, sips: e.value.betSips),
     ];
   }
 
@@ -202,6 +205,7 @@ class _BetCard extends StatelessWidget {
                 ),
                 _Stepper(
                   value: draft.sips,
+                  enabled: !draft.hidalgo,
                   onChanged: (v) {
                     draft.sips = v;
                     onChanged();
@@ -209,7 +213,16 @@ class _BetCard extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: 10),
+            _HidalgoButton(
+              selected: draft.hidalgo,
+              onTap: () {
+                HapticFeedback.selectionClick();
+                draft.hidalgo = !draft.hidalgo;
+                onChanged();
+              },
+            ),
+            const SizedBox(height: 10),
             Row(
               children: [
                 for (final s in Suit.values)
@@ -277,9 +290,10 @@ class _SuitButton extends StatelessWidget {
 }
 
 class _Stepper extends StatelessWidget {
-  const _Stepper({required this.value, required this.onChanged});
+  const _Stepper({required this.value, required this.onChanged, this.enabled = true});
 
   final int value;
+  final bool enabled;
   final ValueChanged<int> onChanged;
 
   @override
@@ -291,20 +305,49 @@ class _Stepper extends StatelessWidget {
         children: [
           IconButton(
             visualDensity: VisualDensity.compact,
-            onPressed: value == Bet.hidalgo ? () => onChanged(10) : (value > 1 ? () => onChanged(value - 1) : null),
+            onPressed: enabled && value > 1 ? () => onChanged(value - 1) : null,
             icon: const Icon(Icons.remove_rounded),
           ),
           SizedBox(
-            width: 64,
-            child: Text(value == Bet.hidalgo ? 'Hidalgo 💀' : '$value 🍺',
+            width: 44,
+            child: Text('$value 🍺',
                 textAlign: TextAlign.center, style: const TextStyle(fontWeight: FontWeight.w800)),
           ),
           IconButton(
             visualDensity: VisualDensity.compact,
-            onPressed: value == Bet.hidalgo ? null : () => onChanged(value == 10 ? Bet.hidalgo : value + 1),
+            onPressed: enabled && value < 10 ? () => onChanged(value + 1) : null,
             icon: const Icon(Icons.add_rounded),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _HidalgoButton extends StatelessWidget {
+  const _HidalgoButton({required this.selected, required this.onTap});
+
+  final bool selected;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 180),
+        width: double.infinity,
+        padding: const EdgeInsets.symmetric(vertical: 10),
+        decoration: BoxDecoration(
+          color: selected ? AppColors.danger.withValues(alpha: 0.25) : AppColors.surfaceHigh,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: selected ? AppColors.danger : Colors.transparent, width: 2),
+        ),
+        child: Text(
+          'Hidalgo 💀  ·  vaso entero',
+          textAlign: TextAlign.center,
+          style: TextStyle(fontWeight: FontWeight.w800, color: selected ? AppColors.danger : AppColors.textMuted),
+        ),
       ),
     );
   }

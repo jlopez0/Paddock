@@ -291,17 +291,17 @@ class _Stepper extends StatelessWidget {
         children: [
           IconButton(
             visualDensity: VisualDensity.compact,
-            onPressed: value > 1 ? () => onChanged(value - 1) : null,
+            onPressed: value == Bet.hidalgo ? () => onChanged(10) : (value > 1 ? () => onChanged(value - 1) : null),
             icon: const Icon(Icons.remove_rounded),
           ),
           SizedBox(
-            width: 44,
-            child: Text('$value 🍺',
+            width: 64,
+            child: Text(value == Bet.hidalgo ? 'Hidalgo 💀' : '$value 🍺',
                 textAlign: TextAlign.center, style: const TextStyle(fontWeight: FontWeight.w800)),
           ),
           IconButton(
             visualDensity: VisualDensity.compact,
-            onPressed: value < 10 ? () => onChanged(value + 1) : null,
+            onPressed: value == Bet.hidalgo ? null : () => onChanged(value == 10 ? Bet.hidalgo : value + 1),
             icon: const Icon(Icons.add_rounded),
           ),
         ],

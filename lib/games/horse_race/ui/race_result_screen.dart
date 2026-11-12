@@ -157,9 +157,9 @@ class _OutcomeSection extends ConsumerWidget {
                   child: ListTile(
                     leading: PlayerAvatar(p),
                     title: Text(p.name, style: const TextStyle(fontWeight: FontWeight.w700)),
-                    subtitle: Text('Apostó ${o.bet.sips} a ${o.bet.suit.label}'),
+                    subtitle: Text('Apostó ${o.bet.isHidalgo ? "hidalgo 💀" : o.bet.sips} a ${o.bet.suit.label}'),
                     trailing: Text(
-                      '${o.sips} 🍺',
+                      o.label,
                       style: TextStyle(fontSize: 22, fontWeight: FontWeight.w900, color: color),
                     ),
                   ),

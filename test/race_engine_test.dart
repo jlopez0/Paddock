@@ -108,4 +108,18 @@ void main() {
     expect(r[1].won, isFalse);
     expect(r[1].sips, 5);
   });
+
+  test('settleBets: hidalgo bebe 1 y, si gana, reparte tantos como el multiplicador', () {
+    const bets = [
+      Bet(playerId: 'a', suit: Suit.copas, sips: Bet.hidalgo),
+      Bet(playerId: 'b', suit: Suit.oros, sips: Bet.hidalgo),
+    ];
+    var r = settleBets(bets, Suit.copas);
+    expect([r[0].won, r[0].hidalgos, r[0].label], [true, 1, '💀']);
+    expect([r[1].won, r[1].hidalgos], [false, 1]);
+    r = settleBets(bets, Suit.copas, winMultiplier: 2);
+    expect(r[0].hidalgos, 2);
+    expect(r[0].label, '💀💀');
+    expect(r[1].hidalgos, 1);
+  });
 }

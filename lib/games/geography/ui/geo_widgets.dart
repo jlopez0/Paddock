@@ -6,12 +6,13 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../app/theme.dart';
 import '../domain/country.dart';
+import '../domain/flag_ratios.dart';
 import '../domain/geo_map.dart';
 import '../geo_data.dart';
 
 const geoColor = Color(0xFF3CC9C0);
 
-/// Bandera con esquinas redondeadas y sombra.
+/// Bandera con su proporción real, centrada en un marco 4:3 para que el diseño no salte.
 class FlagView extends StatelessWidget {
   const FlagView(this.country, {super.key, this.width = 300, this.radius = 14});
 
@@ -21,16 +22,25 @@ class FlagView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    final frameHeight = width * 3 / 4;
+    final ratio = flagRatio(country.iso);
+    final flagWidth = min(width, frameHeight * ratio);
+    return SizedBox(
       width: width,
-      height: width * 3 / 4,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(radius),
-        boxShadow: const [BoxShadow(color: Color(0x99000000), blurRadius: 24, offset: Offset(0, 10))],
-      ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(radius),
-        child: SvgPicture.asset(country.flagAsset, fit: BoxFit.cover),
+      height: frameHeight,
+      child: Center(
+        child: Container(
+          width: flagWidth,
+          height: flagWidth / ratio,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(radius),
+            boxShadow: const [BoxShadow(color: Color(0x99000000), blurRadius: 24, offset: Offset(0, 10))],
+          ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(radius),
+            child: SvgPicture.asset(country.flagAsset, fit: BoxFit.fill),
+          ),
+        ),
       ),
     );
   }

@@ -29,7 +29,7 @@ class CreditsScreen extends StatelessWidget {
           SizedBox(height: 8),
           Text(
             'Siluetas, mapas de regiones, nombres y capitales a partir de Natural Earth (dominio público), naturalearthdata.com.\n'
-            'Banderas del paquete flag-icons, Copyright (c) 2013 Panayiotis Lipiridis, licencia MIT.\n'
+            'Banderas de flagcdn.com, con su proporción oficial.\n'
             'Siluetas simplificadas y datos revisados a mano para esta app.',
             style: muted,
           ),

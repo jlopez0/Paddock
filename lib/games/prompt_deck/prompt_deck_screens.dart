@@ -293,7 +293,7 @@ class _PromptCard extends StatelessWidget {
           Expanded(
             child: Center(
               child: switch (game.style) {
-                PromptCardStyle.statement => _Statement(prefix: game.prefix, text: prompt['texto'], color: game.color),
+                PromptCardStyle.statement => _Statement(prefix: prompt['prefijo'].isEmpty ? game.prefix : prompt['prefijo'], text: prompt['texto'], color: game.color),
                 PromptCardStyle.choice => _Choice(a: prompt['a'], b: prompt['b'], color: game.color),
               },
             ),

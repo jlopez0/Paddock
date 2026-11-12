@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 
 import 'game_module.dart';
+import 'geography/geography_module.dart';
 import 'horse_race/horse_race_module.dart';
 import 'prompt_deck/prompt_deck_module.dart';
 
 /// Juegos disponibles, en el orden en que aparecen en el menú.
 const List<GameModule> gameModules = [
   HorseRaceModule(),
+  GeographyModule(),
   PromptDeckModule(
     id: 'yo-nunca',
     title: 'Yo nunca',

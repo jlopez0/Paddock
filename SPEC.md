@@ -178,6 +178,12 @@ Formato JSON común para los juegos de cartas/preguntas:
 - **Motor puro en Dart** (`RaceEngine`), separado de la UI, con semilla para tests: reglas comprobadas con tests unitarios (avance, obstáculos, mazo agotado → se rebaraja el descarte, victoria).
 - Estética: tema oscuro tipo "hipódromo nocturno" (verde césped/negro con acentos dorados), tipografía redondeada y cartas con sombras suaves; también tema claro.
 
+## Decisiones tomadas en la implementación
+- **Persistencia**: `shared_preferences` + JSON en vez de drift. Los datos son pocos (jugadores, últimas apuestas, ajustes y estadísticas) y así no hace falta generar código. Todo pasa por controladores Riverpod, por lo que migrar a SQLite más adelante solo afecta a esos archivos.
+- **Cartas**: baraja "Naipes Libres" de Wikimedia Commons (CC BY-SA 3.0, Basquetteur / Germarquezm). Las cartas 1–9 y el reverso salen del SVG y las figuras del PNG completo. La atribución está en la pantalla de Créditos.
+- **Sin modo "sin alcohol"** (por decisión del usuario).
+- **Pendiente**: sonidos (no hay assets con licencia elegidos), tema claro, icono y nombre definitivos (provisional: "Paddock", `com.paddock.paddock`).
+
 ## Plan de implementación (Fase 3, commits pequeños)
 1. Proyecto Flutter + tema + router + menú generado desde el registro.
 2. Jugadores persistentes (drift) + pantalla de gestión.

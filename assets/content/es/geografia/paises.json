@@ -1,0 +1,1718 @@
+{
+ "version": 1,
+ "items": [
+  {
+   "iso": "AF",
+   "nombre": "Afganistán",
+   "capital": "Kabul",
+   "continente": "asia",
+   "poblacion": 38041754,
+   "silueta": true
+  },
+  {
+   "iso": "AL",
+   "nombre": "Albania",
+   "capital": "Tirana",
+   "continente": "europa",
+   "poblacion": 2854191,
+   "silueta": true
+  },
+  {
+   "iso": "DE",
+   "nombre": "Alemania",
+   "capital": "Berlín",
+   "continente": "europa",
+   "poblacion": 83132799,
+   "silueta": true
+  },
+  {
+   "iso": "AD",
+   "nombre": "Andorra",
+   "capital": "Andorra la Vieja",
+   "continente": "europa",
+   "poblacion": 77142,
+   "silueta": false
+  },
+  {
+   "iso": "AO",
+   "nombre": "Angola",
+   "capital": "Luanda",
+   "continente": "africa",
+   "poblacion": 31825295,
+   "silueta": true
+  },
+  {
+   "iso": "AG",
+   "nombre": "Antigua y Barbuda",
+   "capital": "Saint John",
+   "continente": "america",
+   "poblacion": 97118,
+   "silueta": false,
+   "alias": [
+    "Antigua"
+   ],
+   "aliasCapital": [
+    "Saint John's"
+   ]
+  },
+  {
+   "iso": "SA",
+   "nombre": "Arabia Saudita",
+   "capital": "Riad",
+   "continente": "asia",
+   "poblacion": 34268528,
+   "silueta": true,
+   "alias": [
+    "Arabia Saudí"
+   ]
+  },
+  {
+   "iso": "DZ",
+   "nombre": "Argelia",
+   "capital": "Argel",
+   "continente": "africa",
+   "poblacion": 43053054,
+   "silueta": true
+  },
+  {
+   "iso": "AR",
+   "nombre": "Argentina",
+   "capital": "Buenos Aires",
+   "continente": "america",
+   "poblacion": 44938712,
+   "silueta": true
+  },
+  {
+   "iso": "AM",
+   "nombre": "Armenia",
+   "capital": "Ereván",
+   "continente": "asia",
+   "poblacion": 2957731,
+   "silueta": true
+  },
+  {
+   "iso": "AU",
+   "nombre": "Australia",
+   "capital": "Canberra",
+   "continente": "oceania",
+   "poblacion": 25364307,
+   "silueta": true
+  },
+  {
+   "iso": "AT",
+   "nombre": "Austria",
+   "capital": "Viena",
+   "continente": "europa",
+   "poblacion": 8877067,
+   "silueta": true
+  },
+  {
+   "iso": "AZ",
+   "nombre": "Azerbaiyán",
+   "capital": "Bakú",
+   "continente": "asia",
+   "poblacion": 10023318,
+   "silueta": true
+  },
+  {
+   "iso": "BS",
+   "nombre": "Bahamas",
+   "capital": "Nasáu",
+   "continente": "america",
+   "poblacion": 389482,
+   "silueta": true
+  },
+  {
+   "iso": "BD",
+   "nombre": "Bangladés",
+   "capital": "Daca",
+   "continente": "asia",
+   "poblacion": 163046161,
+   "silueta": true,
+   "aliasCapital": [
+    "Dacca",
+    "Dhaka"
+   ]
+  },
+  {
+   "iso": "BB",
+   "nombre": "Barbados",
+   "capital": "Bridgetown",
+   "continente": "america",
+   "poblacion": 287025,
+   "silueta": false
+  },
+  {
+   "iso": "BH",
+   "nombre": "Baréin",
+   "capital": "Manama",
+   "continente": "asia",
+   "poblacion": 1641172,
+   "silueta": false
+  },
+  {
+   "iso": "BE",
+   "nombre": "Bélgica",
+   "capital": "Bruselas",
+   "continente": "europa",
+   "poblacion": 11484055,
+   "silueta": true
+  },
+  {
+   "iso": "BZ",
+   "nombre": "Belice",
+   "capital": "Belmopán",
+   "continente": "america",
+   "poblacion": 390353,
+   "silueta": true
+  },
+  {
+   "iso": "BJ",
+   "nombre": "Benín",
+   "capital": "Porto Novo",
+   "continente": "africa",
+   "poblacion": 11801151,
+   "silueta": true,
+   "aliasCapital": [
+    "Cotonú"
+   ]
+  },
+  {
+   "iso": "BY",
+   "nombre": "Bielorrusia",
+   "capital": "Minsk",
+   "continente": "europa",
+   "poblacion": 9466856,
+   "silueta": true,
+   "alias": [
+    "Belarús"
+   ]
+  },
+  {
+   "iso": "MM",
+   "nombre": "Birmania",
+   "capital": "Naipyidó",
+   "continente": "asia",
+   "poblacion": 54045420,
+   "silueta": true,
+   "alias": [
+    "Myanmar"
+   ]
+  },
+  {
+   "iso": "BO",
+   "nombre": "Bolivia",
+   "capital": "Sucre",
+   "continente": "america",
+   "poblacion": 11513100,
+   "silueta": true,
+   "aliasCapital": [
+    "La Paz"
+   ]
+  },
+  {
+   "iso": "BA",
+   "nombre": "Bosnia y Herzegovina",
+   "capital": "Sarajevo",
+   "continente": "europa",
+   "poblacion": 3301000,
+   "silueta": true,
+   "alias": [
+    "Bosnia"
+   ]
+  },
+  {
+   "iso": "BW",
+   "nombre": "Botsuana",
+   "capital": "Gaborone",
+   "continente": "africa",
+   "poblacion": 2303697,
+   "silueta": true
+  },
+  {
+   "iso": "BR",
+   "nombre": "Brasil",
+   "capital": "Brasilia",
+   "continente": "america",
+   "poblacion": 211049527,
+   "silueta": true
+  },
+  {
+   "iso": "BN",
+   "nombre": "Brunéi",
+   "capital": "Bandar Seri Begawan",
+   "continente": "asia",
+   "poblacion": 433285,
+   "silueta": false,
+   "alias": [
+    "Brunei"
+   ]
+  },
+  {
+   "iso": "BG",
+   "nombre": "Bulgaria",
+   "capital": "Sofía",
+   "continente": "europa",
+   "poblacion": 6975761,
+   "silueta": true
+  },
+  {
+   "iso": "BF",
+   "nombre": "Burkina Faso",
+   "capital": "Uagadugú",
+   "continente": "africa",
+   "poblacion": 20321378,
+   "silueta": true
+  },
+  {
+   "iso": "BI",
+   "nombre": "Burundi",
+   "capital": "Gitega",
+   "continente": "africa",
+   "poblacion": 11530580,
+   "silueta": true,
+   "aliasCapital": [
+    "Buyumbura"
+   ]
+  },
+  {
+   "iso": "BT",
+   "nombre": "Bután",
+   "capital": "Timbu",
+   "continente": "asia",
+   "poblacion": 763092,
+   "silueta": true,
+   "aliasCapital": [
+    "Thimphu"
+   ]
+  },
+  {
+   "iso": "CV",
+   "nombre": "Cabo Verde",
+   "capital": "Praia",
+   "continente": "africa",
+   "poblacion": 549935,
+   "silueta": false,
+   "alias": [
+    "Cape Verde"
+   ]
+  },
+  {
+   "iso": "KH",
+   "nombre": "Camboya",
+   "capital": "Nom Pen",
+   "continente": "asia",
+   "poblacion": 16486542,
+   "silueta": true
+  },
+  {
+   "iso": "CM",
+   "nombre": "Camerún",
+   "capital": "Yaundé",
+   "continente": "africa",
+   "poblacion": 25876380,
+   "silueta": true
+  },
+  {
+   "iso": "CA",
+   "nombre": "Canadá",
+   "capital": "Ottawa",
+   "continente": "america",
+   "poblacion": 37589262,
+   "silueta": true
+  },
+  {
+   "iso": "QA",
+   "nombre": "Catar",
+   "capital": "Doha",
+   "continente": "asia",
+   "poblacion": 2832067,
+   "silueta": true
+  },
+  {
+   "iso": "TD",
+   "nombre": "Chad",
+   "capital": "Yamena",
+   "continente": "africa",
+   "poblacion": 15946876,
+   "silueta": true
+  },
+  {
+   "iso": "CL",
+   "nombre": "Chile",
+   "capital": "Santiago",
+   "continente": "america",
+   "poblacion": 18952038,
+   "silueta": true,
+   "aliasCapital": [
+    "Santiago de Chile"
+   ]
+  },
+  {
+   "iso": "CN",
+   "nombre": "China",
+   "capital": "Pekín",
+   "continente": "asia",
+   "poblacion": 1397715000,
+   "silueta": true
+  },
+  {
+   "iso": "CY",
+   "nombre": "Chipre",
+   "capital": "Nicosia",
+   "continente": "europa",
+   "poblacion": 1198575,
+   "silueta": false
+  },
+  {
+   "iso": "CO",
+   "nombre": "Colombia",
+   "capital": "Bogotá",
+   "continente": "america",
+   "poblacion": 50339443,
+   "silueta": true
+  },
+  {
+   "iso": "KM",
+   "nombre": "Comoras",
+   "capital": "Moroni",
+   "continente": "africa",
+   "poblacion": 850886,
+   "silueta": false
+  },
+  {
+   "iso": "KP",
+   "nombre": "Corea del Norte",
+   "capital": "Pionyang",
+   "continente": "asia",
+   "poblacion": 25666161,
+   "silueta": true
+  },
+  {
+   "iso": "KR",
+   "nombre": "Corea del Sur",
+   "capital": "Seúl",
+   "continente": "asia",
+   "poblacion": 51709098,
+   "silueta": true,
+   "alias": [
+    "Corea"
+   ]
+  },
+  {
+   "iso": "CI",
+   "nombre": "Costa de Marfil",
+   "capital": "Yamusukro",
+   "continente": "africa",
+   "poblacion": 25716544,
+   "silueta": true,
+   "alias": [
+    "Côte d'Ivoire"
+   ],
+   "aliasCapital": [
+    "Abiyán"
+   ]
+  },
+  {
+   "iso": "CR",
+   "nombre": "Costa Rica",
+   "capital": "San José",
+   "continente": "america",
+   "poblacion": 5047561,
+   "silueta": true
+  },
+  {
+   "iso": "HR",
+   "nombre": "Croacia",
+   "capital": "Zagreb",
+   "continente": "europa",
+   "poblacion": 4067500,
+   "silueta": true
+  },
+  {
+   "iso": "CU",
+   "nombre": "Cuba",
+   "capital": "La Habana",
+   "continente": "america",
+   "poblacion": 11333483,
+   "silueta": true
+  },
+  {
+   "iso": "DK",
+   "nombre": "Dinamarca",
+   "capital": "Copenhague",
+   "continente": "europa",
+   "poblacion": 5818553,
+   "silueta": true
+  },
+  {
+   "iso": "DM",
+   "nombre": "Dominica",
+   "capital": "Roseau",
+   "continente": "america",
+   "poblacion": 71808,
+   "silueta": false
+  },
+  {
+   "iso": "EC",
+   "nombre": "Ecuador",
+   "capital": "Quito",
+   "continente": "america",
+   "poblacion": 17373662,
+   "silueta": true
+  },
+  {
+   "iso": "EG",
+   "nombre": "Egipto",
+   "capital": "El Cairo",
+   "continente": "africa",
+   "poblacion": 100388073,
+   "silueta": true,
+   "aliasCapital": [
+    "Cairo"
+   ]
+  },
+  {
+   "iso": "SV",
+   "nombre": "El Salvador",
+   "capital": "San Salvador",
+   "continente": "america",
+   "poblacion": 6453553,
+   "silueta": true
+  },
+  {
+   "iso": "AE",
+   "nombre": "Emiratos Árabes Unidos",
+   "capital": "Abu Dabi",
+   "continente": "asia",
+   "poblacion": 9770529,
+   "silueta": true,
+   "alias": [
+    "EAU",
+    "Emiratos"
+   ],
+   "aliasCapital": [
+    "Abu Dhabi"
+   ]
+  },
+  {
+   "iso": "ER",
+   "nombre": "Eritrea",
+   "capital": "Asmara",
+   "continente": "africa",
+   "poblacion": 6081196,
+   "silueta": true
+  },
+  {
+   "iso": "SK",
+   "nombre": "Eslovaquia",
+   "capital": "Bratislava",
+   "continente": "europa",
+   "poblacion": 5454073,
+   "silueta": true
+  },
+  {
+   "iso": "SI",
+   "nombre": "Eslovenia",
+   "capital": "Liubliana",
+   "continente": "europa",
+   "poblacion": 2087946,
+   "silueta": true
+  },
+  {
+   "iso": "ES",
+   "nombre": "España",
+   "capital": "Madrid",
+   "continente": "europa",
+   "poblacion": 47076781,
+   "silueta": true
+  },
+  {
+   "iso": "US",
+   "nombre": "Estados Unidos",
+   "capital": "Washington D. C.",
+   "continente": "america",
+   "poblacion": 328239523,
+   "silueta": true,
+   "alias": [
+    "EEUU",
+    "EE.UU.",
+    "USA",
+    "Estados Unidos de América"
+   ],
+   "aliasCapital": [
+    "Washington",
+    "Washington DC"
+   ]
+  },
+  {
+   "iso": "EE",
+   "nombre": "Estonia",
+   "capital": "Tallin",
+   "continente": "europa",
+   "poblacion": 1326590,
+   "silueta": true
+  },
+  {
+   "iso": "SZ",
+   "nombre": "Esuatini",
+   "capital": "Mbabane",
+   "continente": "africa",
+   "poblacion": 1148130,
+   "silueta": true,
+   "alias": [
+    "Suazilandia",
+    "Swazilandia"
+   ]
+  },
+  {
+   "iso": "ET",
+   "nombre": "Etiopía",
+   "capital": "Adís Abeba",
+   "continente": "africa",
+   "poblacion": 112078730,
+   "silueta": true
+  },
+  {
+   "iso": "PH",
+   "nombre": "Filipinas",
+   "capital": "Manila",
+   "continente": "asia",
+   "poblacion": 108116615,
+   "silueta": true
+  },
+  {
+   "iso": "FI",
+   "nombre": "Finlandia",
+   "capital": "Helsinki",
+   "continente": "europa",
+   "poblacion": 5520314,
+   "silueta": true
+  },
+  {
+   "iso": "FJ",
+   "nombre": "Fiyi",
+   "capital": "Suva",
+   "continente": "oceania",
+   "poblacion": 889953,
+   "silueta": true
+  },
+  {
+   "iso": "FR",
+   "nombre": "Francia",
+   "capital": "París",
+   "continente": "europa",
+   "poblacion": 67059887,
+   "silueta": true
+  },
+  {
+   "iso": "GA",
+   "nombre": "Gabón",
+   "capital": "Libreville",
+   "continente": "africa",
+   "poblacion": 2172579,
+   "silueta": true
+  },
+  {
+   "iso": "GM",
+   "nombre": "Gambia",
+   "capital": "Banjul",
+   "continente": "africa",
+   "poblacion": 2347706,
+   "silueta": true
+  },
+  {
+   "iso": "GE",
+   "nombre": "Georgia",
+   "capital": "Tiflis",
+   "continente": "asia",
+   "poblacion": 3720382,
+   "silueta": true
+  },
+  {
+   "iso": "GH",
+   "nombre": "Ghana",
+   "capital": "Acra",
+   "continente": "africa",
+   "poblacion": 30417856,
+   "silueta": true
+  },
+  {
+   "iso": "GD",
+   "nombre": "Granada",
+   "capital": "Saint George",
+   "continente": "america",
+   "poblacion": 112003,
+   "silueta": false
+  },
+  {
+   "iso": "GR",
+   "nombre": "Grecia",
+   "capital": "Atenas",
+   "continente": "europa",
+   "poblacion": 10716322,
+   "silueta": true
+  },
+  {
+   "iso": "GT",
+   "nombre": "Guatemala",
+   "capital": "Ciudad de Guatemala",
+   "continente": "america",
+   "poblacion": 16604026,
+   "silueta": true,
+   "aliasCapital": [
+    "Guatemala"
+   ]
+  },
+  {
+   "iso": "GN",
+   "nombre": "Guinea",
+   "capital": "Conakri",
+   "continente": "africa",
+   "poblacion": 12771246,
+   "silueta": true
+  },
+  {
+   "iso": "GQ",
+   "nombre": "Guinea Ecuatorial",
+   "capital": "Malabo",
+   "continente": "africa",
+   "poblacion": 1355986,
+   "silueta": true
+  },
+  {
+   "iso": "GW",
+   "nombre": "Guinea-Bisáu",
+   "capital": "Bisáu",
+   "continente": "africa",
+   "poblacion": 1920922,
+   "silueta": true
+  },
+  {
+   "iso": "GY",
+   "nombre": "Guyana",
+   "capital": "Georgetown",
+   "continente": "america",
+   "poblacion": 782766,
+   "silueta": true
+  },
+  {
+   "iso": "HT",
+   "nombre": "Haití",
+   "capital": "Puerto Príncipe",
+   "continente": "america",
+   "poblacion": 11263077,
+   "silueta": true
+  },
+  {
+   "iso": "HN",
+   "nombre": "Honduras",
+   "capital": "Tegucigalpa",
+   "continente": "america",
+   "poblacion": 9746117,
+   "silueta": true
+  },
+  {
+   "iso": "HU",
+   "nombre": "Hungría",
+   "capital": "Budapest",
+   "continente": "europa",
+   "poblacion": 9769949,
+   "silueta": true
+  },
+  {
+   "iso": "IN",
+   "nombre": "India",
+   "capital": "Nueva Delhi",
+   "continente": "asia",
+   "poblacion": 1366417754,
+   "silueta": true,
+   "aliasCapital": [
+    "Delhi"
+   ]
+  },
+  {
+   "iso": "ID",
+   "nombre": "Indonesia",
+   "capital": "Yakarta",
+   "continente": "asia",
+   "poblacion": 270625568,
+   "silueta": true
+  },
+  {
+   "iso": "IQ",
+   "nombre": "Irak",
+   "capital": "Bagdad",
+   "continente": "asia",
+   "poblacion": 39309783,
+   "silueta": true
+  },
+  {
+   "iso": "IR",
+   "nombre": "Irán",
+   "capital": "Teherán",
+   "continente": "asia",
+   "poblacion": 82913906,
+   "silueta": true
+  },
+  {
+   "iso": "IE",
+   "nombre": "Irlanda",
+   "capital": "Dublín",
+   "continente": "europa",
+   "poblacion": 4941444,
+   "silueta": true
+  },
+  {
+   "iso": "IS",
+   "nombre": "Islandia",
+   "capital": "Reikiavik",
+   "continente": "europa",
+   "poblacion": 361313,
+   "silueta": true,
+   "aliasCapital": [
+    "Reykjavik"
+   ]
+  },
+  {
+   "iso": "MH",
+   "nombre": "Islas Marshall",
+   "capital": "Majuro",
+   "continente": "oceania",
+   "poblacion": 58791,
+   "silueta": false
+  },
+  {
+   "iso": "SB",
+   "nombre": "Islas Salomón",
+   "capital": "Honiara",
+   "continente": "oceania",
+   "poblacion": 669823,
+   "silueta": true
+  },
+  {
+   "iso": "IL",
+   "nombre": "Israel",
+   "capital": "Jerusalén",
+   "continente": "asia",
+   "poblacion": 9053300,
+   "silueta": true
+  },
+  {
+   "iso": "IT",
+   "nombre": "Italia",
+   "capital": "Roma",
+   "continente": "europa",
+   "poblacion": 60297396,
+   "silueta": true
+  },
+  {
+   "iso": "JM",
+   "nombre": "Jamaica",
+   "capital": "Kingston",
+   "continente": "america",
+   "poblacion": 2948279,
+   "silueta": true
+  },
+  {
+   "iso": "JP",
+   "nombre": "Japón",
+   "capital": "Tokio",
+   "continente": "asia",
+   "poblacion": 126264931,
+   "silueta": true
+  },
+  {
+   "iso": "JO",
+   "nombre": "Jordania",
+   "capital": "Amán",
+   "continente": "asia",
+   "poblacion": 10101694,
+   "silueta": true
+  },
+  {
+   "iso": "KZ",
+   "nombre": "Kazajistán",
+   "capital": "Astaná",
+   "continente": "asia",
+   "poblacion": 18513930,
+   "silueta": true,
+   "aliasCapital": [
+    "Nur-Sultán",
+    "Nursultán"
+   ]
+  },
+  {
+   "iso": "KE",
+   "nombre": "Kenia",
+   "capital": "Nairobi",
+   "continente": "africa",
+   "poblacion": 52573973,
+   "silueta": true
+  },
+  {
+   "iso": "KG",
+   "nombre": "Kirguistán",
+   "capital": "Biskek",
+   "continente": "asia",
+   "poblacion": 6456900,
+   "silueta": true
+  },
+  {
+   "iso": "KI",
+   "nombre": "Kiribati",
+   "capital": "Tarawa Sur",
+   "continente": "oceania",
+   "poblacion": 117606,
+   "silueta": false,
+   "aliasCapital": [
+    "Tarawa"
+   ]
+  },
+  {
+   "iso": "KW",
+   "nombre": "Kuwait",
+   "capital": "Ciudad de Kuwait",
+   "continente": "asia",
+   "poblacion": 4207083,
+   "silueta": true,
+   "aliasCapital": [
+    "Kuwait"
+   ]
+  },
+  {
+   "iso": "LA",
+   "nombre": "Laos",
+   "capital": "Vientián",
+   "continente": "asia",
+   "poblacion": 7169455,
+   "silueta": true
+  },
+  {
+   "iso": "LS",
+   "nombre": "Lesoto",
+   "capital": "Maseru",
+   "continente": "africa",
+   "poblacion": 2125268,
+   "silueta": true
+  },
+  {
+   "iso": "LV",
+   "nombre": "Letonia",
+   "capital": "Riga",
+   "continente": "europa",
+   "poblacion": 1912789,
+   "silueta": true
+  },
+  {
+   "iso": "LB",
+   "nombre": "Líbano",
+   "capital": "Beirut",
+   "continente": "asia",
+   "poblacion": 6855713,
+   "silueta": true
+  },
+  {
+   "iso": "LR",
+   "nombre": "Liberia",
+   "capital": "Monrovia",
+   "continente": "africa",
+   "poblacion": 4937374,
+   "silueta": true
+  },
+  {
+   "iso": "LY",
+   "nombre": "Libia",
+   "capital": "Trípoli",
+   "continente": "africa",
+   "poblacion": 6777452,
+   "silueta": true
+  },
+  {
+   "iso": "LI",
+   "nombre": "Liechtenstein",
+   "capital": "Vaduz",
+   "continente": "europa",
+   "poblacion": 38019,
+   "silueta": false
+  },
+  {
+   "iso": "LT",
+   "nombre": "Lituania",
+   "capital": "Vilna",
+   "continente": "europa",
+   "poblacion": 2786844,
+   "silueta": true
+  },
+  {
+   "iso": "LU",
+   "nombre": "Luxemburgo",
+   "capital": "Luxemburgo",
+   "continente": "europa",
+   "poblacion": 619896,
+   "silueta": false
+  },
+  {
+   "iso": "MK",
+   "nombre": "Macedonia del Norte",
+   "capital": "Skopie",
+   "continente": "europa",
+   "poblacion": 2083459,
+   "silueta": true,
+   "alias": [
+    "Macedonia"
+   ]
+  },
+  {
+   "iso": "MG",
+   "nombre": "Madagascar",
+   "capital": "Antananarivo",
+   "continente": "africa",
+   "poblacion": 26969307,
+   "silueta": true
+  },
+  {
+   "iso": "MY",
+   "nombre": "Malasia",
+   "capital": "Kuala Lumpur",
+   "continente": "asia",
+   "poblacion": 31949777,
+   "silueta": true
+  },
+  {
+   "iso": "MW",
+   "nombre": "Malaui",
+   "capital": "Lilongüe",
+   "continente": "africa",
+   "poblacion": 18628747,
+   "silueta": true
+  },
+  {
+   "iso": "MV",
+   "nombre": "Maldivas",
+   "capital": "Malé",
+   "continente": "asia",
+   "poblacion": 530953,
+   "silueta": false
+  },
+  {
+   "iso": "ML",
+   "nombre": "Malí",
+   "capital": "Bamako",
+   "continente": "africa",
+   "poblacion": 19658031,
+   "silueta": true
+  },
+  {
+   "iso": "MT",
+   "nombre": "Malta",
+   "capital": "La Valeta",
+   "continente": "europa",
+   "poblacion": 502653,
+   "silueta": false
+  },
+  {
+   "iso": "MA",
+   "nombre": "Marruecos",
+   "capital": "Rabat",
+   "continente": "africa",
+   "poblacion": 36471769,
+   "silueta": true
+  },
+  {
+   "iso": "MU",
+   "nombre": "Mauricio",
+   "capital": "Port Louis",
+   "continente": "africa",
+   "poblacion": 1265711,
+   "silueta": false
+  },
+  {
+   "iso": "MR",
+   "nombre": "Mauritania",
+   "capital": "Nuakchot",
+   "continente": "africa",
+   "poblacion": 4525696,
+   "silueta": true
+  },
+  {
+   "iso": "MX",
+   "nombre": "México",
+   "capital": "Ciudad de México",
+   "continente": "america",
+   "poblacion": 127575529,
+   "silueta": true,
+   "aliasCapital": [
+    "México DF",
+    "CDMX"
+   ]
+  },
+  {
+   "iso": "FM",
+   "nombre": "Micronesia",
+   "capital": "Palikir",
+   "continente": "oceania",
+   "poblacion": 113815,
+   "silueta": false,
+   "alias": [
+    "Estados Federados de Micronesia"
+   ]
+  },
+  {
+   "iso": "MD",
+   "nombre": "Moldavia",
+   "capital": "Chisináu",
+   "continente": "europa",
+   "poblacion": 2657637,
+   "silueta": true
+  },
+  {
+   "iso": "MC",
+   "nombre": "Mónaco",
+   "capital": "Mónaco",
+   "continente": "europa",
+   "poblacion": 38964,
+   "silueta": false
+  },
+  {
+   "iso": "MN",
+   "nombre": "Mongolia",
+   "capital": "Ulán Bator",
+   "continente": "asia",
+   "poblacion": 3225167,
+   "silueta": true
+  },
+  {
+   "iso": "ME",
+   "nombre": "Montenegro",
+   "capital": "Podgorica",
+   "continente": "europa",
+   "poblacion": 622137,
+   "silueta": true
+  },
+  {
+   "iso": "MZ",
+   "nombre": "Mozambique",
+   "capital": "Maputo",
+   "continente": "africa",
+   "poblacion": 30366036,
+   "silueta": true
+  },
+  {
+   "iso": "NA",
+   "nombre": "Namibia",
+   "capital": "Windhoek",
+   "continente": "africa",
+   "poblacion": 2494530,
+   "silueta": true
+  },
+  {
+   "iso": "NR",
+   "nombre": "Nauru",
+   "capital": "Yaren",
+   "continente": "oceania",
+   "poblacion": 12581,
+   "silueta": false
+  },
+  {
+   "iso": "NP",
+   "nombre": "Nepal",
+   "capital": "Katmandú",
+   "continente": "asia",
+   "poblacion": 28608710,
+   "silueta": true
+  },
+  {
+   "iso": "NI",
+   "nombre": "Nicaragua",
+   "capital": "Managua",
+   "continente": "america",
+   "poblacion": 6545502,
+   "silueta": true
+  },
+  {
+   "iso": "NE",
+   "nombre": "Níger",
+   "capital": "Niamey",
+   "continente": "africa",
+   "poblacion": 23310715,
+   "silueta": true
+  },
+  {
+   "iso": "NG",
+   "nombre": "Nigeria",
+   "capital": "Abuya",
+   "continente": "africa",
+   "poblacion": 200963599,
+   "silueta": true
+  },
+  {
+   "iso": "NO",
+   "nombre": "Noruega",
+   "capital": "Oslo",
+   "continente": "europa",
+   "poblacion": 5347896,
+   "silueta": true
+  },
+  {
+   "iso": "NZ",
+   "nombre": "Nueva Zelanda",
+   "capital": "Wellington",
+   "continente": "oceania",
+   "poblacion": 4917000,
+   "silueta": true
+  },
+  {
+   "iso": "OM",
+   "nombre": "Omán",
+   "capital": "Mascate",
+   "continente": "asia",
+   "poblacion": 4974986,
+   "silueta": true
+  },
+  {
+   "iso": "NL",
+   "nombre": "Países Bajos",
+   "capital": "Ámsterdam",
+   "continente": "europa",
+   "poblacion": 17332850,
+   "silueta": true,
+   "alias": [
+    "Holanda"
+   ]
+  },
+  {
+   "iso": "PK",
+   "nombre": "Pakistán",
+   "capital": "Islamabad",
+   "continente": "asia",
+   "poblacion": 216565318,
+   "silueta": true
+  },
+  {
+   "iso": "PW",
+   "nombre": "Palaos",
+   "capital": "Ngerulmud",
+   "continente": "oceania",
+   "poblacion": 18008,
+   "silueta": false,
+   "aliasCapital": [
+    "Melekeok"
+   ]
+  },
+  {
+   "iso": "PA",
+   "nombre": "Panamá",
+   "capital": "Ciudad de Panamá",
+   "continente": "america",
+   "poblacion": 4246439,
+   "silueta": true,
+   "aliasCapital": [
+    "Panamá"
+   ]
+  },
+  {
+   "iso": "PG",
+   "nombre": "Papúa Nueva Guinea",
+   "capital": "Puerto Moresby",
+   "continente": "oceania",
+   "poblacion": 8776109,
+   "silueta": true,
+   "aliasCapital": [
+    "Port Moresby"
+   ]
+  },
+  {
+   "iso": "PY",
+   "nombre": "Paraguay",
+   "capital": "Asunción",
+   "continente": "america",
+   "poblacion": 7044636,
+   "silueta": true
+  },
+  {
+   "iso": "PE",
+   "nombre": "Perú",
+   "capital": "Lima",
+   "continente": "america",
+   "poblacion": 32510453,
+   "silueta": true
+  },
+  {
+   "iso": "PL",
+   "nombre": "Polonia",
+   "capital": "Varsovia",
+   "continente": "europa",
+   "poblacion": 37970874,
+   "silueta": true
+  },
+  {
+   "iso": "PT",
+   "nombre": "Portugal",
+   "capital": "Lisboa",
+   "continente": "europa",
+   "poblacion": 10269417,
+   "silueta": true
+  },
+  {
+   "iso": "GB",
+   "nombre": "Reino Unido",
+   "capital": "Londres",
+   "continente": "europa",
+   "poblacion": 66834405,
+   "silueta": true,
+   "alias": [
+    "UK",
+    "Gran Bretaña",
+    "Inglaterra"
+   ]
+  },
+  {
+   "iso": "CF",
+   "nombre": "República Centroafricana",
+   "capital": "Bangui",
+   "continente": "africa",
+   "poblacion": 4745185,
+   "silueta": true
+  },
+  {
+   "iso": "CZ",
+   "nombre": "República Checa",
+   "capital": "Praga",
+   "continente": "europa",
+   "poblacion": 10669709,
+   "silueta": true,
+   "alias": [
+    "Chequia"
+   ]
+  },
+  {
+   "iso": "CG",
+   "nombre": "República del Congo",
+   "capital": "Brazzaville",
+   "continente": "africa",
+   "poblacion": 5380508,
+   "silueta": true,
+   "alias": [
+    "Congo",
+    "Congo Brazzaville"
+   ]
+  },
+  {
+   "iso": "CD",
+   "nombre": "República Democrática del Congo",
+   "capital": "Kinsasa",
+   "continente": "africa",
+   "poblacion": 86790567,
+   "silueta": true,
+   "alias": [
+    "RD Congo",
+    "RDC",
+    "Congo Kinshasa"
+   ]
+  },
+  {
+   "iso": "DO",
+   "nombre": "República Dominicana",
+   "capital": "Santo Domingo",
+   "continente": "america",
+   "poblacion": 10738958,
+   "silueta": true
+  },
+  {
+   "iso": "RW",
+   "nombre": "Ruanda",
+   "capital": "Kigali",
+   "continente": "africa",
+   "poblacion": 12626950,
+   "silueta": true
+  },
+  {
+   "iso": "RO",
+   "nombre": "Rumanía",
+   "capital": "Bucarest",
+   "continente": "europa",
+   "poblacion": 19356544,
+   "silueta": true,
+   "alias": [
+    "Rumania"
+   ]
+  },
+  {
+   "iso": "RU",
+   "nombre": "Rusia",
+   "capital": "Moscú",
+   "continente": "europa",
+   "poblacion": 144373535,
+   "silueta": true
+  },
+  {
+   "iso": "WS",
+   "nombre": "Samoa",
+   "capital": "Apia",
+   "continente": "oceania",
+   "poblacion": 197097,
+   "silueta": false
+  },
+  {
+   "iso": "KN",
+   "nombre": "San Cristóbal y Nieves",
+   "capital": "Basseterre",
+   "continente": "america",
+   "poblacion": 52834,
+   "silueta": false,
+   "alias": [
+    "San Cristóbal"
+   ]
+  },
+  {
+   "iso": "SM",
+   "nombre": "San Marino",
+   "capital": "San Marino",
+   "continente": "europa",
+   "poblacion": 33860,
+   "silueta": false
+  },
+  {
+   "iso": "VC",
+   "nombre": "San Vicente y las Granadinas",
+   "capital": "Kingstown",
+   "continente": "america",
+   "poblacion": 110589,
+   "silueta": false,
+   "alias": [
+    "San Vicente"
+   ]
+  },
+  {
+   "iso": "LC",
+   "nombre": "Santa Lucía",
+   "capital": "Castries",
+   "continente": "america",
+   "poblacion": 182790,
+   "silueta": false
+  },
+  {
+   "iso": "ST",
+   "nombre": "Santo Tomé y Príncipe",
+   "capital": "Santo Tomé",
+   "continente": "africa",
+   "poblacion": 215056,
+   "silueta": false
+  },
+  {
+   "iso": "SN",
+   "nombre": "Senegal",
+   "capital": "Dakar",
+   "continente": "africa",
+   "poblacion": 16296364,
+   "silueta": true
+  },
+  {
+   "iso": "RS",
+   "nombre": "Serbia",
+   "capital": "Belgrado",
+   "continente": "europa",
+   "poblacion": 6944975,
+   "silueta": true
+  },
+  {
+   "iso": "SC",
+   "nombre": "Seychelles",
+   "capital": "Victoria",
+   "continente": "africa",
+   "poblacion": 97625,
+   "silueta": false
+  },
+  {
+   "iso": "SL",
+   "nombre": "Sierra Leona",
+   "capital": "Freetown",
+   "continente": "africa",
+   "poblacion": 7813215,
+   "silueta": true
+  },
+  {
+   "iso": "SG",
+   "nombre": "Singapur",
+   "capital": "Singapur",
+   "continente": "asia",
+   "poblacion": 5703569,
+   "silueta": false
+  },
+  {
+   "iso": "SY",
+   "nombre": "Siria",
+   "capital": "Damasco",
+   "continente": "asia",
+   "poblacion": 17070135,
+   "silueta": true
+  },
+  {
+   "iso": "SO",
+   "nombre": "Somalia",
+   "capital": "Mogadiscio",
+   "continente": "africa",
+   "poblacion": 10192317,
+   "silueta": true
+  },
+  {
+   "iso": "LK",
+   "nombre": "Sri Lanka",
+   "capital": "Colombo",
+   "continente": "asia",
+   "poblacion": 21803000,
+   "silueta": true,
+   "aliasCapital": [
+    "Sri Jayawardenapura Kotte",
+    "Kotte"
+   ]
+  },
+  {
+   "iso": "ZA",
+   "nombre": "Sudáfrica",
+   "capital": "Pretoria",
+   "continente": "africa",
+   "poblacion": 58558270,
+   "silueta": true,
+   "aliasCapital": [
+    "Ciudad del Cabo",
+    "Bloemfontein"
+   ]
+  },
+  {
+   "iso": "SD",
+   "nombre": "Sudán",
+   "capital": "Jartum",
+   "continente": "africa",
+   "poblacion": 42813238,
+   "silueta": true
+  },
+  {
+   "iso": "SS",
+   "nombre": "Sudán del Sur",
+   "capital": "Yuba",
+   "continente": "africa",
+   "poblacion": 11062113,
+   "silueta": true
+  },
+  {
+   "iso": "SE",
+   "nombre": "Suecia",
+   "capital": "Estocolmo",
+   "continente": "europa",
+   "poblacion": 10285453,
+   "silueta": true
+  },
+  {
+   "iso": "CH",
+   "nombre": "Suiza",
+   "capital": "Berna",
+   "continente": "europa",
+   "poblacion": 8574832,
+   "silueta": true
+  },
+  {
+   "iso": "SR",
+   "nombre": "Surinam",
+   "capital": "Paramaribo",
+   "continente": "america",
+   "poblacion": 581363,
+   "silueta": true,
+   "alias": [
+    "Suriname"
+   ]
+  },
+  {
+   "iso": "TH",
+   "nombre": "Tailandia",
+   "capital": "Bangkok",
+   "continente": "asia",
+   "poblacion": 69625582,
+   "silueta": true
+  },
+  {
+   "iso": "TZ",
+   "nombre": "Tanzania",
+   "capital": "Dodoma",
+   "continente": "africa",
+   "poblacion": 58005463,
+   "silueta": true,
+   "aliasCapital": [
+    "Dar es Salaam"
+   ]
+  },
+  {
+   "iso": "TJ",
+   "nombre": "Tayikistán",
+   "capital": "Dusambé",
+   "continente": "asia",
+   "poblacion": 9321018,
+   "silueta": true
+  },
+  {
+   "iso": "TL",
+   "nombre": "Timor Oriental",
+   "capital": "Dili",
+   "continente": "asia",
+   "poblacion": 1293119,
+   "silueta": true,
+   "alias": [
+    "Timor Leste"
+   ]
+  },
+  {
+   "iso": "TG",
+   "nombre": "Togo",
+   "capital": "Lomé",
+   "continente": "africa",
+   "poblacion": 8082366,
+   "silueta": true
+  },
+  {
+   "iso": "TO",
+   "nombre": "Tonga",
+   "capital": "Nukualofa",
+   "continente": "oceania",
+   "poblacion": 104494,
+   "silueta": false
+  },
+  {
+   "iso": "TT",
+   "nombre": "Trinidad y Tobago",
+   "capital": "Puerto España",
+   "continente": "america",
+   "poblacion": 1394973,
+   "silueta": false,
+   "alias": [
+    "Trinidad"
+   ]
+  },
+  {
+   "iso": "TN",
+   "nombre": "Túnez",
+   "capital": "Túnez",
+   "continente": "africa",
+   "poblacion": 11694719,
+   "silueta": true
+  },
+  {
+   "iso": "TM",
+   "nombre": "Turkmenistán",
+   "capital": "Asjabad",
+   "continente": "asia",
+   "poblacion": 5942089,
+   "silueta": true
+  },
+  {
+   "iso": "TR",
+   "nombre": "Turquía",
+   "capital": "Ankara",
+   "continente": "asia",
+   "poblacion": 83429615,
+   "silueta": true
+  },
+  {
+   "iso": "TV",
+   "nombre": "Tuvalu",
+   "capital": "Funafuti",
+   "continente": "oceania",
+   "poblacion": 11646,
+   "silueta": false
+  },
+  {
+   "iso": "UA",
+   "nombre": "Ucrania",
+   "capital": "Kiev",
+   "continente": "europa",
+   "poblacion": 44385155,
+   "silueta": true,
+   "aliasCapital": [
+    "Kyiv"
+   ]
+  },
+  {
+   "iso": "UG",
+   "nombre": "Uganda",
+   "capital": "Kampala",
+   "continente": "africa",
+   "poblacion": 44269594,
+   "silueta": true
+  },
+  {
+   "iso": "UY",
+   "nombre": "Uruguay",
+   "capital": "Montevideo",
+   "continente": "america",
+   "poblacion": 3461734,
+   "silueta": true
+  },
+  {
+   "iso": "UZ",
+   "nombre": "Uzbekistán",
+   "capital": "Taskent",
+   "continente": "asia",
+   "poblacion": 33580650,
+   "silueta": true
+  },
+  {
+   "iso": "VU",
+   "nombre": "Vanuatu",
+   "capital": "Port Vila",
+   "continente": "oceania",
+   "poblacion": 299882,
+   "silueta": true,
+   "aliasCapital": [
+    "Puerto Vila"
+   ]
+  },
+  {
+   "iso": "VE",
+   "nombre": "Venezuela",
+   "capital": "Caracas",
+   "continente": "america",
+   "poblacion": 28515829,
+   "silueta": true
+  },
+  {
+   "iso": "VN",
+   "nombre": "Vietnam",
+   "capital": "Hanói",
+   "continente": "asia",
+   "poblacion": 96462106,
+   "silueta": true
+  },
+  {
+   "iso": "YE",
+   "nombre": "Yemen",
+   "capital": "Saná",
+   "continente": "asia",
+   "poblacion": 29161922,
+   "silueta": true
+  },
+  {
+   "iso": "DJ",
+   "nombre": "Yibuti",
+   "capital": "Yibuti",
+   "continente": "africa",
+   "poblacion": 973560,
+   "silueta": true
+  },
+  {
+   "iso": "ZM",
+   "nombre": "Zambia",
+   "capital": "Lusaka",
+   "continente": "africa",
+   "poblacion": 17861030,
+   "silueta": true
+  },
+  {
+   "iso": "ZW",
+   "nombre": "Zimbabue",
+   "capital": "Harare",
+   "continente": "africa",
+   "poblacion": 14645468,
+   "silueta": true
+  }
+ ]
+}

@@ -75,32 +75,20 @@ class GeoSetupScreen extends ConsumerWidget {
             const _Title('Dificultad'),
             Row(
               children: [
-                Expanded(
-                  child: _Tile(
-                    selected: setup.withOptions,
-                    onTap: () =>
-                        controller.update((s) => s.copyWith(withOptions: true)),
-                    child: const _Difficulty(
-                      icon: Icons.grid_view_rounded,
-                      title: 'Fácil',
-                      subtitle: '4 opciones',
+                for (final (i, (mode, icon, title, subtitle)) in const [
+                  (AnswerMode.options, Icons.grid_view_rounded, 'Fácil', '4 opciones'),
+                  (AnswerMode.reveal, Icons.visibility_rounded, 'Mental', 'Piensa y mira'),
+                  (AnswerMode.typed, Icons.keyboard_rounded, 'Difícil', 'Escribe'),
+                ].indexed) ...[
+                  if (i > 0) const SizedBox(width: 8),
+                  Expanded(
+                    child: _Tile(
+                      selected: setup.mode == mode,
+                      onTap: () => controller.update((s) => s.copyWith(mode: mode)),
+                      child: _Difficulty(icon: icon, title: title, subtitle: subtitle),
                     ),
                   ),
-                ),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: _Tile(
-                    selected: !setup.withOptions,
-                    onTap: () => controller.update(
-                      (s) => s.copyWith(withOptions: false),
-                    ),
-                    child: const _Difficulty(
-                      icon: Icons.keyboard_rounded,
-                      title: 'Difícil',
-                      subtitle: 'Sin opciones',
-                    ),
-                  ),
-                ),
+                ],
               ],
             ),
             if (!setup.category.isMap) ...[
@@ -268,22 +256,20 @@ class _Difficulty extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return Column(
       children: [
         Icon(icon, color: geoColor),
-        const SizedBox(width: 12),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              title,
-              style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 16),
-            ),
-            Text(
-              subtitle,
-              style: const TextStyle(color: AppColors.textMuted, fontSize: 12),
-            ),
-          ],
+        const SizedBox(height: 6),
+        Text(
+          title,
+          style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 16),
+        ),
+        Text(
+          subtitle,
+          textAlign: TextAlign.center,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: const TextStyle(color: AppColors.textMuted, fontSize: 12),
         ),
       ],
     );

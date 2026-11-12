@@ -6,36 +6,41 @@ import '../../core/storage.dart';
 import 'domain/country.dart';
 import 'domain/quiz.dart';
 
+/// Cómo se responde: elegir entre 4, pensar y destapar, o escribir.
+enum AnswerMode { options, reveal, typed }
+
 /// Configuración de la partida; se recuerda entre sesiones.
 class GeoSetup {
   const GeoSetup({
     this.category = GeoCategory.flags,
-    this.withOptions = true,
+    this.mode = AnswerMode.options,
     this.regions = const {...Continent.values},
     this.count = 10,
   });
 
   final GeoCategory category;
-  final bool withOptions;
+  final AnswerMode mode;
+
+  bool get withOptions => mode == AnswerMode.options;
   final Set<Continent> regions;
   final int count;
 
   QuizConfig get config =>
       QuizConfig(category: category, withOptions: withOptions, regions: regions, count: count);
 
-  GeoSetup copyWith({GeoCategory? category, bool? withOptions, Set<Continent>? regions, int? count}) => GeoSetup(
+  GeoSetup copyWith({GeoCategory? category, AnswerMode? mode, Set<Continent>? regions, int? count}) => GeoSetup(
         category: category ?? this.category,
-        withOptions: withOptions ?? this.withOptions,
+        mode: mode ?? this.mode,
         regions: regions ?? this.regions,
         count: count ?? this.count,
       );
 
   /// Clave para los récords: mismo tipo de partida = mismo récord.
-  String get recordKey => '${category.name}|${withOptions ? 'op' : 'esc'}|$count|${regions.length == Continent.values.length ? 'mundo' : (regions.map((r) => r.name).toList()..sort()).join('+')}';
+  String get recordKey => '${category.name}|${switch (mode) { AnswerMode.options => 'op', AnswerMode.typed => 'esc', AnswerMode.reveal => 'ver' }}|$count|${regions.length == Continent.values.length ? 'mundo' : (regions.map((r) => r.name).toList()..sort()).join('+')}';
 
   Map<String, dynamic> toJson() => {
         'category': category.name,
-        'options': withOptions,
+        'mode': mode.name,
         'regions': regions.map((r) => r.name).toList(),
         'count': count,
       };
@@ -44,7 +49,10 @@ class GeoSetup {
     final regions = (j['regions'] as List).cast<String>().map(Continent.values.byName).toSet();
     return GeoSetup(
       category: GeoCategory.values.byName(j['category'] as String),
-      withOptions: j['options'] as bool,
+      mode: switch (j['mode']) {
+        final String m => AnswerMode.values.byName(m),
+        _ => j['options'] == false ? AnswerMode.typed : AnswerMode.options,
+      },
       regions: regions.isEmpty ? const {...Continent.values} : regions,
       count: j['count'] as int,
     );

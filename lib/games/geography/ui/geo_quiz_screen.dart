@@ -35,6 +35,9 @@ class _GeoQuizScreenState extends ConsumerState<GeoQuizScreen> {
   String? _picked;
   String? _typed;
 
+  /// Modo mental: ya se ha destapado la respuesta y falta decir si se acertó.
+  bool _revealed = false;
+
   final _text = TextEditingController();
   final _focus = FocusNode();
   Timer? _autoNext;
@@ -88,9 +91,10 @@ class _GeoQuizScreenState extends ConsumerState<GeoQuizScreen> {
       _wasCorrect = null;
       _picked = null;
       _typed = null;
+      _revealed = false;
       _text.clear();
     });
-    if (!_setup.withOptions) _focus.requestFocus();
+    if (_setup.mode == AnswerMode.typed) _focus.requestFocus();
   }
 
   void _finish() {
@@ -148,14 +152,27 @@ class _GeoQuizScreenState extends ConsumerState<GeoQuizScreen> {
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 8, 20, 16),
-              child: _setup.withOptions
-                  ? _Options(
-                      question: q,
-                      picked: _picked,
-                      answered: _answered,
-                      onPick: (o) => _answer(option: o),
-                    )
-                  : _TypedAnswer(
+              child: switch (_setup.mode) {
+                AnswerMode.options => _Options(
+                    question: q,
+                    picked: _picked,
+                    answered: _answered,
+                    onPick: (o) => _answer(option: o),
+                  ),
+                AnswerMode.reveal => _RevealAnswer(
+                    question: q,
+                    revealed: _revealed,
+                    onReveal: () {
+                      HapticFeedback.selectionClick();
+                      setState(() => _revealed = true);
+                    },
+                    onScore: (ok) {
+                      _answer(option: ok ? q.answer : null, giveUp: !ok);
+                      _autoNext?.cancel();
+                      _next();
+                    },
+                  ),
+                AnswerMode.typed => _TypedAnswer(
                       controller: _text,
                       focus: _focus,
                       question: q,
@@ -165,6 +182,7 @@ class _GeoQuizScreenState extends ConsumerState<GeoQuizScreen> {
                       onSubmit: () => _answer(typed: _text.text),
                       onGiveUp: () => _answer(giveUp: true),
                     ),
+              },
             ),
             // El hueco del botón está siempre reservado para que nada salte al fallar.
             Padding(
@@ -383,6 +401,92 @@ class _OptionButton extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+/// Modo mental: piensas la respuesta, la destapas y dices si la acertaste.
+class _RevealAnswer extends StatelessWidget {
+  const _RevealAnswer({
+    required this.question,
+    required this.revealed,
+    required this.onReveal,
+    required this.onScore,
+  });
+
+  final Question question;
+  final bool revealed;
+  final VoidCallback onReveal;
+  final ValueChanged<bool> onScore;
+
+  @override
+  Widget build(BuildContext context) {
+    if (!revealed) {
+      return SizedBox(
+        width: double.infinity,
+        height: 128,
+        child: FilledButton.icon(
+          style: FilledButton.styleFrom(
+            backgroundColor: geoColor,
+            foregroundColor: const Color(0xFF042320),
+            textStyle: const TextStyle(fontSize: 18, fontWeight: FontWeight.w800),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          ),
+          onPressed: onReveal,
+          icon: const Icon(Icons.visibility_rounded),
+          label: const Text('Ver respuesta'),
+        ),
+      );
+    }
+    return Column(
+      children: [
+        Container(
+          width: double.infinity,
+          height: 64,
+          alignment: Alignment.center,
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          decoration: BoxDecoration(
+            color: geoColor.withValues(alpha: 0.14),
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(color: geoColor, width: 2),
+          ),
+          child: FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(question.answer, style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w900)),
+          ),
+        ),
+        const SizedBox(height: 10),
+        Row(
+          children: [
+            Expanded(
+              child: SizedBox(
+                height: 54,
+                child: OutlinedButton.icon(
+                  style: OutlinedButton.styleFrom(
+                    foregroundColor: AppColors.danger,
+                    side: const BorderSide(color: AppColors.danger),
+                  ),
+                  onPressed: () => onScore(false),
+                  icon: const Icon(Icons.close_rounded),
+                  label: const Text('Fallé'),
+                ),
+              ),
+            ),
+            const SizedBox(width: 10),
+            Expanded(
+              child: SizedBox(
+                height: 54,
+                child: FilledButton.icon(
+                  style: FilledButton.styleFrom(backgroundColor: AppColors.success, foregroundColor: Colors.black),
+                  onPressed: () => onScore(true),
+                  icon: const Icon(Icons.check_rounded),
+                  label: const Text('Acerté'),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }

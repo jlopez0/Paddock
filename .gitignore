@@ -49,3 +49,8 @@ app.*.map.json
 Paddock-ipa.zip
 siguientes-pasos.md
 Paddock-ipa/Paddock.ipa
+
+# Firma de release Android (nunca en git)
+android/key.properties
+*.jks
+*.keystore

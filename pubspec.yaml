@@ -1,7 +1,7 @@
 name: paddock
-description: "A new Flutter project."
+description: "Paddock: juegos de fiesta para grupos (carrera, trivia, geografía y más)."
 publish_to: 'none'
-version: 0.1.0+1
+version: 1.0.0+1
 
 environment:
   sdk: ^3.11.3

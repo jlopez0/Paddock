@@ -26,7 +26,7 @@ class TriviaResultScreen extends ConsumerWidget {
         title: const Text('Resultado'),
         leading: IconButton(icon: const Icon(Icons.close_rounded), onPressed: () => context.go('/')),
       ),
-      body: ListView(
+      body: SafeArea(top: false, child: ListView(
         padding: const EdgeInsets.fromLTRB(20, 8, 20, 24),
         children: [
           Center(
@@ -86,7 +86,7 @@ class TriviaResultScreen extends ConsumerWidget {
               ),
           ],
         ],
-      ),
+      )),
     );
   }
 }

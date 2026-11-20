@@ -52,7 +52,7 @@ class RaceStatsScreen extends ConsumerWidget {
           ? const Center(
               child: Text('Aún no hay carreras', style: TextStyle(color: AppColors.textMuted)),
             )
-          : ListView(
+          : SafeArea(top: false, child: ListView(
               padding: const EdgeInsets.fromLTRB(20, 4, 20, 24),
               children: [
                 Text(stats.totalRaces == 1 ? '1 carrera' : '${stats.totalRaces} carreras',
@@ -122,7 +122,7 @@ class RaceStatsScreen extends ConsumerWidget {
                     ),
                   ),
               ],
-            ),
+            )),
     );
   }
 }

@@ -41,7 +41,7 @@ class PlayersScreen extends ConsumerWidget {
     final players = ref.watch(playersProvider);
     return Scaffold(
       appBar: AppBar(title: const Text('Jugadores')),
-      body: ListView(
+      body: SafeArea(top: false, child: ListView(
         padding: const EdgeInsets.fromLTRB(20, 8, 20, 32),
         children: [
           const AddPlayerField(),
@@ -72,7 +72,7 @@ class PlayersScreen extends ConsumerWidget {
               ),
             ),
         ],
-      ),
+      )),
     );
   }
 }

@@ -36,7 +36,7 @@ class RoscoSetupScreen extends ConsumerWidget {
       data: tinted,
       child: Scaffold(
         appBar: AppBar(title: const Text('El rosco')),
-        body: ListView(
+        body: SafeArea(top: false, child: ListView(
           padding: const EdgeInsets.fromLTRB(20, 4, 20, 24),
           children: [
             const Text(
@@ -91,7 +91,7 @@ class RoscoSetupScreen extends ConsumerWidget {
               child: const Text('Jugar · 27 letras', style: TextStyle(fontSize: 17, fontWeight: FontWeight.w800)),
             ),
           ],
-        ),
+        )),
       ),
     );
   }

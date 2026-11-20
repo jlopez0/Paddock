@@ -10,7 +10,7 @@ class CreditsScreen extends StatelessWidget {
     const muted = TextStyle(color: AppColors.textMuted, height: 1.5);
     return Scaffold(
       appBar: AppBar(title: const Text('Créditos')),
-      body: ListView(
+      body: SafeArea(top: false, child: ListView(
         padding: const EdgeInsets.all(24),
         children: const [
           Text('Baraja española', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700)),
@@ -59,7 +59,7 @@ class CreditsScreen extends StatelessWidget {
             style: muted,
           ),
         ],
-      ),
+      )),
     );
   }
 }

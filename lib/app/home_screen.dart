@@ -6,6 +6,7 @@ import '../core/players/player_widgets.dart';
 import '../core/players/players_controller.dart';
 import '../games/game_module.dart';
 import '../games/registry.dart';
+import 'app_info.dart';
 import 'theme.dart';
 
 class HomeScreen extends ConsumerWidget {
@@ -27,16 +28,16 @@ class HomeScreen extends ConsumerWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('Paddock',
+                          Text(kAppName,
                               style: TextStyle(fontSize: 34, fontWeight: FontWeight.w900, letterSpacing: -0.5)),
                           Text('Juegos para la previa', style: TextStyle(color: AppColors.textMuted)),
                         ],
                       ),
                     ),
                     IconButton(
-                      tooltip: 'Créditos',
-                      icon: const Icon(Icons.info_outline_rounded),
-                      onPressed: () => context.push('/credits'),
+                      tooltip: 'Ajustes',
+                      icon: const Icon(Icons.settings_rounded),
+                      onPressed: () => context.push('/settings'),
                     ),
                   ],
                 ),

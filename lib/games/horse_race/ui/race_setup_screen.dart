@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import '../../../core/settings/app_feedback.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -42,7 +42,7 @@ class _RaceSetupScreenState extends ConsumerState<RaceSetupScreen> {
   }
 
   void _toggle(Player p) {
-    HapticFeedback.selectionClick();
+    AppFeedback.selection();
     setState(() {
       if (_drafts.remove(p.id) == null) _drafts[p.id] = _Draft();
     });
@@ -224,7 +224,7 @@ class _BetCard extends StatelessWidget {
             _HidalgoButton(
               selected: draft.hidalgo,
               onTap: () {
-                HapticFeedback.selectionClick();
+                AppFeedback.selection();
                 draft.hidalgo = !draft.hidalgo;
                 onChanged();
               },
@@ -240,7 +240,7 @@ class _BetCard extends StatelessWidget {
                         suit: s,
                         selected: draft.suit == s,
                         onTap: () {
-                          HapticFeedback.selectionClick();
+                          AppFeedback.selection();
                           draft.suit = s;
                           onChanged();
                         },

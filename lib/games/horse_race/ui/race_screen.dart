@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import '../../../core/settings/app_feedback.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -47,7 +48,7 @@ class _RaceScreenState extends ConsumerState<RaceScreen> {
     super.initState();
     SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft, DeviceOrientation.landscapeRight]);
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
-    if (_setup.settings.music) _startMusic();
+    if (_setup.settings.music && AppFeedback.soundEnabled) _startMusic();
   }
 
   Future<void> _startMusic() async {
@@ -86,7 +87,7 @@ class _RaceScreenState extends ConsumerState<RaceScreen> {
           setState(() => _message = 'Mazo agotado: se baraja de nuevo');
           await _wait(700);
         case HorseAdvanced(:final card):
-          HapticFeedback.selectionClick();
+          AppFeedback.selection();
           setState(() {
             _lastCard = card;
             _pos[card.suit] = _pos[card.suit]! + 1;
@@ -95,7 +96,7 @@ class _RaceScreenState extends ConsumerState<RaceScreen> {
           });
           await _wait(450);
         case ObstacleRevealed(:final card):
-          HapticFeedback.mediumImpact();
+          AppFeedback.medium();
           setState(() {
             _revealed++;
             _message = '¡Obstáculo! ${card.suit.label} retrocede';
@@ -108,7 +109,7 @@ class _RaceScreenState extends ConsumerState<RaceScreen> {
           });
           await _wait(500);
         case HorseWon(:final suit):
-          HapticFeedback.heavyImpact();
+          AppFeedback.heavy();
           _finish(suit);
       }
     }

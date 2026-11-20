@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import '../../core/settings/app_feedback.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -49,7 +49,7 @@ class _PromptDeckSetupScreenState extends ConsumerState<PromptDeckSetupScreen> {
                 color: game.color,
                 selected: _levels.contains(level),
                 onTap: () {
-                  HapticFeedback.selectionClick();
+                  AppFeedback.selection();
                   setState(() {
                     if (!_levels.remove(level)) _levels.add(level);
                   });
@@ -134,7 +134,7 @@ class _PromptDeckPlayScreenState extends ConsumerState<PromptDeckPlayScreen> {
     final deck = _deck!;
     final next = _index + delta;
     if (next < 0 || next > deck.length) return;
-    HapticFeedback.selectionClick();
+    AppFeedback.selection();
     setState(() {
       _forward = delta > 0;
       _index = next;

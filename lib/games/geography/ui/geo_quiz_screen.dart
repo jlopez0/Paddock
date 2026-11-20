@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import '../../../core/settings/app_feedback.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -63,7 +63,7 @@ class _GeoQuizScreenState extends ConsumerState<GeoQuizScreen> {
     } else {
       ok = _engine!.isCorrect(_q, typed ?? '');
     }
-    ok ? HapticFeedback.lightImpact() : HapticFeedback.heavyImpact();
+    ok ? AppFeedback.light() : AppFeedback.heavy();
     setState(() {
       _wasCorrect = ok;
       _picked = option;
@@ -163,7 +163,7 @@ class _GeoQuizScreenState extends ConsumerState<GeoQuizScreen> {
                     question: q,
                     revealed: _revealed,
                     onReveal: () {
-                      HapticFeedback.selectionClick();
+                      AppFeedback.selection();
                       setState(() => _revealed = true);
                     },
                     onScore: (ok) {

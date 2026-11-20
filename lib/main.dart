@@ -3,8 +3,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'app/app_info.dart';
 import 'app/router.dart';
 import 'app/theme.dart';
+import 'core/settings/settings_controller.dart';
 import 'core/storage.dart';
 
 Future<void> main() async {
@@ -19,13 +21,14 @@ Future<void> main() async {
   );
 }
 
-class PaddockApp extends StatelessWidget {
+class PaddockApp extends ConsumerWidget {
   const PaddockApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    ref.watch(settingsProvider); // carga los ajustes (sonido/vibración) al arrancar
     return MaterialApp.router(
-      title: 'Paddock',
+      title: kAppName,
       debugShowCheckedModeBanner: false,
       theme: buildAppTheme(),
       routerConfig: appRouter,

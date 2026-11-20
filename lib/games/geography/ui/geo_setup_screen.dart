@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import '../../../core/settings/app_feedback.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
@@ -113,7 +113,7 @@ class GeoSetupScreen extends ConsumerWidget {
                           setup.regions.contains(r),
                       showCheckmark: false,
                       onSelected: (_) {
-                        HapticFeedback.selectionClick();
+                        AppFeedback.selection();
                         controller.update((s) {
                           // Desde "todo el mundo", tocar una región deja solo esa.
                           if (s.regions.length == Continent.values.length) {
@@ -221,7 +221,7 @@ class _Tile extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        HapticFeedback.selectionClick();
+        AppFeedback.selection();
         onTap();
       },
       child: AnimatedContainer(

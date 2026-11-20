@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import '../../../core/settings/app_feedback.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -53,7 +53,7 @@ class _RoscoPlayScreenState extends ConsumerState<RoscoPlayScreen> {
       if (_phase == _Phase.thinking) {
         // Un toque suave en cada uno de los últimos 3 segundos.
         final left = _phaseMs - _elapsedMs;
-        if (left > 0 && left <= 3000 && (before ~/ 1000) != (_elapsedMs ~/ 1000)) HapticFeedback.selectionClick();
+        if (left > 0 && left <= 3000 && (before ~/ 1000) != (_elapsedMs ~/ 1000)) AppFeedback.selection();
         if (_elapsedMs >= _phaseMs) _reveal();
       } else if (_setup.auto && _elapsedMs >= _phaseMs) {
         _next();
@@ -62,7 +62,7 @@ class _RoscoPlayScreenState extends ConsumerState<RoscoPlayScreen> {
   }
 
   void _reveal() {
-    HapticFeedback.mediumImpact();
+    AppFeedback.medium();
     setState(() {
       _phase = _Phase.revealed;
       _elapsedMs = 0;

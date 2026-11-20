@@ -6,7 +6,8 @@ Idea central: **Paddock es un recopilatorio de juegos de grupo con marcador de l
 
 > **Estado (19/11/2026)**
 > - Fase 0, configuración hecha: IDs `es.jlopez0.paddock`, compileSdk/targetSdk 36, firma release con `key.properties`, `PrivacyInfo.xcprivacy`, `ITSAppUsesNonExemptEncryption=false`, solo iPhone, versión 1.0.0+1, `docs/` (privacidad, soporte, guía Android).
-> - Fase 0, pendiente: pantalla de Ajustes; revisar edge-to-edge en Android 16; sustituir `CORREO_DE_CONTACTO` y activar GitHub Pages; `codemagic.yaml` (cuando toque iOS).
+> - Fase 0, hecha en código (20/11/2026): pantalla de Ajustes (sonido, vibración, privacidad, soporte, créditos, versión; el modo de consecuencias queda como hueco para la Fase 1), nombre en `kAppName`, SafeArea en las pantallas de lista y atrás predictivo activado, paquetes actualizados, AAB release compilado.
+> - Fase 0, pendiente a mano: probar en emulador Android 16; sustituir `CORREO_DE_CONTACTO` y activar GitHub Pages; generar la clave de subida; `flutter upgrade` (bloqueado por Device Guard, SDK en 3.41.5); `codemagic.yaml` (cuando toque iOS).
 
 Bloqueos detectados en el punto de partida (commit 644b0a1):
 - 186 de las 329 frases de "Yo nunca" son "hot" explícitas.
@@ -19,12 +20,12 @@ Bloqueos detectados en el punto de partida (commit 644b0a1):
 Modelo: **Sonnet 5.5 · esfuerzo medio**
 
 1. ✅ IDs definitivos `es.jlopez0.paddock` (no se pueden cambiar después de publicar).
-2. ✅ `pubspec.yaml`: description y versión `1.0.0+1`. ⏳ Actualizar Flutter estable y plugins (`flutter pub upgrade`).
-3. ✅ Android: compileSdk/targetSdk 36 y firma release con `key.properties`. ⏳ Comprobar edge-to-edge (SafeArea) y "atrás predictivo" en un emulador con Android 16.
+2. ✅ `pubspec.yaml`: description y versión `1.0.0+1`. ✅ Plugins actualizados (`flutter pub upgrade`; `audioplayers_android` fijado a 5.2.1 por incompatibilidad con AGP 8.11). ⏳ `flutter upgrade`: Device Guard bloquea el `dart.exe` nuevo (3.50); SDK vuelto a 3.41.5.
+3. ✅ Android: compileSdk/targetSdk 36 y firma release con `key.properties`. ✅ SafeArea en todas las pantallas y `enableOnBackInvokedCallback`. ⏳ Probar en un emulador con Android 16.
 4. ✅ iOS: `PrivacyInfo.xcprivacy`, `ITSAppUsesNonExemptEncryption=false`, solo iPhone.
 5. ⏳ `codemagic.yaml` (cuando toque iOS).
 6. ✅ `docs/` para GitHub Pages. ⏳ Poner el correo y activar Pages.
-7. ⏳ Pantalla **Ajustes**: modo de consecuencias, sonido, vibración, privacidad, soporte, créditos y versión.
+7. ✅ Pantalla **Ajustes**: modo de consecuencias, sonido, vibración, privacidad, soporte, créditos y versión.
 
 ## Fase 1 · Sistema de consecuencias (el "enmascarado" del alcohol)
 Modelo: **Opus 5.5 · esfuerzo medio**

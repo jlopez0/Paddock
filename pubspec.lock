@@ -42,13 +42,13 @@ packages:
     source: hosted
     version: "6.8.1"
   audioplayers_android:
-    dependency: transitive
+    dependency: "direct overridden"
     description:
       name: audioplayers_android
-      sha256: f5ff5b15620fbab8cb0849e9636c48e2b96c3f0f71723bbbe2ad3c761b205f05
+      sha256: "60a6728277228413a85755bd3ffd6fab98f6555608923813ce383b190a360605"
       url: "https://pub.dev"
     source: hosted
-    version: "5.3.0"
+    version: "5.2.1"
   audioplayers_darwin:
     dependency: transitive
     description:

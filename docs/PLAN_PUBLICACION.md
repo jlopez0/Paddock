@@ -25,7 +25,7 @@ Modelo: **Sonnet 5.5 · esfuerzo medio**
 4. ✅ iOS: `PrivacyInfo.xcprivacy`, `ITSAppUsesNonExemptEncryption=false`, solo iPhone.
 5. ⏳ `codemagic.yaml` (cuando toque iOS).
 6. ✅ `docs/` para GitHub Pages. ⏳ Poner el correo y activar Pages.
-7. ✅ Pantalla **Ajustes**: modo de consecuencias, sonido, vibración, privacidad, soporte, créditos y versión.
+7. ✅ Pantalla **Ajustes**: sonido, vibración, privacidad, soporte, créditos y versión (el modo de consecuencias entra en la Fase 1).
 
 ## Fase 1 · Sistema de consecuencias (el "enmascarado" del alcohol)
 Modelo: **Opus 5.5 · esfuerzo medio**

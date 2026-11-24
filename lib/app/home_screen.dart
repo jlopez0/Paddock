@@ -4,9 +4,11 @@ import 'package:go_router/go_router.dart';
 
 import '../core/players/player_widgets.dart';
 import '../core/players/players_controller.dart';
+import '../core/session/session_controller.dart';
 import '../games/game_module.dart';
 import '../games/registry.dart';
 import 'app_info.dart';
+import 'cup_screen.dart';
 import 'theme.dart';
 
 class HomeScreen extends ConsumerWidget {
@@ -75,6 +77,10 @@ class HomeScreen extends ConsumerWidget {
                 ),
               ),
             ),
+            const SliverPadding(
+              padding: EdgeInsets.fromLTRB(20, 4, 20, 0),
+              sliver: SliverToBoxAdapter(child: _CupSlot()),
+            ),
             SliverPadding(
               padding: const EdgeInsets.fromLTRB(20, 12, 20, 32),
               sliver: SliverList.separated(
@@ -87,6 +93,17 @@ class HomeScreen extends ConsumerWidget {
         ),
       ),
     );
+  }
+}
+
+/// Separación + tarjeta de la Copa; no ocupa nada si no hay puntuaciones.
+class _CupSlot extends ConsumerWidget {
+  const _CupSlot();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    if (ref.watch(sessionProvider).isEmpty) return const SizedBox.shrink();
+    return const Padding(padding: EdgeInsets.only(top: 8), child: CupCard());
   }
 }
 

@@ -178,7 +178,7 @@ class _AbecedarioPlayScreenState extends ConsumerState<AbecedarioPlayScreen> {
                       Padding(
                         padding: const EdgeInsets.only(right: 12),
                         child: Text(
-                          '${_index + 1}/${_entries!.length}',
+                          '${_index + 1} / ${_entries!.length}',
                           style: const TextStyle(
                             fontWeight: FontWeight.w800,
                             color: AppColors.textMuted,

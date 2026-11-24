@@ -61,7 +61,7 @@ class HomeScreen extends ConsumerWidget {
                           Expanded(
                             child: players.isEmpty
                                 ? const Text('Añade jugadores')
-                                : Text('${players.length} jugadores',
+                                : Text(playersLabel(players.length),
                                     style: const TextStyle(fontWeight: FontWeight.w600)),
                           ),
                           for (final p in players.take(5))

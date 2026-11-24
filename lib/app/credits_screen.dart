@@ -9,12 +9,14 @@ class CreditsScreen extends StatelessWidget {
 
   static const _ccBySa4 = 'https://creativecommons.org/licenses/by-sa/4.0/';
 
-  Future<void> _openLicense(BuildContext context) async {
+  static const _ccBySa3 = 'https://creativecommons.org/licenses/by-sa/3.0/';
+
+  Future<void> _openLicense(BuildContext context, String url) async {
     final messenger = ScaffoldMessenger.of(context);
     var ok = false;
     try {
       ok = await launchUrl(
-        Uri.parse(_ccBySa4),
+        Uri.parse(url),
         mode: LaunchMode.externalApplication,
       );
     } catch (_) {}
@@ -58,9 +60,16 @@ class CreditsScreen extends StatelessWidget {
               'por Basquetteur, a partir del trabajo de Germarquezm '
               '("Baraja española.svg" y "Baraja española completa.png").\n'
               'Licencia: Creative Commons Atribución-CompartirIgual 3.0 '
-              '(CC BY-SA 3.0) — creativecommons.org/licenses/by-sa/3.0\n'
+              '(CC BY-SA 3.0).\n'
               'Cambios: recortadas en cartas individuales y reescaladas.',
               style: muted,
+            ),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: TextButton(
+                onPressed: () => _openLicense(context, _ccBySa3),
+                child: const Text('Ver licencia CC BY-SA 3.0'),
+              ),
             ),
             SizedBox(height: 24),
             Text(
@@ -89,7 +98,7 @@ class CreditsScreen extends StatelessWidget {
             Align(
               alignment: Alignment.centerLeft,
               child: TextButton(
-                onPressed: () => _openLicense(context),
+                onPressed: () => _openLicense(context, _ccBySa4),
                 child: const Text('Ver licencia CC BY-SA 4.0'),
               ),
             ),

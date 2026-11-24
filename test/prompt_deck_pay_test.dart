@@ -258,7 +258,37 @@ void main() {
     await tester.pump();
     await tester.tap(find.byTooltip('Salir'));
     await tester.pumpAndSettle();
+    // Pide confirmación: "Seguir" se queda y no registra nada todavía.
+    expect(find.text('¿Salir de la partida?'), findsOneWidget);
+    await tester.tap(find.text('Seguir'));
+    await tester.pumpAndSettle();
+    expect(find.text('inicio'), findsNothing);
+    expect(c.read(sessionProvider).events, isEmpty);
+
+    // Atrás del sistema (también el predictivo): mismo diálogo; "Salir" conserva las fichas.
+    await tester.binding.handlePopRoute();
+    await tester.pumpAndSettle();
+    expect(find.text('¿Salir de la partida?'), findsOneWidget);
+    await tester.tap(find.text('Salir'));
+    await tester.pumpAndSettle();
     expect(c.read(sessionProvider).events.map((e) => e.playerId), ['p2']);
     expect(find.text('inicio'), findsOneWidget);
   });
+
+  for (final mode in [null, 'retos', 'sorbos']) {
+    testWidgets('marcar a alguien no mueve la carta (modo $mode)', (
+      tester,
+    ) async {
+      await _pump(tester, _game(), mode: mode);
+      final before =
+          tester.getSize(find.text('regla').first).height +
+          tester.getTopLeft(find.text('regla').first).dy;
+      await tester.tap(find.byKey(const ValueKey('pay-p3')));
+      await tester.pumpAndSettle();
+      final after =
+          tester.getSize(find.text('regla').first).height +
+          tester.getTopLeft(find.text('regla').first).dy;
+      expect(after, before);
+    });
+  }
 }

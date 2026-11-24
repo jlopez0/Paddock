@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../app/theme.dart';
 import '../../../core/consequences/consequence_banner.dart';
+import '../../../core/consequences/consequences.dart';
 import '../../../core/consequences/retos_filter.dart';
 import '../../../core/content/prompts.dart';
 import '../../../core/players/player.dart';
@@ -14,6 +15,7 @@ import '../../../core/settings/settings_controller.dart';
 import '../domain/bets.dart';
 import '../domain/cards.dart';
 import '../race_result.dart';
+import '../race_texts.dart';
 
 const _retosAsset = 'assets/content/es/retos.json';
 
@@ -35,8 +37,10 @@ class _RaceResultScreenState extends ConsumerState<RaceResultScreen> {
   }
 
   /// Otros jugadores a los que puede repartir [playerId] su All-in.
-  List<Player> _pool(List<Player> players, String playerId) =>
-      [for (final p in players) if (p.id != playerId) p];
+  List<Player> _pool(List<Player> players, String playerId) => [
+    for (final p in players)
+      if (p.id != playerId) p,
+  ];
 
   /// Envía las fichas de esta carrera a la Copa, una sola vez (el `roundId` evita duplicados).
   /// Si [force] es falso y hay All-in ganadores sin repartir, espera: la elección se puede
@@ -46,7 +50,10 @@ class _RaceResultScreenState extends ConsumerState<RaceResultScreen> {
     if (r == null || r.settled) return;
     final players = ref.read(playersProvider);
     final ids = {for (final p in players) p.id};
-    final outcomes = [for (final o in r.outcomes) if (ids.contains(o.bet.playerId)) o];
+    final outcomes = [
+      for (final o in r.outcomes)
+        if (ids.contains(o.bet.playerId)) o,
+    ];
     if (!force) {
       for (final o in outcomes) {
         if (!(o.won && o.isAllIn)) continue;
@@ -93,12 +100,34 @@ class _RaceResultScreenState extends ConsumerState<RaceResultScreen> {
     final retosPrompts = ref.watch(promptsProvider(_retosAsset)).asData?.value;
     final retos = retosPrompts == null ? null : filterRetos(retosPrompts, adultConfirmed: adult);
 
-    final known = [for (final o in result.outcomes) if (byId.containsKey(o.bet.playerId)) o];
+    final known = [
+      for (final o in result.outcomes)
+        if (byId.containsKey(o.bet.playerId)) o,
+    ];
     final winners = known.where((o) => o.won).toList();
     final settlement = settleChips(known, result.allInTargets);
     final losses = <String, int>{
       for (final e in settlement.losses.entries)
-        if (byId[e.key] case final p?) p.name: e.value,
+        if (e.value > 0 && byId.containsKey(e.key)) e.key: e.value,
+    };
+    // Por qué paga cada uno: lo que apostó y falló, o el All-in que le reparten.
+    final reasons = <String, List<String>>{};
+    for (final o in known) {
+      if (!o.won) {
+        (reasons[o.bet.playerId] ??= []).add('Apostó ${betText(o.bet)} a ${o.bet.suit.label} y falló');
+      } else if (o.isAllIn) {
+        final pool = _pool(players, o.bet.playerId).map((p) => p.id).toSet();
+        final chosen = (result.allInTargets[o.bet.playerId] ?? const <String>{}).intersection(pool);
+        for (final t in chosen.take(o.allIns)) {
+          (reasons[t] ??= []).add('Le reparte un All-in ${byId[o.bet.playerId]!.name}');
+        }
+      }
+    }
+    final lossesByName = {for (final e in losses.entries) byId[e.key]!.name: e.value};
+    final gainsByName = {
+      for (final w in winners)
+        if ((settlement.deltas[w.bet.playerId] ?? 0) > 0)
+          byId[w.bet.playerId]!.name: settlement.deltas[w.bet.playerId]!,
     };
 
     return PopScope(
@@ -107,7 +136,7 @@ class _RaceResultScreenState extends ConsumerState<RaceResultScreen> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Resultado'),
+          title: const Text('Carrera de caballos'),
           leading: IconButton(
             tooltip: 'Cerrar',
             icon: const Icon(Icons.close_rounded),
@@ -121,10 +150,13 @@ class _RaceResultScreenState extends ConsumerState<RaceResultScreen> {
             children: [
               _Podium(standings: result.standings),
               const SizedBox(height: 8),
-              Text('${result.draws} cartas sacadas',
-                  textAlign: TextAlign.center, style: const TextStyle(color: AppColors.textMuted)),
+              Text(
+                '${result.draws} cartas sacadas',
+                textAlign: TextAlign.center,
+                style: const TextStyle(color: AppColors.textMuted),
+              ),
               if (winners.isNotEmpty) ...[
-                const _SectionHeader(title: '🎉 Reparten', color: AppColors.success),
+                const _SectionHeader(title: '🎉 Ganan', color: AppColors.success),
                 for (final o in winners)
                   _WinnerCard(
                     outcome: o,
@@ -132,13 +164,28 @@ class _RaceResultScreenState extends ConsumerState<RaceResultScreen> {
                     pool: _pool(players, o.bet.playerId),
                     targets: result.allInTargets[o.bet.playerId] ?? const {},
                     locked: result.settled,
-                    onToggle: (target, max) =>
-                        _toggleTarget(result, byId[o.bet.playerId]!, target, max),
+                    mode: mode,
+                    onToggle: (target, max) => _toggleTarget(result, byId[o.bet.playerId]!, target, max),
                   ),
+                if (gainsByName.isNotEmpty)
+                  Text(chipsLine('Ganan', gainsByName, gain: true), style: const TextStyle(color: AppColors.textMuted)),
               ],
               if (losses.isNotEmpty) ...[
                 const _SectionHeader(title: '💸 Pagan', color: AppColors.danger),
-                ConsequenceBanner(losses: losses, mode: mode, retos: retos),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 8),
+                  child: Text(
+                    chipsLine('Pagan', lossesByName, gain: false),
+                    style: const TextStyle(color: AppColors.textMuted),
+                  ),
+                ),
+                _Payers(
+                  losses: losses,
+                  names: {for (final p in players) p.id: p.name},
+                  reasons: reasons,
+                  mode: mode,
+                  retos: retos,
+                ),
               ],
               if (winners.isEmpty)
                 const Padding(
@@ -182,9 +229,12 @@ class _SectionHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Padding(
-        padding: const EdgeInsets.only(top: 20, bottom: 8),
-        child: Text(title, style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800, color: color)),
-      );
+    padding: const EdgeInsets.only(top: 20, bottom: 8),
+    child: Text(
+      title,
+      style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800, color: color),
+    ),
+  );
 }
 
 class _Podium extends StatelessWidget {
@@ -214,8 +264,7 @@ class _Podium extends StatelessWidget {
                       duration: Duration(milliseconds: 500 + 200 * i),
                       curve: Curves.easeOutBack,
                       builder: (c, t, child) => Transform.scale(scale: t, child: child),
-                      child: Image.asset(PlayingCard.horseAsset(standings[order[i]]),
-                          height: order[i] == 0 ? 130 : 95),
+                      child: Image.asset(PlayingCard.horseAsset(standings[order[i]]), height: order[i] == 0 ? 130 : 95),
                     ),
                     const SizedBox(height: 6),
                     Container(
@@ -226,8 +275,10 @@ class _Podium extends StatelessWidget {
                         borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
                         border: Border.all(color: standings[order[i]].color),
                       ),
-                      child: Text('${order[i] + 1}º',
-                          style: const TextStyle(fontSize: 26, fontWeight: FontWeight.w900)),
+                      child: Text(
+                        '${order[i] + 1}º',
+                        style: const TextStyle(fontSize: 26, fontWeight: FontWeight.w900),
+                      ),
                     ),
                   ],
                 ),
@@ -246,6 +297,7 @@ class _WinnerCard extends StatelessWidget {
     required this.pool,
     required this.targets,
     required this.locked,
+    required this.mode,
     required this.onToggle,
   });
 
@@ -254,6 +306,7 @@ class _WinnerCard extends StatelessWidget {
   final List<Player> pool;
   final Set<String> targets;
   final bool locked;
+  final ConsequenceMode mode;
   final void Function(Player target, int max) onToggle;
 
   @override
@@ -261,7 +314,9 @@ class _WinnerCard extends StatelessWidget {
     final bet = outcome.bet;
     final max = allInTargetCount(pool.length);
     final chosen = targets.where((id) => pool.any((p) => p.id == id)).length;
-    final betText = bet.isAllIn ? 'All-in' : (bet.chips == 1 ? '1 ficha' : '${bet.chips} fichas');
+    final title = outcome.isAllIn
+        ? '${player.name} reparte ${allInCountText(outcome.allIns)}'
+        : '${player.name} gana ${chipsText(outcome.chips)}';
     return Padding(
       padding: const EdgeInsets.only(bottom: 8),
       child: Card(
@@ -269,12 +324,8 @@ class _WinnerCard extends StatelessWidget {
           children: [
             ListTile(
               leading: PlayerAvatar(player),
-              title: Text(player.name, style: const TextStyle(fontWeight: FontWeight.w700)),
-              subtitle: Text('Apostó $betText a ${bet.suit.label}'),
-              trailing: Text(
-                outcome.label,
-                style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w900, color: AppColors.success),
-              ),
+              title: Text(title, style: const TextStyle(fontWeight: FontWeight.w700)),
+              subtitle: Text('Apostó ${betText(bet)} a ${bet.suit.label}'),
             ),
             if (outcome.isAllIn)
               Padding(
@@ -283,11 +334,11 @@ class _WinnerCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      max == 0
-                          ? 'No hay a quién repartir los All-in.'
-                          : 'Reparte un All-in a $max ${max == 1 ? "persona" : "personas distintas"} ($chosen/$max)',
+                      max == 0 ? 'No hay a quién repartir los All-in.' : '${allInShareText(mode, max)} ($chosen/$max)',
                       style: const TextStyle(fontWeight: FontWeight.w700),
                     ),
+                    const SizedBox(height: 2),
+                    Text(allInCupNote, style: const TextStyle(color: AppColors.textMuted, fontSize: 12)),
                     if (max > 0) ...[
                       const SizedBox(height: 8),
                       Wrap(
@@ -314,5 +365,64 @@ class _WinnerCard extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+/// Quién paga y por qué. Misma lógica que `ConsequenceBanner`, más el motivo y, en retos y
+/// sorbos, una línea aparte con lo que se registra en la Copa.
+class _Payers extends StatelessWidget {
+  const _Payers({
+    required this.losses,
+    required this.names,
+    required this.reasons,
+    required this.mode,
+    required this.retos,
+  });
+
+  final Map<String, int> losses;
+  final Map<String, String> names;
+  final Map<String, List<String>> reasons;
+  final ConsequenceMode mode;
+  final List<String>? retos;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final pool = (retos == null || retos!.isEmpty) ? kFallbackRetos : retos!;
+    var retoIndex = 0;
+    final rows = <Widget>[];
+    for (final e in losses.entries) {
+      final loss = resolveLoss(e.value, mode);
+      if (loss.amount == 0) continue;
+      final reto = mode == ConsequenceMode.retos ? pool[retoIndex++ % pool.length] : null;
+      final cup = cupLineFor(mode, e.value);
+      final why = reasons[e.key]?.join(' · ');
+      rows.add(
+        Card(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Expanded(child: Text(names[e.key] ?? '', style: theme.textTheme.titleMedium)),
+                    Text(ConsequenceBanner.amountText(loss), style: theme.textTheme.titleMedium),
+                  ],
+                ),
+                if (why != null) Text(why, style: const TextStyle(color: AppColors.textMuted, fontSize: 13)),
+                if (reto != null) ...[const SizedBox(height: 4), Text(reto, style: theme.textTheme.bodyMedium)],
+                if (cup != null)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 4),
+                    child: Text(cup, style: const TextStyle(color: AppColors.textMuted, fontSize: 13)),
+                  ),
+              ],
+            ),
+          ),
+        ),
+      );
+    }
+    return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: rows);
   }
 }

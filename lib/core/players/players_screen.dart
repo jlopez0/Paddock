@@ -31,9 +31,28 @@ class PlayersScreen extends ConsumerWidget {
         ],
       ),
     );
-    if (name != null && name.trim().isNotEmpty) {
-      ref.read(playersProvider.notifier).rename(p.id, name);
+    if (name == null || !context.mounted) return;
+    final notifier = ref.read(playersProvider.notifier);
+    final messenger = ScaffoldMessenger.of(context);
+    if (name.trim().isEmpty) {
+      messenger.showSnackBar(const SnackBar(content: Text('El nombre no puede estar vacío')));
+    } else if (notifier.nameTaken(name, exceptId: p.id)) {
+      messenger.showSnackBar(const SnackBar(content: Text('Ya hay un jugador con ese nombre')));
+    } else {
+      notifier.rename(p.id, name);
     }
+  }
+
+  void _remove(BuildContext context, WidgetRef ref, Player p) {
+    final notifier = ref.read(playersProvider.notifier);
+    final index = ref.read(playersProvider).indexWhere((x) => x.id == p.id);
+    notifier.remove(p.id);
+    ScaffoldMessenger.of(context)
+      ..clearSnackBars()
+      ..showSnackBar(SnackBar(
+        content: Text('${p.name} eliminado'),
+        action: SnackBarAction(label: 'Deshacer', onPressed: () => notifier.restore(p, index)),
+      ));
   }
 
   @override
@@ -66,7 +85,7 @@ class PlayersScreen extends ConsumerWidget {
                   trailing: IconButton(
                     tooltip: 'Eliminar',
                     icon: const Icon(Icons.delete_outline_rounded),
-                    onPressed: () => ref.read(playersProvider.notifier).remove(p.id),
+                    onPressed: () => _remove(context, ref, p),
                   ),
                 ),
               ),

@@ -16,6 +16,8 @@ import '../../core/players/player.dart';
 import '../../core/players/player_widgets.dart';
 import '../../core/players/players_controller.dart';
 import '../../core/session/session_controller.dart';
+import 'game_colors.dart';
+import 'level_chips.dart';
 import 'prompt_deck_module.dart';
 
 /// Mazo de retos que alimenta al [ConsequenceBanner] en los modos Retos y Sorbos.
@@ -44,32 +46,9 @@ class _PromptDeckSetupScreenState extends ConsumerState<PromptDeckSetupScreen> {
   final Set<PromptLevel> _levels = {PromptLevel.suave, PromptLevel.picante};
 
   Future<void> _toggle(PromptLevel level) async {
-    AppFeedback.selection();
-    if (!_levels.contains(level) &&
-        level == PromptLevel.atrevido &&
-        !ref.read(settingsProvider).adultConfirmed) {
-      final ok = await showDialog<bool>(
-        context: context,
-        builder: (ctx) => AlertDialog(
-          title: const Text('Solo para mayores de 18'),
-          content: const Text(
-            'El nivel Atrevido incluye contenido para adultos. '
-            'Actívalo solo si todos los presentes son mayores de edad.',
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(ctx, false),
-              child: const Text('Cancelar'),
-            ),
-            FilledButton(
-              onPressed: () => Navigator.pop(ctx, true),
-              child: const Text('Tengo 18 o más'),
-            ),
-          ],
-        ),
-      );
-      if (ok != true || !mounted) return;
-      ref.read(settingsProvider.notifier).confirmAdult();
+    if (!_levels.contains(level)) {
+      final ok = await ensureLevelAllowed(context, ref, level);
+      if (!ok || !mounted) return;
     }
     setState(() {
       if (!_levels.remove(level)) _levels.add(level);
@@ -96,29 +75,24 @@ class _PromptDeckSetupScreenState extends ConsumerState<PromptDeckSetupScreen> {
           Text(
             game.rule,
             textAlign: TextAlign.center,
-            style: const TextStyle(color: AppColors.textMuted, fontSize: 16),
+            style: const TextStyle(color: GameColors.mutedText, fontSize: 16),
           ),
           const SizedBox(height: 32),
           const Text(
             'NIVEL',
             style: TextStyle(
-              color: AppColors.textMuted,
+              color: GameColors.mutedText,
               fontWeight: FontWeight.w700,
               letterSpacing: 1.2,
               fontSize: 12,
             ),
           ),
           const SizedBox(height: 10),
-          for (final level in PromptLevel.values)
-            Padding(
-              padding: const EdgeInsets.only(bottom: 10),
-              child: _LevelTile(
-                level: level,
-                color: game.color,
-                selected: _levels.contains(level),
-                onTap: () => _toggle(level),
-              ),
-            ),
+          LevelChips(
+            levels: _levels,
+            color: game.color,
+            onToggle: _toggle,
+          ),
           if (prompts.hasError)
             Text(
               'No se pudo cargar el contenido: ${prompts.error}',
@@ -137,58 +111,6 @@ class _PromptDeckSetupScreenState extends ConsumerState<PromptDeckSetupScreen> {
           child: Text(
             count == 0 ? 'Elige al menos un nivel' : 'Empezar · $count cartas',
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class _LevelTile extends StatelessWidget {
-  const _LevelTile({
-    required this.level,
-    required this.color,
-    required this.selected,
-    required this.onTap,
-  });
-
-  final PromptLevel level;
-  final Color color;
-  final bool selected;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 180),
-        padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 16),
-        decoration: BoxDecoration(
-          color: selected ? color.withValues(alpha: 0.2) : AppColors.surface,
-          borderRadius: BorderRadius.circular(16),
-          border: Border.all(
-            color: selected ? color : AppColors.outline,
-            width: selected ? 2 : 1,
-          ),
-        ),
-        child: Row(
-          children: [
-            Text(level.emoji, style: const TextStyle(fontSize: 26)),
-            const SizedBox(width: 14),
-            Expanded(
-              child: Text(
-                level.label,
-                style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-            ),
-            Icon(
-              selected ? Icons.check_circle_rounded : Icons.circle_outlined,
-              color: selected ? color : AppColors.textMuted,
-            ),
-          ],
         ),
       ),
     );
@@ -270,6 +192,32 @@ class _PromptDeckPlayScreenState extends ConsumerState<PromptDeckPlayScreen> {
     });
   }
 
+  Future<void> _confirmExit() async {
+    final leave = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text('¿Salir de la partida?'),
+        content: const Text(
+          'Se pierde el punto por el que ibas en el mazo. '
+          'Las fichas que ya has marcado se quedan en la Copa.',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx, false),
+            child: const Text('Seguir'),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.pop(ctx, true),
+            child: const Text('Salir'),
+          ),
+        ],
+      ),
+    );
+    if (leave != true || !mounted) return;
+    _commit(_index);
+    context.pop();
+  }
+
   void _go(int delta) {
     final deck = _deck!;
     final next = _index + delta;
@@ -308,9 +256,15 @@ class _PromptDeckPlayScreenState extends ConsumerState<PromptDeckPlayScreen> {
     final showPay = players.isNotEmpty && !finished;
 
     return PopScope(
-      // Salir con las fichas de la carta actual marcadas no las pierde: se registran al cerrar.
+      // Con el mazo a medias, salir (X, atrás o atrás predictivo) pide confirmación.
+      // Las fichas de la carta actual marcadas no se pierden: se registran al salir.
+      canPop: finished,
       onPopInvokedWithResult: (didPop, _) {
-        if (didPop) _commit(_index);
+        if (didPop) {
+          _commit(_index);
+          return;
+        }
+        _confirmExit();
       },
       child: Scaffold(
         body: Container(
@@ -334,7 +288,7 @@ class _PromptDeckPlayScreenState extends ConsumerState<PromptDeckPlayScreen> {
                       IconButton(
                         tooltip: 'Salir',
                         icon: const Icon(Icons.close_rounded),
-                        onPressed: () => context.pop(),
+                        onPressed: () => Navigator.of(context).maybePop(),
                       ),
                       Expanded(
                         child: Text(
@@ -350,7 +304,7 @@ class _PromptDeckPlayScreenState extends ConsumerState<PromptDeckPlayScreen> {
                         width: 48,
                         child: Text(
                           finished ? '' : '${_index + 1}/${deck.length}',
-                          style: const TextStyle(color: AppColors.textMuted),
+                          style: const TextStyle(color: GameColors.mutedText),
                         ),
                       ),
                     ],
@@ -431,7 +385,7 @@ class _PromptDeckPlayScreenState extends ConsumerState<PromptDeckPlayScreen> {
                           finished ? '' : 'Toca o desliza para la siguiente',
                           textAlign: TextAlign.center,
                           style: const TextStyle(
-                            color: AppColors.textMuted,
+                            color: GameColors.mutedText,
                             fontSize: 13,
                           ),
                         ),
@@ -508,7 +462,7 @@ class _PaySection extends ConsumerWidget {
               Text(
                 locked ? 'Ya registrado en la Copa' : game.payHint,
                 style: const TextStyle(
-                  color: AppColors.textMuted,
+                  color: GameColors.mutedText,
                   fontSize: 13,
                 ),
               ),
@@ -534,23 +488,45 @@ class _PaySection extends ConsumerWidget {
                     ),
                 ],
               ),
-              if (names.isNotEmpty) ...[
-                const SizedBox(height: 8),
-                if (mode == ConsequenceMode.puntos)
-                  Text(
-                    '−$kPromptPayChips en la Copa: ${names.join(', ')}',
-                    style: const TextStyle(
-                      color: AppColors.textMuted,
-                      fontSize: 13,
+              const SizedBox(height: 8),
+              // Hueco reservado: marcar o desmarcar no mueve el resto de la pantalla.
+              // Si hay más marcados de los que caben en el hueco, crece con animación.
+              AnimatedSize(
+                duration: const Duration(milliseconds: 180),
+                curve: Curves.easeOutCubic,
+                alignment: Alignment.topCenter,
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    minHeight: MediaQuery.textScalerOf(context).scale(
+                      switch (mode) {
+                        ConsequenceMode.puntos => 22,
+                        ConsequenceMode.retos => 78,
+                        ConsequenceMode.sorbos => 60,
+                      },
                     ),
-                  )
-                else
-                  ConsequenceBanner(
-                    losses: {for (final n in names) n: kPromptPayChips},
-                    mode: mode,
-                    retos: retos,
                   ),
-              ],
+                  child: Align(
+                    alignment: Alignment.topLeft,
+                    child: names.isEmpty
+                        ? const SizedBox.shrink()
+                        : mode == ConsequenceMode.puntos
+                        ? Text(
+                            '−$kPromptPayChips en la Copa: ${names.join(', ')}',
+                            style: const TextStyle(
+                              color: GameColors.mutedText,
+                              fontSize: 13,
+                            ),
+                          )
+                        : ConsequenceBanner(
+                            losses: {
+                              for (final n in names) n: kPromptPayChips,
+                            },
+                            mode: mode,
+                            retos: retos,
+                          ),
+                  ),
+                ),
+              ),
             ],
           ),
         ),
@@ -628,7 +604,7 @@ class _PromptCard extends StatelessWidget {
           Text(
             game.rule,
             textAlign: TextAlign.center,
-            style: const TextStyle(color: AppColors.textMuted),
+            style: const TextStyle(color: GameColors.mutedText),
           ),
         ],
       ),
@@ -721,7 +697,7 @@ class _Choice extends StatelessWidget {
             child: Text(
               '— o —',
               style: TextStyle(
-                color: AppColors.textMuted,
+                color: GameColors.mutedText,
                 fontWeight: FontWeight.w700,
               ),
             ),

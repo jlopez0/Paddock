@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
 
 import '../../../app/theme.dart';
+import '../../prompt_deck/game_colors.dart';
 import '../../../core/players/player.dart';
 import '../../../core/players/player_widgets.dart';
 import '../../../core/players/players_controller.dart';
@@ -125,7 +126,7 @@ class _InfiltradoVoteScreenState extends ConsumerState<InfiltradoVoteScreen> {
             Text(
               'Se vuelve a votar solo entre ${names.join(' y ')}.',
               textAlign: TextAlign.center,
-              style: const TextStyle(color: AppColors.textMuted, fontSize: 16),
+              style: const TextStyle(color: GameColors.mutedText, fontSize: 16),
             ),
           ],
         );
@@ -177,7 +178,7 @@ class _InfiltradoVoteScreenState extends ConsumerState<InfiltradoVoteScreen> {
       child: Scaffold(
         body: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
+            padding: const EdgeInsets.fromLTRB(20, 8, 20, 16),
             child: Column(
               children: [
                 InfiltradoTopBar(title: _phase == _Phase.debate ? 'Debate' : 'Votación'),
@@ -225,7 +226,7 @@ class _Debate extends StatelessWidget {
           'Cada uno da una pista sobre la palabra sin decirla. '
           'Descubrid quién no la conoce.',
           textAlign: TextAlign.center,
-          style: TextStyle(color: AppColors.textMuted, fontSize: 16),
+          style: TextStyle(color: GameColors.mutedText, fontSize: 16),
         ),
       ],
     );

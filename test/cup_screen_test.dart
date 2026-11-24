@@ -56,12 +56,28 @@ void main() {
       nameOf: (id) => {'a': 'Ana', 'b': 'Luis', 'c': 'Eva'}[id]!,
       titleOf: (id) => 'Trivia',
     );
-    expect(text, contains('🥇 Ana: 5 fichas'));
-    expect(text, contains('🥇 Luis: 5 fichas'));
+    expect(text, startsWith('🏆 Copa de la noche · Paddock (24/11/2026)'));
+    expect(text, contains('🥇 Ana: +5 fichas'));
+    expect(text, contains('🥇 Luis: +5 fichas'));
     expect(text, contains('🥉 Eva: -2 fichas'));
+    expect(text, contains('Va ganando: Ana, Luis'));
+    expect(text, isNot(contains('Ganador')));
+    expect(text, isNot(contains('http')));
     expect(text, contains('El que más ha perdido: Eva'));
     expect(text, contains('- Trivia (1 ronda): Ana, Luis'));
     expect(text.toLowerCase(), isNot(contains('alcohol')));
+    final fin = cupShareText(s, nameOf: (id) => id, titleOf: (id) => id, finished: true);
+    expect(fin, contains('Ganador: a, b'));
+  });
+
+  test('cupShareText con todos en negativo: lidera quien menos pierde', () {
+    final s = Session.empty(_now)
+        .withRound(roundId: 'r1', gameId: 'g', deltas: {'a': -2, 'b': -5, 'c': -2}, at: _now);
+    final text = cupShareText(s, nameOf: (id) => id, titleOf: (id) => id);
+    expect(text, contains('🥇 a: -2 fichas'));
+    expect(text, contains('🥉 b: -5 fichas'));
+    expect(text, contains('Va ganando: a, c'));
+    expect(text, contains('El que más ha perdido: b'));
   });
 
   testWidgets('la pantalla muestra podio, clasificación y estadísticas', (tester) async {
@@ -71,7 +87,12 @@ void main() {
     await _pump(tester, const CupScreen());
     // Ana 4, Luis 7, Pepe 1, Eva -2.
     expect(find.text('Luis'), findsWidgets);
-    expect(find.text('7 fichas'), findsNWidgets(2)); // podio + lista
+    expect(find.text('+7 fichas'), findsNWidgets(2)); // podio + lista
+    expect(find.text('-2 fichas'), findsOneWidget); // 4.ª: solo en la lista
+    expect(find.text('Va ganando: Luis'), findsOneWidget);
+    expect(find.text('Líder'), findsOneWidget);
+    expect(find.text('Ganador'), findsNothing);
+    expect(find.textContaining('va ganando quien más ha ganado'), findsOneWidget);
     expect(find.text('Clasificación'), findsOneWidget);
     expect(find.text('Por juego'), findsOneWidget);
     expect(find.text('El que más ha perdido'), findsOneWidget);
@@ -90,7 +111,25 @@ void main() {
     await tester.pump();
     expect(env.shared, hasLength(1));
     expect(env.shared.single, startsWith('🏆 Copa de la noche'));
-    expect(env.shared.single, contains('Luis: 7 fichas'));
+    expect(env.shared.single, contains('Luis: +7 fichas'));
+    expect(env.shared.single, contains('Paddock'));
+    expect(env.shared.single, contains('24/11/2026'));
+  });
+
+  testWidgets('con letra 2.0 en 320x568 la Copa no desborda', (tester) async {
+    tester.view.physicalSize = const Size(320, 568);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.reset);
+    await _pump(
+      tester,
+      Builder(
+        builder: (context) => MediaQuery(
+          data: MediaQuery.of(context).copyWith(textScaler: const TextScaler.linear(2.0)),
+          child: const CupScreen(),
+        ),
+      ),
+    );
+    expect(tester.takeException(), isNull);
   });
 
   testWidgets('Nueva noche pide confirmación y vacía la Copa', (tester) async {

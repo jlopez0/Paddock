@@ -20,7 +20,26 @@ final shareTextProvider = Provider<Future<void> Function(String text)>(
   },
 );
 
-String _chips(int n) => n == 1 ? '1 ficha' : '$n fichas';
+/// Enlace de la app para el texto de compartir. Vacío hasta que haya URL de tienda.
+const kShareLink = '';
+
+/// Saldo con signo: `+5`, `0`, `-2`.
+String _signed(int n) => n > 0 ? '+$n' : '$n';
+
+String _chips(int n) => '${_signed(n)} ${n == 1 || n == -1 ? 'ficha' : 'fichas'}';
+
+/// Rojo si es negativo, verde si es positivo, neutro si es cero.
+Color _balanceColor(int n) => n < 0
+    ? AppColors.danger
+    : n > 0
+        ? AppColors.success
+        : AppColors.textMuted;
+
+String _date(DateTime d) =>
+    '${d.day.toString().padLeft(2, '0')}/${d.month.toString().padLeft(2, '0')}/${d.year}';
+
+const _howItWorks =
+    'Cada ronda suma las fichas ganadas y resta las perdidas: va ganando quien más ha ganado o menos ha perdido.';
 
 String _medal(int rank) => switch (rank) {
       1 => '🥇',
@@ -29,28 +48,36 @@ String _medal(int rank) => switch (rank) {
       _ => '$rank.',
     };
 
-/// Texto plano de la Copa para compartir (solo texto, sin datos personales).
+/// Mensaje de chat corto con la Copa (solo texto, sin datos personales).
+/// `finished`: la noche ha terminado, así que el primero es "Ganador" y no "Va ganando".
 String cupShareText(
   Session session, {
   required String Function(String playerId) nameOf,
   required String Function(String gameId) titleOf,
+  bool finished = false,
 }) {
-  final b = StringBuffer('🏆 Copa de la noche · $kAppName\n');
-  for (final s in session.standings) {
+  final b = StringBuffer('🏆 Copa de la noche · $kAppName (${_date(session.startedAt)})\n');
+  final standings = session.standings;
+  for (final s in standings) {
     b.writeln('${_medal(s.rank)} ${nameOf(s.playerId)}: ${_chips(s.total)}');
+  }
+  final leaders = standings.where((s) => s.rank == 1).map((s) => nameOf(s.playerId)).join(', ');
+  if (leaders.isNotEmpty) {
+    b.writeln('\n${finished ? 'Ganador' : 'Va ganando'}: $leaders');
   }
   final losers = session.biggestLosers;
   if (losers.isNotEmpty) {
-    b.writeln('\nEl que más ha perdido: ${losers.map(nameOf).join(', ')}');
+    b.writeln('El que más ha perdido: ${losers.map(nameOf).join(', ')}');
   }
   final games = session.statsByGame;
   if (games.isNotEmpty) {
     b.writeln('\nPor juego:');
     for (final g in games) {
-      final leaders = g.standings.where((s) => s.rank == 1).map((s) => nameOf(s.playerId)).join(', ');
-      b.writeln('- ${titleOf(g.gameId)} (${g.rounds} ${g.rounds == 1 ? 'ronda' : 'rondas'}): $leaders');
+      final lead = g.standings.where((s) => s.rank == 1).map((s) => nameOf(s.playerId)).join(', ');
+      b.writeln('- ${titleOf(g.gameId)} (${g.rounds} ${g.rounds == 1 ? 'ronda' : 'rondas'}): $lead');
     }
   }
+  if (kShareLink.isNotEmpty) b.writeln('\n$kShareLink');
   return b.toString().trimRight();
 }
 
@@ -136,7 +163,8 @@ class CupCard extends ConsumerWidget {
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
-                      Text(_chips(s.total), style: const TextStyle(fontWeight: FontWeight.w700)),
+                      Text(_chips(s.total),
+                          style: TextStyle(fontWeight: FontWeight.w700, color: _balanceColor(s.total))),
                     ],
                   ),
                 ),
@@ -154,7 +182,9 @@ class CupScreen extends ConsumerWidget {
   Future<void> _share(BuildContext context, WidgetRef ref) async {
     final session = ref.read(sessionProvider);
     final players = ref.read(playersProvider);
-    final text = cupShareText(session, nameOf: _nameResolver(players), titleOf: _titleOf);
+    final finished = ref.read(sessionProvider.notifier).isStale;
+    final text = cupShareText(session,
+        nameOf: _nameResolver(players), titleOf: _titleOf, finished: finished);
     try {
       await ref.read(shareTextProvider)(text);
     } catch (_) {
@@ -202,6 +232,7 @@ class CupScreen extends ConsumerWidget {
             : _CupBody(
                 session: session,
                 players: players,
+                finished: ref.read(sessionProvider.notifier).isStale,
                 onShare: () => _share(context, ref),
                 onNewNight: () => _newNight(context, ref),
               ),
@@ -238,12 +269,14 @@ class _CupBody extends StatelessWidget {
   const _CupBody({
     required this.session,
     required this.players,
+    required this.finished,
     required this.onShare,
     required this.onNewNight,
   });
 
   final Session session;
   final List<Player> players;
+  final bool finished;
   final VoidCallback onShare;
   final VoidCallback onNewNight;
 
@@ -257,30 +290,48 @@ class _CupBody extends StatelessWidget {
         ListView(
           padding: const EdgeInsets.fromLTRB(20, 8, 20, 32),
           children: [
+            _LeaderBanner(
+              names: standings.where((s) => s.rank == 1).map((s) => nameOf(s.playerId)).toList(),
+              finished: finished,
+            ),
+            const SizedBox(height: 12),
             _Podium(standings: standings.take(3).toList(), players: players),
             const SizedBox(height: 20),
             const _SectionTitle('Clasificación'),
+            const Padding(
+              padding: EdgeInsets.only(left: 4, right: 4, bottom: 8),
+              child: Text(_howItWorks, style: TextStyle(color: AppColors.textMuted, fontSize: 13)),
+            ),
             Card(
               child: Column(
                 children: [
                   for (final s in standings)
                     Semantics(
                       container: true,
-                      label: 'Puesto ${s.rank}: ${nameOf(s.playerId)}, ${_chips(s.total)}',
+                      label: 'Puesto ${s.rank}: ${nameOf(s.playerId)}, ${_chips(s.total)}'
+                          '${s.rank == 1 ? ', ${finished ? 'ganador' : 'líder'}' : ''}',
                       child: ExcludeSemantics(
                         child: ListTile(
                           leading: SizedBox(
-                            width: 56,
+                            width: 64,
                             child: Row(
                               children: [
-                                SizedBox(width: 28, child: Text(_medal(s.rank))),
+                                SizedBox(
+                                  width: 30,
+                                  child: Text('${s.rank}.',
+                                      style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 16)),
+                                ),
                                 PlayerAvatar(_playerOf(players, s.playerId), size: 26),
                               ],
                             ),
                           ),
                           title: Text(nameOf(s.playerId), maxLines: 1, overflow: TextOverflow.ellipsis),
+                          subtitle: s.rank == 1
+                              ? Text(finished ? 'Ganador' : 'Líder',
+                                  style: const TextStyle(color: AppColors.gold, fontWeight: FontWeight.w700))
+                              : null,
                           trailing: Text(_chips(s.total),
-                              style: const TextStyle(fontWeight: FontWeight.w800)),
+                              style: TextStyle(fontWeight: FontWeight.w800, color: _balanceColor(s.total))),
                         ),
                       ),
                     ),
@@ -329,6 +380,28 @@ class _CupBody extends StatelessWidget {
         ),
         if (!MediaQuery.disableAnimationsOf(context)) const Positioned.fill(child: Confetti()),
       ],
+    );
+  }
+}
+
+class _LeaderBanner extends StatelessWidget {
+  const _LeaderBanner({required this.names, required this.finished});
+
+  final List<String> names;
+  final bool finished;
+
+  @override
+  Widget build(BuildContext context) {
+    if (names.isEmpty) return const SizedBox.shrink();
+    final text = '${finished ? 'Ganador' : 'Va ganando'}: ${names.join(', ')}';
+    return Semantics(
+      container: true,
+      label: text,
+      child: ExcludeSemantics(
+        child: Text(text,
+            textAlign: TextAlign.center,
+            style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 18, color: AppColors.gold)),
+      ),
     );
   }
 }
@@ -403,7 +476,9 @@ class _PodiumColumn extends StatelessWidget {
               const SizedBox(height: 6),
               Text(player.name,
                   maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(fontWeight: FontWeight.w700)),
-              Text(_chips(standing.total), style: const TextStyle(color: AppColors.textMuted, fontSize: 13)),
+              Text(_chips(standing.total),
+                  style: TextStyle(
+                      color: _balanceColor(standing.total), fontSize: 13, fontWeight: FontWeight.w700)),
               const SizedBox(height: 6),
               Container(
                 height: (base * grow).clamp(0.0, 200.0),

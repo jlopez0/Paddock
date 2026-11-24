@@ -1,7 +1,7 @@
 import 'package:material_ui/material_ui.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../app/theme.dart';
+import '../../prompt_deck/game_colors.dart';
 import '../../../core/players/player.dart';
 import '../../../core/players/player_widgets.dart';
 
@@ -89,11 +89,12 @@ class InfiltradoBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Column(
+    crossAxisAlignment: CrossAxisAlignment.stretch,
     children: [
       Expanded(
         child: LayoutBuilder(
           builder: (context, c) => SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(horizontal: 4),
+            padding: EdgeInsets.zero,
             child: ConstrainedBox(
               constraints: BoxConstraints(minHeight: c.maxHeight),
               child: Column(
@@ -140,7 +141,7 @@ class PassPhoneCover extends StatelessWidget {
       Text(
         heading,
         textAlign: TextAlign.center,
-        style: const TextStyle(color: AppColors.textMuted, fontSize: 16),
+        style: const TextStyle(color: GameColors.mutedText, fontSize: 16),
       ),
       const SizedBox(height: 16),
       Center(child: PlayerAvatar(player, size: 72)),
@@ -155,7 +156,7 @@ class PassPhoneCover extends StatelessWidget {
         Text(
           progress!,
           textAlign: TextAlign.center,
-          style: const TextStyle(color: AppColors.textMuted),
+          style: const TextStyle(color: GameColors.mutedText),
         ),
       ],
     ],

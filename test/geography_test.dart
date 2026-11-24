@@ -155,4 +155,28 @@ void main() {
       expect(e.isCorrect(q('Francia'), 'Paris'), isTrue);
     });
   });
+
+  group('regiones', () {
+    final countries = loadCountries();
+    for (final region in Continent.values) {
+      for (final cat in GeoCategory.values.where((c) => !c.isMap)) {
+        test('${region.label} / ${cat.name}: 10 preguntas válidas, sin repetir', () {
+          for (var seed = 0; seed < 5; seed++) {
+            final qs = QuizEngine(countries, random: Random(seed))
+                .generate(config(cat, count: 10, regions: {region}));
+            // Oceanía solo tiene 6 siluetas disponibles: ahí la partida es más corta.
+            final expected = (cat == GeoCategory.silhouettes && region == Continent.oceania) ? 6 : 10;
+            expect(qs.length, expected);
+            expect(qs.map((q) => q.country!.iso).toSet().length, expected);
+            for (final q in qs) {
+              expect(q.country!.continent, region);
+              expect(q.options.length, 4);
+              expect(q.options.map(normalizeText).toSet().length, 4);
+              expect(q.options.where((o) => normalizeText(o) == normalizeText(q.answer)).length, 1);
+            }
+          }
+        });
+      }
+    }
+  });
 }

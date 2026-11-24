@@ -13,7 +13,7 @@ class RaceSettings {
   final int length;
   final bool obstacles;
 
-  /// Si está activo, quien acierta reparte el doble de lo apostado.
+  /// Si está activo, quien acierta gana el doble de lo apostado.
   final bool doubleForWinners;
 
   /// Suena la obertura de Guillermo Tell durante la carrera.

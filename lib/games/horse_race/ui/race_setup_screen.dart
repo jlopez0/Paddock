@@ -38,7 +38,9 @@ class _RaceSetupScreenState extends ConsumerState<RaceSetupScreen> {
     final players = ref.read(playersProvider);
     final ids = players.map((p) => p.id).toSet();
     for (final b in ref.read(raceSetupProvider).bets) {
-      if (ids.contains(b.playerId)) _drafts[b.playerId] = _Draft(suit: b.suit, chips: b.isAllIn ? 2 : b.chips, allIn: b.isAllIn);
+      if (ids.contains(b.playerId)) {
+        _drafts[b.playerId] = _Draft(suit: b.suit, chips: b.isAllIn ? 2 : b.chips, allIn: b.isAllIn);
+      }
     }
   }
 
@@ -51,9 +53,7 @@ class _RaceSetupScreenState extends ConsumerState<RaceSetupScreen> {
 
   List<Bet>? get _validBets {
     if (_drafts.isEmpty || _drafts.values.any((d) => d.suit == null)) return null;
-    return [
-      for (final e in _drafts.entries) Bet(playerId: e.key, suit: e.value.suit!, chips: e.value.betChips),
-    ];
+    return [for (final e in _drafts.entries) Bet(playerId: e.key, suit: e.value.suit!, chips: e.value.betChips)];
   }
 
   void _start() {
@@ -73,7 +73,7 @@ class _RaceSetupScreenState extends ConsumerState<RaceSetupScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Apuestas'),
+        title: const Text('Carrera de caballos'),
         actions: [
           const HowToPlayButton('carrera'),
           IconButton(
@@ -87,6 +87,16 @@ class _RaceSetupScreenState extends ConsumerState<RaceSetupScreen> {
         padding: const EdgeInsets.fromLTRB(20, 4, 20, 120),
         children: [
           const _SectionTitle('¿Quién apuesta?'),
+          if (players.isEmpty)
+            const Card(
+              child: Padding(
+                padding: EdgeInsets.all(16),
+                child: Text(
+                  'Añade jugadores para apostar.\nEscribe un nombre abajo y toca «Añadir».',
+                  style: TextStyle(fontWeight: FontWeight.w700),
+                ),
+              ),
+            ),
           Wrap(
             spacing: 8,
             runSpacing: 8,
@@ -108,11 +118,7 @@ class _RaceSetupScreenState extends ConsumerState<RaceSetupScreen> {
             for (final e in _drafts.entries)
               Padding(
                 padding: const EdgeInsets.only(bottom: 10),
-                child: _BetCard(
-                  player: byId[e.key]!,
-                  draft: e.value,
-                  onChanged: () => setState(() {}),
-                ),
+                child: _BetCard(player: byId[e.key]!, draft: e.value, onChanged: () => setState(() {})),
               ),
           ],
           const _SectionTitle('Reglas'),
@@ -120,40 +126,34 @@ class _RaceSetupScreenState extends ConsumerState<RaceSetupScreen> {
             child: Column(
               children: [
                 ListTile(
-                  title: const Text('Casillas hasta la meta'),
+                  title: Text('Casillas hasta la meta: ${settings.length}'),
                   subtitle: Slider(
                     value: settings.length.toDouble(),
                     min: 4,
                     max: 9,
                     divisions: 5,
                     label: '${settings.length}',
-                    onChanged: (v) => ref
-                        .read(raceSetupProvider.notifier)
-                        .setSettings(settings.copyWith(length: v.round())),
+                    onChanged: (v) =>
+                        ref.read(raceSetupProvider.notifier).setSettings(settings.copyWith(length: v.round())),
                   ),
-                  trailing: Text('${settings.length}',
-                      style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w800)),
                 ),
                 SwitchListTile(
                   title: const Text('Cartas obstáculo'),
                   subtitle: const Text('Al descubrirse, ese caballo retrocede'),
                   value: settings.obstacles,
-                  onChanged: (v) =>
-                      ref.read(raceSetupProvider.notifier).setSettings(settings.copyWith(obstacles: v)),
+                  onChanged: (v) => ref.read(raceSetupProvider.notifier).setSettings(settings.copyWith(obstacles: v)),
                 ),
                 SwitchListTile(
-                  title: const Text('Acertar reparte el doble'),
+                  title: const Text('Acertar gana el doble'),
                   value: settings.doubleForWinners,
-                  onChanged: (v) => ref
-                      .read(raceSetupProvider.notifier)
-                      .setSettings(settings.copyWith(doubleForWinners: v)),
+                  onChanged: (v) =>
+                      ref.read(raceSetupProvider.notifier).setSettings(settings.copyWith(doubleForWinners: v)),
                 ),
                 SwitchListTile(
                   title: const Text('Música de carrera'),
                   subtitle: const Text('Obertura de Guillermo Tell al empezar'),
                   value: settings.music,
-                  onChanged: (v) =>
-                      ref.read(raceSetupProvider.notifier).setSettings(settings.copyWith(music: v)),
+                  onChanged: (v) => ref.read(raceSetupProvider.notifier).setSettings(settings.copyWith(music: v)),
                 ),
               ],
             ),
@@ -162,16 +162,34 @@ class _RaceSetupScreenState extends ConsumerState<RaceSetupScreen> {
       ),
       bottomNavigationBar: SafeArea(
         minimum: const EdgeInsets.fromLTRB(20, 8, 20, 16),
-        child: FilledButton.icon(
-          onPressed: _validBets == null ? null : _start,
-          icon: const Text('🏁', style: TextStyle(fontSize: 20)),
-          label: Text(
-            _drafts.isEmpty
-                ? 'Elige quién apuesta'
-                : missingSuit.isNotEmpty
-                    ? 'Falta el palo de ${missingSuit.first}'
-                    : '¡A correr!',
-          ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Padding(
+              padding: EdgeInsets.only(bottom: 8),
+              child: Text(
+                'Gira el móvil: la carrera se juega en horizontal.',
+                textAlign: TextAlign.center,
+                style: TextStyle(color: AppColors.textMuted, fontSize: 13),
+              ),
+            ),
+            SizedBox(
+              width: double.infinity,
+              child: FilledButton.icon(
+                onPressed: _validBets == null ? null : _start,
+                icon: const Text('🏁', style: TextStyle(fontSize: 20)),
+                label: Text(
+                  players.isEmpty
+                      ? 'Añade jugadores para apostar'
+                      : _drafts.isEmpty
+                      ? 'Elige quién apuesta'
+                      : missingSuit.isNotEmpty
+                      ? 'Falta el palo de ${missingSuit.first}'
+                      : '¡A correr!',
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -184,11 +202,12 @@ class _SectionTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Padding(
-        padding: const EdgeInsets.only(top: 24, bottom: 10),
-        child: Text(text.toUpperCase(),
-            style: const TextStyle(
-                color: AppColors.textMuted, fontWeight: FontWeight.w700, letterSpacing: 1.2, fontSize: 12)),
-      );
+    padding: const EdgeInsets.only(top: 24, bottom: 10),
+    child: Text(
+      text.toUpperCase(),
+      style: const TextStyle(color: AppColors.textMuted, fontWeight: FontWeight.w700, letterSpacing: 1.2, fontSize: 12),
+    ),
+  );
 }
 
 class _BetCard extends StatelessWidget {
@@ -285,12 +304,14 @@ class _SuitButton extends StatelessWidget {
               child: Image.asset(PlayingCard.horseAsset(suit), height: 54),
             ),
             const SizedBox(height: 4),
-            Text(suit.label,
-                style: TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w700,
-                  color: selected ? suit.color : AppColors.textMuted,
-                )),
+            Text(
+              suit.label,
+              style: TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.w700,
+                color: selected ? suit.color : AppColors.textMuted,
+              ),
+            ),
           ],
         ),
       ),

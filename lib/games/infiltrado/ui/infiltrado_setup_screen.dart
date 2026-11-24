@@ -3,15 +3,16 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
 
-import '../../../app/theme.dart';
+import '../../prompt_deck/game_colors.dart';
+import '../../prompt_deck/level_chips.dart';
 import '../../../core/content/prompts.dart';
 import '../../../core/players/player.dart';
 import '../../../core/players/player_widgets.dart';
 import '../../../core/players/players_controller.dart';
 import '../../../core/settings/app_feedback.dart';
-import '../../../core/settings/settings_controller.dart';
 import '../domain/infiltrado_engine.dart';
 import '../infiltrado_store.dart';
+import 'infiltrado_widgets.dart';
 
 class InfiltradoSetupScreen extends ConsumerStatefulWidget {
   const InfiltradoSetupScreen({super.key});
@@ -47,29 +48,14 @@ class _InfiltradoSetupScreenState extends ConsumerState<InfiltradoSetupScreen> {
   }
 
   Future<void> _toggleLevel(PromptLevel level) async {
-    AppFeedback.selection();
     final levels = {..._setup.levels};
-    if (!levels.contains(level) &&
-        level == PromptLevel.atrevido &&
-        !ref.read(settingsProvider).adultConfirmed) {
-      final ok = await showDialog<bool>(
-        context: context,
-        builder: (ctx) => AlertDialog(
-          title: const Text('Solo para mayores de 18'),
-          content: const Text(
-            'El nivel Atrevido incluye contenido para adultos. '
-            'Actívalo solo si todos los presentes son mayores de edad.',
-          ),
-          actions: [
-            TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Cancelar')),
-            FilledButton(onPressed: () => Navigator.pop(ctx, true), child: const Text('Tengo 18 o más')),
-          ],
-        ),
-      );
-      if (ok != true || !mounted) return;
-      ref.read(settingsProvider.notifier).confirmAdult();
+    if (!levels.contains(level)) {
+      final ok = await ensureLevelAllowed(context, ref, level);
+      if (!ok || !mounted) return;
+      levels.add(level);
+    } else {
+      levels.remove(level);
     }
-    if (!levels.remove(level)) levels.add(level);
     if (levels.isEmpty) return; // siempre queda un nivel activo
     _update((s) => s.copyWith(levels: levels));
   }
@@ -133,7 +119,7 @@ class _InfiltradoSetupScreenState extends ConsumerState<InfiltradoSetupScreen> {
             if (players.isEmpty)
               const Padding(
                 padding: EdgeInsets.only(bottom: 12),
-                child: Text('Añade jugadores para empezar.', style: TextStyle(color: AppColors.textMuted)),
+                child: Text('Añade jugadores para empezar.', style: TextStyle(color: GameColors.mutedText)),
               ),
             Wrap(
               spacing: 8,
@@ -162,7 +148,7 @@ class _InfiltradoSetupScreenState extends ConsumerState<InfiltradoSetupScreen> {
                 child: Text(
                   'Hacen falta al menos ${InfiltradoEngine.minPlayers} jugadores '
                   '(ahora: ${chosen.length}).',
-                  style: const TextStyle(color: AppColors.textMuted),
+                  style: const TextStyle(color: GameColors.mutedText),
                 ),
               ),
             const _SectionTitle('Infiltrados'),
@@ -183,22 +169,14 @@ class _InfiltradoSetupScreenState extends ConsumerState<InfiltradoSetupScreen> {
                 padding: EdgeInsets.only(top: 6),
                 child: Text(
                   'Con 2 infiltrados hacen falta 5 jugadores o más.',
-                  style: TextStyle(color: AppColors.textMuted, fontSize: 13),
+                  style: TextStyle(color: GameColors.mutedText, fontSize: 13),
                 ),
               ),
             const _SectionTitle('Nivel de las palabras'),
-            Wrap(
-              spacing: 8,
-              runSpacing: 8,
-              children: [
-                for (final level in PromptLevel.values)
-                  FilterChip(
-                    label: Text('${level.emoji} ${level.label}'),
-                    selected: setup.levels.contains(level),
-                    showCheckmark: false,
-                    onSelected: (_) => _toggleLevel(level),
-                  ),
-              ],
+            LevelChips(
+              levels: setup.levels,
+              color: infiltradoColor,
+              onToggle: _toggleLevel,
             ),
             if (available != null)
               Padding(
@@ -207,7 +185,7 @@ class _InfiltradoSetupScreenState extends ConsumerState<InfiltradoSetupScreen> {
                   exhausted
                       ? 'No quedan palabras con estos niveles.'
                       : '${available.length} palabras disponibles',
-                  style: const TextStyle(color: AppColors.textMuted, fontSize: 13),
+                  style: const TextStyle(color: GameColors.mutedText, fontSize: 13),
                 ),
               ),
             if (exhausted) ...[
@@ -255,7 +233,7 @@ class _SectionTitle extends StatelessWidget {
     child: Text(
       text.toUpperCase(),
       style: const TextStyle(
-        color: AppColors.textMuted,
+        color: GameColors.mutedText,
         fontWeight: FontWeight.w700,
         letterSpacing: 1.2,
         fontSize: 12,

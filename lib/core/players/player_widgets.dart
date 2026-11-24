@@ -46,6 +46,7 @@ class AddPlayerField extends ConsumerStatefulWidget {
 class _AddPlayerFieldState extends ConsumerState<AddPlayerField> {
   final _controller = TextEditingController();
   final _focus = FocusNode();
+  String? _error;
 
   @override
   void dispose() {
@@ -56,8 +57,19 @@ class _AddPlayerFieldState extends ConsumerState<AddPlayerField> {
 
   void _submit() {
     final name = _controller.text.trim();
-    if (name.isEmpty) return;
-    final player = ref.read(playersProvider.notifier).add(name);
+    final notifier = ref.read(playersProvider.notifier);
+    if (name.isEmpty) {
+      setState(() => _error = 'Escribe un nombre');
+      _focus.requestFocus();
+      return;
+    }
+    if (notifier.nameTaken(name)) {
+      setState(() => _error = 'Ya hay un jugador con ese nombre');
+      _focus.requestFocus();
+      return;
+    }
+    final player = notifier.add(name);
+    setState(() => _error = null);
     _controller.clear();
     widget.onAdded?.call(player);
     _focus.requestFocus();
@@ -71,10 +83,13 @@ class _AddPlayerFieldState extends ConsumerState<AddPlayerField> {
       textCapitalization: TextCapitalization.words,
       textInputAction: TextInputAction.done,
       maxLength: 16,
+      onChanged: (_) {
+        if (_error != null) setState(() => _error = null);
+      },
       onSubmitted: (_) => _submit(),
       decoration: InputDecoration(
         hintText: 'Nombre del jugador',
-        counterText: '',
+        errorText: _error,
         prefixIcon: const Icon(Icons.person_add_alt_1_rounded),
         suffixIcon: IconButton(
           tooltip: 'Añadir',

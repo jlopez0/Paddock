@@ -176,7 +176,7 @@ class GeoSetupScreen extends ConsumerWidget {
                   child: Text(
                     questions == 0
                         ? (quiz.hasError ? 'No se pudo cargar el contenido' : 'Sin preguntas con estos filtros')
-                        : 'Empezar · $questions preguntas',
+                        : 'Jugar · $questions preguntas',
                   ),
                 ),
               ),

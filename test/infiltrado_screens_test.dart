@@ -175,6 +175,11 @@ void main() {
       }
       await tester.pumpAndSettle();
       expect(find.text('No quedan palabras'), findsOneWidget);
+      await tester.scrollUntilVisible(
+        find.text('No quedan palabras con estos niveles.'),
+        200,
+        scrollable: find.byType(Scrollable).first,
+      );
       expect(find.text('No quedan palabras con estos niveles.'), findsOneWidget);
 
       await _tapText(tester, 'Volver a empezar con todas');
@@ -260,6 +265,11 @@ void main() {
       expect(find.text('Última oportunidad'), findsNothing);
       expect(find.text('El infiltrado se escapa'), findsOneWidget);
       expect(find.text(game.deal.word), findsOneWidget);
+      await tester.scrollUntilVisible(
+        find.text('Fichas anotadas en la Copa de la noche.'),
+        200,
+        scrollable: find.byType(Scrollable).first,
+      );
       expect(find.text('Fichas anotadas en la Copa de la noche.'), findsOneWidget);
       final events = env.c.read(sessionProvider).events;
       expect(events, hasLength(3));

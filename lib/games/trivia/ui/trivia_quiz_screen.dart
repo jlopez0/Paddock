@@ -112,7 +112,7 @@ class _TriviaQuizScreenState extends ConsumerState<TriviaQuizScreen> {
                       ),
                     ),
                     const SizedBox(width: 12),
-                    Text('${_index + 1}/$total', style: const TextStyle(fontWeight: FontWeight.w800)),
+                    Text('${_index + 1} / $total', style: const TextStyle(fontWeight: FontWeight.w800)),
                   ],
                 ),
                 const SizedBox(height: 20),

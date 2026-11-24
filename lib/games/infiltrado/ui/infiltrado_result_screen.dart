@@ -2,7 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
 
-import '../../../app/theme.dart';
+import '../../prompt_deck/game_colors.dart';
 import '../../../core/consequences/consequence_banner.dart';
 import '../../../core/consequences/retos_filter.dart';
 import '../../../core/content/prompts.dart';
@@ -90,7 +90,7 @@ class _InfiltradoResultScreenState extends ConsumerState<InfiltradoResultScreen>
         title: Text(outcome == null ? 'Última oportunidad' : 'Resultado'),
       ),
       body: SafeArea(
-        child: Padding(padding: const EdgeInsets.fromLTRB(16, 0, 16, 16), child: body),
+        child: Padding(padding: const EdgeInsets.fromLTRB(20, 0, 20, 16), child: body),
       ),
     );
     return outcome == null ? InfiltradoLeaveGuard(child: content) : content;
@@ -136,7 +136,7 @@ class _LastChance extends StatelessWidget {
         'Última oportunidad: si acierta la palabra de "$category", gana igualmente. '
         'Que los demás no miren.',
         textAlign: TextAlign.center,
-        style: const TextStyle(color: AppColors.textMuted, fontSize: 16),
+        style: const TextStyle(color: GameColors.mutedText, fontSize: 16),
       ),
       const SizedBox(height: 20),
       TextField(
@@ -195,6 +195,7 @@ class _Outcome extends ConsumerWidget {
     votes.sort((a, b) => b.value.compareTo(a.value));
 
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Expanded(
           child: ListView(
@@ -219,7 +220,7 @@ class _Outcome extends ConsumerWidget {
               Text(
                 _detail,
                 textAlign: TextAlign.center,
-                style: const TextStyle(color: AppColors.textMuted, fontSize: 16),
+                style: const TextStyle(color: GameColors.mutedText, fontSize: 16),
               ),
               const SizedBox(height: 16),
               Card(
@@ -230,7 +231,7 @@ class _Outcome extends ConsumerWidget {
                     children: [
                       Text(
                         game.deal.impostors.length == 1 ? 'El infiltrado era' : 'Los infiltrados eran',
-                        style: const TextStyle(color: AppColors.textMuted),
+                        style: const TextStyle(color: GameColors.mutedText),
                       ),
                       Text(
                         impostorNames.join(' y '),
@@ -239,7 +240,7 @@ class _Outcome extends ConsumerWidget {
                       const SizedBox(height: 10),
                       Text(
                         'La palabra era (${game.deal.category})',
-                        style: const TextStyle(color: AppColors.textMuted),
+                        style: const TextStyle(color: GameColors.mutedText),
                       ),
                       Text(
                         game.deal.word,
@@ -257,7 +258,7 @@ class _Outcome extends ConsumerWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text('Votos', style: TextStyle(color: AppColors.textMuted)),
+                        const Text('Votos', style: TextStyle(color: GameColors.mutedText)),
                         const SizedBox(height: 4),
                         for (final e in votes)
                           Row(
@@ -279,7 +280,7 @@ class _Outcome extends ConsumerWidget {
               const Text(
                 'Fichas anotadas en la Copa de la noche.',
                 textAlign: TextAlign.center,
-                style: TextStyle(color: AppColors.textMuted, fontSize: 13),
+                style: TextStyle(color: GameColors.mutedText, fontSize: 13),
               ),
             ],
           ),

@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
 
 import '../../../app/theme.dart';
+import '../../prompt_deck/game_colors.dart';
 import '../../../core/players/player.dart';
 import '../../../core/players/players_controller.dart';
 import '../../../core/settings/app_feedback.dart';
@@ -50,7 +51,7 @@ class _InfiltradoRevealScreenState extends ConsumerState<InfiltradoRevealScreen>
       child: Scaffold(
         body: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
+            padding: const EdgeInsets.fromLTRB(20, 8, 20, 16),
             child: Column(
               children: [
                 InfiltradoTopBar(title: 'Roles', trailing: '${_index + 1}/${deal.players.length}'),
@@ -113,13 +114,13 @@ class _CardView extends StatelessWidget {
               children: [
                 Text(
                   player.name,
-                  style: const TextStyle(color: AppColors.textMuted, fontWeight: FontWeight.w700),
+                  style: const TextStyle(color: GameColors.mutedText, fontWeight: FontWeight.w700),
                 ),
                 const SizedBox(height: 16),
                 Text(
                   'CATEGORÍA',
                   style: const TextStyle(
-                    color: AppColors.textMuted,
+                    color: GameColors.mutedText,
                     letterSpacing: 1.2,
                     fontSize: 12,
                     fontWeight: FontWeight.w700,
@@ -153,7 +154,7 @@ class _CardView extends StatelessWidget {
                   const Text(
                     'LA PALABRA',
                     style: TextStyle(
-                      color: AppColors.textMuted,
+                      color: GameColors.mutedText,
                       letterSpacing: 1.2,
                       fontSize: 12,
                       fontWeight: FontWeight.w700,
@@ -163,7 +164,7 @@ class _CardView extends StatelessWidget {
                   Text(
                     card.word!,
                     textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 36, fontWeight: FontWeight.w900, color: accent),
+                    style: TextStyle(fontSize: 36, fontWeight: FontWeight.w900, color: GameColors.infiltradoText),
                   ),
                   const SizedBox(height: 8),
                   const Text(

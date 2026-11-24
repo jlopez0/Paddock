@@ -26,6 +26,19 @@ class PlayersController extends Notifier<List<Player>> {
     return null;
   }
 
+  /// ¿Ya hay otro jugador con ese nombre (sin distinguir mayúsculas)?
+  bool nameTaken(String rawName, {String? exceptId}) {
+    final name = rawName.trim().toLowerCase();
+    return state.any((p) => p.id != exceptId && p.name.toLowerCase() == name);
+  }
+
+  /// Vuelve a insertar un jugador borrado en su posición (para "Deshacer").
+  void restore(Player player, int index) {
+    if (state.any((p) => p.id == player.id)) return;
+    final list = [...state]..insert(index.clamp(0, state.length), player);
+    _save(list);
+  }
+
   /// Añade un jugador. Devuelve el existente si ya hay uno con ese nombre.
   Player add(String rawName) {
     final name = rawName.trim();
@@ -74,3 +87,6 @@ class PlayersController extends Notifier<List<Player>> {
         .setString(_key, jsonEncode(players.map((p) => p.toJson()).toList()));
   }
 }
+
+/// "1 jugador" / "N jugadores".
+String playersLabel(int n) => n == 1 ? '1 jugador' : '$n jugadores';

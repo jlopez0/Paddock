@@ -40,7 +40,7 @@ class TriviaResultScreen extends ConsumerWidget {
                     child: CircularProgressIndicator(
                         value: ratio, strokeWidth: 12, color: triviaColor, backgroundColor: AppColors.surfaceHigh),
                   ),
-                  Text('${r.correct}/${r.total}', style: const TextStyle(fontSize: 38, fontWeight: FontWeight.w900)),
+                  Text('${r.correct} / ${r.total}', style: const TextStyle(fontSize: 38, fontWeight: FontWeight.w900)),
                 ],
               ),
             ),

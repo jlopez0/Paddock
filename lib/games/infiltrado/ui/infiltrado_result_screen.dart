@@ -4,6 +4,8 @@ import 'package:material_ui/material_ui.dart';
 
 import '../../../app/theme.dart';
 import '../../../core/consequences/consequence_banner.dart';
+import '../../../core/consequences/retos_filter.dart';
+import '../../../core/content/prompts.dart';
 import '../../../core/players/player.dart';
 import '../../../core/players/players_controller.dart';
 import '../../../core/settings/app_feedback.dart';
@@ -181,6 +183,9 @@ class _Outcome extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final mode = ref.watch(settingsProvider.select((s) => s.consequenceMode));
+    final adult = ref.watch(settingsProvider.select((s) => s.adultConfirmed));
+    final retosPrompts = ref.watch(promptsProvider('assets/content/es/retos.json')).asData?.value;
+    final retos = retosPrompts == null ? null : filterRetos(retosPrompts, adultConfirmed: adult);
     final losses = <String, int>{
       for (final e in outcome.deltas.entries)
         if (e.value < 0) nameOf(e.key): -e.value,
@@ -268,7 +273,7 @@ class _Outcome extends ConsumerWidget {
               ],
               if (losses.isNotEmpty) ...[
                 const SizedBox(height: 12),
-                ConsequenceBanner(losses: losses, mode: mode),
+                ConsequenceBanner(losses: losses, mode: mode, retos: retos),
               ],
               const SizedBox(height: 8),
               const Text(

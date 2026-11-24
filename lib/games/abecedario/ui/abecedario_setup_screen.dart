@@ -1,3 +1,4 @@
+import '../../../core/help/how_to_play.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -49,7 +50,7 @@ class AbecedarioSetupScreen extends ConsumerWidget {
     return Theme(
       data: tinted,
       child: Scaffold(
-        appBar: AppBar(title: const Text('Abecedario')),
+        appBar: AppBar(title: const Text('Abecedario'), actions: const [HowToPlayButton('abecedario')]),
         body: SafeArea(
           top: false,
           child: ListView(

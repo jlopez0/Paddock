@@ -31,7 +31,7 @@ class GeoResultScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Resultado'),
-        leading: IconButton(icon: const Icon(Icons.close_rounded), onPressed: () => context.go('/')),
+        leading: IconButton(tooltip: 'Cerrar', icon: const Icon(Icons.close_rounded), onPressed: () => context.go('/')),
       ),
       body: ListView(
         padding: const EdgeInsets.fromLTRB(20, 8, 20, 24),

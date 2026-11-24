@@ -99,7 +99,7 @@ class _TriviaQuizScreenState extends ConsumerState<TriviaQuizScreen> {
               children: [
                 Row(
                   children: [
-                    IconButton(onPressed: _exit, icon: const Icon(Icons.close_rounded)),
+                    IconButton(tooltip: 'Salir', onPressed: _exit, icon: const Icon(Icons.close_rounded)),
                     Expanded(
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(6),

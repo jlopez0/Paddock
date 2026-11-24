@@ -127,9 +127,23 @@ class _GeoQuizScreenState extends ConsumerState<GeoQuizScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final quiz = ref.watch(geoQuizProvider(_setup.category)).value;
+    final quizAsync = ref.watch(geoQuizProvider(_setup.category));
+    final quiz = quizAsync.value;
     ref.watch(silhouettesProvider); // precarga las siluetas
-    if (quiz == null) return const Scaffold(body: Center(child: CircularProgressIndicator()));
+    if (quiz == null) {
+      if (quizAsync.hasError) {
+        return Scaffold(
+          appBar: AppBar(),
+          body: const Center(
+            child: Padding(
+              padding: EdgeInsets.all(24),
+              child: Text('No se pudo cargar el contenido. Vuelve atrás e inténtalo de nuevo.', textAlign: TextAlign.center),
+            ),
+          ),
+        );
+      }
+      return const Scaffold(body: Center(child: CircularProgressIndicator()));
+    }
     if (_engine == null) {
       _engine = quiz;
       _questions = quiz.generate(_setup.config);
@@ -250,7 +264,7 @@ class _Header extends StatelessWidget {
         children: [
           Row(
             children: [
-              IconButton(icon: const Icon(Icons.close_rounded), onPressed: onClose),
+              IconButton(tooltip: 'Salir', icon: const Icon(Icons.close_rounded), onPressed: onClose),
               Expanded(
                 child: Text('${index + 1} / $total',
                     textAlign: TextAlign.center,

@@ -169,6 +169,7 @@ class _AbecedarioPlayScreenState extends ConsumerState<AbecedarioPlayScreen> {
                 Row(
                   children: [
                     IconButton(
+                      tooltip: 'Salir',
                       onPressed: _exit,
                       icon: const Icon(Icons.close_rounded),
                     ),

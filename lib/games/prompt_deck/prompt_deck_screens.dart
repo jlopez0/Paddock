@@ -1,3 +1,4 @@
+import '../../core/help/how_to_play.dart';
 import 'dart:math';
 
 import 'package:material_ui/material_ui.dart';
@@ -86,7 +87,7 @@ class _PromptDeckSetupScreenState extends ConsumerState<PromptDeckSetupScreen> {
         0;
 
     return Scaffold(
-      appBar: AppBar(title: Text(game.title)),
+      appBar: AppBar(title: Text(game.title), actions: [HowToPlayButton(game.id)]),
       body: ListView(
         padding: const EdgeInsets.fromLTRB(20, 16, 20, 24),
         children: [
@@ -287,6 +288,15 @@ class _PromptDeckPlayScreenState extends ConsumerState<PromptDeckPlayScreen> {
     final async = ref.watch(promptsProvider(game.contentAsset));
     final all = async.value;
     if (all == null) {
+      if (async.hasError) {
+        return Scaffold(
+          appBar: AppBar(),
+          body: const Center(child: Padding(
+            padding: EdgeInsets.all(24),
+            child: Text('No se pudo cargar el contenido. Vuelve atrás e inténtalo de nuevo.', textAlign: TextAlign.center),
+          )),
+        );
+      }
       return const Scaffold(body: Center(child: CircularProgressIndicator()));
     }
     if (_deck == null) _shuffle(all);

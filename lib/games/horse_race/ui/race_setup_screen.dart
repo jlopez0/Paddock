@@ -1,3 +1,4 @@
+import '../../../core/help/how_to_play.dart';
 import 'package:material_ui/material_ui.dart';
 import '../../../core/settings/app_feedback.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -74,6 +75,7 @@ class _RaceSetupScreenState extends ConsumerState<RaceSetupScreen> {
       appBar: AppBar(
         title: const Text('Apuestas'),
         actions: [
+          const HowToPlayButton('carrera'),
           IconButton(
             tooltip: 'Estadísticas',
             icon: const Icon(Icons.leaderboard_rounded),

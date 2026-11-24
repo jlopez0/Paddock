@@ -1,3 +1,4 @@
+import '../../../core/help/how_to_play.dart';
 import 'package:material_ui/material_ui.dart';
 import '../../../core/settings/app_feedback.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -54,7 +55,7 @@ class GeoSetupScreen extends ConsumerWidget {
     return Theme(
       data: tealTheme,
       child: Scaffold(
-        appBar: AppBar(title: const Text('Geografía')),
+        appBar: AppBar(title: const Text('Geografía'), actions: const [HowToPlayButton('geografia')]),
         body: ListView(
           padding: const EdgeInsets.fromLTRB(20, 4, 20, 24),
           children: [
@@ -174,7 +175,7 @@ class GeoSetupScreen extends ConsumerWidget {
                       : () => context.push('/game/geografia/play'),
                   child: Text(
                     questions == 0
-                        ? 'Sin preguntas con estos filtros'
+                        ? (quiz.hasError ? 'No se pudo cargar el contenido' : 'Sin preguntas con estos filtros')
                         : 'Empezar · $questions preguntas',
                   ),
                 ),

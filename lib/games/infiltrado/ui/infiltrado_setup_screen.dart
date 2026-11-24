@@ -1,3 +1,4 @@
+import '../../../core/help/how_to_play.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
@@ -104,7 +105,7 @@ class _InfiltradoSetupScreenState extends ConsumerState<InfiltradoSetupScreen> {
     if (!enough) {
       buttonLabel = 'Elige al menos ${InfiltradoEngine.minPlayers} jugadores';
     } else if (words == null) {
-      buttonLabel = 'Cargando palabras…';
+      buttonLabel = wordsAsync.hasError ? 'No se pudieron cargar las palabras' : 'Cargando palabras…';
     } else if (exhausted) {
       buttonLabel = 'No quedan palabras';
     } else {
@@ -113,7 +114,7 @@ class _InfiltradoSetupScreenState extends ConsumerState<InfiltradoSetupScreen> {
     }
 
     return Scaffold(
-      appBar: AppBar(title: const Text('El Infiltrado')),
+      appBar: AppBar(title: const Text('El Infiltrado'), actions: const [HowToPlayButton('infiltrado')]),
       body: SafeArea(
         child: ListView(
           padding: const EdgeInsets.fromLTRB(20, 4, 20, 24),

@@ -1,3 +1,4 @@
+import '../../../core/help/how_to_play.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -33,7 +34,7 @@ class TriviaSetupScreen extends ConsumerWidget {
     return Theme(
       data: tinted,
       child: Scaffold(
-        appBar: AppBar(title: const Text('Trivia')),
+        appBar: AppBar(title: const Text('Trivia'), actions: const [HowToPlayButton('trivia')]),
         body: SafeArea(top: false, child: ListView(
           padding: const EdgeInsets.fromLTRB(20, 4, 20, 24),
           children: [
@@ -78,7 +79,7 @@ class TriviaSetupScreen extends ConsumerWidget {
               style: FilledButton.styleFrom(
                   backgroundColor: triviaColor, foregroundColor: Colors.black, minimumSize: const Size.fromHeight(56)),
               onPressed: questions == 0 ? null : () => context.push('/game/trivia/play'),
-              child: Text('Jugar · $questions preguntas',
+              child: Text(bank.hasError ? 'No se pudo cargar el contenido' : 'Jugar · $questions preguntas',
                   style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w800)),
             ),
           ],

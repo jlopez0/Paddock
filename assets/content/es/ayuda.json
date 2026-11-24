@@ -1,0 +1,92 @@
+[
+  {
+    "id": "carrera",
+    "titulo": "¿Cómo se juega a la Carrera de caballos?",
+    "pasos": [
+      "Cada persona elige un caballo: Oros, Copas, Espadas o Bastos.",
+      "Apuesta de 1 a 5 fichas o ve a por todas con el All-in, que vale 10.",
+      "Cada carta hace avanzar al caballo de su palo. Ojo con los obstáculos: hacen retroceder.",
+      "Si aciertas, repartes tus fichas; si fallas, las pierdes. El modo de Ajustes decide cómo se pagan.",
+      "¿Ganas con All-in? Repartes 2 All-in a 2 personas distintas."
+    ],
+    "consejo": "Activa «Acertar reparte el doble» si queréis que cada apuesta cuente más."
+  },
+  {
+    "id": "infiltrado",
+    "titulo": "¿Cómo se juega a El Infiltrado?",
+    "pasos": [
+      "Necesitáis al menos 3 personas. Desde 5 podéis jugar con 2 infiltrados.",
+      "Pasad el móvil: todos ven la palabra secreta menos el infiltrado, que solo ve la categoría.",
+      "Hablad de la palabra sin decirla y descubrid quién va de farol.",
+      "Votad en secreto pasando el móvil. Si hay empate, se vota otra vez entre los empatados.",
+      "Si pilláis al infiltrado, pierde 2 fichas salvo que adivine la palabra. Si se escapa, los demás pierden 1."
+    ],
+    "consejo": "Si te toca ser infiltrado, escucha mucho y habla poco: la categoría es tu mejor pista."
+  },
+  {
+    "id": "trivia",
+    "titulo": "¿Cómo se juega a Trivia?",
+    "pasos": [
+      "Elige las categorías, el nivel y cuántas preguntas: 10, 20 o todas.",
+      "Lee la pregunta en voz alta y debatid la respuesta.",
+      "Toca una de las 4 opciones y pasa a la siguiente.",
+      "Al final verás tus aciertos y la respuesta correcta de cada fallo."
+    ],
+    "consejo": "Jugad por equipos y pasad el móvil en cada pregunta."
+  },
+  {
+    "id": "geografia",
+    "titulo": "¿Cómo se juega a Geografía?",
+    "pasos": [
+      "Elige qué adivinar: banderas, capitales, siluetas o regiones en un mapa.",
+      "Elige la dificultad: Fácil con 4 opciones, Mental para pensar y mirar o Difícil escribiendo.",
+      "Filtra por continentes si quieres y decide cuántas preguntas: 10, 20 o todas.",
+      "Al terminar verás tus fallos y si has batido tu récord."
+    ],
+    "consejo": "En el modo Mental, decid la respuesta en voz alta antes de mirarla. Sin trampas."
+  },
+  {
+    "id": "abecedario",
+    "titulo": "¿Cómo se juega a Abecedario?",
+    "pasos": [
+      "Hay una palabra por letra, de la A a la Z con la Ñ: 27 en total.",
+      "Lee la definición en voz alta. La palabra empieza por esa letra o la contiene.",
+      "Pensad mientras corre el tiempo. Cuando se acaba, se desvela la palabra.",
+      "Elige si se pasa solo a la siguiente letra o con un botón."
+    ],
+    "consejo": "Competid por letras: quien la diga primero se la apunta."
+  },
+  {
+    "id": "quien-es-mas-probable",
+    "titulo": "¿Cómo se juega a Quién es más probable?",
+    "pasos": [
+      "Elige los niveles: Suave, Picante o Atrevido.",
+      "Lee la carta en voz alta.",
+      "A la de tres, todos señalan a quien ven más capaz.",
+      "El más señalado pierde una ficha. Márcalo en la app para que cuente en la Copa."
+    ],
+    "consejo": "Si alguien protesta, que se defienda en 10 segundos. Luego, a la siguiente."
+  },
+  {
+    "id": "que-preferirias",
+    "titulo": "¿Cómo se juega a Qué preferirías?",
+    "pasos": [
+      "Elige los niveles: Suave, Picante o Atrevido.",
+      "Lee las dos opciones en voz alta.",
+      "A la de tres, todos eligen a la vez: uno o dos dedos.",
+      "La minoría pierde una ficha. Márcala en la app para que cuente en la Copa."
+    ],
+    "consejo": "Lo mejor viene después: que cada uno explique por qué ha elegido eso."
+  },
+  {
+    "id": "yo-nunca",
+    "titulo": "¿Cómo se juega a Yo nunca?",
+    "pasos": [
+      "Elige los niveles: Suave, Picante o Atrevido.",
+      "Lee la carta en voz alta, empezando por «Yo nunca…».",
+      "Quien lo haya hecho, lo confiesa.",
+      "Cada persona que lo haya hecho pierde una ficha. Márcala en la app."
+    ],
+    "consejo": "Si alguien confiesa algo jugoso, el grupo puede pedir la historia completa."
+  }
+]

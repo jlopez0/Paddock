@@ -2,7 +2,7 @@ import 'package:material_ui/material_ui.dart';
 
 import 'consequences.dart';
 
-/// Retos de reserva mientras no exista `retos.json` (subtarea 1.5).
+/// Retos de reserva por si `retos.json` no carga o queda vacío.
 const List<String> kFallbackRetos = [
   'Cuenta un chiste en menos de 20 segundos.',
   'Haz un cumplido sincero a la persona de tu derecha.',

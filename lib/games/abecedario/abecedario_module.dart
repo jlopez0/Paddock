@@ -2,27 +2,29 @@ import 'package:material_ui/material_ui.dart';
 import 'package:go_router/go_router.dart';
 
 import '../game_module.dart';
-import 'rosco_data.dart';
-import 'ui/rosco_play_screen.dart';
-import 'ui/rosco_setup_screen.dart';
+import 'abecedario_data.dart';
+import 'ui/abecedario_play_screen.dart';
+import 'ui/abecedario_setup_screen.dart';
 
-class RoscoModule extends GameModule {
-  const RoscoModule();
+class AbecedarioModule extends GameModule {
+  const AbecedarioModule();
 
   @override
-  String get id => 'rosco';
+  String get id => 'abecedario';
   @override
-  String get title => 'El rosco';
+  String get title => 'Abecedario';
   @override
   String get subtitle => 'Adivina la palabra de cada letra';
   @override
   String get emoji => '🔤';
   @override
-  Color get color => roscoColor;
+  Color get color => abecedarioColor;
 
   @override
-  Widget buildEntry(BuildContext context) => const RoscoSetupScreen();
+  Widget buildEntry(BuildContext context) => const AbecedarioSetupScreen();
 
   @override
-  List<RouteBase> get subRoutes => [GoRoute(path: 'play', builder: (_, _) => const RoscoPlayScreen())];
+  List<RouteBase> get subRoutes => [
+    GoRoute(path: 'play', builder: (_, _) => const AbecedarioPlayScreen()),
+  ];
 }

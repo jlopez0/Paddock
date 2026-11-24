@@ -495,7 +495,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "belicoso",
-   "def": "Inclinado a la guerra o a las peleas."
+   "def": "Que siempre anda buscando pelea, sea en el patio o en el campo de batalla."
   },
   {
    "id": "r-b27",
@@ -503,7 +503,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "bagatela",
-   "def": "Cosa de poco valor o importancia."
+   "def": "Minucia sin valor que no merece ni un segundo de atención."
   },
   {
    "id": "r-b28",
@@ -511,7 +511,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "blasfemia",
-   "def": "Palabra injuriosa contra lo sagrado."
+   "def": "Insulto o expresión ofensiva contra Dios o contra lo sagrado."
   },
   {
    "id": "r-b29",
@@ -519,7 +519,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "baladí",
-   "def": "De poca importancia."
+   "def": "Asunto sin chicha: tan poco importante que no merece ni discutirlo."
   },
   {
    "id": "r-b30",
@@ -615,7 +615,7 @@
    "tipo": "empieza",
    "dif": "facil",
    "resp": "cama",
-   "def": "Mueble donde se duerme."
+   "def": "Mueble en el que pasas un tercio de tu vida durmiendo."
   },
   {
    "id": "r-c11",
@@ -695,7 +695,7 @@
    "tipo": "empieza",
    "dif": "medio",
    "resp": "cordillera",
-   "def": "Cadena de montañas."
+   "def": "Montañas puestas en fila, una tras otra, a lo largo de muchos kilómetros."
   },
   {
    "id": "r-c21",
@@ -759,7 +759,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "contumaz",
-   "def": "Obstinado en mantener un error."
+   "def": "Que se empeña en su error aunque todo el mundo le demuestre lo contrario."
   },
   {
    "id": "r-c29",
@@ -767,7 +767,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "cándido",
-   "def": "Sencillo, ingenuo, sin malicia."
+   "def": "Tan inocente que se cree todo lo que le cuentan."
   },
   {
    "id": "r-c30",
@@ -959,7 +959,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "diatriba",
-   "def": "Discurso violento e injurioso contra alguien."
+   "def": "Ataque verbal largo y furibundo contra alguien."
   },
   {
    "id": "r-d23",
@@ -967,7 +967,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "disquisición",
-   "def": "Examen minucioso y largo de un asunto."
+   "def": "Análisis largo y detallado de un tema, dándole mil vueltas."
   },
   {
    "id": "r-d24",
@@ -975,7 +975,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "displicente",
-   "def": "Que muestra indiferencia y desagrado."
+   "def": "Que trata a los demás con desgana y aires de superioridad."
   },
   {
    "id": "r-d25",
@@ -983,7 +983,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "dádiva",
-   "def": "Cosa que se regala."
+   "def": "Regalo que se hace por generosidad, sin esperar nada a cambio."
   },
   {
    "id": "r-e1",
@@ -1135,7 +1135,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "efímero",
-   "def": "Que dura muy poco tiempo."
+   "def": "Que dura un suspiro, como una pompa de jabón."
   },
   {
    "id": "r-e20",
@@ -1199,7 +1199,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "epítome",
-   "def": "Resumen de una obra."
+   "def": "Versión resumida de una obra: lo esencial y sin paja."
   },
   {
    "id": "r-e28",
@@ -1295,7 +1295,7 @@
    "tipo": "empieza",
    "dif": "medio",
    "resp": "faraón",
-   "def": "Antiguo rey del Egipto."
+   "def": "Rey del antiguo Egipto, a veces enterrado dentro de una pirámide."
   },
   {
    "id": "r-f12",
@@ -1375,7 +1375,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "férreo",
-   "def": "Duro, tenaz, inflexible."
+   "def": "Firme como una barra de metal: no se dobla ante nada."
   },
   {
    "id": "r-f22",
@@ -1383,7 +1383,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "fútil",
-   "def": "De poca importancia."
+   "def": "Que importa tan poco como una mota de polvo y no sirve para nada."
   },
   {
    "id": "r-f23",
@@ -1391,7 +1391,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "fugaz",
-   "def": "Que dura un instante."
+   "def": "Que pasa tan rápido que, si parpadeas, te lo pierdes."
   },
   {
    "id": "r-f24",
@@ -1407,7 +1407,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "fidedigno",
-   "def": "Digno de fe y crédito."
+   "def": "Que merece confianza: te lo puedes creer sin dudar."
   },
   {
    "id": "r-g1",
@@ -1591,7 +1591,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "gregario",
-   "def": "Que sigue ciegamente a la mayoría."
+   "def": "Que va siempre donde va el grupo, como una oveja en el rebaño."
   },
   {
    "id": "r-g24",
@@ -1599,7 +1599,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "gesta",
-   "def": "Hazaña heroica."
+   "def": "Hazaña tan heroica que se sigue contando siglos después."
   },
   {
    "id": "r-g25",
@@ -1607,7 +1607,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "grandilocuente",
-   "def": "Que habla con exagerada pompa."
+   "def": "Que habla con palabras tan pomposas que parece estar dando un discurso."
   },
   {
    "id": "r-g26",
@@ -1623,7 +1623,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "gélido",
-   "def": "Muy frío."
+   "def": "Tan frío que te cala hasta los huesos."
   },
   {
    "id": "r-g28",
@@ -1783,7 +1783,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "hipérbole",
-   "def": "Exageración desmesurada de lo que se dice."
+   "def": "Figura que exagera a lo grande, como decir «te lo he dicho un millón de veces»."
   },
   {
    "id": "r-h20",
@@ -1839,7 +1839,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "heráldica",
-   "def": "Ciencia de los escudos de armas."
+   "def": "Disciplina que estudia los escudos de los linajes: leones, torres y colores."
   },
   {
    "id": "r-h27",
@@ -1967,7 +1967,7 @@
    "tipo": "empieza",
    "dif": "medio",
    "resp": "infinito",
-   "def": "Que no tiene fin."
+   "def": "Que no se acaba nunca, como intentar contar todas las estrellas."
   },
   {
    "id": "r-i16",
@@ -1983,7 +1983,7 @@
    "tipo": "empieza",
    "dif": "medio",
    "resp": "indulto",
-   "def": "Perdón de una pena."
+   "def": "Perdón que libra a un condenado de cumplir toda o parte de su castigo."
   },
   {
    "id": "r-i18",
@@ -2007,7 +2007,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "ineludible",
-   "def": "Que no se puede evitar."
+   "def": "Que no hay manera de esquivar, por mucho que lo intentes."
   },
   {
    "id": "r-i21",
@@ -2015,7 +2015,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "insidioso",
-   "def": "Que tiende trampas con malicia."
+   "def": "Que engaña con disimulo y prepara trampas a traición."
   },
   {
    "id": "r-i22",
@@ -2023,7 +2023,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "incólume",
-   "def": "Sin daño ni lesión."
+   "def": "Que sale de un buen lío sin un solo rasguño."
   },
   {
    "id": "r-i23",
@@ -2039,7 +2039,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "inefable",
-   "def": "Que no se puede expresar con palabras."
+   "def": "Tan intenso o maravilloso que no hay palabras para describirlo."
   },
   {
    "id": "r-i25",
@@ -2047,7 +2047,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "ignominia",
-   "def": "Deshonra pública."
+   "def": "Vergüenza pública tan grande que mancha el nombre de alguien."
   },
   {
    "id": "r-i26",
@@ -2071,7 +2071,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "ímprobo",
-   "def": "Excesivo, dicho de un trabajo."
+   "def": "Dicho de un esfuerzo: agotador, de los que te dejan sin fuerzas."
   },
   {
    "id": "r-j1",
@@ -2223,7 +2223,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "jocoso",
-   "def": "Gracioso, que provoca risa."
+   "def": "Gracioso y chistoso, de los que arrancan una carcajada."
   },
   {
    "id": "r-j20",
@@ -2231,7 +2231,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "jaculatoria",
-   "def": "Oración muy breve y fervorosa."
+   "def": "Rezo cortito que se dice de un tirón y con mucha devoción."
   },
   {
    "id": "r-j21",
@@ -2255,7 +2255,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "jovial",
-   "def": "Alegre y bromista."
+   "def": "De buen humor y siempre con una broma a punto."
   },
   {
    "id": "r-j24",
@@ -2263,7 +2263,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "jaez",
-   "def": "Clase o índole de algo."
+   "def": "Clase o calaña de algo; se dice mucho de gente poco recomendable."
   },
   {
    "id": "r-j25",
@@ -2271,7 +2271,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "jeremiada",
-   "def": "Lamento exagerado."
+   "def": "Queja larga y dramática, de las que parece que no van a acabar nunca."
   },
   {
    "id": "r-j26",
@@ -2279,14 +2279,14 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "jergón",
-   "def": "Colchón relleno de paja."
+   "def": "Colchón rústico relleno de paja u hojas secas, que pincha un poco."
   },
   {
    "id": "r-k1",
    "letra": "K",
    "tipo": "empieza",
    "resp": "kilo",
-   "def": "Mil gramos.",
+   "def": "Lo que pesa, más o menos, un litro de agua o un paquete de arroz.",
    "dif": "facil"
   },
   {
@@ -2367,7 +2367,7 @@
    "tipo": "empieza",
    "dif": "medio",
    "resp": "kilómetro",
-   "def": "Mil metros."
+   "def": "Distancia que recorres en unos diez minutos andando a buen paso."
   },
   {
    "id": "r-k12",
@@ -2639,7 +2639,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "lexicografía",
-   "def": "Técnica de hacer diccionarios."
+   "def": "Oficio de elaborar diccionarios, palabra a palabra."
   },
   {
    "id": "r-l23",
@@ -2647,7 +2647,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "litigio",
-   "def": "Pleito o disputa en un juicio."
+   "def": "Disputa que acaba en los tribunales, con abogados de por medio."
   },
   {
    "id": "r-l24",
@@ -2655,7 +2655,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "longevo",
-   "def": "De larga vida."
+   "def": "Que vive muchísimos años, como una tortuga gigante."
   },
   {
    "id": "r-l25",
@@ -2663,7 +2663,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "lúgubre",
-   "def": "Triste y sombrío."
+   "def": "Tan triste y oscuro que parece sacado de una película de miedo."
   },
   {
    "id": "r-l26",
@@ -2687,7 +2687,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "locuaz",
-   "def": "Que habla mucho."
+   "def": "Que habla por los codos y no hay quien le haga callar."
   },
   {
    "id": "r-m1",
@@ -2823,7 +2823,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "mausoleo",
-   "def": "Sepulcro monumental y suntuoso."
+   "def": "Tumba tan grande y lujosa que parece un pequeño palacio."
   },
   {
    "id": "r-m18",
@@ -2855,7 +2855,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "mendaz",
-   "def": "Mentiroso."
+   "def": "Que suelta una trola tras otra sin despeinarse."
   },
   {
    "id": "r-m22",
@@ -2863,7 +2863,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "magnánimo",
-   "def": "De alma generosa y noble."
+   "def": "Tan generoso y noble que perdona y ayuda sin pedir nada a cambio."
   },
   {
    "id": "r-m23",
@@ -2871,7 +2871,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "mordaz",
-   "def": "Que critica con ironía hiriente."
+   "def": "Que critica con un humor tan afilado que pica."
   },
   {
    "id": "r-m24",
@@ -3071,7 +3071,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "nebuloso",
-   "def": "Con nubes o poco claro."
+   "def": "Cubierto de niebla, o tan confuso que no hay quien lo entienda."
   },
   {
    "id": "r-n23",
@@ -3079,7 +3079,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "nefasto",
-   "def": "Funesto, muy malo."
+   "def": "Desastroso, de los que traen desgracias y conviene olvidar cuanto antes."
   },
   {
    "id": "r-n24",
@@ -3087,7 +3087,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "nimio",
-   "def": "Insignificante."
+   "def": "Tan pequeño o poco importante que casi ni se ve."
   },
   {
    "id": "r-n25",
@@ -3111,14 +3111,14 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "numismática",
-   "def": "Ciencia que estudia las monedas."
+   "def": "Afición o disciplina que estudia y colecciona monedas y medallas."
   },
   {
    "id": "r-ñ1",
    "letra": "Ñ",
    "tipo": "contiene",
    "resp": "niño",
-   "def": "Persona de corta edad.",
+   "def": "Persona pequeña que todavía no ha llegado a la adolescencia.",
    "dif": "facil"
   },
   {
@@ -3159,7 +3159,7 @@
    "tipo": "contiene",
    "dif": "facil",
    "resp": "año",
-   "def": "Periodo de doce meses."
+   "def": "Lo que tarda la Tierra en dar una vuelta completa alrededor del Sol."
   },
   {
    "id": "r-ñ7",
@@ -3263,7 +3263,7 @@
    "tipo": "contiene",
    "dif": "medio",
    "resp": "champiñón",
-   "def": "Seta blanca comestible."
+   "def": "Seta blanca y redondita que se come a la plancha con ajo y perejil."
   },
   {
    "id": "r-ñ20",
@@ -3271,7 +3271,7 @@
    "tipo": "contiene",
    "dif": "medio",
    "resp": "peñasco",
-   "def": "Roca grande y elevada."
+   "def": "Roca enorme y alta que sobresale en mitad del monte."
   },
   {
    "id": "r-ñ21",
@@ -3327,7 +3327,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "ñoño",
-   "def": "Apocado y remilgado, o demasiado sensiblero."
+   "def": "Cursi y quejica, de una dulzura que empalaga."
   },
   {
    "id": "r-ñ28",
@@ -3351,7 +3351,7 @@
    "tipo": "contiene",
    "dif": "dificil",
    "resp": "pergeñar",
-   "def": "Planear o esbozar algo."
+   "def": "Preparar algo a grandes rasgos, como un plan trazado deprisa y corriendo."
   },
   {
    "id": "r-ñ31",
@@ -3359,7 +3359,7 @@
    "tipo": "contiene",
    "dif": "dificil",
    "resp": "desdeñar",
-   "def": "Tratar con desprecio."
+   "def": "Mirar algo o a alguien por encima del hombro, como si no valiera nada."
   },
   {
    "id": "r-o1",
@@ -3399,7 +3399,7 @@
    "tipo": "empieza",
    "dif": "facil",
    "resp": "ojo",
-   "def": "Órgano con el que vemos."
+   "def": "Órgano con el que estás leyendo estas letras ahora mismo."
   },
   {
    "id": "r-o6",
@@ -3511,7 +3511,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "obsoleto",
-   "def": "Anticuado, que ya no se usa."
+   "def": "Pasado de moda y en desuso, como un fax o un disquete."
   },
   {
    "id": "r-o20",
@@ -3527,7 +3527,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "ocaso",
-   "def": "Puesta del sol."
+   "def": "Momento en que el sol se esconde tras el horizonte y el cielo se pone naranja."
   },
   {
    "id": "r-o22",
@@ -3535,7 +3535,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "opulento",
-   "def": "Muy rico y abundante."
+   "def": "Que nada en riquezas y no le falta de nada."
   },
   {
    "id": "r-o23",
@@ -3543,7 +3543,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "onírico",
-   "def": "Relativo a los sueños."
+   "def": "Que tiene que ver con lo que soñamos, o tan raro que parece un sueño."
   },
   {
    "id": "r-o24",
@@ -3551,7 +3551,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "oprobio",
-   "def": "Deshonra pública."
+   "def": "Humillación que deja a alguien señalado delante de todos."
   },
   {
    "id": "r-o25",
@@ -3751,7 +3751,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "pusilánime",
-   "def": "Falto de valor y ánimo."
+   "def": "Que se acobarda ante cualquier reto y no se atreve a nada."
   },
   {
    "id": "r-p25",
@@ -3759,7 +3759,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "perentorio",
-   "def": "Urgente, que no admite demora."
+   "def": "Tan urgente que no puede esperar ni un minuto más."
   },
   {
    "id": "r-p26",
@@ -3767,7 +3767,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "prolijo",
-   "def": "Largo y detallado en exceso."
+   "def": "Que se enrolla con tantos detalles que acaba aburriendo."
   },
   {
    "id": "r-p27",
@@ -3775,7 +3775,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "prístino",
-   "def": "Primitivo, original, puro."
+   "def": "Puro y original, tal como era al principio, sin ningún retoque."
   },
   {
    "id": "r-p28",
@@ -3783,7 +3783,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "paroxismo",
-   "def": "Exaltación extrema de un sentimiento."
+   "def": "Punto máximo de una emoción, cuando ya no se puede más."
   },
   {
    "id": "r-q1",
@@ -3863,7 +3863,7 @@
    "tipo": "empieza",
    "dif": "medio",
    "resp": "quebradizo",
-   "def": "Que se rompe fácilmente."
+   "def": "Que se rompe con nada, como una galleta seca o un cristal fino."
   },
   {
    "id": "r-q11",
@@ -3935,7 +3935,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "quintaesencia",
-   "def": "Lo más puro y refinado de algo."
+   "def": "Lo mejor de lo mejor: la versión más pura y perfecta de algo."
   },
   {
    "id": "r-q20",
@@ -3943,7 +3943,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "quincalla",
-   "def": "Objetos de poco valor."
+   "def": "Baratijas de metal sin valor, de las que acaban llenando cajones."
   },
   {
    "id": "r-r1",
@@ -4063,7 +4063,7 @@
    "tipo": "empieza",
    "dif": "medio",
    "resp": "ruiseñor",
-   "def": "Ave de canto melodioso."
+   "def": "Pájaro pequeño y pardo famoso por cantar de maravilla, incluso de noche."
   },
   {
    "id": "r-r16",
@@ -4103,7 +4103,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "rubicundo",
-   "def": "De color rojizo, dicho de una persona."
+   "def": "Con la cara colorada, como quien vuelve de correr bajo el sol."
   },
   {
    "id": "r-r21",
@@ -4111,7 +4111,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "recalcitrante",
-   "def": "Obstinado en su oposición."
+   "def": "Que se resiste y se mantiene en sus trece, digan lo que digan."
   },
   {
    "id": "r-r22",
@@ -4119,7 +4119,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "rimbombante",
-   "def": "Ostentoso y llamativo."
+   "def": "Exagerado y aparatoso, con mucho adorno y poca sustancia."
   },
   {
    "id": "r-r23",
@@ -4135,7 +4135,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "rescoldo",
-   "def": "Brasa menuda bajo la ceniza."
+   "def": "Brasa que sigue encendida bajo la ceniza cuando el fuego parece apagado."
   },
   {
    "id": "r-r25",
@@ -4199,7 +4199,7 @@
    "tipo": "empieza",
    "dif": "facil",
    "resp": "silla",
-   "def": "Asiento con respaldo."
+   "def": "Asiento con respaldo y cuatro patas para una sola persona."
   },
   {
    "id": "r-s8",
@@ -4207,7 +4207,7 @@
    "tipo": "empieza",
    "dif": "facil",
    "resp": "sopa",
-   "def": "Plato caliente de caldo."
+   "def": "Plato de caldo calentito que se toma con cuchara en invierno."
   },
   {
    "id": "r-s9",
@@ -4319,7 +4319,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "sempiterno",
-   "def": "Que durará siempre."
+   "def": "Que dura para siempre, sin final a la vista."
   },
   {
    "id": "r-s23",
@@ -4327,7 +4327,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "sibilino",
-   "def": "Misterioso y con doble sentido."
+   "def": "Dicho de forma tan misteriosa que hay que adivinar qué significa."
   },
   {
    "id": "r-s24",
@@ -4335,7 +4335,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "soslayar",
-   "def": "Evitar un asunto."
+   "def": "Esquivar un tema incómodo dando un rodeo para no afrontarlo."
   },
   {
    "id": "r-s25",
@@ -4351,7 +4351,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "sinuoso",
-   "def": "Que tiene curvas."
+   "def": "Lleno de curvas y revueltas, como una carretera de montaña."
   },
   {
    "id": "r-s27",
@@ -4359,7 +4359,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "subrepticio",
-   "def": "Hecho a escondidas."
+   "def": "Que se hace a escondidas, sin que nadie se dé cuenta."
   },
   {
    "id": "r-s28",
@@ -4559,7 +4559,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "taciturno",
-   "def": "Callado y melancólico."
+   "def": "Callado, serio y con cara de pocos amigos."
   },
   {
    "id": "r-t25",
@@ -4567,7 +4567,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "truculento",
-   "def": "Cruel y espantoso."
+   "def": "Tan cruel y exagerado que pone los pelos de punta."
   },
   {
    "id": "r-t26",
@@ -4575,7 +4575,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "talante",
-   "def": "Humor o disposición de ánimo."
+   "def": "Actitud con la que alguien afronta las cosas, buena o mala."
   },
   {
    "id": "r-t27",
@@ -4583,7 +4583,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "terruño",
-   "def": "Tierra natal."
+   "def": "Rincón donde naciste y que siempre echas de menos."
   },
   {
    "id": "r-u1",
@@ -4663,7 +4663,7 @@
    "tipo": "empieza",
    "dif": "medio",
    "resp": "unanimidad",
-   "def": "Acuerdo de todos."
+   "def": "Acuerdo total: cuando todos, sin excepción, opinan lo mismo."
   },
   {
    "id": "r-u11",
@@ -4719,7 +4719,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "ufano",
-   "def": "Orgulloso y satisfecho de sí mismo."
+   "def": "Muy satisfecho de sí mismo, como un pavo real luciendo plumas."
   },
   {
    "id": "r-u18",
@@ -4727,7 +4727,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "urbanidad",
-   "def": "Cortesía y buenos modales."
+   "def": "Buenos modales en el trato: saludar, ceder el paso y dar las gracias."
   },
   {
    "id": "r-u19",
@@ -4743,7 +4743,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "umbrío",
-   "def": "De sombra, sombrío."
+   "def": "Dicho de un lugar: donde apenas da el sol y casi siempre hay sombra."
   },
   {
    "id": "r-v1",
@@ -4758,7 +4758,7 @@
    "letra": "V",
    "tipo": "empieza",
    "resp": "vaca",
-   "def": "Hembra del toro.",
+   "def": "Animal que muge, pasta en el prado y nos da la leche.",
    "dif": "facil"
   },
   {
@@ -4791,7 +4791,7 @@
    "tipo": "empieza",
    "dif": "facil",
    "resp": "verano",
-   "def": "Estación más calurosa."
+   "def": "Estación del calor, de las vacaciones y de los helados."
   },
   {
    "id": "r-v7",
@@ -4831,7 +4831,7 @@
    "tipo": "empieza",
    "dif": "medio",
    "resp": "vendaval",
-   "def": "Viento muy fuerte."
+   "def": "Viento tan fuerte que arranca tejas y da la vuelta a los paraguas."
   },
   {
    "id": "r-v12",
@@ -4839,7 +4839,7 @@
    "tipo": "empieza",
    "dif": "medio",
    "resp": "velero",
-   "def": "Barco de vela."
+   "def": "Barco que avanza empujado solo por el viento, sin necesidad de motor."
   },
   {
    "id": "r-v13",
@@ -4879,7 +4879,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "vilipendiar",
-   "def": "Tratar a alguien con desprecio."
+   "def": "Humillar a alguien de palabra, sin la más mínima consideración."
   },
   {
    "id": "r-v18",
@@ -4895,7 +4895,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "verosímil",
-   "def": "Que parece cierto y creíble."
+   "def": "Que podría ser verdad, aunque nadie lo haya comprobado."
   },
   {
    "id": "r-v20",
@@ -4911,7 +4911,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "vetusto",
-   "def": "Muy viejo."
+   "def": "Viejísimo, con siglos de historia a sus espaldas."
   },
   {
    "id": "r-v22",
@@ -4919,7 +4919,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "vehemente",
-   "def": "Que se expresa con pasión."
+   "def": "Que defiende sus ideas con tanta pasión que se acalora."
   },
   {
    "id": "r-v23",
@@ -4927,7 +4927,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "vituperio",
-   "def": "Censura dura."
+   "def": "Crítica feroz que pone a alguien a caer de un burro."
   },
   {
    "id": "r-v24",
@@ -4935,7 +4935,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "vástago",
-   "def": "Hijo, descendiente."
+   "def": "Hijo o descendiente de una familia; también, brote nuevo de una planta."
   },
   {
    "id": "r-w1",
@@ -4959,7 +4959,7 @@
    "tipo": "empieza",
    "dif": "facil",
    "resp": "wáter",
-   "def": "Taza del cuarto de baño."
+   "def": "Asiento del baño en el que, al terminar, se tira de la cadena."
   },
   {
    "id": "r-w4",
@@ -5143,7 +5143,7 @@
    "tipo": "contiene",
    "dif": "facil",
    "resp": "excursión",
-   "def": "Viaje corto por placer."
+   "def": "Salida de un día para ir al campo o visitar algún sitio, mochila al hombro."
   },
   {
    "id": "r-x7",
@@ -5151,7 +5151,7 @@
    "tipo": "contiene",
    "dif": "facil",
    "resp": "axila",
-   "def": "Hueco bajo el brazo."
+   "def": "Hueco bajo el brazo donde más cosquillas tienes."
   },
   {
    "id": "r-x8",
@@ -5231,7 +5231,7 @@
    "tipo": "contiene",
    "dif": "medio",
    "resp": "maxilar",
-   "def": "Hueso de la mandíbula."
+   "def": "Hueso de la cara en el que están encajados los dientes."
   },
   {
    "id": "r-x18",
@@ -5239,7 +5239,7 @@
    "tipo": "contiene",
    "dif": "medio",
    "resp": "flexible",
-   "def": "Que se dobla fácilmente."
+   "def": "Que se dobla sin romperse, como una rama joven o una gimnasta."
   },
   {
    "id": "r-x19",
@@ -5311,7 +5311,7 @@
    "tipo": "contiene",
    "dif": "dificil",
    "resp": "sexagenario",
-   "def": "Que tiene sesenta años."
+   "def": "Persona que ya ha cumplido los sesenta y aún no ha llegado a los setenta."
   },
   {
    "id": "r-x28",
@@ -5359,7 +5359,7 @@
    "tipo": "empieza",
    "dif": "facil",
    "resp": "yegua",
-   "def": "Hembra del caballo."
+   "def": "Hembra del caballo, la mamá de los potros."
   },
   {
    "id": "r-y5",
@@ -5375,7 +5375,7 @@
    "tipo": "contiene",
    "dif": "facil",
    "resp": "ayer",
-   "def": "El día antes de hoy."
+   "def": "El día anterior a hoy, ese que ya no vuelve."
   },
   {
    "id": "r-y7",
@@ -5391,7 +5391,7 @@
    "tipo": "contiene",
    "dif": "facil",
    "resp": "mayo",
-   "def": "Quinto mes del año."
+   "def": "Quinto mes del calendario, el de las flores y las tardes largas."
   },
   {
    "id": "r-y9",
@@ -5399,7 +5399,7 @@
    "tipo": "contiene",
    "dif": "facil",
    "resp": "desayuno",
-   "def": "Primera comida del día."
+   "def": "Primera comida del día: tostadas, cereales o lo que te dé tiempo."
   },
   {
    "id": "r-y10",
@@ -5407,7 +5407,7 @@
    "tipo": "contiene",
    "dif": "facil",
    "resp": "hoyo",
-   "def": "Agujero en el suelo."
+   "def": "Agujero en el suelo, como el que cava un perro para esconder un hueso."
   },
   {
    "id": "r-y11",
@@ -5479,7 +5479,7 @@
    "tipo": "contiene",
    "dif": "medio",
    "resp": "ayuno",
-   "def": "Abstinencia de comida."
+   "def": "Pasar un tiempo sin probar bocado, a propósito."
   },
   {
    "id": "r-y20",
@@ -5503,7 +5503,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "yugular",
-   "def": "Vena grande del cuello."
+   "def": "Vena gruesa del cuello que baja la sangre de la cabeza al corazón."
   },
   {
    "id": "r-y23",
@@ -5511,7 +5511,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "yacija",
-   "def": "Cama pobre o lugar donde se está acostado."
+   "def": "Cama humilde o rincón improvisado donde echarse a dormir."
   },
   {
    "id": "r-y24",
@@ -5527,7 +5527,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "yermo",
-   "def": "Terreno inculto y deshabitado."
+   "def": "Terreno sin cultivar y sin gente, donde casi no crece nada."
   },
   {
    "id": "r-z1",
@@ -5623,7 +5623,7 @@
    "tipo": "empieza",
    "dif": "medio",
    "resp": "zafiro",
-   "def": "Piedra preciosa azul."
+   "def": "Piedra preciosa de un azul intenso que luce en anillos y coronas."
   },
   {
    "id": "r-z13",
@@ -5631,7 +5631,7 @@
    "tipo": "empieza",
    "dif": "medio",
    "resp": "zombi",
-   "def": "Muerto viviente."
+   "def": "Muerto que vuelve a andar, torpe y hambriento, en las películas de miedo."
   },
   {
    "id": "r-z14",
@@ -5671,7 +5671,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "zafio",
-   "def": "Grosero y tosco."
+   "def": "Bruto y maleducado, sin ningún tipo de finura."
   },
   {
    "id": "r-z19",
@@ -5687,7 +5687,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "zozobra",
-   "def": "Inquietud y angustia."
+   "def": "Inquietud que no te deja en paz, como un nudo en el estómago."
   },
   {
    "id": "r-z21",
@@ -5695,7 +5695,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "zaherir",
-   "def": "Herir con críticas."
+   "def": "Hacer daño a alguien con críticas o burlas que escuecen."
   },
   {
    "id": "r-z22",
@@ -5703,7 +5703,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "zascandil",
-   "def": "Persona inquieta y entrometida."
+   "def": "Persona que va de aquí para allá metiéndose en todo sin hacer nada útil."
   },
   {
    "id": "r-z23",
@@ -5711,7 +5711,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "zurcir",
-   "def": "Coser un roto."
+   "def": "Coser un agujero de la ropa con puntadas finas hasta que apenas se note."
   },
   {
    "id": "r-z24",
@@ -5719,7 +5719,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "zalamero",
-   "def": "Que adula de manera empalagosa."
+   "def": "Que hace mimos y halagos exagerados para salirse con la suya."
   },
   {
    "id": "r-z25",
@@ -5727,7 +5727,7 @@
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "zurrón",
-   "def": "Bolsa de pastor."
+   "def": "Bolsa de cuero que los pastores llevaban colgada al hombro."
   }
  ]
 }

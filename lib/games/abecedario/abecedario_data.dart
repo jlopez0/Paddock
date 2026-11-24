@@ -6,22 +6,22 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/storage.dart';
 
-const roscoColor = Color(0xFF4C8DFF);
-const roscoAsset = 'assets/content/es/rosco.json';
+const abecedarioColor = Color(0xFF4C8DFF);
+const abecedarioAsset = 'assets/content/es/abecedario.json';
 
-/// Las 27 letras del rosco, en orden.
-const roscoLetters = [
+/// Las 27 letras del abecedario, en orden.
+const abecedarioLetters = [
   'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'Ñ', //
   'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
 ];
 
-enum RoscoLevel {
+enum AbecedarioLevel {
   easy('Fácil', 'facil'),
   medium('Medio', 'medio'),
   hard('Difícil', 'dificil'),
   mixed('Mezcla', '');
 
-  const RoscoLevel(this.label, this.key);
+  const AbecedarioLevel(this.label, this.key);
 
   final String label;
 
@@ -29,8 +29,8 @@ enum RoscoLevel {
   final String key;
 }
 
-class RoscoEntry {
-  const RoscoEntry({
+class AbecedarioEntry {
+  const AbecedarioEntry({
     required this.id,
     required this.letter,
     required this.contains,
@@ -52,41 +52,54 @@ class RoscoEntry {
 
   String get clue => contains ? 'Contiene la $letter' : 'Empieza por $letter';
 
-  factory RoscoEntry.fromJson(Map<String, dynamic> j) => RoscoEntry(
-        id: j['id'] as String,
-        letter: j['letra'] as String,
-        contains: j['tipo'] == 'contiene',
-        answer: j['resp'] as String,
-        definition: j['def'] as String,
-        level: j['dif'] as String,
-      );
+  factory AbecedarioEntry.fromJson(Map<String, dynamic> j) => AbecedarioEntry(
+    id: j['id'] as String,
+    letter: j['letra'] as String,
+    contains: j['tipo'] == 'contiene',
+    answer: j['resp'] as String,
+    definition: j['def'] as String,
+    level: j['dif'] as String,
+  );
 }
 
-List<RoscoEntry> parseRosco(String json) => ((jsonDecode(json) as Map<String, dynamic>)['items'] as List)
-    .cast<Map<String, dynamic>>()
-    .map(RoscoEntry.fromJson)
-    .toList();
+List<AbecedarioEntry> parseAbecedario(String json) =>
+    ((jsonDecode(json) as Map<String, dynamic>)['items'] as List)
+        .cast<Map<String, dynamic>>()
+        .map(AbecedarioEntry.fromJson)
+        .toList();
 
-final roscoBankProvider =
-    FutureProvider<List<RoscoEntry>>((ref) async => parseRosco(await rootBundle.loadString(roscoAsset)));
+final abecedarioBankProvider = FutureProvider<List<AbecedarioEntry>>(
+  (ref) async => parseAbecedario(await rootBundle.loadString(abecedarioAsset)),
+);
 
 /// Una definición al azar por cada letra, en orden alfabético y del nivel pedido
 /// (si a una letra no le queda ninguna de ese nivel, se usa cualquiera).
-List<RoscoEntry> generateRosco(List<RoscoEntry> bank, Random random, {RoscoLevel level = RoscoLevel.mixed}) {
-  final out = <RoscoEntry>[];
-  for (final l in roscoLetters) {
+List<AbecedarioEntry> generateAbecedario(
+  List<AbecedarioEntry> bank,
+  Random random, {
+  AbecedarioLevel level = AbecedarioLevel.mixed,
+}) {
+  final out = <AbecedarioEntry>[];
+  for (final l in abecedarioLetters) {
     final ofLetter = bank.where((e) => e.letter == l).toList();
-    final ofLevel = level == RoscoLevel.mixed ? ofLetter : ofLetter.where((e) => e.level == level.key).toList();
+    final ofLevel = level == AbecedarioLevel.mixed
+        ? ofLetter
+        : ofLetter.where((e) => e.level == level.key).toList();
     final options = ofLevel.isEmpty ? ofLetter : ofLevel;
     if (options.isNotEmpty) out.add(options[random.nextInt(options.length)]);
   }
   return out;
 }
 
-class RoscoSetup {
-  const RoscoSetup({this.seconds = 20, this.auto = false, this.readSeconds = 5, this.level = RoscoLevel.mixed});
+class AbecedarioSetup {
+  const AbecedarioSetup({
+    this.seconds = 20,
+    this.auto = false,
+    this.readSeconds = 5,
+    this.level = AbecedarioLevel.mixed,
+  });
 
-  final RoscoLevel level;
+  final AbecedarioLevel level;
 
   /// Tiempo para pensar antes de desvelar la respuesta.
   final int seconds;
@@ -95,42 +108,57 @@ class RoscoSetup {
   final bool auto;
   final int readSeconds;
 
-  RoscoSetup copyWith({int? seconds, bool? auto, int? readSeconds, RoscoLevel? level}) => RoscoSetup(
-        level: level ?? this.level,
-        seconds: seconds ?? this.seconds,
-        auto: auto ?? this.auto,
-        readSeconds: readSeconds ?? this.readSeconds,
-      );
+  AbecedarioSetup copyWith({
+    int? seconds,
+    bool? auto,
+    int? readSeconds,
+    AbecedarioLevel? level,
+  }) => AbecedarioSetup(
+    level: level ?? this.level,
+    seconds: seconds ?? this.seconds,
+    auto: auto ?? this.auto,
+    readSeconds: readSeconds ?? this.readSeconds,
+  );
 
-  Map<String, dynamic> toJson() => {'seconds': seconds, 'auto': auto, 'read': readSeconds, 'level': level.name};
+  Map<String, dynamic> toJson() => {
+    'seconds': seconds,
+    'auto': auto,
+    'read': readSeconds,
+    'level': level.name,
+  };
 
-  factory RoscoSetup.fromJson(Map<String, dynamic> j) =>
-      RoscoSetup(
-        seconds: j['seconds'] as int,
-        auto: j['auto'] as bool,
-        readSeconds: j['read'] as int,
-        level: RoscoLevel.values.asNameMap()[j['level']] ?? RoscoLevel.mixed,
-      );
+  factory AbecedarioSetup.fromJson(Map<String, dynamic> j) => AbecedarioSetup(
+    seconds: j['seconds'] as int,
+    auto: j['auto'] as bool,
+    readSeconds: j['read'] as int,
+    level:
+        AbecedarioLevel.values.asNameMap()[j['level']] ?? AbecedarioLevel.mixed,
+  );
 }
 
-final roscoSetupProvider = NotifierProvider<RoscoSetupController, RoscoSetup>(RoscoSetupController.new);
+final abecedarioSetupProvider =
+    NotifierProvider<AbecedarioSetupController, AbecedarioSetup>(
+      AbecedarioSetupController.new,
+    );
 
-class RoscoSetupController extends Notifier<RoscoSetup> {
-  static const _key = 'rosco.setup.v1';
+class AbecedarioSetupController extends Notifier<AbecedarioSetup> {
+  static const _key = 'abecedario.setup.v1';
 
   @override
-  RoscoSetup build() {
+  AbecedarioSetup build() {
     final raw = ref.read(sharedPreferencesProvider).getString(_key);
-    if (raw == null) return const RoscoSetup();
+    if (raw == null) return const AbecedarioSetup();
     try {
-      return RoscoSetup.fromJson(jsonDecode(raw) as Map<String, dynamic>);
+      return AbecedarioSetup.fromJson(jsonDecode(raw) as Map<String, dynamic>);
     } catch (_) {
-      return const RoscoSetup();
+      return const AbecedarioSetup();
     }
   }
 
-  void update(RoscoSetup Function(RoscoSetup s) change) {
+  void update(AbecedarioSetup Function(AbecedarioSetup s) change) {
     state = change(state);
-    ref.read(sharedPreferencesProvider).setString(_key, jsonEncode(state.toJson()));
+    ref
+        .read(sharedPreferencesProvider)
+        .setString(_key, jsonEncode(state.toJson()));
   }
 }

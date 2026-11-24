@@ -4,7 +4,7 @@ import 'game_module.dart';
 import 'geography/geography_module.dart';
 import 'horse_race/horse_race_module.dart';
 import 'prompt_deck/prompt_deck_module.dart';
-import 'rosco/rosco_module.dart';
+import 'abecedario/abecedario_module.dart';
 import 'trivia/trivia_module.dart';
 
 /// Juegos disponibles, en el orden en que aparecen en el menú.
@@ -12,7 +12,7 @@ const List<GameModule> gameModules = [
   HorseRaceModule(),
   GeographyModule(),
   TriviaModule(),
-  RoscoModule(),
+  AbecedarioModule(),
   PromptDeckModule(
     id: 'yo-nunca',
     title: 'Yo nunca',

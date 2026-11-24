@@ -37,12 +37,68 @@
    "id": "r-a5",
    "letra": "A",
    "tipo": "empieza",
+   "dif": "facil",
+   "resp": "avión",
+   "def": "Vehículo con alas que vuela llevando pasajeros."
+  },
+  {
+   "id": "r-a6",
+   "letra": "A",
+   "tipo": "empieza",
+   "dif": "facil",
+   "resp": "azúcar",
+   "def": "Polvo blanco y dulce que se echa al café."
+  },
+  {
+   "id": "r-a7",
+   "letra": "A",
+   "tipo": "empieza",
+   "dif": "facil",
+   "resp": "árbol",
+   "def": "Planta de tronco leñoso y copa con hojas."
+  },
+  {
+   "id": "r-a8",
+   "letra": "A",
+   "tipo": "empieza",
+   "dif": "facil",
+   "resp": "abuelo",
+   "def": "Padre de tu padre o de tu madre."
+  },
+  {
+   "id": "r-a9",
+   "letra": "A",
+   "tipo": "empieza",
+   "dif": "facil",
+   "resp": "ambulancia",
+   "def": "Vehículo con sirena que lleva enfermos al hospital."
+  },
+  {
+   "id": "r-a10",
+   "letra": "A",
+   "tipo": "empieza",
+   "dif": "facil",
+   "resp": "anillo",
+   "def": "Joya que se lleva en un dedo."
+  },
+  {
+   "id": "r-a11",
+   "letra": "A",
+   "tipo": "empieza",
+   "dif": "facil",
+   "resp": "autobús",
+   "def": "Vehículo grande que hace un recorrido fijo con paradas."
+  },
+  {
+   "id": "r-a12",
+   "letra": "A",
+   "tipo": "empieza",
    "resp": "ajedrez",
    "def": "Juego de tablero con reyes, reinas, torres, alfiles y caballos.",
    "dif": "medio"
   },
   {
-   "id": "r-a6",
+   "id": "r-a13",
    "letra": "A",
    "tipo": "empieza",
    "resp": "avestruz",
@@ -50,7 +106,7 @@
    "dif": "medio"
   },
   {
-   "id": "r-a7",
+   "id": "r-a14",
    "letra": "A",
    "tipo": "empieza",
    "dif": "medio",
@@ -58,7 +114,7 @@
    "def": "Lugar con peces y otros animales marinos que se exhibe al público."
   },
   {
-   "id": "r-a8",
+   "id": "r-a15",
    "letra": "A",
    "tipo": "empieza",
    "dif": "medio",
@@ -66,7 +122,71 @@
    "def": "Animal, como la rana, que de joven vive en el agua y de adulto en tierra."
   },
   {
-   "id": "r-a9",
+   "id": "r-a16",
+   "letra": "A",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "astronauta",
+   "def": "Persona que viaja al espacio."
+  },
+  {
+   "id": "r-a17",
+   "letra": "A",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "archipiélago",
+   "def": "Conjunto de islas cercanas entre sí."
+  },
+  {
+   "id": "r-a18",
+   "letra": "A",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "alquimista",
+   "def": "Antiguo experimentador que buscaba convertir metales en oro."
+  },
+  {
+   "id": "r-a19",
+   "letra": "A",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "ábaco",
+   "def": "Instrumento de cuentas ensartadas para calcular."
+  },
+  {
+   "id": "r-a20",
+   "letra": "A",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "acueducto",
+   "def": "Construcción romana con arcos para llevar agua, como la de Segovia."
+  },
+  {
+   "id": "r-a21",
+   "letra": "A",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "avalancha",
+   "def": "Gran masa de nieve que se desprende de una montaña."
+  },
+  {
+   "id": "r-a22",
+   "letra": "A",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "armadillo",
+   "def": "Mamífero americano cubierto de placas que se enrolla como una bola."
+  },
+  {
+   "id": "r-a23",
+   "letra": "A",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "arquitecto",
+   "def": "Profesional que diseña edificios."
+  },
+  {
+   "id": "r-a24",
    "letra": "A",
    "tipo": "empieza",
    "dif": "dificil",
@@ -74,7 +194,7 @@
    "def": "Antiguo instrumento que servía para medir la altura de los astros sobre el horizonte."
   },
   {
-   "id": "r-a10",
+   "id": "r-a25",
    "letra": "A",
    "tipo": "empieza",
    "dif": "dificil",
@@ -82,7 +202,7 @@
    "def": "Persona que no bebe alcohol."
   },
   {
-   "id": "r-a11",
+   "id": "r-a26",
    "letra": "A",
    "tipo": "empieza",
    "dif": "dificil",
@@ -90,12 +210,84 @@
    "def": "Tarifa oficial que se paga por las mercancías que cruzan una aduana."
   },
   {
-   "id": "r-a12",
+   "id": "r-a27",
    "letra": "A",
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "altruismo",
    "def": "Preocupación desinteresada por el bien de los demás."
+  },
+  {
+   "id": "r-a28",
+   "letra": "A",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "apócrifo",
+   "def": "Falso o de dudosa autenticidad, dicho de un texto atribuido a un autor."
+  },
+  {
+   "id": "r-a29",
+   "letra": "A",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "aséptico",
+   "def": "Libre de gérmenes que pueden causar infección."
+  },
+  {
+   "id": "r-a30",
+   "letra": "A",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "anacronismo",
+   "def": "Error de situar algo fuera de su época."
+  },
+  {
+   "id": "r-a31",
+   "letra": "A",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "apología",
+   "def": "Discurso en defensa o alabanza de alguien o algo."
+  },
+  {
+   "id": "r-a32",
+   "letra": "A",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "ambivalente",
+   "def": "Que tiene dos valores o sentidos a la vez."
+  },
+  {
+   "id": "r-a33",
+   "letra": "A",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "acérrimo",
+   "def": "Muy firme y obstinado en defender algo."
+  },
+  {
+   "id": "r-a34",
+   "letra": "A",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "antagonista",
+   "def": "Personaje o fuerza que se opone al protagonista."
+  },
+  {
+   "id": "r-a35",
+   "letra": "A",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "axioma",
+   "def": "Verdad tan evidente que no necesita demostración."
+  },
+  {
+   "id": "r-a36",
+   "letra": "A",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "amanuense",
+   "def": "Persona que copiaba a mano textos antiguos."
   },
   {
    "id": "r-b1",
@@ -133,12 +325,60 @@
    "id": "r-b5",
    "letra": "B",
    "tipo": "empieza",
+   "dif": "facil",
+   "resp": "barco",
+   "def": "Embarcación grande que navega por el mar."
+  },
+  {
+   "id": "r-b6",
+   "letra": "B",
+   "tipo": "empieza",
+   "dif": "facil",
+   "resp": "ballena",
+   "def": "Mamífero marino gigantesco que respira por un orificio en el lomo."
+  },
+  {
+   "id": "r-b7",
+   "letra": "B",
+   "tipo": "empieza",
+   "dif": "facil",
+   "resp": "botella",
+   "def": "Recipiente de cuello estrecho para líquidos."
+  },
+  {
+   "id": "r-b8",
+   "letra": "B",
+   "tipo": "empieza",
+   "dif": "facil",
+   "resp": "bombero",
+   "def": "Profesional que apaga incendios."
+  },
+  {
+   "id": "r-b9",
+   "letra": "B",
+   "tipo": "empieza",
+   "dif": "facil",
+   "resp": "balón",
+   "def": "Pelota grande para jugar al fútbol."
+  },
+  {
+   "id": "r-b10",
+   "letra": "B",
+   "tipo": "empieza",
+   "dif": "facil",
+   "resp": "burro",
+   "def": "Animal parecido al caballo pero más pequeño y de largas orejas."
+  },
+  {
+   "id": "r-b11",
+   "letra": "B",
+   "tipo": "empieza",
    "resp": "bumerán",
    "def": "Objeto curvo de madera que, al lanzarlo, vuelve al punto de partida.",
    "dif": "medio"
   },
   {
-   "id": "r-b6",
+   "id": "r-b12",
    "letra": "B",
    "tipo": "empieza",
    "dif": "medio",
@@ -146,7 +386,7 @@
    "def": "Pieza que une una puerta con su marco y le permite girar."
   },
   {
-   "id": "r-b7",
+   "id": "r-b13",
    "letra": "B",
    "tipo": "empieza",
    "dif": "medio",
@@ -154,7 +394,7 @@
    "def": "Gran bóvido de joroba y cabeza peluda, típico de las praderas norteamericanas."
   },
   {
-   "id": "r-b8",
+   "id": "r-b14",
    "letra": "B",
    "tipo": "empieza",
    "dif": "medio",
@@ -162,7 +402,55 @@
    "def": "Instrumento con una aguja imantada que siempre señala el norte."
   },
   {
-   "id": "r-b9",
+   "id": "r-b15",
+   "letra": "B",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "baobab",
+   "def": "Árbol africano de tronco enorme y grueso."
+  },
+  {
+   "id": "r-b16",
+   "letra": "B",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "barómetro",
+   "def": "Instrumento que mide la presión atmosférica."
+  },
+  {
+   "id": "r-b17",
+   "letra": "B",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "bellota",
+   "def": "Fruto de la encina y del roble."
+  },
+  {
+   "id": "r-b18",
+   "letra": "B",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "bóveda",
+   "def": "Techo curvo de ciertos edificios, como las iglesias."
+  },
+  {
+   "id": "r-b19",
+   "letra": "B",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "búho",
+   "def": "Ave nocturna de grandes ojos y cabeza redonda."
+  },
+  {
+   "id": "r-b20",
+   "letra": "B",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "bacalao",
+   "def": "Pescado que se come salado y es típico de Semana Santa."
+  },
+  {
+   "id": "r-b21",
    "letra": "B",
    "tipo": "empieza",
    "resp": "barítono",
@@ -170,7 +458,7 @@
    "dif": "dificil"
   },
   {
-   "id": "r-b10",
+   "id": "r-b22",
    "letra": "B",
    "tipo": "empieza",
    "dif": "dificil",
@@ -178,7 +466,7 @@
    "def": "Fortificación que sobresale de una muralla; también, lo que sirve de defensa o apoyo."
   },
   {
-   "id": "r-b11",
+   "id": "r-b23",
    "letra": "B",
    "tipo": "empieza",
    "dif": "dificil",
@@ -186,12 +474,68 @@
    "def": "Relativo a la vida del campo y de los pastores, siempre idealizada."
   },
   {
-   "id": "r-b12",
+   "id": "r-b24",
    "letra": "B",
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "burocracia",
    "def": "Exceso de trámites y papeleo en la administración."
+  },
+  {
+   "id": "r-b25",
+   "letra": "B",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "benevolente",
+   "def": "Que muestra comprensión y buena voluntad hacia los demás."
+  },
+  {
+   "id": "r-b26",
+   "letra": "B",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "belicoso",
+   "def": "Inclinado a la guerra o a las peleas."
+  },
+  {
+   "id": "r-b27",
+   "letra": "B",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "bagatela",
+   "def": "Cosa de poco valor o importancia."
+  },
+  {
+   "id": "r-b28",
+   "letra": "B",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "blasfemia",
+   "def": "Palabra injuriosa contra lo sagrado."
+  },
+  {
+   "id": "r-b29",
+   "letra": "B",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "baladí",
+   "def": "De poca importancia."
+  },
+  {
+   "id": "r-b30",
+   "letra": "B",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "bilis",
+   "def": "Líquido amargo y verdoso que segrega el hígado."
+  },
+  {
+   "id": "r-b31",
+   "letra": "B",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "bucanero",
+   "def": "Pirata que atacaba las colonias españolas en América."
   },
   {
    "id": "r-c1",
@@ -229,12 +573,68 @@
    "id": "r-c5",
    "letra": "C",
    "tipo": "empieza",
+   "dif": "facil",
+   "resp": "casa",
+   "def": "Edificio donde vive una familia."
+  },
+  {
+   "id": "r-c6",
+   "letra": "C",
+   "tipo": "empieza",
+   "dif": "facil",
+   "resp": "coche",
+   "def": "Vehículo de cuatro ruedas con motor para ir por carretera."
+  },
+  {
+   "id": "r-c7",
+   "letra": "C",
+   "tipo": "empieza",
+   "dif": "facil",
+   "resp": "cebolla",
+   "def": "Hortaliza que hace llorar al cortarla."
+  },
+  {
+   "id": "r-c8",
+   "letra": "C",
+   "tipo": "empieza",
+   "dif": "facil",
+   "resp": "conejo",
+   "def": "Animal de largas orejas que da saltos y come zanahorias."
+  },
+  {
+   "id": "r-c9",
+   "letra": "C",
+   "tipo": "empieza",
+   "dif": "facil",
+   "resp": "chocolate",
+   "def": "Dulce marrón hecho con cacao."
+  },
+  {
+   "id": "r-c10",
+   "letra": "C",
+   "tipo": "empieza",
+   "dif": "facil",
+   "resp": "cama",
+   "def": "Mueble donde se duerme."
+  },
+  {
+   "id": "r-c11",
+   "letra": "C",
+   "tipo": "empieza",
+   "dif": "facil",
+   "resp": "cuchara",
+   "def": "Cubierto para tomar la sopa."
+  },
+  {
+   "id": "r-c12",
+   "letra": "C",
+   "tipo": "empieza",
    "resp": "cerradura",
    "def": "Mecanismo de una puerta que se abre con llave.",
    "dif": "medio"
   },
   {
-   "id": "r-c6",
+   "id": "r-c13",
    "letra": "C",
    "tipo": "empieza",
    "resp": "cometa",
@@ -242,7 +642,7 @@
    "dif": "medio"
   },
   {
-   "id": "r-c7",
+   "id": "r-c14",
    "letra": "C",
    "tipo": "empieza",
    "resp": "catedral",
@@ -250,7 +650,7 @@
    "dif": "medio"
   },
   {
-   "id": "r-c8",
+   "id": "r-c15",
    "letra": "C",
    "tipo": "empieza",
    "dif": "medio",
@@ -258,7 +658,55 @@
    "def": "Persona que dibuja mapas."
   },
   {
-   "id": "r-c9",
+   "id": "r-c16",
+   "letra": "C",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "cactus",
+   "def": "Planta del desierto cubierta de espinas."
+  },
+  {
+   "id": "r-c17",
+   "letra": "C",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "calendario",
+   "def": "Sistema que organiza el año en meses y días."
+  },
+  {
+   "id": "r-c18",
+   "letra": "C",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "cocodrilo",
+   "def": "Gran reptil de mandíbulas potentes que vive en ríos tropicales."
+  },
+  {
+   "id": "r-c19",
+   "letra": "C",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "carabela",
+   "def": "Barco ligero de vela, como los de Colón."
+  },
+  {
+   "id": "r-c20",
+   "letra": "C",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "cordillera",
+   "def": "Cadena de montañas."
+  },
+  {
+   "id": "r-c21",
+   "letra": "C",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "cerámica",
+   "def": "Arte de fabricar objetos de barro cocido."
+  },
+  {
+   "id": "r-c22",
    "letra": "C",
    "tipo": "empieza",
    "dif": "dificil",
@@ -266,7 +714,7 @@
    "def": "Punto del cielo situado justo encima del observador."
   },
   {
-   "id": "r-c10",
+   "id": "r-c23",
    "letra": "C",
    "tipo": "empieza",
    "dif": "dificil",
@@ -274,7 +722,7 @@
    "def": "Escritura de los antiguos sumerios, con signos en forma de cuña."
   },
   {
-   "id": "r-c11",
+   "id": "r-c24",
    "letra": "C",
    "tipo": "empieza",
    "dif": "dificil",
@@ -282,12 +730,60 @@
    "def": "Mezcla de sonidos que resulta desagradable al oído."
   },
   {
-   "id": "r-c12",
+   "id": "r-c25",
    "letra": "C",
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "clepsidra",
    "def": "Reloj antiguo que medía el tiempo con agua."
+  },
+  {
+   "id": "r-c26",
+   "letra": "C",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "cenotafio",
+   "def": "Monumento funerario en honor de alguien cuyo cuerpo no está allí."
+  },
+  {
+   "id": "r-c27",
+   "letra": "C",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "caligrafía",
+   "def": "Arte de escribir con letra hermosa."
+  },
+  {
+   "id": "r-c28",
+   "letra": "C",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "contumaz",
+   "def": "Obstinado en mantener un error."
+  },
+  {
+   "id": "r-c29",
+   "letra": "C",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "cándido",
+   "def": "Sencillo, ingenuo, sin malicia."
+  },
+  {
+   "id": "r-c30",
+   "letra": "C",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "cónclave",
+   "def": "Reunión de cardenales para elegir papa."
+  },
+  {
+   "id": "r-c31",
+   "letra": "C",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "cleptómano",
+   "def": "Que siente un impulso irresistible de robar."
   },
   {
    "id": "r-d1",
@@ -325,12 +821,44 @@
    "id": "r-d5",
    "letra": "D",
    "tipo": "empieza",
+   "dif": "facil",
+   "resp": "dedo",
+   "def": "Cada una de las cinco partes móviles de la mano."
+  },
+  {
+   "id": "r-d6",
+   "letra": "D",
+   "tipo": "empieza",
+   "dif": "facil",
+   "resp": "dinosaurio",
+   "def": "Reptil gigante extinguido hace millones de años."
+  },
+  {
+   "id": "r-d7",
+   "letra": "D",
+   "tipo": "empieza",
+   "dif": "facil",
+   "resp": "diente",
+   "def": "Pieza dura de la boca que sirve para masticar."
+  },
+  {
+   "id": "r-d8",
+   "letra": "D",
+   "tipo": "empieza",
+   "dif": "facil",
+   "resp": "dragón",
+   "def": "Animal fantástico que echa fuego por la boca."
+  },
+  {
+   "id": "r-d9",
+   "letra": "D",
+   "tipo": "empieza",
    "resp": "dromedario",
    "def": "Camello de una sola joroba.",
    "dif": "medio"
   },
   {
-   "id": "r-d6",
+   "id": "r-d10",
    "letra": "D",
    "tipo": "empieza",
    "dif": "medio",
@@ -338,7 +866,7 @@
    "def": "Aparato que da descargas eléctricas para recuperar el ritmo del corazón."
   },
   {
-   "id": "r-d7",
+   "id": "r-d11",
    "letra": "D",
    "tipo": "empieza",
    "dif": "medio",
@@ -346,7 +874,7 @@
    "def": "Explosivo inventado por Alfred Nobel."
   },
   {
-   "id": "r-d8",
+   "id": "r-d12",
    "letra": "D",
    "tipo": "empieza",
    "dif": "medio",
@@ -354,7 +882,39 @@
    "def": "Perro blanco con manchas negras."
   },
   {
-   "id": "r-d9",
+   "id": "r-d13",
+   "letra": "D",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "diamante",
+   "def": "Piedra preciosa muy dura y transparente."
+  },
+  {
+   "id": "r-d14",
+   "letra": "D",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "desierto",
+   "def": "Zona árida con poca lluvia y mucha arena."
+  },
+  {
+   "id": "r-d15",
+   "letra": "D",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "diluvio",
+   "def": "Lluvia muy fuerte, como la de la historia de Noé."
+  },
+  {
+   "id": "r-d16",
+   "letra": "D",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "dentista",
+   "def": "Médico que cuida los dientes."
+  },
+  {
+   "id": "r-d17",
    "letra": "D",
    "tipo": "empieza",
    "dif": "dificil",
@@ -362,7 +922,7 @@
    "def": "División de algo en dos partes opuestas o contrarias."
   },
   {
-   "id": "r-d10",
+   "id": "r-d18",
    "letra": "D",
    "tipo": "empieza",
    "dif": "dificil",
@@ -370,7 +930,7 @@
    "def": "Dispersión de un pueblo originario por diversos lugares del mundo."
   },
   {
-   "id": "r-d11",
+   "id": "r-d19",
    "letra": "D",
    "tipo": "empieza",
    "dif": "dificil",
@@ -378,12 +938,52 @@
    "def": "Halago al pueblo con falsas promesas para conseguir su apoyo."
   },
   {
-   "id": "r-d12",
+   "id": "r-d20",
    "letra": "D",
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "dogma",
    "def": "Verdad que se considera indiscutible, sobre todo en religión."
+  },
+  {
+   "id": "r-d21",
+   "letra": "D",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "déspota",
+   "def": "Gobernante que ejerce el poder de forma absoluta y arbitraria."
+  },
+  {
+   "id": "r-d22",
+   "letra": "D",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "diatriba",
+   "def": "Discurso violento e injurioso contra alguien."
+  },
+  {
+   "id": "r-d23",
+   "letra": "D",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "disquisición",
+   "def": "Examen minucioso y largo de un asunto."
+  },
+  {
+   "id": "r-d24",
+   "letra": "D",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "displicente",
+   "def": "Que muestra indiferencia y desagrado."
+  },
+  {
+   "id": "r-d25",
+   "letra": "D",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "dádiva",
+   "def": "Cosa que se regala."
   },
   {
    "id": "r-e1",
@@ -421,12 +1021,60 @@
    "id": "r-e5",
    "letra": "E",
    "tipo": "empieza",
+   "dif": "facil",
+   "resp": "elefante",
+   "def": "Animal enorme con trompa y colmillos."
+  },
+  {
+   "id": "r-e6",
+   "letra": "E",
+   "tipo": "empieza",
+   "dif": "facil",
+   "resp": "escuela",
+   "def": "Lugar donde los niños van a aprender."
+  },
+  {
+   "id": "r-e7",
+   "letra": "E",
+   "tipo": "empieza",
+   "dif": "facil",
+   "resp": "estrella",
+   "def": "Astro que brilla de noche."
+  },
+  {
+   "id": "r-e8",
+   "letra": "E",
+   "tipo": "empieza",
+   "dif": "facil",
+   "resp": "espejo",
+   "def": "Superficie que refleja la imagen."
+  },
+  {
+   "id": "r-e9",
+   "letra": "E",
+   "tipo": "empieza",
+   "dif": "facil",
+   "resp": "ensalada",
+   "def": "Plato frío de lechuga y tomate aliñado."
+  },
+  {
+   "id": "r-e10",
+   "letra": "E",
+   "tipo": "empieza",
+   "dif": "facil",
+   "resp": "erizo",
+   "def": "Animal pequeño cubierto de púas."
+  },
+  {
+   "id": "r-e11",
+   "letra": "E",
+   "tipo": "empieza",
    "resp": "eclipse",
    "def": "Fenómeno en el que un astro tapa, total o parcialmente, la luz de otro.",
    "dif": "medio"
   },
   {
-   "id": "r-e6",
+   "id": "r-e12",
    "letra": "E",
    "tipo": "empieza",
    "dif": "medio",
@@ -434,7 +1082,7 @@
    "def": "Formación de roca que cuelga del techo de una cueva."
   },
   {
-   "id": "r-e7",
+   "id": "r-e13",
    "letra": "E",
    "tipo": "empieza",
    "dif": "medio",
@@ -442,7 +1090,7 @@
    "def": "Arácnido con pinzas y una cola terminada en un aguijón venenoso."
   },
   {
-   "id": "r-e8",
+   "id": "r-e14",
    "letra": "E",
    "tipo": "empieza",
    "dif": "medio",
@@ -450,7 +1098,39 @@
    "def": "Momento del año en que el día y la noche duran lo mismo."
   },
   {
-   "id": "r-e9",
+   "id": "r-e15",
+   "letra": "E",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "embajador",
+   "def": "Representante de un país ante otro."
+  },
+  {
+   "id": "r-e16",
+   "letra": "E",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "excavadora",
+   "def": "Máquina que remueve la tierra."
+  },
+  {
+   "id": "r-e17",
+   "letra": "E",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "esmeralda",
+   "def": "Piedra preciosa de color verde."
+  },
+  {
+   "id": "r-e18",
+   "letra": "E",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "enciclopedia",
+   "def": "Obra que recoge conocimientos de todas las materias."
+  },
+  {
+   "id": "r-e19",
    "letra": "E",
    "tipo": "empieza",
    "dif": "dificil",
@@ -458,7 +1138,7 @@
    "def": "Que dura muy poco tiempo."
   },
   {
-   "id": "r-e10",
+   "id": "r-e20",
    "letra": "E",
    "tipo": "empieza",
    "dif": "dificil",
@@ -466,7 +1146,7 @@
    "def": "Poema extenso que narra las hazañas de un héroe, como la Ilíada."
   },
   {
-   "id": "r-e11",
+   "id": "r-e21",
    "letra": "E",
    "tipo": "empieza",
    "dif": "dificil",
@@ -474,12 +1154,60 @@
    "def": "Palabra suave que sustituye a otra considerada demasiado dura."
   },
   {
-   "id": "r-e12",
+   "id": "r-e22",
    "letra": "E",
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "efeméride",
    "def": "Hecho importante que se recuerda en su aniversario."
+  },
+  {
+   "id": "r-e23",
+   "letra": "E",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "empírico",
+   "def": "Basado en la experiencia y la observación."
+  },
+  {
+   "id": "r-e24",
+   "letra": "E",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "endémico",
+   "def": "Propio y exclusivo de una región, dicho de una especie."
+  },
+  {
+   "id": "r-e25",
+   "letra": "E",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "elocuente",
+   "def": "Que habla con facilidad y persuade."
+  },
+  {
+   "id": "r-e26",
+   "letra": "E",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "ecuánime",
+   "def": "Que actúa con imparcialidad y serenidad."
+  },
+  {
+   "id": "r-e27",
+   "letra": "E",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "epítome",
+   "def": "Resumen de una obra."
+  },
+  {
+   "id": "r-e28",
+   "letra": "E",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "esotérico",
+   "def": "Oculto, reservado a unos pocos iniciados."
   },
   {
    "id": "r-f1",
@@ -517,12 +1245,44 @@
    "id": "r-f5",
    "letra": "F",
    "tipo": "empieza",
+   "dif": "facil",
+   "resp": "fuego",
+   "def": "Llamas que producen luz y calor al quemar algo."
+  },
+  {
+   "id": "r-f6",
+   "letra": "F",
+   "tipo": "empieza",
+   "dif": "facil",
+   "resp": "flor",
+   "def": "Parte de la planta de colores y perfume que da frutos."
+  },
+  {
+   "id": "r-f7",
+   "letra": "F",
+   "tipo": "empieza",
+   "dif": "facil",
+   "resp": "fútbol",
+   "def": "Deporte en que dos equipos de once intentan meter un balón en la portería."
+  },
+  {
+   "id": "r-f8",
+   "letra": "F",
+   "tipo": "empieza",
+   "dif": "facil",
+   "resp": "foca",
+   "def": "Mamífero marino de aletas que come pescado."
+  },
+  {
+   "id": "r-f9",
+   "letra": "F",
+   "tipo": "empieza",
    "resp": "frontera",
    "def": "Línea que separa dos países.",
    "dif": "medio"
   },
   {
-   "id": "r-f6",
+   "id": "r-f10",
    "letra": "F",
    "tipo": "empieza",
    "dif": "medio",
@@ -530,7 +1290,7 @@
    "def": "Resto de un ser vivo muy antiguo conservado en las rocas."
   },
   {
-   "id": "r-f7",
+   "id": "r-f11",
    "letra": "F",
    "tipo": "empieza",
    "dif": "medio",
@@ -538,7 +1298,7 @@
    "def": "Antiguo rey del Egipto."
   },
   {
-   "id": "r-f8",
+   "id": "r-f12",
    "letra": "F",
    "tipo": "empieza",
    "dif": "medio",
@@ -546,7 +1306,39 @@
    "def": "Proceso por el que las plantas fabrican su alimento con la luz solar."
   },
   {
-   "id": "r-f9",
+   "id": "r-f13",
+   "letra": "F",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "flamenco",
+   "def": "Ave rosada de patas largas; también baile andaluz."
+  },
+  {
+   "id": "r-f14",
+   "letra": "F",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "fénix",
+   "def": "Ave mitológica que renace de sus cenizas."
+  },
+  {
+   "id": "r-f15",
+   "letra": "F",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "fanfarrón",
+   "def": "Que presume de lo que no es."
+  },
+  {
+   "id": "r-f16",
+   "letra": "F",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "fábula",
+   "def": "Relato breve con animales y una moraleja."
+  },
+  {
+   "id": "r-f17",
    "letra": "F",
    "tipo": "empieza",
    "dif": "dificil",
@@ -554,7 +1346,7 @@
    "def": "Argumento que parece válido pero encierra un engaño."
   },
   {
-   "id": "r-f10",
+   "id": "r-f18",
    "letra": "F",
    "tipo": "empieza",
    "dif": "dificil",
@@ -562,7 +1354,7 @@
    "def": "Entrada de mar larga y estrecha entre montañas, típica de Noruega."
   },
   {
-   "id": "r-f11",
+   "id": "r-f19",
    "letra": "F",
    "tipo": "empieza",
    "dif": "dificil",
@@ -570,12 +1362,52 @@
    "def": "Persona que ayuda a los demás sin buscar beneficio."
   },
   {
-   "id": "r-f12",
+   "id": "r-f20",
    "letra": "F",
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "fehaciente",
    "def": "Que prueba algo de forma indudable."
+  },
+  {
+   "id": "r-f21",
+   "letra": "F",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "férreo",
+   "def": "Duro, tenaz, inflexible."
+  },
+  {
+   "id": "r-f22",
+   "letra": "F",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "fútil",
+   "def": "De poca importancia."
+  },
+  {
+   "id": "r-f23",
+   "letra": "F",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "fugaz",
+   "def": "Que dura un instante."
+  },
+  {
+   "id": "r-f24",
+   "letra": "F",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "fastuoso",
+   "def": "Lujoso y con mucho esplendor."
+  },
+  {
+   "id": "r-f25",
+   "letra": "F",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "fidedigno",
+   "def": "Digno de fe y crédito."
   },
   {
    "id": "r-g1",
@@ -621,12 +1453,52 @@
    "id": "r-g6",
    "letra": "G",
    "tipo": "empieza",
+   "dif": "facil",
+   "resp": "gato",
+   "def": "Felino doméstico que maúlla y caza ratones."
+  },
+  {
+   "id": "r-g7",
+   "letra": "G",
+   "tipo": "empieza",
+   "dif": "facil",
+   "resp": "gallina",
+   "def": "Ave de corral que pone huevos."
+  },
+  {
+   "id": "r-g8",
+   "letra": "G",
+   "tipo": "empieza",
+   "dif": "facil",
+   "resp": "gafas",
+   "def": "Objeto con cristales que se pone ante los ojos para ver mejor."
+  },
+  {
+   "id": "r-g9",
+   "letra": "G",
+   "tipo": "empieza",
+   "dif": "facil",
+   "resp": "gorila",
+   "def": "Gran simio africano de pelaje oscuro."
+  },
+  {
+   "id": "r-g10",
+   "letra": "G",
+   "tipo": "empieza",
+   "dif": "facil",
+   "resp": "galleta",
+   "def": "Dulce pequeño, crujiente y plano, que se moja en leche."
+  },
+  {
+   "id": "r-g11",
+   "letra": "G",
+   "tipo": "empieza",
    "dif": "medio",
    "resp": "glaciar",
    "def": "Gran masa de hielo que se desliza lentamente por una montaña."
   },
   {
-   "id": "r-g7",
+   "id": "r-g12",
    "letra": "G",
    "tipo": "empieza",
    "dif": "medio",
@@ -634,7 +1506,7 @@
    "def": "Barca alargada y de proa curva, típica de Venecia."
   },
   {
-   "id": "r-g8",
+   "id": "r-g13",
    "letra": "G",
    "tipo": "empieza",
    "dif": "medio",
@@ -642,7 +1514,7 @@
    "def": "Luchador de los circos de la antigua Roma."
   },
   {
-   "id": "r-g9",
+   "id": "r-g14",
    "letra": "G",
    "tipo": "empieza",
    "dif": "medio",
@@ -650,7 +1522,39 @@
    "def": "Ciencia que estudia las reglas de una lengua."
   },
   {
-   "id": "r-g10",
+   "id": "r-g15",
+   "letra": "G",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "galaxia",
+   "def": "Enorme conjunto de estrellas, como la Vía Láctea."
+  },
+  {
+   "id": "r-g16",
+   "letra": "G",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "geólogo",
+   "def": "Científico que estudia la Tierra y sus rocas."
+  },
+  {
+   "id": "r-g17",
+   "letra": "G",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "guepardo",
+   "def": "Felino más veloz del mundo."
+  },
+  {
+   "id": "r-g18",
+   "letra": "G",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "gazpacho",
+   "def": "Sopa fría andaluza de tomate."
+  },
+  {
+   "id": "r-g19",
    "letra": "G",
    "tipo": "empieza",
    "dif": "dificil",
@@ -658,7 +1562,7 @@
    "def": "Figura grotesca por la que desagua el tejado de una catedral gótica."
   },
   {
-   "id": "r-g11",
+   "id": "r-g20",
    "letra": "G",
    "tipo": "empieza",
    "dif": "dificil",
@@ -666,7 +1570,7 @@
    "def": "En la Edad Media, asociación de artesanos de un mismo oficio."
   },
   {
-   "id": "r-g12",
+   "id": "r-g21",
    "letra": "G",
    "tipo": "empieza",
    "dif": "dificil",
@@ -674,12 +1578,60 @@
    "def": "Lenguaje confuso y difícil de entender."
   },
   {
-   "id": "r-g13",
+   "id": "r-g22",
    "letra": "G",
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "gentilicio",
    "def": "Nombre que indica el lugar de origen de una persona, como «madrileño»."
+  },
+  {
+   "id": "r-g23",
+   "letra": "G",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "gregario",
+   "def": "Que sigue ciegamente a la mayoría."
+  },
+  {
+   "id": "r-g24",
+   "letra": "G",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "gesta",
+   "def": "Hazaña heroica."
+  },
+  {
+   "id": "r-g25",
+   "letra": "G",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "grandilocuente",
+   "def": "Que habla con exagerada pompa."
+  },
+  {
+   "id": "r-g26",
+   "letra": "G",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "galardón",
+   "def": "Premio que se concede por un mérito."
+  },
+  {
+   "id": "r-g27",
+   "letra": "G",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "gélido",
+   "def": "Muy frío."
+  },
+  {
+   "id": "r-g28",
+   "letra": "G",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "gerundio",
+   "def": "Forma verbal que termina en -ando o -iendo."
   },
   {
    "id": "r-h1",
@@ -717,12 +1669,44 @@
    "id": "r-h5",
    "letra": "H",
    "tipo": "empieza",
+   "dif": "facil",
+   "resp": "helado",
+   "def": "Postre frío que se toma en cucurucho."
+  },
+  {
+   "id": "r-h6",
+   "letra": "H",
+   "tipo": "empieza",
+   "dif": "facil",
+   "resp": "hamburguesa",
+   "def": "Carne picada en forma de disco, servida en un pan redondo."
+  },
+  {
+   "id": "r-h7",
+   "letra": "H",
+   "tipo": "empieza",
+   "dif": "facil",
+   "resp": "hada",
+   "def": "Ser mágico femenino de los cuentos con varita."
+  },
+  {
+   "id": "r-h8",
+   "letra": "H",
+   "tipo": "empieza",
+   "dif": "facil",
+   "resp": "hermano",
+   "def": "Hijo de los mismos padres que tú."
+  },
+  {
+   "id": "r-h9",
+   "letra": "H",
+   "tipo": "empieza",
    "resp": "herradura",
    "def": "Pieza de hierro que se clava en el casco de los caballos.",
    "dif": "medio"
   },
   {
-   "id": "r-h6",
+   "id": "r-h10",
    "letra": "H",
    "tipo": "empieza",
    "resp": "hamaca",
@@ -730,7 +1714,7 @@
    "dif": "medio"
   },
   {
-   "id": "r-h7",
+   "id": "r-h11",
    "letra": "H",
    "tipo": "empieza",
    "dif": "medio",
@@ -738,7 +1722,7 @@
    "def": "Mamífero africano enorme que pasa el día metido en el agua de los ríos."
   },
   {
-   "id": "r-h8",
+   "id": "r-h12",
    "letra": "H",
    "tipo": "empieza",
    "dif": "medio",
@@ -746,7 +1730,47 @@
    "def": "Predicción del futuro basada en la posición de los astros y el signo."
   },
   {
-   "id": "r-h9",
+   "id": "r-h13",
+   "letra": "H",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "herrero",
+   "def": "Artesano que trabaja el hierro."
+  },
+  {
+   "id": "r-h14",
+   "letra": "H",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "hemisferio",
+   "def": "Cada una de las dos mitades de la Tierra."
+  },
+  {
+   "id": "r-h15",
+   "letra": "H",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "hámster",
+   "def": "Roedor pequeño que se tiene de mascota y corre en una rueda."
+  },
+  {
+   "id": "r-h16",
+   "letra": "H",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "huracán",
+   "def": "Tormenta tropical con vientos violentísimos."
+  },
+  {
+   "id": "r-h17",
+   "letra": "H",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "herbívoro",
+   "def": "Animal que se alimenta solo de plantas."
+  },
+  {
+   "id": "r-h18",
    "letra": "H",
    "tipo": "empieza",
    "dif": "dificil",
@@ -754,7 +1778,7 @@
    "def": "Lugar donde se guardan periódicos y revistas para consultarlos."
   },
   {
-   "id": "r-h10",
+   "id": "r-h19",
    "letra": "H",
    "tipo": "empieza",
    "dif": "dificil",
@@ -762,7 +1786,7 @@
    "def": "Exageración desmesurada de lo que se dice."
   },
   {
-   "id": "r-h11",
+   "id": "r-h20",
    "letra": "H",
    "tipo": "empieza",
    "dif": "dificil",
@@ -770,12 +1794,60 @@
    "def": "Dominio de un país o de un grupo sobre otros."
   },
   {
-   "id": "r-h12",
+   "id": "r-h21",
    "letra": "H",
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "heterogéneo",
    "def": "Compuesto por elementos de distinta naturaleza."
+  },
+  {
+   "id": "r-h22",
+   "letra": "H",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "holístico",
+   "def": "Que considera el todo y no solo las partes."
+  },
+  {
+   "id": "r-h23",
+   "letra": "H",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "hermético",
+   "def": "Que cierra tan bien que no deja pasar nada."
+  },
+  {
+   "id": "r-h24",
+   "letra": "H",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "hedonismo",
+   "def": "Doctrina que busca el placer como fin de la vida."
+  },
+  {
+   "id": "r-h25",
+   "letra": "H",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "homilía",
+   "def": "Sermón que pronuncia el sacerdote en misa."
+  },
+  {
+   "id": "r-h26",
+   "letra": "H",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "heráldica",
+   "def": "Ciencia de los escudos de armas."
+  },
+  {
+   "id": "r-h27",
+   "letra": "H",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "hastío",
+   "def": "Sensación de aburrimiento y cansancio."
   },
   {
    "id": "r-i1",
@@ -813,12 +1885,28 @@
    "id": "r-i5",
    "letra": "I",
    "tipo": "empieza",
+   "dif": "facil",
+   "resp": "incendio",
+   "def": "Fuego grande que destruye lo que encuentra."
+  },
+  {
+   "id": "r-i6",
+   "letra": "I",
+   "tipo": "empieza",
+   "dif": "facil",
+   "resp": "impresora",
+   "def": "Máquina que pasa a papel lo que hay en el ordenador."
+  },
+  {
+   "id": "r-i7",
+   "letra": "I",
+   "tipo": "empieza",
    "resp": "imán",
    "def": "Cuerpo que atrae el hierro.",
    "dif": "medio"
   },
   {
-   "id": "r-i6",
+   "id": "r-i8",
    "letra": "I",
    "tipo": "empieza",
    "resp": "iguana",
@@ -826,7 +1914,7 @@
    "dif": "medio"
   },
   {
-   "id": "r-i7",
+   "id": "r-i9",
    "letra": "I",
    "tipo": "empieza",
    "dif": "medio",
@@ -834,7 +1922,7 @@
    "def": "Cuando el agua cubre terrenos que normalmente están secos."
   },
   {
-   "id": "r-i8",
+   "id": "r-i10",
    "letra": "I",
    "tipo": "empieza",
    "dif": "medio",
@@ -842,7 +1930,63 @@
    "def": "Artista que hace trucos de magia."
   },
   {
-   "id": "r-i9",
+   "id": "r-i11",
+   "letra": "I",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "iglú",
+   "def": "Casa de hielo de los esquimales."
+  },
+  {
+   "id": "r-i12",
+   "letra": "I",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "imprenta",
+   "def": "Invento de Gutenberg para reproducir textos."
+  },
+  {
+   "id": "r-i13",
+   "letra": "I",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "inquilino",
+   "def": "Persona que alquila una vivienda."
+  },
+  {
+   "id": "r-i14",
+   "letra": "I",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "ingeniero",
+   "def": "Profesional que diseña puentes, máquinas o carreteras."
+  },
+  {
+   "id": "r-i15",
+   "letra": "I",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "infinito",
+   "def": "Que no tiene fin."
+  },
+  {
+   "id": "r-i16",
+   "letra": "I",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "incienso",
+   "def": "Resina aromática que se quema en las iglesias."
+  },
+  {
+   "id": "r-i17",
+   "letra": "I",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "indulto",
+   "def": "Perdón de una pena."
+  },
+  {
+   "id": "r-i18",
    "letra": "I",
    "tipo": "empieza",
    "dif": "dificil",
@@ -850,7 +1994,7 @@
    "def": "Rasgos y carácter propios de una persona o de una colectividad."
   },
   {
-   "id": "r-i10",
+   "id": "r-i19",
    "letra": "I",
    "tipo": "empieza",
    "dif": "dificil",
@@ -858,7 +2002,7 @@
    "def": "Libro impreso desde la invención de la imprenta hasta el año 1500."
   },
   {
-   "id": "r-i11",
+   "id": "r-i20",
    "letra": "I",
    "tipo": "empieza",
    "dif": "dificil",
@@ -866,12 +2010,68 @@
    "def": "Que no se puede evitar."
   },
   {
-   "id": "r-i12",
+   "id": "r-i21",
    "letra": "I",
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "insidioso",
    "def": "Que tiende trampas con malicia."
+  },
+  {
+   "id": "r-i22",
+   "letra": "I",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "incólume",
+   "def": "Sin daño ni lesión."
+  },
+  {
+   "id": "r-i23",
+   "letra": "I",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "irascible",
+   "def": "Que se enfada con facilidad."
+  },
+  {
+   "id": "r-i24",
+   "letra": "I",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "inefable",
+   "def": "Que no se puede expresar con palabras."
+  },
+  {
+   "id": "r-i25",
+   "letra": "I",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "ignominia",
+   "def": "Deshonra pública."
+  },
+  {
+   "id": "r-i26",
+   "letra": "I",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "incipiente",
+   "def": "Que empieza a manifestarse."
+  },
+  {
+   "id": "r-i27",
+   "letra": "I",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "inexorable",
+   "def": "Que no se puede evitar ni detener."
+  },
+  {
+   "id": "r-i28",
+   "letra": "I",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "ímprobo",
+   "def": "Excesivo, dicho de un trabajo."
   },
   {
    "id": "r-j1",
@@ -917,12 +2117,28 @@
    "id": "r-j6",
    "letra": "J",
    "tipo": "empieza",
+   "dif": "facil",
+   "resp": "juguete",
+   "def": "Objeto con el que juegan los niños."
+  },
+  {
+   "id": "r-j7",
+   "letra": "J",
+   "tipo": "empieza",
+   "dif": "facil",
+   "resp": "jueves",
+   "def": "Día entre el miércoles y el viernes."
+  },
+  {
+   "id": "r-j8",
+   "letra": "J",
+   "tipo": "empieza",
    "dif": "medio",
    "resp": "jabalí",
    "def": "Cerdo salvaje de colmillos prominentes."
   },
   {
-   "id": "r-j7",
+   "id": "r-j9",
    "letra": "J",
    "tipo": "empieza",
    "dif": "medio",
@@ -930,7 +2146,7 @@
    "def": "Escritura del antiguo Egipto basada en dibujos."
   },
   {
-   "id": "r-j8",
+   "id": "r-j10",
    "letra": "J",
    "tipo": "empieza",
    "dif": "medio",
@@ -938,7 +2154,7 @@
    "def": "Persona que monta a caballo."
   },
   {
-   "id": "r-j9",
+   "id": "r-j11",
    "letra": "J",
    "tipo": "empieza",
    "dif": "medio",
@@ -946,7 +2162,47 @@
    "def": "Instrumento con una aguja que sirve para poner inyecciones."
   },
   {
-   "id": "r-j10",
+   "id": "r-j12",
+   "letra": "J",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "jazz",
+   "def": "Estilo musical nacido en Nueva Orleans."
+  },
+  {
+   "id": "r-j13",
+   "letra": "J",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "juez",
+   "def": "Persona que dicta sentencias."
+  },
+  {
+   "id": "r-j14",
+   "letra": "J",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "jilguero",
+   "def": "Pájaro de plumaje colorido y canto melodioso."
+  },
+  {
+   "id": "r-j15",
+   "letra": "J",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "jengibre",
+   "def": "Raíz picante que se usa como especia."
+  },
+  {
+   "id": "r-j16",
+   "letra": "J",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "jubilación",
+   "def": "Retiro del trabajo por edad."
+  },
+  {
+   "id": "r-j17",
    "letra": "J",
    "tipo": "empieza",
    "dif": "dificil",
@@ -954,7 +2210,7 @@
    "def": "Conjunto de sentencias de los tribunales que sirven de precedente."
   },
   {
-   "id": "r-j11",
+   "id": "r-j18",
    "letra": "J",
    "tipo": "empieza",
    "dif": "dificil",
@@ -962,7 +2218,7 @@
    "def": "Lenguaje enredado y difícil de entender."
   },
   {
-   "id": "r-j12",
+   "id": "r-j19",
    "letra": "J",
    "tipo": "empieza",
    "dif": "dificil",
@@ -970,12 +2226,60 @@
    "def": "Gracioso, que provoca risa."
   },
   {
-   "id": "r-j13",
+   "id": "r-j20",
    "letra": "J",
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "jaculatoria",
    "def": "Oración muy breve y fervorosa."
+  },
+  {
+   "id": "r-j21",
+   "letra": "J",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "juglar",
+   "def": "Artista medieval que recitaba poemas y cantaba."
+  },
+  {
+   "id": "r-j22",
+   "letra": "J",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "jerarquía",
+   "def": "Organización por grados de autoridad."
+  },
+  {
+   "id": "r-j23",
+   "letra": "J",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "jovial",
+   "def": "Alegre y bromista."
+  },
+  {
+   "id": "r-j24",
+   "letra": "J",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "jaez",
+   "def": "Clase o índole de algo."
+  },
+  {
+   "id": "r-j25",
+   "letra": "J",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "jeremiada",
+   "def": "Lamento exagerado."
+  },
+  {
+   "id": "r-j26",
+   "letra": "J",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "jergón",
+   "def": "Colchón relleno de paja."
   },
   {
    "id": "r-k1",
@@ -1012,13 +2316,29 @@
   {
    "id": "r-k5",
    "letra": "K",
+   "tipo": "contiene",
+   "dif": "facil",
+   "resp": "bikini",
+   "def": "Traje de baño de dos piezas."
+  },
+  {
+   "id": "r-k6",
+   "letra": "K",
+   "tipo": "contiene",
+   "dif": "facil",
+   "resp": "anorak",
+   "def": "Chaqueta impermeable con capucha."
+  },
+  {
+   "id": "r-k7",
+   "letra": "K",
    "tipo": "empieza",
    "resp": "kayak",
    "def": "Embarcación ligera y alargada que se propulsa con un remo de dos palas.",
    "dif": "medio"
   },
   {
-   "id": "r-k6",
+   "id": "r-k8",
    "letra": "K",
    "tipo": "empieza",
    "resp": "kétchup",
@@ -1026,7 +2346,7 @@
    "dif": "medio"
   },
   {
-   "id": "r-k7",
+   "id": "r-k9",
    "letra": "K",
    "tipo": "empieza",
    "dif": "medio",
@@ -1034,7 +2354,7 @@
    "def": "Piloto japonés que se estrellaba voluntariamente contra objetivos enemigos en la Segunda Guerra Mundial."
   },
   {
-   "id": "r-k8",
+   "id": "r-k10",
    "letra": "K",
    "tipo": "empieza",
    "dif": "medio",
@@ -1042,7 +2362,55 @@
    "def": "Túnica japonesa de mangas anchas que se ata con un fajín."
   },
   {
-   "id": "r-k9",
+   "id": "r-k11",
+   "letra": "K",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "kilómetro",
+   "def": "Mil metros."
+  },
+  {
+   "id": "r-k12",
+   "letra": "K",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "kiosco",
+   "def": "Pequeña caseta de prensa y golosinas."
+  },
+  {
+   "id": "r-k13",
+   "letra": "K",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "kebab",
+   "def": "Carne asada en vertical que se sirve en pan de pita."
+  },
+  {
+   "id": "r-k14",
+   "letra": "K",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "kárate",
+   "def": "Arte marcial japonés que usa puños y patadas."
+  },
+  {
+   "id": "r-k15",
+   "letra": "K",
+   "tipo": "contiene",
+   "dif": "medio",
+   "resp": "póker",
+   "def": "Juego de cartas con apuestas."
+  },
+  {
+   "id": "r-k16",
+   "letra": "K",
+   "tipo": "contiene",
+   "dif": "medio",
+   "resp": "búnker",
+   "def": "Refugio subterráneo reforzado contra bombardeos."
+  },
+  {
+   "id": "r-k17",
    "letra": "K",
    "tipo": "empieza",
    "dif": "dificil",
@@ -1050,7 +2418,7 @@
    "def": "Comunidad agrícola colectiva de Israel."
   },
   {
-   "id": "r-k10",
+   "id": "r-k18",
    "letra": "K",
    "tipo": "empieza",
    "dif": "dificil",
@@ -1058,7 +2426,7 @@
    "def": "Mil vatios; unidad con la que se mide la potencia eléctrica."
   },
   {
-   "id": "r-k11",
+   "id": "r-k19",
    "letra": "K",
    "tipo": "empieza",
    "dif": "dificil",
@@ -1066,12 +2434,36 @@
    "def": "Fortaleza de Moscú que es sede del gobierno ruso."
   },
   {
-   "id": "r-k12",
+   "id": "r-k20",
    "letra": "K",
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "kafkiano",
    "def": "Absurdo y angustioso, como en las novelas de un célebre escritor checo."
+  },
+  {
+   "id": "r-k21",
+   "letra": "K",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "kantiano",
+   "def": "Relativo a la filosofía de Immanuel Kant."
+  },
+  {
+   "id": "r-k22",
+   "letra": "K",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "kermés",
+   "def": "Fiesta popular al aire libre con fines benéficos."
+  },
+  {
+   "id": "r-k23",
+   "letra": "K",
+   "tipo": "contiene",
+   "dif": "dificil",
+   "resp": "kárstico",
+   "def": "Relativo al paisaje de roca caliza con cuevas y simas."
   },
   {
    "id": "r-l1",
@@ -1109,12 +2501,60 @@
    "id": "r-l5",
    "letra": "L",
    "tipo": "empieza",
+   "dif": "facil",
+   "resp": "luna",
+   "def": "Satélite natural de la Tierra."
+  },
+  {
+   "id": "r-l6",
+   "letra": "L",
+   "tipo": "empieza",
+   "dif": "facil",
+   "resp": "lápiz",
+   "def": "Instrumento para escribir y dibujar con mina de grafito."
+  },
+  {
+   "id": "r-l7",
+   "letra": "L",
+   "tipo": "empieza",
+   "dif": "facil",
+   "resp": "leche",
+   "def": "Líquido blanco que dan las vacas."
+  },
+  {
+   "id": "r-l8",
+   "letra": "L",
+   "tipo": "empieza",
+   "dif": "facil",
+   "resp": "lobo",
+   "def": "Animal salvaje parecido al perro que aúlla a la luna."
+  },
+  {
+   "id": "r-l9",
+   "letra": "L",
+   "tipo": "empieza",
+   "dif": "facil",
+   "resp": "lechuga",
+   "def": "Hortaliza de hojas verdes para ensalada."
+  },
+  {
+   "id": "r-l10",
+   "letra": "L",
+   "tipo": "empieza",
+   "dif": "facil",
+   "resp": "lavadora",
+   "def": "Electrodoméstico que limpia la ropa."
+  },
+  {
+   "id": "r-l11",
+   "letra": "L",
+   "tipo": "empieza",
    "resp": "luciérnaga",
    "def": "Insecto que emite luz en la oscuridad.",
    "dif": "medio"
   },
   {
-   "id": "r-l6",
+   "id": "r-l12",
    "letra": "L",
    "tipo": "empieza",
    "resp": "lupa",
@@ -1122,7 +2562,7 @@
    "dif": "medio"
   },
   {
-   "id": "r-l7",
+   "id": "r-l13",
    "letra": "L",
    "tipo": "empieza",
    "resp": "leopardo",
@@ -1130,7 +2570,7 @@
    "dif": "medio"
   },
   {
-   "id": "r-l8",
+   "id": "r-l14",
    "letra": "L",
    "tipo": "empieza",
    "dif": "medio",
@@ -1138,7 +2578,47 @@
    "def": "Lugar de caminos que se cruzan y del que es difícil salir."
   },
   {
-   "id": "r-l9",
+   "id": "r-l15",
+   "letra": "L",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "lagarto",
+   "def": "Reptil de cuatro patas y cola larga."
+  },
+  {
+   "id": "r-l16",
+   "letra": "L",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "lazarillo",
+   "def": "Persona o perro que guía a un ciego."
+  },
+  {
+   "id": "r-l17",
+   "letra": "L",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "locomotora",
+   "def": "Máquina que arrastra los vagones de un tren."
+  },
+  {
+   "id": "r-l18",
+   "letra": "L",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "lombriz",
+   "def": "Gusano largo que vive bajo tierra."
+  },
+  {
+   "id": "r-l19",
+   "letra": "L",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "lingote",
+   "def": "Barra de metal, como la de oro."
+  },
+  {
+   "id": "r-l20",
    "letra": "L",
    "tipo": "empieza",
    "dif": "dificil",
@@ -1146,7 +2626,7 @@
    "def": "Finca rural de gran extensión perteneciente a un solo dueño."
   },
   {
-   "id": "r-l10",
+   "id": "r-l21",
    "letra": "L",
    "tipo": "empieza",
    "dif": "dificil",
@@ -1154,7 +2634,7 @@
    "def": "Que habla o escribe con muy pocas palabras."
   },
   {
-   "id": "r-l11",
+   "id": "r-l22",
    "letra": "L",
    "tipo": "empieza",
    "dif": "dificil",
@@ -1162,12 +2642,52 @@
    "def": "Técnica de hacer diccionarios."
   },
   {
-   "id": "r-l12",
+   "id": "r-l23",
    "letra": "L",
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "litigio",
    "def": "Pleito o disputa en un juicio."
+  },
+  {
+   "id": "r-l24",
+   "letra": "L",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "longevo",
+   "def": "De larga vida."
+  },
+  {
+   "id": "r-l25",
+   "letra": "L",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "lúgubre",
+   "def": "Triste y sombrío."
+  },
+  {
+   "id": "r-l26",
+   "letra": "L",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "letargo",
+   "def": "Estado de sueño profundo, como el de la marmota en invierno."
+  },
+  {
+   "id": "r-l27",
+   "letra": "L",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "liturgia",
+   "def": "Conjunto de ceremonias de una religión."
+  },
+  {
+   "id": "r-l28",
+   "letra": "L",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "locuaz",
+   "def": "Que habla mucho."
   },
   {
    "id": "r-m1",
@@ -1205,12 +2725,36 @@
    "id": "r-m5",
    "letra": "M",
    "tipo": "empieza",
+   "dif": "facil",
+   "resp": "mesa",
+   "def": "Mueble con patas donde se come."
+  },
+  {
+   "id": "r-m6",
+   "letra": "M",
+   "tipo": "empieza",
+   "dif": "facil",
+   "resp": "mono",
+   "def": "Animal que trepa árboles y se parece al ser humano."
+  },
+  {
+   "id": "r-m7",
+   "letra": "M",
+   "tipo": "empieza",
+   "dif": "facil",
+   "resp": "moto",
+   "def": "Vehículo de dos ruedas que se conduce con casco y gasolina."
+  },
+  {
+   "id": "r-m8",
+   "letra": "M",
+   "tipo": "empieza",
    "resp": "microscopio",
    "def": "Instrumento que permite ver lo que es invisible a simple vista por su pequeñez.",
    "dif": "medio"
   },
   {
-   "id": "r-m6",
+   "id": "r-m9",
    "letra": "M",
    "tipo": "empieza",
    "resp": "murciélago",
@@ -1218,7 +2762,7 @@
    "dif": "medio"
   },
   {
-   "id": "r-m7",
+   "id": "r-m10",
    "letra": "M",
    "tipo": "empieza",
    "dif": "medio",
@@ -1226,7 +2770,7 @@
    "def": "Aparato que marca el ritmo con golpes regulares y usan los músicos."
   },
   {
-   "id": "r-m8",
+   "id": "r-m11",
    "letra": "M",
    "tipo": "empieza",
    "dif": "medio",
@@ -1234,7 +2778,47 @@
    "def": "Fragmento de roca espacial que cae sobre la Tierra."
   },
   {
-   "id": "r-m9",
+   "id": "r-m12",
+   "letra": "M",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "molino",
+   "def": "Máquina que muele grano, movida por viento o agua."
+  },
+  {
+   "id": "r-m13",
+   "letra": "M",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "mosquetero",
+   "def": "Soldado con mosquete, como d'Artagnan."
+  },
+  {
+   "id": "r-m14",
+   "letra": "M",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "mamut",
+   "def": "Elefante prehistórico cubierto de pelo."
+  },
+  {
+   "id": "r-m15",
+   "letra": "M",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "maratón",
+   "def": "Carrera de 42 kilómetros."
+  },
+  {
+   "id": "r-m16",
+   "letra": "M",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "mazapán",
+   "def": "Dulce navideño de almendra, típico de Toledo."
+  },
+  {
+   "id": "r-m17",
    "letra": "M",
    "tipo": "empieza",
    "dif": "dificil",
@@ -1242,7 +2826,7 @@
    "def": "Sepulcro monumental y suntuoso."
   },
   {
-   "id": "r-m10",
+   "id": "r-m18",
    "letra": "M",
    "tipo": "empieza",
    "dif": "dificil",
@@ -1250,7 +2834,7 @@
    "def": "Técnica para memorizar mediante asociaciones."
   },
   {
-   "id": "r-m11",
+   "id": "r-m19",
    "letra": "M",
    "tipo": "empieza",
    "dif": "dificil",
@@ -1258,12 +2842,60 @@
    "def": "Persona que protege y financia a artistas."
   },
   {
-   "id": "r-m12",
+   "id": "r-m20",
    "letra": "M",
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "meticuloso",
    "def": "Que cuida los detalles en exceso."
+  },
+  {
+   "id": "r-m21",
+   "letra": "M",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "mendaz",
+   "def": "Mentiroso."
+  },
+  {
+   "id": "r-m22",
+   "letra": "M",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "magnánimo",
+   "def": "De alma generosa y noble."
+  },
+  {
+   "id": "r-m23",
+   "letra": "M",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "mordaz",
+   "def": "Que critica con ironía hiriente."
+  },
+  {
+   "id": "r-m24",
+   "letra": "M",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "metáfora",
+   "def": "Figura que identifica una cosa con otra por semejanza."
+  },
+  {
+   "id": "r-m25",
+   "letra": "M",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "misántropo",
+   "def": "Persona que siente aversión hacia el trato con la gente."
+  },
+  {
+   "id": "r-m26",
+   "letra": "M",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "moratoria",
+   "def": "Plazo que se concede para pagar una deuda."
   },
   {
    "id": "r-n1",
@@ -1301,12 +2933,44 @@
    "id": "r-n5",
    "letra": "N",
    "tipo": "empieza",
+   "dif": "facil",
+   "resp": "nariz",
+   "def": "Parte de la cara con la que olemos."
+  },
+  {
+   "id": "r-n6",
+   "letra": "N",
+   "tipo": "empieza",
+   "dif": "facil",
+   "resp": "nieve",
+   "def": "Agua helada que cae en copos blancos."
+  },
+  {
+   "id": "r-n7",
+   "letra": "N",
+   "tipo": "empieza",
+   "dif": "facil",
+   "resp": "noche",
+   "def": "Parte del día en que no hay sol."
+  },
+  {
+   "id": "r-n8",
+   "letra": "N",
+   "tipo": "empieza",
+   "dif": "facil",
+   "resp": "nido",
+   "def": "Lugar donde las aves ponen sus huevos."
+  },
+  {
+   "id": "r-n9",
+   "letra": "N",
+   "tipo": "empieza",
    "resp": "náufrago",
    "def": "Persona que ha sobrevivido al hundimiento de un barco.",
    "dif": "medio"
   },
   {
-   "id": "r-n6",
+   "id": "r-n10",
    "letra": "N",
    "tipo": "empieza",
    "dif": "medio",
@@ -1314,7 +2978,7 @@
    "def": "Planta acuática de grandes hojas flotantes y flores blancas o rosadas."
   },
   {
-   "id": "r-n7",
+   "id": "r-n11",
    "letra": "N",
    "tipo": "empieza",
    "dif": "medio",
@@ -1322,7 +2986,7 @@
    "def": "Tristeza al recordar un tiempo pasado que fue feliz."
   },
   {
-   "id": "r-n8",
+   "id": "r-n12",
    "letra": "N",
    "tipo": "empieza",
    "dif": "medio",
@@ -1330,7 +2994,47 @@
    "def": "Que no vive en un sitio fijo, sino que va de un lugar a otro."
   },
   {
-   "id": "r-n9",
+   "id": "r-n13",
+   "letra": "N",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "neurona",
+   "def": "Célula del sistema nervioso."
+  },
+  {
+   "id": "r-n14",
+   "letra": "N",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "nutria",
+   "def": "Mamífero de río de pelo suave que come peces."
+  },
+  {
+   "id": "r-n15",
+   "letra": "N",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "narval",
+   "def": "Cetáceo con un largo colmillo en espiral en la frente."
+  },
+  {
+   "id": "r-n16",
+   "letra": "N",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "notario",
+   "def": "Funcionario que da fe de documentos."
+  },
+  {
+   "id": "r-n17",
+   "letra": "N",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "nitrógeno",
+   "def": "Gas que forma casi cuatro quintos del aire."
+  },
+  {
+   "id": "r-n18",
    "letra": "N",
    "tipo": "empieza",
    "dif": "dificil",
@@ -1338,7 +3042,7 @@
    "def": "Favoritismo hacia los familiares al repartir cargos o empleos."
   },
   {
-   "id": "r-n10",
+   "id": "r-n19",
    "letra": "N",
    "tipo": "empieza",
    "dif": "dificil",
@@ -1346,7 +3050,7 @@
    "def": "En el budismo, estado de liberación y plenitud absoluta."
   },
   {
-   "id": "r-n11",
+   "id": "r-n20",
    "letra": "N",
    "tipo": "empieza",
    "dif": "dificil",
@@ -1354,12 +3058,60 @@
    "def": "Nube de gas y polvo del espacio."
   },
   {
-   "id": "r-n12",
+   "id": "r-n21",
    "letra": "N",
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "neologismo",
    "def": "Palabra o expresión nueva en una lengua."
+  },
+  {
+   "id": "r-n22",
+   "letra": "N",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "nebuloso",
+   "def": "Con nubes o poco claro."
+  },
+  {
+   "id": "r-n23",
+   "letra": "N",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "nefasto",
+   "def": "Funesto, muy malo."
+  },
+  {
+   "id": "r-n24",
+   "letra": "N",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "nimio",
+   "def": "Insignificante."
+  },
+  {
+   "id": "r-n25",
+   "letra": "N",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "nigromancia",
+   "def": "Magia que pretende invocar a los muertos."
+  },
+  {
+   "id": "r-n26",
+   "letra": "N",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "neófito",
+   "def": "Persona recién incorporada a una causa."
+  },
+  {
+   "id": "r-n27",
+   "letra": "N",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "numismática",
+   "def": "Ciencia que estudia las monedas."
   },
   {
    "id": "r-ñ1",
@@ -1405,12 +3157,68 @@
    "id": "r-ñ6",
    "letra": "Ñ",
    "tipo": "contiene",
+   "dif": "facil",
+   "resp": "año",
+   "def": "Periodo de doce meses."
+  },
+  {
+   "id": "r-ñ7",
+   "letra": "Ñ",
+   "tipo": "contiene",
+   "dif": "facil",
+   "resp": "sueño",
+   "def": "Lo que se tiene al dormir."
+  },
+  {
+   "id": "r-ñ8",
+   "letra": "Ñ",
+   "tipo": "contiene",
+   "dif": "facil",
+   "resp": "cabaña",
+   "def": "Casa pequeña y rústica de madera en el campo."
+  },
+  {
+   "id": "r-ñ9",
+   "letra": "Ñ",
+   "tipo": "contiene",
+   "dif": "facil",
+   "resp": "piña",
+   "def": "Fruta tropical con una corona de hojas."
+  },
+  {
+   "id": "r-ñ10",
+   "letra": "Ñ",
+   "tipo": "contiene",
+   "dif": "facil",
+   "resp": "pañuelo",
+   "def": "Pieza de tela para sonarse la nariz."
+  },
+  {
+   "id": "r-ñ11",
+   "letra": "Ñ",
+   "tipo": "contiene",
+   "dif": "facil",
+   "resp": "mañana",
+   "def": "Parte del día entre el amanecer y el mediodía."
+  },
+  {
+   "id": "r-ñ12",
+   "letra": "Ñ",
+   "tipo": "contiene",
+   "dif": "facil",
+   "resp": "leña",
+   "def": "Madera para quemar en la chimenea."
+  },
+  {
+   "id": "r-ñ13",
+   "letra": "Ñ",
+   "tipo": "contiene",
    "dif": "medio",
    "resp": "tacaño",
    "def": "Persona que se resiste a gastar su dinero."
   },
   {
-   "id": "r-ñ7",
+   "id": "r-ñ14",
    "letra": "Ñ",
    "tipo": "contiene",
    "dif": "medio",
@@ -1418,7 +3226,7 @@
    "def": "Conjunto de acciones organizadas para conseguir un fin, como las políticas o las publicitarias."
   },
   {
-   "id": "r-ñ8",
+   "id": "r-ñ15",
    "letra": "Ñ",
    "tipo": "contiene",
    "dif": "medio",
@@ -1426,7 +3234,7 @@
    "def": "Cada uno de los pelos del borde del párpado."
   },
   {
-   "id": "r-ñ9",
+   "id": "r-ñ16",
    "letra": "Ñ",
    "tipo": "contiene",
    "dif": "medio",
@@ -1434,7 +3242,55 @@
    "def": "Aniversario del día en que naciste."
   },
   {
-   "id": "r-ñ10",
+   "id": "r-ñ17",
+   "letra": "Ñ",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "ñoquis",
+   "def": "Pasta italiana de patata en bolitas."
+  },
+  {
+   "id": "r-ñ18",
+   "letra": "Ñ",
+   "tipo": "contiene",
+   "dif": "medio",
+   "resp": "moño",
+   "def": "Peinado con el pelo recogido en lo alto."
+  },
+  {
+   "id": "r-ñ19",
+   "letra": "Ñ",
+   "tipo": "contiene",
+   "dif": "medio",
+   "resp": "champiñón",
+   "def": "Seta blanca comestible."
+  },
+  {
+   "id": "r-ñ20",
+   "letra": "Ñ",
+   "tipo": "contiene",
+   "dif": "medio",
+   "resp": "peñasco",
+   "def": "Roca grande y elevada."
+  },
+  {
+   "id": "r-ñ21",
+   "letra": "Ñ",
+   "tipo": "contiene",
+   "dif": "medio",
+   "resp": "reñir",
+   "def": "Pelearse con alguien de palabra."
+  },
+  {
+   "id": "r-ñ22",
+   "letra": "Ñ",
+   "tipo": "contiene",
+   "dif": "medio",
+   "resp": "diseño",
+   "def": "Proyecto o plan de cómo será un objeto."
+  },
+  {
+   "id": "r-ñ23",
    "letra": "Ñ",
    "tipo": "empieza",
    "dif": "dificil",
@@ -1442,7 +3298,7 @@
    "def": "Ave corredora sudamericana parecida al avestruz."
   },
   {
-   "id": "r-ñ11",
+   "id": "r-ñ24",
    "letra": "Ñ",
    "tipo": "contiene",
    "dif": "dificil",
@@ -1450,7 +3306,7 @@
    "def": "Mala hierba que perjudica a los cereales; también, lo que siembra discordia."
   },
   {
-   "id": "r-ñ12",
+   "id": "r-ñ25",
    "letra": "Ñ",
    "tipo": "empieza",
    "dif": "dificil",
@@ -1458,12 +3314,52 @@
    "def": "Antílope africano de cabeza grande que migra en enormes manadas."
   },
   {
-   "id": "r-ñ13",
+   "id": "r-ñ26",
    "letra": "Ñ",
    "tipo": "contiene",
    "dif": "dificil",
    "resp": "añagaza",
    "def": "Truco o artificio para atraer a alguien con engaño."
+  },
+  {
+   "id": "r-ñ27",
+   "letra": "Ñ",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "ñoño",
+   "def": "Apocado y remilgado, o demasiado sensiblero."
+  },
+  {
+   "id": "r-ñ28",
+   "letra": "Ñ",
+   "tipo": "contiene",
+   "dif": "dificil",
+   "resp": "carroña",
+   "def": "Carne podrida de animales muertos de la que se alimentan los buitres."
+  },
+  {
+   "id": "r-ñ29",
+   "letra": "Ñ",
+   "tipo": "contiene",
+   "dif": "dificil",
+   "resp": "añoranza",
+   "def": "Pena por la ausencia de algo querido."
+  },
+  {
+   "id": "r-ñ30",
+   "letra": "Ñ",
+   "tipo": "contiene",
+   "dif": "dificil",
+   "resp": "pergeñar",
+   "def": "Planear o esbozar algo."
+  },
+  {
+   "id": "r-ñ31",
+   "letra": "Ñ",
+   "tipo": "contiene",
+   "dif": "dificil",
+   "resp": "desdeñar",
+   "def": "Tratar con desprecio."
   },
   {
    "id": "r-o1",
@@ -1501,12 +3397,44 @@
    "id": "r-o5",
    "letra": "O",
    "tipo": "empieza",
+   "dif": "facil",
+   "resp": "ojo",
+   "def": "Órgano con el que vemos."
+  },
+  {
+   "id": "r-o6",
+   "letra": "O",
+   "tipo": "empieza",
+   "dif": "facil",
+   "resp": "oreja",
+   "def": "Parte del cuerpo con la que oímos."
+  },
+  {
+   "id": "r-o7",
+   "letra": "O",
+   "tipo": "empieza",
+   "dif": "facil",
+   "resp": "oro",
+   "def": "Metal amarillo muy valioso."
+  },
+  {
+   "id": "r-o8",
+   "letra": "O",
+   "tipo": "empieza",
+   "dif": "facil",
+   "resp": "olivo",
+   "def": "Árbol del que se obtiene el aceite."
+  },
+  {
+   "id": "r-o9",
+   "letra": "O",
+   "tipo": "empieza",
    "resp": "orquesta",
    "def": "Conjunto de músicos con instrumentos de cuerda, viento y percusión, dirigido por un maestro.",
    "dif": "medio"
   },
   {
-   "id": "r-o6",
+   "id": "r-o10",
    "letra": "O",
    "tipo": "empieza",
    "dif": "medio",
@@ -1514,7 +3442,7 @@
    "def": "Monumento de piedra alto, de cuatro caras y rematado en punta."
   },
   {
-   "id": "r-o7",
+   "id": "r-o11",
    "letra": "O",
    "tipo": "empieza",
    "dif": "medio",
@@ -1522,7 +3450,7 @@
    "def": "Gran simio de pelaje rojizo que vive en Borneo y Sumatra."
   },
   {
-   "id": "r-o8",
+   "id": "r-o12",
    "letra": "O",
    "tipo": "empieza",
    "dif": "medio",
@@ -1530,7 +3458,39 @@
    "def": "Lugar con agua y vegetación en medio del desierto."
   },
   {
-   "id": "r-o9",
+   "id": "r-o13",
+   "letra": "O",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "ornitorrinco",
+   "def": "Mamífero australiano con pico de pato que pone huevos."
+  },
+  {
+   "id": "r-o14",
+   "letra": "O",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "orfebre",
+   "def": "Artesano que trabaja el oro y la plata."
+  },
+  {
+   "id": "r-o15",
+   "letra": "O",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "oxígeno",
+   "def": "Gas del aire que necesitamos para respirar."
+  },
+  {
+   "id": "r-o16",
+   "letra": "O",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "oruga",
+   "def": "Larva que se convertirá en mariposa."
+  },
+  {
+   "id": "r-o17",
    "letra": "O",
    "tipo": "empieza",
    "dif": "dificil",
@@ -1538,7 +3498,7 @@
    "def": "Gobierno ejercido por un grupo reducido de personas."
   },
   {
-   "id": "r-o10",
+   "id": "r-o18",
    "letra": "O",
    "tipo": "empieza",
    "dif": "dificil",
@@ -1546,7 +3506,7 @@
    "def": "Figura que une dos términos opuestos, como «silencio ensordecedor»."
   },
   {
-   "id": "r-o11",
+   "id": "r-o19",
    "letra": "O",
    "tipo": "empieza",
    "dif": "dificil",
@@ -1554,12 +3514,52 @@
    "def": "Anticuado, que ya no se usa."
   },
   {
-   "id": "r-o12",
+   "id": "r-o20",
    "letra": "O",
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "ostracismo",
    "def": "Aislamiento al que se somete a alguien por motivos políticos o sociales."
+  },
+  {
+   "id": "r-o21",
+   "letra": "O",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "ocaso",
+   "def": "Puesta del sol."
+  },
+  {
+   "id": "r-o22",
+   "letra": "O",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "opulento",
+   "def": "Muy rico y abundante."
+  },
+  {
+   "id": "r-o23",
+   "letra": "O",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "onírico",
+   "def": "Relativo a los sueños."
+  },
+  {
+   "id": "r-o24",
+   "letra": "O",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "oprobio",
+   "def": "Deshonra pública."
+  },
+  {
+   "id": "r-o25",
+   "letra": "O",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "ontología",
+   "def": "Parte de la filosofía que estudia el ser."
   },
   {
    "id": "r-p1",
@@ -1605,12 +3605,60 @@
    "id": "r-p6",
    "letra": "P",
    "tipo": "empieza",
+   "dif": "facil",
+   "resp": "perro",
+   "def": "Mejor amigo del hombre, que ladra."
+  },
+  {
+   "id": "r-p7",
+   "letra": "P",
+   "tipo": "empieza",
+   "dif": "facil",
+   "resp": "pan",
+   "def": "Alimento de harina que se hornea y se corta en rebanadas."
+  },
+  {
+   "id": "r-p8",
+   "letra": "P",
+   "tipo": "empieza",
+   "dif": "facil",
+   "resp": "pelota",
+   "def": "Esfera que rebota y sirve para jugar."
+  },
+  {
+   "id": "r-p9",
+   "letra": "P",
+   "tipo": "empieza",
+   "dif": "facil",
+   "resp": "payaso",
+   "def": "Artista de circo con nariz roja que hace reír."
+  },
+  {
+   "id": "r-p10",
+   "letra": "P",
+   "tipo": "empieza",
+   "dif": "facil",
+   "resp": "plátano",
+   "def": "Fruta amarilla y alargada que se pela."
+  },
+  {
+   "id": "r-p11",
+   "letra": "P",
+   "tipo": "empieza",
+   "dif": "facil",
+   "resp": "puerta",
+   "def": "Lo que se abre para entrar en una habitación."
+  },
+  {
+   "id": "r-p12",
+   "letra": "P",
+   "tipo": "empieza",
    "dif": "medio",
    "resp": "periscopio",
    "def": "Tubo con espejos que permite ver la superficie desde un submarino sumergido."
   },
   {
-   "id": "r-p7",
+   "id": "r-p13",
    "letra": "P",
    "tipo": "empieza",
    "dif": "medio",
@@ -1618,7 +3666,7 @@
    "def": "Persona que viaja a un lugar sagrado por devoción."
   },
   {
-   "id": "r-p8",
+   "id": "r-p14",
    "letra": "P",
    "tipo": "empieza",
    "dif": "medio",
@@ -1626,7 +3674,7 @@
    "def": "Conjunto de cinco líneas sobre las que se escriben las notas musicales."
   },
   {
-   "id": "r-p9",
+   "id": "r-p15",
    "letra": "P",
    "tipo": "empieza",
    "dif": "medio",
@@ -1634,7 +3682,39 @@
    "def": "Mezcla explosiva usada en cohetes y armas antiguas."
   },
   {
-   "id": "r-p10",
+   "id": "r-p16",
+   "letra": "P",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "pulpo",
+   "def": "Molusco de ocho tentáculos."
+  },
+  {
+   "id": "r-p17",
+   "letra": "P",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "planeta",
+   "def": "Cuerpo celeste que gira alrededor de una estrella."
+  },
+  {
+   "id": "r-p18",
+   "letra": "P",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "pastelería",
+   "def": "Tienda de tartas y dulces."
+  },
+  {
+   "id": "r-p19",
+   "letra": "P",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "piloto",
+   "def": "Persona que conduce un avión."
+  },
+  {
+   "id": "r-p20",
    "letra": "P",
    "tipo": "empieza",
    "dif": "dificil",
@@ -1642,7 +3722,7 @@
    "def": "Modelo o ejemplo que sirve de norma."
   },
   {
-   "id": "r-p11",
+   "id": "r-p21",
    "letra": "P",
    "tipo": "empieza",
    "dif": "dificil",
@@ -1650,7 +3730,7 @@
    "def": "Remedio imaginario capaz de curar todos los males."
   },
   {
-   "id": "r-p12",
+   "id": "r-p22",
    "letra": "P",
    "tipo": "empieza",
    "dif": "dificil",
@@ -1658,12 +3738,52 @@
    "def": "Manuscrito antiguo en el que se borró el texto original para escribir otro."
   },
   {
-   "id": "r-p13",
+   "id": "r-p23",
    "letra": "P",
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "peyorativo",
    "def": "Que expresa desprecio o quita valor."
+  },
+  {
+   "id": "r-p24",
+   "letra": "P",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "pusilánime",
+   "def": "Falto de valor y ánimo."
+  },
+  {
+   "id": "r-p25",
+   "letra": "P",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "perentorio",
+   "def": "Urgente, que no admite demora."
+  },
+  {
+   "id": "r-p26",
+   "letra": "P",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "prolijo",
+   "def": "Largo y detallado en exceso."
+  },
+  {
+   "id": "r-p27",
+   "letra": "P",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "prístino",
+   "def": "Primitivo, original, puro."
+  },
+  {
+   "id": "r-p28",
+   "letra": "P",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "paroxismo",
+   "def": "Exaltación extrema de un sentimiento."
   },
   {
    "id": "r-q1",
@@ -1701,12 +3821,20 @@
    "id": "r-q5",
    "letra": "Q",
    "tipo": "empieza",
+   "dif": "facil",
+   "resp": "quiniela",
+   "def": "Apuesta de resultados de partidos de fútbol."
+  },
+  {
+   "id": "r-q6",
+   "letra": "Q",
+   "tipo": "empieza",
    "resp": "quirófano",
    "def": "Sala del hospital donde se realizan operaciones.",
    "dif": "medio"
   },
   {
-   "id": "r-q6",
+   "id": "r-q7",
    "letra": "Q",
    "tipo": "empieza",
    "resp": "química",
@@ -1714,7 +3842,7 @@
    "dif": "medio"
   },
   {
-   "id": "r-q7",
+   "id": "r-q8",
    "letra": "Q",
    "tipo": "empieza",
    "dif": "medio",
@@ -1722,7 +3850,7 @@
    "def": "Ave de colores brillantes y larga cola, símbolo de Guatemala."
   },
   {
-   "id": "r-q8",
+   "id": "r-q9",
    "letra": "Q",
    "tipo": "empieza",
    "dif": "medio",
@@ -1730,7 +3858,39 @@
    "def": "Ave rapaz que deja caer los huesos desde lo alto para romperlos y comer su tuétano."
   },
   {
-   "id": "r-q9",
+   "id": "r-q10",
+   "letra": "Q",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "quebradizo",
+   "def": "Que se rompe fácilmente."
+  },
+  {
+   "id": "r-q11",
+   "letra": "Q",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "quijotesco",
+   "def": "Idealista y soñador como el hidalgo de Cervantes."
+  },
+  {
+   "id": "r-q12",
+   "letra": "Q",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "químico",
+   "def": "Científico que estudia las sustancias y sus reacciones."
+  },
+  {
+   "id": "r-q13",
+   "letra": "Q",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "queroseno",
+   "def": "Combustible de los aviones."
+  },
+  {
+   "id": "r-q14",
    "letra": "Q",
    "tipo": "empieza",
    "resp": "quimera",
@@ -1738,7 +3898,7 @@
    "dif": "dificil"
   },
   {
-   "id": "r-q10",
+   "id": "r-q15",
    "letra": "Q",
    "tipo": "empieza",
    "dif": "dificil",
@@ -1746,7 +3906,7 @@
    "def": "Unidad que mide la pureza del oro."
   },
   {
-   "id": "r-q11",
+   "id": "r-q16",
    "letra": "Q",
    "tipo": "empieza",
    "dif": "dificil",
@@ -1754,12 +3914,36 @@
    "def": "Número mínimo de miembros presentes para que una reunión sea válida."
   },
   {
-   "id": "r-q12",
+   "id": "r-q17",
    "letra": "Q",
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "quiromancia",
    "def": "Adivinación del futuro por las líneas de la mano."
+  },
+  {
+   "id": "r-q18",
+   "letra": "Q",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "quisquilloso",
+   "def": "Que se ofende o se fija en cosas pequeñas."
+  },
+  {
+   "id": "r-q19",
+   "letra": "Q",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "quintaesencia",
+   "def": "Lo más puro y refinado de algo."
+  },
+  {
+   "id": "r-q20",
+   "letra": "Q",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "quincalla",
+   "def": "Objetos de poco valor."
   },
   {
    "id": "r-r1",
@@ -1797,12 +3981,36 @@
    "id": "r-r5",
    "letra": "R",
    "tipo": "empieza",
+   "dif": "facil",
+   "resp": "rueda",
+   "def": "Pieza redonda que gira en coches y bicicletas."
+  },
+  {
+   "id": "r-r6",
+   "letra": "R",
+   "tipo": "empieza",
+   "dif": "facil",
+   "resp": "rojo",
+   "def": "Color de la sangre y del tomate."
+  },
+  {
+   "id": "r-r7",
+   "letra": "R",
+   "tipo": "empieza",
+   "dif": "facil",
+   "resp": "rana",
+   "def": "Anfibio verde que croa y salta."
+  },
+  {
+   "id": "r-r8",
+   "letra": "R",
+   "tipo": "empieza",
    "resp": "rinoceronte",
    "def": "Mamífero grande con uno o dos cuernos sobre el hocico.",
    "dif": "medio"
   },
   {
-   "id": "r-r6",
+   "id": "r-r9",
    "letra": "R",
    "tipo": "empieza",
    "resp": "relámpago",
@@ -1810,7 +4018,7 @@
    "dif": "medio"
   },
   {
-   "id": "r-r7",
+   "id": "r-r10",
    "letra": "R",
    "tipo": "empieza",
    "dif": "medio",
@@ -1818,7 +4026,7 @@
    "def": "Edificio altísimo de muchas plantas."
   },
   {
-   "id": "r-r8",
+   "id": "r-r11",
    "letra": "R",
    "tipo": "empieza",
    "dif": "medio",
@@ -1826,7 +4034,39 @@
    "def": "Sistema que detecta objetos lejanos mediante ondas de radio."
   },
   {
-   "id": "r-r9",
+   "id": "r-r12",
+   "letra": "R",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "robot",
+   "def": "Máquina programada para realizar tareas."
+  },
+  {
+   "id": "r-r13",
+   "letra": "R",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "reptil",
+   "def": "Animal de sangre fría como la serpiente o el lagarto."
+  },
+  {
+   "id": "r-r14",
+   "letra": "R",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "remolino",
+   "def": "Movimiento giratorio del agua o del viento."
+  },
+  {
+   "id": "r-r15",
+   "letra": "R",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "ruiseñor",
+   "def": "Ave de canto melodioso."
+  },
+  {
+   "id": "r-r16",
    "letra": "R",
    "tipo": "empieza",
    "dif": "dificil",
@@ -1834,7 +4074,7 @@
    "def": "Recuerdo vago de algo del pasado."
   },
   {
-   "id": "r-r10",
+   "id": "r-r17",
    "letra": "R",
    "tipo": "empieza",
    "dif": "dificil",
@@ -1842,7 +4082,7 @@
    "def": "Antiguo cantor griego que recitaba poemas épicos."
   },
   {
-   "id": "r-r11",
+   "id": "r-r18",
    "letra": "R",
    "tipo": "empieza",
    "dif": "dificil",
@@ -1850,12 +4090,60 @@
    "def": "Río italiano que cruzó Julio César, origen de la expresión para una decisión sin vuelta atrás."
   },
   {
-   "id": "r-r12",
+   "id": "r-r19",
    "letra": "R",
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "retórica",
    "def": "Arte de hablar con eficacia y belleza para persuadir."
+  },
+  {
+   "id": "r-r20",
+   "letra": "R",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "rubicundo",
+   "def": "De color rojizo, dicho de una persona."
+  },
+  {
+   "id": "r-r21",
+   "letra": "R",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "recalcitrante",
+   "def": "Obstinado en su oposición."
+  },
+  {
+   "id": "r-r22",
+   "letra": "R",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "rimbombante",
+   "def": "Ostentoso y llamativo."
+  },
+  {
+   "id": "r-r23",
+   "letra": "R",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "resiliencia",
+   "def": "Capacidad de superar situaciones adversas."
+  },
+  {
+   "id": "r-r24",
+   "letra": "R",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "rescoldo",
+   "def": "Brasa menuda bajo la ceniza."
+  },
+  {
+   "id": "r-r25",
+   "letra": "R",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "réquiem",
+   "def": "Misa o composición musical por los difuntos."
   },
   {
    "id": "r-s1",
@@ -1901,12 +4189,36 @@
    "id": "r-s6",
    "letra": "S",
    "tipo": "empieza",
+   "dif": "facil",
+   "resp": "sol",
+   "def": "Estrella que ilumina la Tierra."
+  },
+  {
+   "id": "r-s7",
+   "letra": "S",
+   "tipo": "empieza",
+   "dif": "facil",
+   "resp": "silla",
+   "def": "Asiento con respaldo."
+  },
+  {
+   "id": "r-s8",
+   "letra": "S",
+   "tipo": "empieza",
+   "dif": "facil",
+   "resp": "sopa",
+   "def": "Plato caliente de caldo."
+  },
+  {
+   "id": "r-s9",
+   "letra": "S",
+   "tipo": "empieza",
    "dif": "medio",
    "resp": "sextante",
    "def": "Instrumento que mide la altura de los astros para orientarse en el mar."
   },
   {
-   "id": "r-s7",
+   "id": "r-s10",
    "letra": "S",
    "tipo": "empieza",
    "dif": "medio",
@@ -1914,7 +4226,7 @@
    "def": "Ataúd de piedra de la Antigüedad."
   },
   {
-   "id": "r-s8",
+   "id": "r-s11",
    "letra": "S",
    "tipo": "empieza",
    "dif": "medio",
@@ -1922,7 +4234,7 @@
    "def": "Aparato que registra los temblores de tierra."
   },
   {
-   "id": "r-s9",
+   "id": "r-s12",
    "letra": "S",
    "tipo": "empieza",
    "dif": "medio",
@@ -1930,7 +4242,47 @@
    "def": "Anfibio de piel negra con manchas amarillas."
   },
   {
-   "id": "r-s10",
+   "id": "r-s13",
+   "letra": "S",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "saxofón",
+   "def": "Instrumento de viento de metal inventado por Adolphe Sax."
+  },
+  {
+   "id": "r-s14",
+   "letra": "S",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "satélite",
+   "def": "Cuerpo que gira alrededor de un planeta."
+  },
+  {
+   "id": "r-s15",
+   "letra": "S",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "sabana",
+   "def": "Llanura africana con hierba y pocos árboles."
+  },
+  {
+   "id": "r-s16",
+   "letra": "S",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "sirena",
+   "def": "Ser mitad mujer, mitad pez."
+  },
+  {
+   "id": "r-s17",
+   "letra": "S",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "sacacorchos",
+   "def": "Utensilio para descorchar una botella."
+  },
+  {
+   "id": "r-s18",
    "letra": "S",
    "tipo": "empieza",
    "dif": "dificil",
@@ -1938,7 +4290,7 @@
    "def": "Asociación íntima entre seres vivos de la que ambos salen beneficiados."
   },
   {
-   "id": "r-s11",
+   "id": "r-s19",
    "letra": "S",
    "tipo": "empieza",
    "dif": "dificil",
@@ -1946,7 +4298,7 @@
    "def": "Razonamiento formado por dos premisas y una conclusión."
   },
   {
-   "id": "r-s12",
+   "id": "r-s20",
    "letra": "S",
    "tipo": "empieza",
    "dif": "dificil",
@@ -1954,12 +4306,68 @@
    "def": "Persona que ama los placeres refinados y el lujo."
   },
   {
-   "id": "r-s13",
+   "id": "r-s21",
    "letra": "S",
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "soliloquio",
    "def": "Reflexión en voz alta de alguien que está solo."
+  },
+  {
+   "id": "r-s22",
+   "letra": "S",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "sempiterno",
+   "def": "Que durará siempre."
+  },
+  {
+   "id": "r-s23",
+   "letra": "S",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "sibilino",
+   "def": "Misterioso y con doble sentido."
+  },
+  {
+   "id": "r-s24",
+   "letra": "S",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "soslayar",
+   "def": "Evitar un asunto."
+  },
+  {
+   "id": "r-s25",
+   "letra": "S",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "sinécdoque",
+   "def": "Figura retórica que nombra la parte por el todo."
+  },
+  {
+   "id": "r-s26",
+   "letra": "S",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "sinuoso",
+   "def": "Que tiene curvas."
+  },
+  {
+   "id": "r-s27",
+   "letra": "S",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "subrepticio",
+   "def": "Hecho a escondidas."
+  },
+  {
+   "id": "r-s28",
+   "letra": "S",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "sofisma",
+   "def": "Razonamiento falso con apariencia de verdadero."
   },
   {
    "id": "r-t1",
@@ -1997,12 +4405,68 @@
    "id": "r-t5",
    "letra": "T",
    "tipo": "empieza",
+   "dif": "facil",
+   "resp": "tigre",
+   "def": "Felino rayado de gran tamaño."
+  },
+  {
+   "id": "r-t6",
+   "letra": "T",
+   "tipo": "empieza",
+   "dif": "facil",
+   "resp": "tomate",
+   "def": "Fruto rojo de las ensaladas y del kétchup."
+  },
+  {
+   "id": "r-t7",
+   "letra": "T",
+   "tipo": "empieza",
+   "dif": "facil",
+   "resp": "tren",
+   "def": "Medio de transporte sobre raíles."
+  },
+  {
+   "id": "r-t8",
+   "letra": "T",
+   "tipo": "empieza",
+   "dif": "facil",
+   "resp": "taza",
+   "def": "Recipiente con asa para el café."
+  },
+  {
+   "id": "r-t9",
+   "letra": "T",
+   "tipo": "empieza",
+   "dif": "facil",
+   "resp": "teléfono",
+   "def": "Aparato para hablar con alguien lejano."
+  },
+  {
+   "id": "r-t10",
+   "letra": "T",
+   "tipo": "empieza",
+   "dif": "facil",
+   "resp": "tiburón",
+   "def": "Gran pez de dientes afilados."
+  },
+  {
+   "id": "r-t11",
+   "letra": "T",
+   "tipo": "empieza",
+   "dif": "facil",
+   "resp": "tijeras",
+   "def": "Herramienta para cortar papel o tela."
+  },
+  {
+   "id": "r-t12",
+   "letra": "T",
+   "tipo": "empieza",
    "resp": "telescopio",
    "def": "Instrumento para observar astros lejanos.",
    "dif": "medio"
   },
   {
-   "id": "r-t6",
+   "id": "r-t13",
    "letra": "T",
    "tipo": "empieza",
    "dif": "medio",
@@ -2010,7 +4474,7 @@
    "def": "Ola gigantesca provocada por un maremoto."
   },
   {
-   "id": "r-t7",
+   "id": "r-t14",
    "letra": "T",
    "tipo": "empieza",
    "dif": "medio",
@@ -2018,7 +4482,7 @@
    "def": "Instrumento que mide la temperatura."
   },
   {
-   "id": "r-t8",
+   "id": "r-t15",
    "letra": "T",
    "tipo": "empieza",
    "dif": "medio",
@@ -2026,7 +4490,31 @@
    "def": "Planta de tres hojas; si tiene cuatro, dicen que da suerte."
   },
   {
-   "id": "r-t9",
+   "id": "r-t16",
+   "letra": "T",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "tucán",
+   "def": "Ave tropical de enorme pico colorido."
+  },
+  {
+   "id": "r-t17",
+   "letra": "T",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "trampolín",
+   "def": "Tabla elástica desde donde se salta."
+  },
+  {
+   "id": "r-t18",
+   "letra": "T",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "tapiz",
+   "def": "Tela tejida con dibujos que adorna paredes."
+  },
+  {
+   "id": "r-t19",
    "letra": "T",
    "tipo": "empieza",
    "dif": "dificil",
@@ -2034,7 +4522,7 @@
    "def": "Repetición inútil de una misma idea con distintas palabras."
   },
   {
-   "id": "r-t10",
+   "id": "r-t20",
    "letra": "T",
    "tipo": "empieza",
    "dif": "dificil",
@@ -2042,7 +4530,7 @@
    "def": "Traslado estacional del ganado en busca de pastos."
   },
   {
-   "id": "r-t11",
+   "id": "r-t21",
    "letra": "T",
    "tipo": "empieza",
    "dif": "dificil",
@@ -2050,12 +4538,52 @@
    "def": "Recta que toca a una curva en un solo punto."
   },
   {
-   "id": "r-t12",
+   "id": "r-t22",
    "letra": "T",
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "tergiversar",
    "def": "Deformar los hechos o las palabras para cambiar su sentido."
+  },
+  {
+   "id": "r-t23",
+   "letra": "T",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "tácito",
+   "def": "Que no se dice pero se entiende."
+  },
+  {
+   "id": "r-t24",
+   "letra": "T",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "taciturno",
+   "def": "Callado y melancólico."
+  },
+  {
+   "id": "r-t25",
+   "letra": "T",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "truculento",
+   "def": "Cruel y espantoso."
+  },
+  {
+   "id": "r-t26",
+   "letra": "T",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "talante",
+   "def": "Humor o disposición de ánimo."
+  },
+  {
+   "id": "r-t27",
+   "letra": "T",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "terruño",
+   "def": "Tierra natal."
   },
   {
    "id": "r-u1",
@@ -2125,12 +4653,52 @@
    "id": "r-u9",
    "letra": "U",
    "tipo": "empieza",
+   "dif": "medio",
+   "resp": "utopía",
+   "def": "Plan o mundo ideal imposible de realizar."
+  },
+  {
+   "id": "r-u10",
+   "letra": "U",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "unanimidad",
+   "def": "Acuerdo de todos."
+  },
+  {
+   "id": "r-u11",
+   "letra": "U",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "uranio",
+   "def": "Metal radiactivo usado en energía nuclear."
+  },
+  {
+   "id": "r-u12",
+   "letra": "U",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "ultimátum",
+   "def": "Última exigencia antes de tomar medidas."
+  },
+  {
+   "id": "r-u13",
+   "letra": "U",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "universidad",
+   "def": "Centro de estudios superiores."
+  },
+  {
+   "id": "r-u14",
+   "letra": "U",
+   "tipo": "empieza",
    "dif": "dificil",
    "resp": "ubicuo",
    "def": "Que está en todas partes a la vez."
   },
   {
-   "id": "r-u10",
+   "id": "r-u15",
    "letra": "U",
    "tipo": "empieza",
    "dif": "dificil",
@@ -2138,7 +4706,7 @@
    "def": "Que va después de algo o más allá de ello."
   },
   {
-   "id": "r-u11",
+   "id": "r-u16",
    "letra": "U",
    "tipo": "empieza",
    "dif": "dificil",
@@ -2146,12 +4714,36 @@
    "def": "Derecho a disfrutar de un bien que pertenece a otro."
   },
   {
-   "id": "r-u12",
+   "id": "r-u17",
    "letra": "U",
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "ufano",
    "def": "Orgulloso y satisfecho de sí mismo."
+  },
+  {
+   "id": "r-u18",
+   "letra": "U",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "urbanidad",
+   "def": "Cortesía y buenos modales."
+  },
+  {
+   "id": "r-u19",
+   "letra": "U",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "ucronía",
+   "def": "Historia imaginada suponiendo que algo ocurrió de otro modo."
+  },
+  {
+   "id": "r-u20",
+   "letra": "U",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "umbrío",
+   "def": "De sombra, sombrío."
   },
   {
    "id": "r-v1",
@@ -2189,12 +4781,36 @@
    "id": "r-v5",
    "letra": "V",
    "tipo": "empieza",
+   "dif": "facil",
+   "resp": "vaso",
+   "def": "Recipiente para beber agua."
+  },
+  {
+   "id": "r-v6",
+   "letra": "V",
+   "tipo": "empieza",
+   "dif": "facil",
+   "resp": "verano",
+   "def": "Estación más calurosa."
+  },
+  {
+   "id": "r-v7",
+   "letra": "V",
+   "tipo": "empieza",
+   "dif": "facil",
+   "resp": "vestido",
+   "def": "Prenda de mujer de una sola pieza."
+  },
+  {
+   "id": "r-v8",
+   "letra": "V",
+   "tipo": "empieza",
    "resp": "violín",
    "def": "Instrumento de cuerda frotada con arco, el más agudo de su familia.",
    "dif": "medio"
   },
   {
-   "id": "r-v6",
+   "id": "r-v9",
    "letra": "V",
    "tipo": "empieza",
    "dif": "medio",
@@ -2202,7 +4818,7 @@
    "def": "Sensación de mareo al asomarse a una gran altura."
   },
   {
-   "id": "r-v7",
+   "id": "r-v10",
    "letra": "V",
    "tipo": "empieza",
    "dif": "medio",
@@ -2210,7 +4826,7 @@
    "def": "Pieza giratoria en lo alto de un edificio que indica la dirección del viento."
   },
   {
-   "id": "r-v8",
+   "id": "r-v11",
    "letra": "V",
    "tipo": "empieza",
    "dif": "medio",
@@ -2218,7 +4834,47 @@
    "def": "Viento muy fuerte."
   },
   {
-   "id": "r-v9",
+   "id": "r-v12",
+   "letra": "V",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "velero",
+   "def": "Barco de vela."
+  },
+  {
+   "id": "r-v13",
+   "letra": "V",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "vertebrado",
+   "def": "Animal con columna vertebral."
+  },
+  {
+   "id": "r-v14",
+   "letra": "V",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "vitrina",
+   "def": "Armario con cristales para exponer objetos."
+  },
+  {
+   "id": "r-v15",
+   "letra": "V",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "vikingo",
+   "def": "Navegante guerrero del norte de Europa."
+  },
+  {
+   "id": "r-v16",
+   "letra": "V",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "vocabulario",
+   "def": "Conjunto de palabras de una lengua."
+  },
+  {
+   "id": "r-v17",
    "letra": "V",
    "tipo": "empieza",
    "dif": "dificil",
@@ -2226,7 +4882,7 @@
    "def": "Tratar a alguien con desprecio."
   },
   {
-   "id": "r-v10",
+   "id": "r-v18",
    "letra": "V",
    "tipo": "empieza",
    "dif": "dificil",
@@ -2234,7 +4890,7 @@
    "def": "Remolino; también, mezcla confusa de gente o sucesos."
   },
   {
-   "id": "r-v11",
+   "id": "r-v19",
    "letra": "V",
    "tipo": "empieza",
    "dif": "dificil",
@@ -2242,12 +4898,44 @@
    "def": "Que parece cierto y creíble."
   },
   {
-   "id": "r-v12",
+   "id": "r-v20",
    "letra": "V",
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "vicisitud",
    "def": "Sucesión de acontecimientos favorables y adversos en la vida."
+  },
+  {
+   "id": "r-v21",
+   "letra": "V",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "vetusto",
+   "def": "Muy viejo."
+  },
+  {
+   "id": "r-v22",
+   "letra": "V",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "vehemente",
+   "def": "Que se expresa con pasión."
+  },
+  {
+   "id": "r-v23",
+   "letra": "V",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "vituperio",
+   "def": "Censura dura."
+  },
+  {
+   "id": "r-v24",
+   "letra": "V",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "vástago",
+   "def": "Hijo, descendiente."
   },
   {
    "id": "r-w1",
@@ -2325,12 +5013,52 @@
    "id": "r-w10",
    "letra": "W",
    "tipo": "empieza",
+   "dif": "medio",
+   "resp": "western",
+   "def": "Película ambientada en el Lejano Oeste."
+  },
+  {
+   "id": "r-w11",
+   "letra": "W",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "wasabi",
+   "def": "Pasta verde muy picante que acompaña al sushi."
+  },
+  {
+   "id": "r-w12",
+   "letra": "W",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "wok",
+   "def": "Sartén asiática de fondo curvo."
+  },
+  {
+   "id": "r-w13",
+   "letra": "W",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "washington",
+   "def": "Capital de Estados Unidos."
+  },
+  {
+   "id": "r-w14",
+   "letra": "W",
+   "tipo": "contiene",
+   "dif": "medio",
+   "resp": "newton",
+   "def": "Unidad de fuerza del sistema internacional."
+  },
+  {
+   "id": "r-w15",
+   "letra": "W",
+   "tipo": "empieza",
    "dif": "dificil",
    "resp": "wolframio",
    "def": "Metal, de símbolo W, que se usaba en los filamentos de las bombillas."
   },
   {
-   "id": "r-w11",
+   "id": "r-w16",
    "letra": "W",
    "tipo": "empieza",
    "dif": "dificil",
@@ -2338,7 +5066,7 @@
    "def": "Raza alemana de perro de caza, de pelaje gris plateado."
   },
   {
-   "id": "r-w12",
+   "id": "r-w17",
    "letra": "W",
    "tipo": "empieza",
    "dif": "dificil",
@@ -2346,12 +5074,28 @@
    "def": "Relativo a la música de un compositor alemán de óperas como «El anillo del nibelungo»."
   },
   {
-   "id": "r-w13",
+   "id": "r-w18",
    "letra": "W",
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "wombat",
    "def": "Marsupial australiano excavador, parecido a un pequeño oso."
+  },
+  {
+   "id": "r-w19",
+   "letra": "W",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "watusi",
+   "def": "Baile de moda en los años sesenta."
+  },
+  {
+   "id": "r-w20",
+   "letra": "W",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "waterloo",
+   "def": "Batalla en la que fue derrotado Napoleón."
   },
   {
    "id": "r-x1",
@@ -2388,13 +5132,37 @@
   {
    "id": "r-x5",
    "letra": "X",
+   "tipo": "contiene",
+   "dif": "facil",
+   "resp": "texto",
+   "def": "Conjunto de palabras escritas."
+  },
+  {
+   "id": "r-x6",
+   "letra": "X",
+   "tipo": "contiene",
+   "dif": "facil",
+   "resp": "excursión",
+   "def": "Viaje corto por placer."
+  },
+  {
+   "id": "r-x7",
+   "letra": "X",
+   "tipo": "contiene",
+   "dif": "facil",
+   "resp": "axila",
+   "def": "Hueco bajo el brazo."
+  },
+  {
+   "id": "r-x8",
+   "letra": "X",
    "tipo": "empieza",
    "resp": "xilófono",
    "def": "Instrumento musical de láminas de madera o metal que se golpean con mazos.",
    "dif": "medio"
   },
   {
-   "id": "r-x6",
+   "id": "r-x9",
    "letra": "X",
    "tipo": "contiene",
    "resp": "éxito",
@@ -2402,7 +5170,7 @@
    "dif": "medio"
   },
   {
-   "id": "r-x7",
+   "id": "r-x10",
    "letra": "X",
    "tipo": "contiene",
    "dif": "medio",
@@ -2410,7 +5178,7 @@
    "def": "Muestra pública de obras de arte."
   },
   {
-   "id": "r-x8",
+   "id": "r-x11",
    "letra": "X",
    "tipo": "contiene",
    "dif": "medio",
@@ -2418,7 +5186,79 @@
    "def": "Ser procedente de otro planeta."
   },
   {
-   "id": "r-x9",
+   "id": "r-x12",
+   "letra": "X",
+   "tipo": "contiene",
+   "dif": "medio",
+   "resp": "experimento",
+   "def": "Prueba científica para comprobar algo."
+  },
+  {
+   "id": "r-x13",
+   "letra": "X",
+   "tipo": "contiene",
+   "dif": "medio",
+   "resp": "léxico",
+   "def": "Conjunto de palabras de una lengua."
+  },
+  {
+   "id": "r-x14",
+   "letra": "X",
+   "tipo": "contiene",
+   "dif": "medio",
+   "resp": "exótico",
+   "def": "Procedente de un país lejano y extraño."
+  },
+  {
+   "id": "r-x15",
+   "letra": "X",
+   "tipo": "contiene",
+   "dif": "medio",
+   "resp": "toxina",
+   "def": "Veneno producido por un ser vivo."
+  },
+  {
+   "id": "r-x16",
+   "letra": "X",
+   "tipo": "contiene",
+   "dif": "medio",
+   "resp": "anexo",
+   "def": "Documento adjunto a otro."
+  },
+  {
+   "id": "r-x17",
+   "letra": "X",
+   "tipo": "contiene",
+   "dif": "medio",
+   "resp": "maxilar",
+   "def": "Hueso de la mandíbula."
+  },
+  {
+   "id": "r-x18",
+   "letra": "X",
+   "tipo": "contiene",
+   "dif": "medio",
+   "resp": "flexible",
+   "def": "Que se dobla fácilmente."
+  },
+  {
+   "id": "r-x19",
+   "letra": "X",
+   "tipo": "contiene",
+   "dif": "medio",
+   "resp": "nexo",
+   "def": "Unión o vínculo entre cosas."
+  },
+  {
+   "id": "r-x20",
+   "letra": "X",
+   "tipo": "contiene",
+   "dif": "medio",
+   "resp": "asfixia",
+   "def": "Falta de aire para respirar."
+  },
+  {
+   "id": "r-x21",
    "letra": "X",
    "tipo": "empieza",
    "dif": "dificil",
@@ -2426,7 +5266,7 @@
    "def": "Rechazo u odio hacia las personas extranjeras."
   },
   {
-   "id": "r-x10",
+   "id": "r-x22",
    "letra": "X",
    "tipo": "empieza",
    "dif": "dificil",
@@ -2434,7 +5274,7 @@
    "def": "Procedimiento de copia en seco en el que se basa la fotocopiadora."
   },
   {
-   "id": "r-x11",
+   "id": "r-x23",
    "letra": "X",
    "tipo": "contiene",
    "dif": "dificil",
@@ -2442,12 +5282,52 @@
    "def": "Explicación o interpretación de un texto, sobre todo religioso."
   },
   {
-   "id": "r-x12",
+   "id": "r-x24",
    "letra": "X",
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "xenón",
    "def": "Gas noble pesado que se usa en ciertos faros de coche."
+  },
+  {
+   "id": "r-x25",
+   "letra": "X",
+   "tipo": "contiene",
+   "dif": "dificil",
+   "resp": "sintaxis",
+   "def": "Parte de la gramática que estudia cómo se combinan las palabras."
+  },
+  {
+   "id": "r-x26",
+   "letra": "X",
+   "tipo": "contiene",
+   "dif": "dificil",
+   "resp": "taxidermista",
+   "def": "Persona que diseca animales."
+  },
+  {
+   "id": "r-x27",
+   "letra": "X",
+   "tipo": "contiene",
+   "dif": "dificil",
+   "resp": "sexagenario",
+   "def": "Que tiene sesenta años."
+  },
+  {
+   "id": "r-x28",
+   "letra": "X",
+   "tipo": "contiene",
+   "dif": "dificil",
+   "resp": "complexión",
+   "def": "Constitución física de una persona."
+  },
+  {
+   "id": "r-x29",
+   "letra": "X",
+   "tipo": "contiene",
+   "dif": "dificil",
+   "resp": "ortodoxo",
+   "def": "Conforme con la doctrina establecida."
   },
   {
    "id": "r-y1",
@@ -2485,12 +5365,60 @@
    "id": "r-y5",
    "letra": "Y",
    "tipo": "empieza",
+   "dif": "facil",
+   "resp": "yoyó",
+   "def": "Juguete de dos discos con cuerda que sube y baja."
+  },
+  {
+   "id": "r-y6",
+   "letra": "Y",
+   "tipo": "contiene",
+   "dif": "facil",
+   "resp": "ayer",
+   "def": "El día antes de hoy."
+  },
+  {
+   "id": "r-y7",
+   "letra": "Y",
+   "tipo": "contiene",
+   "dif": "facil",
+   "resp": "rayo",
+   "def": "Descarga eléctrica de una tormenta."
+  },
+  {
+   "id": "r-y8",
+   "letra": "Y",
+   "tipo": "contiene",
+   "dif": "facil",
+   "resp": "mayo",
+   "def": "Quinto mes del año."
+  },
+  {
+   "id": "r-y9",
+   "letra": "Y",
+   "tipo": "contiene",
+   "dif": "facil",
+   "resp": "desayuno",
+   "def": "Primera comida del día."
+  },
+  {
+   "id": "r-y10",
+   "letra": "Y",
+   "tipo": "contiene",
+   "dif": "facil",
+   "resp": "hoyo",
+   "def": "Agujero en el suelo."
+  },
+  {
+   "id": "r-y11",
+   "letra": "Y",
+   "tipo": "empieza",
    "resp": "yate",
    "def": "Embarcación de recreo, a menudo lujosa.",
    "dif": "medio"
   },
   {
-   "id": "r-y6",
+   "id": "r-y12",
    "letra": "Y",
    "tipo": "empieza",
    "dif": "medio",
@@ -2498,7 +5426,7 @@
    "def": "Lugar donde se hallan minerales o restos arqueológicos."
   },
   {
-   "id": "r-y7",
+   "id": "r-y13",
    "letra": "Y",
    "tipo": "empieza",
    "dif": "medio",
@@ -2506,7 +5434,7 @@
    "def": "Bóvido de pelo largo que vive en el Himalaya."
   },
   {
-   "id": "r-y8",
+   "id": "r-y14",
    "letra": "Y",
    "tipo": "empieza",
    "dif": "medio",
@@ -2514,7 +5442,47 @@
    "def": "Mineral blando que, mezclado con agua, sirve para enyesar paredes y fracturas."
   },
   {
-   "id": "r-y9",
+   "id": "r-y15",
+   "letra": "Y",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "yedra",
+   "def": "Planta trepadora de hojas perennes, también llamada hiedra."
+  },
+  {
+   "id": "r-y16",
+   "letra": "Y",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "yeti",
+   "def": "Criatura legendaria de las nieves del Himalaya."
+  },
+  {
+   "id": "r-y17",
+   "letra": "Y",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "yodo",
+   "def": "Elemento químico que se usa para desinfectar heridas."
+  },
+  {
+   "id": "r-y18",
+   "letra": "Y",
+   "tipo": "contiene",
+   "dif": "medio",
+   "resp": "mayordomo",
+   "def": "Criado principal de una casa."
+  },
+  {
+   "id": "r-y19",
+   "letra": "Y",
+   "tipo": "contiene",
+   "dif": "medio",
+   "resp": "ayuno",
+   "def": "Abstinencia de comida."
+  },
+  {
+   "id": "r-y20",
    "letra": "Y",
    "tipo": "empieza",
    "resp": "yunque",
@@ -2522,7 +5490,7 @@
    "dif": "dificil"
   },
   {
-   "id": "r-y10",
+   "id": "r-y21",
    "letra": "Y",
    "tipo": "empieza",
    "dif": "dificil",
@@ -2530,7 +5498,7 @@
    "def": "Colocación de cosas una junto a otra, sin nexo que las una."
   },
   {
-   "id": "r-y11",
+   "id": "r-y22",
    "letra": "Y",
    "tipo": "empieza",
    "dif": "dificil",
@@ -2538,12 +5506,28 @@
    "def": "Vena grande del cuello."
   },
   {
-   "id": "r-y12",
+   "id": "r-y23",
    "letra": "Y",
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "yacija",
    "def": "Cama pobre o lugar donde se está acostado."
+  },
+  {
+   "id": "r-y24",
+   "letra": "Y",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "yarda",
+   "def": "Medida inglesa de unos noventa y un centímetros."
+  },
+  {
+   "id": "r-y25",
+   "letra": "Y",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "yermo",
+   "def": "Terreno inculto y deshabitado."
   },
   {
    "id": "r-z1",
@@ -2581,12 +5565,28 @@
    "id": "r-z5",
    "letra": "Z",
    "tipo": "empieza",
+   "dif": "facil",
+   "resp": "zoo",
+   "def": "Lugar con animales exóticos para visitar."
+  },
+  {
+   "id": "r-z6",
+   "letra": "Z",
+   "tipo": "empieza",
+   "dif": "facil",
+   "resp": "zumo",
+   "def": "Líquido que se saca exprimiendo fruta."
+  },
+  {
+   "id": "r-z7",
+   "letra": "Z",
+   "tipo": "empieza",
    "resp": "zurdo",
    "def": "Persona que usa preferentemente la mano izquierda.",
    "dif": "medio"
   },
   {
-   "id": "r-z6",
+   "id": "r-z8",
    "letra": "Z",
    "tipo": "empieza",
    "dif": "medio",
@@ -2594,7 +5594,7 @@
    "def": "Franja del cielo dividida en doce signos."
   },
   {
-   "id": "r-z7",
+   "id": "r-z9",
    "letra": "Z",
    "tipo": "empieza",
    "dif": "medio",
@@ -2602,7 +5602,7 @@
    "def": "Dirigible rígido de estructura metálica, de invención alemana."
   },
   {
-   "id": "r-z8",
+   "id": "r-z10",
    "letra": "Z",
    "tipo": "empieza",
    "dif": "medio",
@@ -2610,7 +5610,55 @@
    "def": "Franja inferior de una pared."
   },
   {
-   "id": "r-z9",
+   "id": "r-z11",
+   "letra": "Z",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "zarzuela",
+   "def": "Género lírico español con partes cantadas y habladas."
+  },
+  {
+   "id": "r-z12",
+   "letra": "Z",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "zafiro",
+   "def": "Piedra preciosa azul."
+  },
+  {
+   "id": "r-z13",
+   "letra": "Z",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "zombi",
+   "def": "Muerto viviente."
+  },
+  {
+   "id": "r-z14",
+   "letra": "Z",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "zanja",
+   "def": "Excavación larga y estrecha."
+  },
+  {
+   "id": "r-z15",
+   "letra": "Z",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "zángano",
+   "def": "Abeja macho que no trabaja."
+  },
+  {
+   "id": "r-z16",
+   "letra": "Z",
+   "tipo": "empieza",
+   "dif": "medio",
+   "resp": "zampoña",
+   "def": "Flauta andina de varios tubos."
+  },
+  {
+   "id": "r-z17",
    "letra": "Z",
    "tipo": "empieza",
    "dif": "dificil",
@@ -2618,7 +5666,7 @@
    "def": "Torre escalonada de los templos de la antigua Mesopotamia."
   },
   {
-   "id": "r-z10",
+   "id": "r-z18",
    "letra": "Z",
    "tipo": "empieza",
    "dif": "dificil",
@@ -2626,7 +5674,7 @@
    "def": "Grosero y tosco."
   },
   {
-   "id": "r-z11",
+   "id": "r-z19",
    "letra": "Z",
    "tipo": "empieza",
    "dif": "dificil",
@@ -2634,12 +5682,52 @@
    "def": "Persona que dice poder descubrir aguas subterráneas."
   },
   {
-   "id": "r-z12",
+   "id": "r-z20",
    "letra": "Z",
    "tipo": "empieza",
    "dif": "dificil",
    "resp": "zozobra",
    "def": "Inquietud y angustia."
+  },
+  {
+   "id": "r-z21",
+   "letra": "Z",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "zaherir",
+   "def": "Herir con críticas."
+  },
+  {
+   "id": "r-z22",
+   "letra": "Z",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "zascandil",
+   "def": "Persona inquieta y entrometida."
+  },
+  {
+   "id": "r-z23",
+   "letra": "Z",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "zurcir",
+   "def": "Coser un roto."
+  },
+  {
+   "id": "r-z24",
+   "letra": "Z",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "zalamero",
+   "def": "Que adula de manera empalagosa."
+  },
+  {
+   "id": "r-z25",
+   "letra": "Z",
+   "tipo": "empieza",
+   "dif": "dificil",
+   "resp": "zurrón",
+   "def": "Bolsa de pastor."
   }
  ]
 }

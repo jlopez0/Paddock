@@ -91,3 +91,5 @@ Antes de tocar código, dime en 5 líneas qué vas a cambiar y espera mi OK.
 Commits pequeños; pasa `flutter analyze` y `flutter test` antes de cada commit.
 Al terminar, marca la fase como hecha en el plan y apunta las decisiones tomadas.
 ```
+
+## Bitácora del jefe

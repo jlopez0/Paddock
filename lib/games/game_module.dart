@@ -1,6 +1,8 @@
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 
+import '../app/app_icons.dart';
+
 /// Contrato de un juego. Para añadir un juego nuevo:
 /// 1. Crea su carpeta en `lib/games/<juego>/` con una clase que implemente esto.
 /// 2. Añádelo a la lista de `registry.dart`.
@@ -12,8 +14,10 @@ abstract class GameModule {
   String get id;
   String get title;
   String get subtitle;
-  String get emoji;
   Color get color;
+
+  /// Icono del juego (duotono, ver `GameIcon`). Se resuelve por [id].
+  Widget icon(double size) => GameIcon(id, size: size);
 
   String get path => '/game/$id';
 

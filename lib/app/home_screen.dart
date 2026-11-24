@@ -132,7 +132,7 @@ class _GameTile extends StatelessWidget {
           ),
           child: Row(
             children: [
-              Text(game.emoji, style: const TextStyle(fontSize: 44)),
+              game.icon(44),
               const SizedBox(width: 16),
               Expanded(
                 child: Column(

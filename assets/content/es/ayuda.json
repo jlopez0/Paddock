@@ -6,10 +6,10 @@
       "Cada persona elige un caballo: Oros, Copas, Espadas o Bastos.",
       "Apuesta de 1 a 5 fichas o ve a por todas con el All-in, que vale 10.",
       "Cada carta hace avanzar al caballo de su palo. Ojo con los obstáculos: hacen retroceder.",
-      "Si aciertas, repartes tus fichas; si fallas, las pierdes. El modo de Ajustes decide cómo se pagan.",
+      "Si aciertas, cobras fichas; si fallas, pagas lo apostado. El modo de Ajustes decide cómo se pagan.",
       "¿Ganas con All-in? Repartes 2 All-in a 2 personas distintas."
     ],
-    "consejo": "Activa «Acertar reparte el doble» si queréis que cada apuesta cuente más."
+    "consejo": "Activa «Acertar gana el doble» si queréis que cada apuesta cuente más."
   },
   {
     "id": "infiltrado",

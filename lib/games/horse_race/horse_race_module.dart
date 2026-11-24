@@ -17,8 +17,6 @@ class HorseRaceModule extends GameModule {
   @override
   String get subtitle => 'Apuesta por un palo y que gane el mejor caballo';
   @override
-  String get emoji => '🏇';
-  @override
   Color get color => const Color(0xFFE8B84A);
 
   @override

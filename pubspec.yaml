@@ -8,6 +8,7 @@ environment:
 
 dependencies:
   audioplayers: ^6.7.1
+  confetti: ^0.8.0
   flutter:
     sdk: flutter
   flutter_riverpod: ^3.3.2
@@ -36,6 +37,27 @@ flutter:
     - assets/geo/
     - assets/geo/flags/
     - assets/audio/
+    - assets/fonts/
+    - assets/licenses/
+    - assets/illustrations/
+  fonts:
+    - family: AlfaSlabOne
+      fonts:
+        - asset: assets/fonts/AlfaSlabOne-Regular.ttf
+    # Glifos Phosphor (MIT), ver lib/app/app_icons.dart.
+    - family: PhosphorDuotone
+      fonts:
+        - asset: assets/fonts/Phosphor-Duotone.ttf
+    - family: PhosphorFill
+      fonts:
+        - asset: assets/fonts/Phosphor-Fill.ttf
+    - family: Figtree
+      fonts:
+        - asset: "assets/fonts/Figtree[wght].ttf"
+        - asset: "assets/fonts/Figtree[wght].ttf"
+          weight: 700
+        - asset: "assets/fonts/Figtree[wght].ttf"
+          weight: 800
 
 dependency_overrides:
   # 5.3.0 usa el bloque kotlin{} de AGP 9; el proyecto usa AGP 8.11 y no compila.

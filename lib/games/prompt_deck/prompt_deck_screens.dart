@@ -70,7 +70,7 @@ class _PromptDeckSetupScreenState extends ConsumerState<PromptDeckSetupScreen> {
       body: ListView(
         padding: const EdgeInsets.fromLTRB(20, 16, 20, 24),
         children: [
-          Center(child: Text(game.emoji, style: const TextStyle(fontSize: 72))),
+          Center(child: game.icon(72)),
           const SizedBox(height: 12),
           Text(
             game.rule,

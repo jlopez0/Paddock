@@ -11,6 +11,24 @@ abstract final class AppColors {
   static const textMuted = Color(0xFF9BB2A4);
   static const danger = Color(0xFFE5575C);
   static const success = Color(0xFF5BC27A);
+
+  // Tokens "casa de apuestas de hipódromo" (docs/DISENO_ALMA.md).
+  static const brass = Color(0xFFB8862B);
+  static const paper = Color(0xFFF3EFE0);
+  static const burgundy = Color(0xFF7A2430);
+  static const medalGold = Color(0xFFE8B84A);
+  static const medalSilver = Color(0xFFC9D1CC);
+  static const medalBronze = Color(0xFFC98B5A);
+}
+
+/// Familias tipográficas empaquetadas en `assets/fonts/`.
+abstract final class AppFonts {
+  /// Slab pesada de cartelería; peso único. Solo para títulos y cifras de
+  /// ceremonia a partir de ~20 px.
+  static const display = 'AlfaSlabOne';
+
+  /// Texto e interfaz (variable 300-900).
+  static const body = 'Figtree';
 }
 
 ThemeData buildAppTheme() {
@@ -28,7 +46,20 @@ ThemeData buildAppTheme() {
     error: AppColors.danger,
   );
 
-  final base = ThemeData(useMaterial3: true, colorScheme: scheme);
+  final base = ThemeData(
+    useMaterial3: true,
+    colorScheme: scheme,
+    fontFamily: AppFonts.body,
+  );
+  final bodyTheme = base.textTheme.apply(
+    fontFamily: AppFonts.body,
+    bodyColor: AppColors.text,
+    displayColor: AppColors.text,
+  );
+  TextStyle? slab(TextStyle? s) => s?.copyWith(
+        fontFamily: AppFonts.display,
+        fontWeight: FontWeight.w400,
+      );
   return base.copyWith(
     scaffoldBackgroundColor: AppColors.background,
     appBarTheme: const AppBarTheme(
@@ -37,9 +68,11 @@ ThemeData buildAppTheme() {
       elevation: 0,
       centerTitle: true,
     ),
-    textTheme: base.textTheme.apply(
-      bodyColor: AppColors.text,
-      displayColor: AppColors.text,
+    textTheme: bodyTheme.copyWith(
+      displayLarge: slab(bodyTheme.displayLarge),
+      displayMedium: slab(bodyTheme.displayMedium),
+      displaySmall: slab(bodyTheme.displaySmall),
+      headlineLarge: slab(bodyTheme.headlineLarge),
     ),
     cardTheme: CardThemeData(
       color: AppColors.surface,

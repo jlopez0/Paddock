@@ -41,7 +41,6 @@ class PromptDeckModule extends GameModule {
     required this.id,
     required this.title,
     required this.subtitle,
-    required this.emoji,
     required this.color,
     required this.contentAsset,
     required this.style,
@@ -56,8 +55,6 @@ class PromptDeckModule extends GameModule {
   final String title;
   @override
   final String subtitle;
-  @override
-  final String emoji;
   @override
   final Color color;
 

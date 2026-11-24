@@ -18,8 +18,6 @@ class InfiltradoModule extends GameModule {
   @override
   String get subtitle => 'Todos saben la palabra menos uno';
   @override
-  String get emoji => '🕵️';
-  @override
   Color get color => const Color(0xFF8E6BE0);
 
   @override

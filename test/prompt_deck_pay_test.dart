@@ -34,7 +34,6 @@ PromptDeckModule _game({
   id: 'test-game',
   title: 'Test',
   subtitle: 's',
-  emoji: '🙊',
   color: const Color(0xFFE5575C),
   contentAsset: _asset,
   style: style,

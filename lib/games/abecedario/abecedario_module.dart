@@ -16,8 +16,6 @@ class AbecedarioModule extends GameModule {
   @override
   String get subtitle => 'Adivina la palabra de cada letra';
   @override
-  String get emoji => '🔤';
-  @override
   Color get color => abecedarioColor;
 
   @override

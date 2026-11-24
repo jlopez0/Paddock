@@ -17,8 +17,6 @@ class TriviaModule extends GameModule {
   @override
   String get subtitle => 'Cultura general en 4 opciones';
   @override
-  String get emoji => '🧠';
-  @override
   Color get color => triviaColor;
 
   @override

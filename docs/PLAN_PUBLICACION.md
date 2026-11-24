@@ -22,7 +22,7 @@ Modelo: **Sonnet 5.5 · esfuerzo medio**
 
 1. ✅ IDs definitivos `es.jlopez0.paddock` (no se pueden cambiar después de publicar).
 2. ✅ `pubspec.yaml`: description y versión `1.0.0+1`. ✅ Plugins actualizados (`flutter pub upgrade`; `audioplayers_android` fijado a 5.2.1 por incompatibilidad con AGP 8.11). ✅ `flutter upgrade` (Flutter 3.50.1, Dart 3.14, Gradle 9.3.1, AGP 9.1.1, `material_ui`). Con Device Guard hay que compilar con `--no-tree-shake-icons` (bloquea `font-subset.exe`).
-3. ✅ Android: compileSdk/targetSdk 36 y firma release con `key.properties`. ✅ SafeArea en todas las pantallas y `enableOnBackInvokedCallback`. ⏳ Probar en un emulador con Android 16.
+3. ✅ Android: compileSdk/targetSdk 36 y firma release con `key.properties`. ✅ SafeArea en todas las pantallas y `enableOnBackInvokedCallback`. ✅ Probado en emulador Android 16 (API 36.1): home, Ajustes, Geografía (con confirmación al salir) y Rosco sin contenido bajo las barras; faltan por revisar a mano Carrera, Trivia y Yo nunca.
 4. ✅ iOS: `PrivacyInfo.xcprivacy`, `ITSAppUsesNonExemptEncryption=false`, solo iPhone.
 5. ⏳ `codemagic.yaml` (cuando toque iOS).
 6. ✅ `docs/` para GitHub Pages. ⏳ Poner el correo y activar Pages.

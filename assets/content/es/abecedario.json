@@ -198,8 +198,8 @@
    "letra": "A",
    "tipo": "empieza",
    "dif": "dificil",
-   "resp": "abstemio",
-   "def": "Persona que no bebe alcohol."
+   "resp": "anacoreta",
+   "def": "Persona que vive aislada del mundo, retirada en soledad y dedicada a la oración."
   },
   {
    "id": "r-a26",
@@ -3871,7 +3871,7 @@
    "tipo": "empieza",
    "dif": "medio",
    "resp": "quijotesco",
-   "def": "Idealista y soñador como el hidalgo de Cervantes."
+   "def": "Idealista y soñador hasta la exageración, como el caballero de la Mancha de Cervantes."
   },
   {
    "id": "r-q12",
@@ -4590,7 +4590,7 @@
    "letra": "U",
    "tipo": "empieza",
    "resp": "uva",
-   "def": "Fruto de la vid, con el que se hace el vino.",
+   "def": "Fruto pequeño y redondo de la vid que crece en racimos.",
    "dif": "facil"
   },
   {
@@ -4783,7 +4783,7 @@
    "tipo": "empieza",
    "dif": "facil",
    "resp": "vaso",
-   "def": "Recipiente para beber agua."
+   "def": "Recipiente de cristal, sin asa, en el que se sirve el agua en la mesa."
   },
   {
    "id": "r-v6",
@@ -4973,8 +4973,8 @@
    "id": "r-w5",
    "letra": "W",
    "tipo": "empieza",
-   "resp": "whisky",
-   "def": "Bebida alcohólica destilada de cereales, típica de Escocia.",
+   "resp": "walkman",
+   "def": "Reproductor portátil de casetes con auriculares, muy popular en los años ochenta.",
    "dif": "medio"
   },
   {

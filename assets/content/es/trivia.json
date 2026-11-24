@@ -1467,7 +1467,7 @@
   {
    "id": "cur05",
    "cat": "curiosidades",
-   "q": "¿De qué país es originario el tequila?",
+   "q": "¿De qué país es originaria la música de mariachi?",
    "a": "México",
    "w": [
     "España",
@@ -1642,6 +1642,8 @@
   },
   {
    "id": "ot-his01",
+   "fuente": "opentdb",
+   "licencia": "CC BY-SA 4.0",
    "cat": "historia",
    "dif": "dificil",
    "q": "¿Qué antiguo reino ibérico, además de Castilla, León y Aragón, aparece en el escudo del rey de España?",
@@ -1654,6 +1656,8 @@
   },
   {
    "id": "ot-his02",
+   "fuente": "opentdb",
+   "licencia": "CC BY-SA 4.0",
    "cat": "historia",
    "dif": "dificil",
    "q": "¿Qué emperador bizantino mandó construir Santa Sofía?",
@@ -1666,6 +1670,8 @@
   },
   {
    "id": "ot-his03",
+   "fuente": "opentdb",
+   "licencia": "CC BY-SA 4.0",
    "cat": "historia",
    "dif": "dificil",
    "q": "¿Quién fue el último emperador de México?",
@@ -1678,6 +1684,8 @@
   },
   {
    "id": "ot-his04",
+   "fuente": "opentdb",
+   "licencia": "CC BY-SA 4.0",
    "cat": "historia",
    "dif": "dificil",
    "q": "¿En qué año se adoptó por primera vez el calendario gregoriano?",
@@ -1690,6 +1698,8 @@
   },
   {
    "id": "ot-his05",
+   "fuente": "opentdb",
+   "licencia": "CC BY-SA 4.0",
    "cat": "historia",
    "dif": "dificil",
    "q": "¿En qué país se cultivaron originalmente las patatas?",
@@ -1702,6 +1712,8 @@
   },
   {
    "id": "ot-his06",
+   "fuente": "opentdb",
+   "licencia": "CC BY-SA 4.0",
    "cat": "historia",
    "dif": "dificil",
    "q": "¿Qué día de enero de 1933 fue nombrado Hitler canciller de Alemania?",
@@ -1714,6 +1726,8 @@
   },
   {
    "id": "ot-his07",
+   "fuente": "opentdb",
+   "licencia": "CC BY-SA 4.0",
    "cat": "historia",
    "dif": "dificil",
    "q": "¿Quién asesinó al presidente estadounidense James A. Garfield?",
@@ -1726,6 +1740,8 @@
   },
   {
    "id": "ot-cie01",
+   "fuente": "opentdb",
+   "licencia": "CC BY-SA 4.0",
    "cat": "ciencia",
    "dif": "dificil",
    "q": "¿Cuál es la unidad del SI para la intensidad luminosa?",
@@ -1738,6 +1754,8 @@
   },
   {
    "id": "ot-cie02",
+   "fuente": "opentdb",
+   "licencia": "CC BY-SA 4.0",
    "cat": "ciencia",
    "dif": "dificil",
    "q": "¿Cuál es la unidad de inductancia eléctrica?",
@@ -1750,6 +1768,8 @@
   },
   {
    "id": "ot-cie03",
+   "fuente": "opentdb",
+   "licencia": "CC BY-SA 4.0",
    "cat": "ciencia",
    "dif": "dificil",
    "q": "¿Cómo se llama la envoltura gaseosa de un cometa que origina su cola?",
@@ -1762,6 +1782,8 @@
   },
   {
    "id": "ot-cie04",
+   "fuente": "opentdb",
+   "licencia": "CC BY-SA 4.0",
    "cat": "ciencia",
    "dif": "dificil",
    "q": "¿Qué es un «gosipiboma»?",
@@ -1774,6 +1796,8 @@
   },
   {
    "id": "ot-cie05",
+   "fuente": "opentdb",
+   "licencia": "CC BY-SA 4.0",
    "cat": "ciencia",
    "dif": "dificil",
    "q": "¿Cuál es el nombre científico del «dolor de cabeza por helado»?",
@@ -1786,6 +1810,8 @@
   },
   {
    "id": "ot-cie06",
+   "fuente": "opentdb",
+   "licencia": "CC BY-SA 4.0",
    "cat": "ciencia",
    "dif": "dificil",
    "q": "¿Cuál es la fórmula molecular de la glucosa?",
@@ -1798,6 +1824,8 @@
   },
   {
    "id": "ot-nat01",
+   "fuente": "opentdb",
+   "licencia": "CC BY-SA 4.0",
    "cat": "naturaleza",
    "dif": "dificil",
    "q": "¿Qué ave nace con garras en los dedos de las alas?",
@@ -1810,6 +1838,8 @@
   },
   {
    "id": "ot-nat02",
+   "fuente": "opentdb",
+   "licencia": "CC BY-SA 4.0",
    "cat": "naturaleza",
    "dif": "dificil",
    "q": "¿Cuántas especies vivas de hiena se conocen?",
@@ -1822,6 +1852,8 @@
   },
   {
    "id": "ot-nat03",
+   "fuente": "opentdb",
+   "licencia": "CC BY-SA 4.0",
    "cat": "naturaleza",
    "dif": "dificil",
    "q": "¿Cuál de estos animales NO es un lagarto?",
@@ -1834,6 +1866,8 @@
   },
   {
    "id": "ot-nat04",
+   "fuente": "opentdb",
+   "licencia": "CC BY-SA 4.0",
    "cat": "naturaleza",
    "dif": "dificil",
    "q": "¿Qué es una carabela portuguesa?",
@@ -1846,6 +1880,8 @@
   },
   {
    "id": "ot-nat05",
+   "fuente": "opentdb",
+   "licencia": "CC BY-SA 4.0",
    "cat": "naturaleza",
    "dif": "dificil",
    "q": "La caquexia crónica (enfermedad del ciervo zombi) solo afecta a los…",
@@ -1858,6 +1894,8 @@
   },
   {
    "id": "ot-nat06",
+   "fuente": "opentdb",
+   "licencia": "CC BY-SA 4.0",
    "cat": "naturaleza",
    "dif": "dificil",
    "q": "¿Cuál es el nombre científico del lobo gris?",
@@ -1870,6 +1908,8 @@
   },
   {
    "id": "ot-art01",
+   "fuente": "opentdb",
+   "licencia": "CC BY-SA 4.0",
    "cat": "arte",
    "dif": "dificil",
    "q": "¿En qué año pintó Dalí «La persistencia de la memoria»?",
@@ -1882,6 +1922,8 @@
   },
   {
    "id": "ot-art02",
+   "fuente": "opentdb",
+   "licencia": "CC BY-SA 4.0",
    "cat": "arte",
    "dif": "dificil",
    "q": "¿A qué movimiento perteneció Piet Mondrian?",
@@ -1894,6 +1936,8 @@
   },
   {
    "id": "ot-art03",
+   "fuente": "opentdb",
+   "licencia": "CC BY-SA 4.0",
    "cat": "arte",
    "dif": "dificil",
    "q": "¿A qué lugar se mudó Paul Gauguin en 1895?",
@@ -1906,6 +1950,8 @@
   },
   {
    "id": "ot-art04",
+   "fuente": "opentdb",
+   "licencia": "CC BY-SA 4.0",
    "cat": "arte",
    "dif": "dificil",
    "q": "¿Cuántas versiones al óleo y pastel de «El grito» se cree que pintó Edvard Munch?",
@@ -1918,6 +1964,8 @@
   },
   {
    "id": "ot-art05",
+   "fuente": "opentdb",
+   "licencia": "CC BY-SA 4.0",
    "cat": "arte",
    "dif": "dificil",
    "q": "¿Quién pintó «Gótico americano»?",
@@ -1930,6 +1978,8 @@
   },
   {
    "id": "ot-art06",
+   "fuente": "opentdb",
+   "licencia": "CC BY-SA 4.0",
    "cat": "arte",
    "dif": "dificil",
    "q": "¿Quién era la hija del rey Minos en la mitología griega?",
@@ -1942,6 +1992,8 @@
   },
   {
    "id": "ot-art07",
+   "fuente": "opentdb",
+   "licencia": "CC BY-SA 4.0",
    "cat": "arte",
    "dif": "dificil",
    "q": "¿Qué dios nórdico tiene un caballo llamado Sleipnir?",
@@ -1954,6 +2006,8 @@
   },
   {
    "id": "ot-art08",
+   "fuente": "opentdb",
+   "licencia": "CC BY-SA 4.0",
    "cat": "arte",
    "dif": "dificil",
    "q": "¿De qué isla era protector Talos, el gigante de bronce?",
@@ -1966,6 +2020,8 @@
   },
   {
    "id": "ot-art09",
+   "fuente": "opentdb",
+   "licencia": "CC BY-SA 4.0",
    "cat": "arte",
    "dif": "dificil",
    "q": "¿A quién venció Hipómenes en una carrera a pie?",
@@ -1978,6 +2034,8 @@
   },
   {
    "id": "ot-art10",
+   "fuente": "opentdb",
+   "licencia": "CC BY-SA 4.0",
    "cat": "arte",
    "dif": "dificil",
    "q": "¿De qué mitología proviene la criatura Nidhogg?",
@@ -1990,6 +2048,8 @@
   },
   {
    "id": "ot-dep01",
+   "fuente": "opentdb",
+   "licencia": "CC BY-SA 4.0",
    "cat": "deporte",
    "dif": "dificil",
    "q": "¿Cuál es el nombre completo de Cristiano Ronaldo?",
@@ -2002,6 +2062,8 @@
   },
   {
    "id": "ot-dep02",
+   "fuente": "opentdb",
+   "licencia": "CC BY-SA 4.0",
    "cat": "deporte",
    "dif": "dificil",
    "q": "¿Cuál es «el deporte de los reyes»?",
@@ -2014,6 +2076,8 @@
   },
   {
    "id": "ot-dep03",
+   "fuente": "opentdb",
+   "licencia": "CC BY-SA 4.0",
    "cat": "deporte",
    "dif": "dificil",
    "q": "¿Qué futbolista le dio una patada de kung-fu a un aficionado del Crystal Palace en 1995?",
@@ -2026,6 +2090,8 @@
   },
   {
    "id": "ot-dep04",
+   "fuente": "opentdb",
+   "licencia": "CC BY-SA 4.0",
    "cat": "deporte",
    "dif": "dificil",
    "q": "¿En qué carrera se decidió el Mundial de F1 de 2018?",
@@ -2038,6 +2104,8 @@
   },
   {
    "id": "ot-oci01",
+   "fuente": "opentdb",
+   "licencia": "CC BY-SA 4.0",
    "cat": "ocio",
    "dif": "dificil",
    "q": "¿Cómo se llama la especie del Depredador en la película «Depredador» (1987)?",
@@ -2050,6 +2118,8 @@
   },
   {
    "id": "ot-oci02",
+   "fuente": "opentdb",
+   "licencia": "CC BY-SA 4.0",
    "cat": "ocio",
    "dif": "dificil",
    "q": "¿Cuál era el segundo nombre de Humphrey Bogart?",
@@ -2062,6 +2132,8 @@
   },
   {
    "id": "ot-oci03",
+   "fuente": "opentdb",
+   "licencia": "CC BY-SA 4.0",
    "cat": "ocio",
    "dif": "dificil",
    "q": "¿Cómo se llama el asesino de la primera película de «Hellboy»?",
@@ -2074,6 +2146,8 @@
   },
   {
    "id": "ot-oci04",
+   "fuente": "opentdb",
+   "licencia": "CC BY-SA 4.0",
    "cat": "ocio",
    "dif": "dificil",
    "q": "¿Cuál era la clave del wifi que le dieron a Stephen Strange en «Doctor Strange»?",
@@ -2086,6 +2160,8 @@
   },
   {
    "id": "ot-oci05",
+   "fuente": "opentdb",
+   "licencia": "CC BY-SA 4.0",
    "cat": "ocio",
    "dif": "dificil",
    "q": "¿De qué banda de metal alternativo es cantante Chino Moreno?",
@@ -2098,6 +2174,8 @@
   },
   {
    "id": "ot-oci06",
+   "fuente": "opentdb",
+   "licencia": "CC BY-SA 4.0",
    "cat": "ocio",
    "dif": "dificil",
    "q": "¿Cómo se llamaba la banda de rock de Nobuo Uematsu que tocaba temas de Final Fantasy?",
@@ -2110,6 +2188,8 @@
   },
   {
    "id": "ot-oci07",
+   "fuente": "opentdb",
+   "licencia": "CC BY-SA 4.0",
    "cat": "ocio",
    "dif": "dificil",
    "q": "¿Cuál es el nombre artístico de la cantante neozelandesa Pip Brown?",
@@ -2122,6 +2202,8 @@
   },
   {
    "id": "ot-oci08",
+   "fuente": "opentdb",
+   "licencia": "CC BY-SA 4.0",
    "cat": "ocio",
    "dif": "dificil",
    "q": "¿Qué canción de Elton John empieza con «When are you gonna come down»?",
@@ -2134,6 +2216,8 @@
   },
   {
    "id": "ot-oci09",
+   "fuente": "opentdb",
+   "licencia": "CC BY-SA 4.0",
    "cat": "ocio",
    "dif": "dificil",
    "q": "¿Qué canción de los Bee Gees (1978) versionaron Steps veinte años después?",
@@ -2146,6 +2230,8 @@
   },
   {
    "id": "ot-oci10",
+   "fuente": "opentdb",
+   "licencia": "CC BY-SA 4.0",
    "cat": "ocio",
    "dif": "dificil",
    "q": "¿Qué boxeador golpeaba el gong en la introducción de las películas de J. Arthur Rank?",
@@ -2158,6 +2244,8 @@
   },
   {
    "id": "ot-cur01",
+   "fuente": "opentdb",
+   "licencia": "CC BY-SA 4.0",
    "cat": "curiosidades",
    "dif": "dificil",
    "q": "¿Qué significan las siglas TCAS en los sistemas de vuelo?",
@@ -2170,6 +2258,8 @@
   },
   {
    "id": "ot-cur02",
+   "fuente": "opentdb",
+   "licencia": "CC BY-SA 4.0",
    "cat": "curiosidades",
    "dif": "dificil",
    "q": "¿Qué presidente de EE. UU. inauguró oficialmente el canal de Panamá?",
@@ -2182,6 +2272,8 @@
   },
   {
    "id": "ot-cur03",
+   "fuente": "opentdb",
+   "licencia": "CC BY-SA 4.0",
    "cat": "curiosidades",
    "dif": "dificil",
    "q": "¿Qué es la «nefelococigia»?",
@@ -2194,6 +2286,8 @@
   },
   {
    "id": "ot-cur04",
+   "fuente": "opentdb",
+   "licencia": "CC BY-SA 4.0",
    "cat": "curiosidades",
    "dif": "dificil",
    "q": "¿Qué monarca británico nunca apareció en una moneda de libra esterlina en circulación?",
@@ -2206,6 +2300,8 @@
   },
   {
    "id": "ot-cur05",
+   "fuente": "opentdb",
+   "licencia": "CC BY-SA 4.0",
    "cat": "curiosidades",
    "dif": "dificil",
    "q": "¿Quién fundó la Khan Academy?",

@@ -129,6 +129,11 @@ class _TriviaQuizScreenState extends ConsumerState<TriviaQuizScreen> {
                           Text(_q.text,
                               textAlign: TextAlign.center,
                               style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w800, height: 1.25)),
+                          if (_q.id.startsWith('ot-')) ...[
+                            const SizedBox(height: 10),
+                            const Text('Fuente: Open Trivia DB (CC BY-SA 4.0)',
+                                style: TextStyle(fontSize: 11, color: Colors.white54)),
+                          ],
                         ],
                       ),
                     ),

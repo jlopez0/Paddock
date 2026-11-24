@@ -37,8 +37,8 @@ class CreditsScreen extends StatelessWidget {
           Text('Trivia', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700)),
           SizedBox(height: 8),
           Text(
-            'Las preguntas marcadas como difíciles proceden de Open Trivia DB (opentdb.com), '
-            'licencia Creative Commons Atribución-CompartirIgual 4.0, traducidas y adaptadas al español. '
+            'Algunas preguntas proceden de Open Trivia DB (opentdb.com), con licencia CC BY-SA 4.0, '
+            'traducidas y adaptadas al español. '
             'El resto de preguntas son originales.',
             style: muted,
           ),

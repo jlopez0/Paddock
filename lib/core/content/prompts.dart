@@ -6,12 +6,22 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 enum PromptLevel {
   suave('Suave', '😇'),
   picante('Picante', '🌶️'),
-  hot('Hot', '🔥');
+  atrevido('Atrevido', '🔥');
 
   const PromptLevel(this.label, this.emoji);
 
   final String label;
   final String emoji;
+
+  /// Convierte un nombre guardado o recibido por ruta. Acepta el antiguo `hot`
+  /// como `atrevido` y devuelve `null` si no se reconoce (nunca lanza).
+  static PromptLevel? tryParse(String? name) {
+    if (name == 'hot') return PromptLevel.atrevido;
+    for (final l in PromptLevel.values) {
+      if (l.name == name) return l;
+    }
+    return null;
+  }
 }
 
 /// Una carta de contenido. Los campos de texto dependen del juego
@@ -25,20 +35,28 @@ class Prompt {
 
   String operator [](String key) => fields[key] ?? '';
 
-  factory Prompt.fromJson(Map<String, dynamic> j) => Prompt(
-        id: j['id'] as String,
-        level: PromptLevel.values.byName(j['nivel'] as String),
-        fields: {
-          for (final e in j.entries)
-            if (e.key != 'id' && e.key != 'nivel') e.key: e.value as String,
-        },
-      );
+  /// Devuelve `null` si el nivel es desconocido (la carta se descarta).
+  static Prompt? tryFromJson(Map<String, dynamic> j) {
+    final level = PromptLevel.tryParse(j['nivel'] as String?);
+    if (level == null) return null;
+    return Prompt(
+      id: j['id'] as String,
+      level: level,
+      fields: {
+        for (final e in j.entries)
+          if (e.key != 'id' && e.key != 'nivel') e.key: e.value as String,
+      },
+    );
+  }
 }
 
 /// Parsea un fichero de contenido `{ "version": 1, "items": [...] }`.
 List<Prompt> parsePrompts(String json) {
   final data = jsonDecode(json) as Map<String, dynamic>;
-  return (data['items'] as List).cast<Map<String, dynamic>>().map(Prompt.fromJson).toList();
+  return [
+    for (final j in (data['items'] as List).cast<Map<String, dynamic>>())
+      ?Prompt.tryFromJson(j),
+  ];
 }
 
 /// Carga (y cachea) un fichero de contenido de `assets/content/`.

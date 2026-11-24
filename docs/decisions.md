@@ -101,3 +101,9 @@ Pendiente de que lo valide Javier: el valor de 10 fichas.
 - Un All-in ganado suma 20 fichas a `chipsWon` aunque se reparta a menos de dos personas.
 
 **Motivo**: migrar o recalcular no compensa para estadísticas locales de bajo valor; no se cambia la lógica.
+
+- 2026-11-24 · Sin i18n con ARB en la v1 · La v1 sale solo en español; los textos siguen en el código. Se aborda en v1.1 si se añaden idiomas.
+
+- 2026-11-24 · Copia de seguridad de Android desactivada · `allowBackup="false"` y reglas `dataExtractionRules`/`fullBackupContent` que excluyen todo. Motivo: la política dice que los datos nunca salen del dispositivo y la copia automática de Google los subiría a la nube.
+- 2026-11-24 · Pistas del Abecedario reformuladas · "Empieza por X"/"Contiene la X" pasan a "Arranca con la X"/"Lleva una X dentro". Motivo: riesgo de propiedad intelectual con "El Rosco" (mitigación parcial; la mecánica sigue siendo similar). Si se quiere conservar la mecánica, recomendable consulta legal.
+- 2026-11-24 · iOS (enero): pendiente decidir si se retira el modo Sorbos y el texto "Nadie está obligado a beber" · Motivo: posible choque con Apple 4.3(b)/1.4.3 (contenido relacionado con alcohol).

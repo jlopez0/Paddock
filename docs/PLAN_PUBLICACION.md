@@ -92,4 +92,19 @@ Commits pequeños; pasa `flutter analyze` y `flutter test` antes de cada commit.
 Al terminar, marca la fase como hecha en el plan y apunta las decisiones tomadas.
 ```
 
+## Estado de las fases (24/11/2026)
+- ✅ Fase 0 (salvo tareas manuales de Javier: correo y Pages, clave de subida, pruebas en emulador).
+- ✅ Fase 1: fichas, modos Puntos/Retos/Sorbos (+18), `ConsequenceBanner`, bienvenida +18, Carrera con All-in (10 fichas), guardia anti-alcohol.
+- ✅ Fase 2: niveles Suave/Picante/Atrevido, contenido reescrito, test de lista negra, atribución de Open Trivia DB.
+- ✅ Fase 3: Copa Paddock, El Infiltrado, ¿Quién es más probable?, ¿Qué preferirías? (120). Falta 3.11 (Trivia y Geografía → Copa), opcional, para v1.1.
+- ✅ Fase 4: Abecedario (cuadrícula A–Z). No se hizo el temporizador por equipos (decisión de diseño pendiente).
+- ✅ Fase 5: "¿Cómo se juega?" en los 8 juegos, accesibilidad (tooltips, letra al doble sin desbordes, estados vacíos y de error), orientación, copia de seguridad de Android desactivada, licencias en Créditos. i18n con ARB aplazado a la v1.1 (la v1 sale solo en español).
+- ✅ Fase 6, textos: ficha, notas para el revisor de Apple, cuestionarios y lista de pasos de Google Play en `docs/store/`; informe de cumplimiento en `docs/COMPLIANCE.md`. ⏳ Capturas de pantalla (necesitan emulador) y revisar los ❓ de los cuestionarios con los formularios reales.
+
 ## Bitácora del jefe
+- 2026-11-24 · Fase 0 · jefe · commit del estado y 4 tareas manuales en Todoist.
+- 2026-11-24 · Fase 4 · implementador, redactor-es, revisor · Abecedario hecho y revisado (LISTO) → commits 841ddbf y 28e1f47.
+- 2026-11-24 · Fases 1–3 · arquitecto (desglose en docs/FASES_1_3.md), implementador, juego-flutter, contenido-fiesta, mecanico, redactor-es · 2 revisiones; la 1.ª encontró 1 bloqueante (retos atrevidos sin +18), corregido en la 1.ª vuelta; la 2.ª dio LISTO · 216 tests en verde y `flutter analyze` limpio → commits 6a35abe, b1839d1, 7317722 y a2e6b94.
+- 2026-11-24 · Fases 5 y 6 · redactor-es, release-movil, cumplimiento, implementador, mecanico, revisor · revisión LISTO (230 tests, `flutter analyze` limpio, APK de depuración compila). AAB release compila pero va firmado con clave de depuración: falta la clave de subida (tarea de Javier). El cuestionario IARC corregido: alcohol "Sí" por el modo Sorbos.
+- Decisiones del dueño: unidad "fichas"; All-in = 10 fichas; el All-in ganador reparte 2 All-in a 2 personas distintas.
+- Pendiente de confirmar: que el ganador de un All-in sume +10 por cada persona elegida (supuesto D11).

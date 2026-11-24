@@ -22,24 +22,70 @@ enum QuestionKind {
   region,
 }
 
-const _worldKinds = [QuestionKind.flag, QuestionKind.capital, QuestionKind.capitalOwner, QuestionKind.silhouette];
+const _worldKinds = [
+  QuestionKind.flag,
+  QuestionKind.capital,
+  QuestionKind.capitalOwner,
+  QuestionKind.silhouette,
+];
 
 /// Lo que elige el jugador en la pantalla de inicio.
 enum GeoCategory {
-  flags('Banderas', '🏳️', 'Bandera → país', [QuestionKind.flag]),
-  capitals('Capitales', '🏛️', 'País → capital', [QuestionKind.capital]),
-  owners('Capital → país', '📍', '¿De qué país es?', [QuestionKind.capitalOwner]),
-  silhouettes('Siluetas', '🗺️', 'Forma → país', [QuestionKind.silhouette]),
-  mix('Mezcla', '🎲', 'Un poco de todo', _worldKinds),
-  usStates('EE. UU.', '🇺🇸', '50 estados', [QuestionKind.region], mapId: 'eeuu', flagIso: 'us'),
-  mxStates('México', '🇲🇽', '32 estados', [QuestionKind.region], mapId: 'mexico', flagIso: 'mx'),
-  esProvinces('España', '🇪🇸', '50 provincias', [QuestionKind.region], mapId: 'espana', flagIso: 'es'),
-  jpPrefectures('Japón', '🇯🇵', '47 prefecturas', [QuestionKind.region], mapId: 'japon', flagIso: 'jp');
+  flags('Banderas', 'banderas', 'Bandera → país', [QuestionKind.flag]),
+  capitals('Capitales', 'capitales', 'País → capital', [QuestionKind.capital]),
+  owners('Capital → país', 'capital-a-pais', '¿De qué país es?', [
+    QuestionKind.capitalOwner,
+  ]),
+  silhouettes('Siluetas', 'siluetas', 'Forma → país', [
+    QuestionKind.silhouette,
+  ]),
+  mix('Mezcla', 'mezcla', 'Un poco de todo', _worldKinds),
+  usStates(
+    'EE. UU.',
+    null,
+    '50 estados',
+    [QuestionKind.region],
+    mapId: 'eeuu',
+    flagIso: 'us',
+  ),
+  mxStates(
+    'México',
+    null,
+    '32 estados',
+    [QuestionKind.region],
+    mapId: 'mexico',
+    flagIso: 'mx',
+  ),
+  esProvinces(
+    'España',
+    null,
+    '50 provincias',
+    [QuestionKind.region],
+    mapId: 'espana',
+    flagIso: 'es',
+  ),
+  jpPrefectures(
+    'Japón',
+    null,
+    '47 prefecturas',
+    [QuestionKind.region],
+    mapId: 'japon',
+    flagIso: 'jp',
+  );
 
-  const GeoCategory(this.label, this.emoji, this.description, this.kinds, {this.mapId, this.flagIso});
+  const GeoCategory(
+    this.label,
+    this.iconId,
+    this.description,
+    this.kinds, {
+    this.mapId,
+    this.flagIso,
+  });
 
   final String label;
-  final String emoji;
+
+  /// Id del `CategoryIcon`; `null` en las categorías de mapa, que usan la bandera real (`flagIso`).
+  final String? iconId;
   final String description;
   final List<QuestionKind> kinds;
 
@@ -101,7 +147,8 @@ class Question {
 /// Comprueba respuestas escritas: tolera tildes, mayúsculas, alias y pequeñas erratas,
 /// pero nunca da por buena una respuesta que sea exactamente otra de las posibles.
 class AnswerChecker {
-  AnswerChecker(Iterable<String> knownAnswers) : _known = knownAnswers.map(normalizeText).toSet();
+  AnswerChecker(Iterable<String> knownAnswers)
+    : _known = knownAnswers.map(normalizeText).toSet();
 
   final Set<String> _known;
 
@@ -128,10 +175,13 @@ abstract class GeoQuiz {
 /// Banderas, capitales y siluetas de los países del mundo.
 class QuizEngine implements GeoQuiz {
   QuizEngine(this.countries, {Random? random})
-      : _random = random ?? Random(),
-        _countryChecker = AnswerChecker(countries.expand((c) => c.acceptedNames)),
-        _capitalChecker =
-            AnswerChecker(countries.where((c) => c.hasUsableCapital).expand((c) => c.acceptedCapitals));
+    : _random = random ?? Random(),
+      _countryChecker = AnswerChecker(countries.expand((c) => c.acceptedNames)),
+      _capitalChecker = AnswerChecker(
+        countries
+            .where((c) => c.hasUsableCapital)
+            .expand((c) => c.acceptedCapitals),
+      );
 
   final List<Country> countries;
   final Random _random;
@@ -139,24 +189,31 @@ class QuizEngine implements GeoQuiz {
   final AnswerChecker _capitalChecker;
 
   bool _eligible(Country c, QuestionKind k) => switch (k) {
-        QuestionKind.flag => true,
-        QuestionKind.capital || QuestionKind.capitalOwner => c.hasUsableCapital,
-        QuestionKind.silhouette => c.hasSilhouette,
-        QuestionKind.region => false,
-      };
+    QuestionKind.flag => true,
+    QuestionKind.capital || QuestionKind.capitalOwner => c.hasUsableCapital,
+    QuestionKind.silhouette => c.hasSilhouette,
+    QuestionKind.region => false,
+  };
 
   @override
   int poolSize(QuizConfig config) => countries
-      .where((c) =>
-          config.regions.contains(c.continent) && config.category.kinds.any((k) => _eligible(c, k)))
+      .where(
+        (c) =>
+            config.regions.contains(c.continent) &&
+            config.category.kinds.any((k) => _eligible(c, k)),
+      )
       .length;
 
   @override
   List<Question> generate(QuizConfig config) {
-    final pool = countries.where((c) => config.regions.contains(c.continent)).toList()..shuffle(_random);
+    final pool =
+        countries.where((c) => config.regions.contains(c.continent)).toList()
+          ..shuffle(_random);
     final questions = <Question>[];
     for (final country in pool) {
-      final kinds = config.category.kinds.where((k) => _eligible(country, k)).toList();
+      final kinds = config.category.kinds
+          .where((k) => _eligible(country, k))
+          .toList();
       if (kinds.isEmpty) continue;
       final kind = kinds[_random.nextInt(kinds.length)];
       questions.add(_build(country, kind, config.withOptions));
@@ -177,24 +234,33 @@ class QuizEngine implements GeoQuiz {
 
   List<String> _options(Country correct, bool capitals) {
     String text(Country c) => capitals ? c.capital : c.name;
-    final others = countries.where((c) => c.iso != correct.iso && (!capitals || c.hasUsableCapital)).toList()
-      ..shuffle(_random);
+    final others =
+        countries
+            .where(
+              (c) => c.iso != correct.iso && (!capitals || c.hasUsableCapital),
+            )
+            .toList()
+          ..shuffle(_random);
     // Primero los del mismo continente, para que no sea evidente.
-    others.sort((a, b) =>
-        (a.continent == correct.continent ? 0 : 1).compareTo(b.continent == correct.continent ? 0 : 1));
+    others.sort(
+      (a, b) => (a.continent == correct.continent ? 0 : 1).compareTo(
+        b.continent == correct.continent ? 0 : 1,
+      ),
+    );
     return pickOptions(text(correct), others.map(text), _random);
   }
 
   @override
   bool isCorrect(Question q, String input) =>
-      (q.kind == QuestionKind.capital ? _capitalChecker : _countryChecker).check(q.accepted, input);
+      (q.kind == QuestionKind.capital ? _capitalChecker : _countryChecker)
+          .check(q.accepted, input);
 }
 
 /// Regiones de un mapa (estados, provincias…).
 class MapQuizEngine implements GeoQuiz {
   MapQuizEngine(this.map, {Random? random})
-      : _random = random ?? Random(),
-        _checker = AnswerChecker(map.regions.expand((r) => r.acceptedNames));
+    : _random = random ?? Random(),
+      _checker = AnswerChecker(map.regions.expand((r) => r.acceptedNames));
 
   final GeoMap map;
   final Random _random;
@@ -227,9 +293,14 @@ class MapQuizEngine implements GeoQuiz {
       return dx * dx + dy * dy;
     }
 
-    final near = map.regions.where((r) => r.id != correct.id).toList()..sort((a, b) => dist(a).compareTo(dist(b)));
+    final near = map.regions.where((r) => r.id != correct.id).toList()
+      ..sort((a, b) => dist(a).compareTo(dist(b)));
     final candidates = near.take(8).toList()..shuffle(_random);
-    return pickOptions(correct.name, [...candidates, ...near.skip(8)].map((r) => r.name), _random);
+    return pickOptions(
+      correct.name,
+      [...candidates, ...near.skip(8)].map((r) => r.name),
+      _random,
+    );
   }
 
   @override
@@ -237,7 +308,11 @@ class MapQuizEngine implements GeoQuiz {
 }
 
 /// La respuesta + las 3 primeras alternativas distintas, barajadas.
-List<String> pickOptions(String answer, Iterable<String> candidates, Random random) {
+List<String> pickOptions(
+  String answer,
+  Iterable<String> candidates,
+  Random random,
+) {
   final used = {normalizeText(answer)};
   final options = [answer];
   for (final c in candidates) {

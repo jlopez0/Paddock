@@ -15,7 +15,7 @@ class HorseRaceModule extends GameModule {
   @override
   String get title => 'Carrera de caballos';
   @override
-  String get subtitle => 'Apuesta por un palo y que gane el mejor caballo';
+  String get subtitle => 'Elige palo, suelta fichas y que corra tu caballo';
   @override
   Color get color => const Color(0xFFE8B84A);
 
@@ -24,8 +24,8 @@ class HorseRaceModule extends GameModule {
 
   @override
   List<RouteBase> get subRoutes => [
-        GoRoute(path: 'race', builder: (_, _) => const RaceScreen()),
-        GoRoute(path: 'result', builder: (_, _) => const RaceResultScreen()),
-        GoRoute(path: 'stats', builder: (_, _) => const RaceStatsScreen()),
-      ];
+    GoRoute(path: 'race', builder: (_, _) => const RaceScreen()),
+    GoRoute(path: 'result', builder: (_, _) => const RaceResultScreen()),
+    GoRoute(path: 'stats', builder: (_, _) => const RaceStatsScreen()),
+  ];
 }

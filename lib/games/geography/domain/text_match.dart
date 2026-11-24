@@ -1,10 +1,29 @@
 const _fold = {
-  'á': 'a', 'à': 'a', 'ä': 'a', 'â': 'a', 'ã': 'a', 'å': 'a',
-  'é': 'e', 'è': 'e', 'ë': 'e', 'ê': 'e',
-  'í': 'i', 'ì': 'i', 'ï': 'i', 'î': 'i',
-  'ó': 'o', 'ò': 'o', 'ö': 'o', 'ô': 'o', 'õ': 'o',
-  'ú': 'u', 'ù': 'u', 'ü': 'u', 'û': 'u',
-  'ñ': 'n', 'ç': 'c',
+  'á': 'a',
+  'à': 'a',
+  'ä': 'a',
+  'â': 'a',
+  'ã': 'a',
+  'å': 'a',
+  'é': 'e',
+  'è': 'e',
+  'ë': 'e',
+  'ê': 'e',
+  'í': 'i',
+  'ì': 'i',
+  'ï': 'i',
+  'î': 'i',
+  'ó': 'o',
+  'ò': 'o',
+  'ö': 'o',
+  'ô': 'o',
+  'õ': 'o',
+  'ú': 'u',
+  'ù': 'u',
+  'ü': 'u',
+  'û': 'u',
+  'ñ': 'n',
+  'ç': 'c',
 };
 
 const _articles = {'el', 'la', 'los', 'las'};
@@ -34,7 +53,11 @@ int levenshtein(String a, String b) {
     final cur = List<int>.filled(b.length + 1, 0)..[0] = i;
     for (var j = 1; j <= b.length; j++) {
       final cost = a.codeUnitAt(i - 1) == b.codeUnitAt(j - 1) ? 0 : 1;
-      cur[j] = [prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + cost].reduce((x, y) => x < y ? x : y);
+      cur[j] = [
+        prev[j] + 1,
+        cur[j - 1] + 1,
+        prev[j - 1] + cost,
+      ].reduce((x, y) => x < y ? x : y);
     }
     prev = cur;
   }

@@ -18,11 +18,11 @@ const List<GameModule> gameModules = [
   PromptDeckModule(
     id: 'quien-es-mas-probable',
     title: '¿Quién es más probable?',
-    subtitle: 'Señala al más probable',
+    subtitle: 'Señalad sin piedad',
     color: Color(0xFF3FA796),
     contentAsset: 'assets/content/es/quien_es_mas_probable.json',
     style: PromptCardStyle.question,
-    rule: 'A la de tres, todos señalan. El más señalado pierde una ficha',
+    rule: 'A la de tres, todos señalan. El más señalado paga una ficha',
     payMode: PromptPayMode.single,
   ),
   PromptDeckModule(
@@ -32,7 +32,7 @@ const List<GameModule> gameModules = [
     color: Color(0xFFB57BEE),
     contentAsset: 'assets/content/es/que_preferirias.json',
     style: PromptCardStyle.choice,
-    rule: 'A la de tres, todos eligen. La minoría pierde una ficha',
+    rule: 'A la de tres, todos eligen. Pagan los de la minoría: una ficha',
     payMode: PromptPayMode.single,
   ),
   PromptDeckModule(
@@ -43,7 +43,7 @@ const List<GameModule> gameModules = [
     contentAsset: 'assets/content/es/yo_nunca.json',
     style: PromptCardStyle.statement,
     prefix: 'Yo nunca',
-    rule: 'Quien lo haya hecho, pierde una ficha',
+    rule: 'Quien lo haya hecho, paga una ficha',
     payMode: PromptPayMode.multi,
   ),
 ];

@@ -15,12 +15,18 @@ final routerProvider = Provider<GoRouter>((ref) {
   final refresh = ValueNotifier<bool>(ref.read(onboardingProvider));
   ref.listen<bool>(onboardingProvider, (_, seen) => refresh.value = seen);
   ref.onDispose(refresh.dispose);
-  return buildRouter(isWelcomeSeen: () => ref.read(onboardingProvider), refresh: refresh);
+  return buildRouter(
+    isWelcomeSeen: () => ref.read(onboardingProvider),
+    refresh: refresh,
+  );
 });
 
 /// Todas las rutas cuelgan de `/`, así `context.go()` siempre deja el menú debajo.
 /// La bienvenida +18 (`/welcome`) se fuerza hasta que se ha visto una vez.
-GoRouter buildRouter({required bool Function() isWelcomeSeen, Listenable? refresh}) {
+GoRouter buildRouter({
+  required bool Function() isWelcomeSeen,
+  Listenable? refresh,
+}) {
   return GoRouter(
     refreshListenable: refresh,
     redirect: (_, state) {
@@ -41,7 +47,12 @@ GoRouter buildRouter({required bool Function() isWelcomeSeen, Listenable? refres
           GoRoute(
             path: 'settings',
             builder: (_, _) => const SettingsScreen(),
-            routes: [GoRoute(path: 'credits', builder: (_, _) => const CreditsScreen())],
+            routes: [
+              GoRoute(
+                path: 'credits',
+                builder: (_, _) => const CreditsScreen(),
+              ),
+            ],
           ),
           for (final game in gameModules)
             GoRoute(

@@ -35,16 +35,66 @@ class InfiltradoWord {
 
 /// Palabras de reserva si no se puede leer `assets/content/es/infiltrado.json`.
 const List<InfiltradoWord> kFallbackWords = [
-  InfiltradoWord(id: 'inf_test_01', level: PromptLevel.suave, category: 'Comida', word: 'Tortilla'),
-  InfiltradoWord(id: 'inf_test_02', level: PromptLevel.suave, category: 'Comida', word: 'Paella'),
-  InfiltradoWord(id: 'inf_test_03', level: PromptLevel.suave, category: 'Lugares', word: 'Playa'),
-  InfiltradoWord(id: 'inf_test_04', level: PromptLevel.suave, category: 'Lugares', word: 'Biblioteca'),
-  InfiltradoWord(id: 'inf_test_05', level: PromptLevel.suave, category: 'Profesiones', word: 'Bombero'),
-  InfiltradoWord(id: 'inf_test_06', level: PromptLevel.suave, category: 'Profesiones', word: 'Fontanero'),
-  InfiltradoWord(id: 'inf_test_07', level: PromptLevel.suave, category: 'Objetos', word: 'Paraguas'),
-  InfiltradoWord(id: 'inf_test_08', level: PromptLevel.suave, category: 'Objetos', word: 'Linterna'),
-  InfiltradoWord(id: 'inf_test_09', level: PromptLevel.suave, category: 'Animales', word: 'Delfín'),
-  InfiltradoWord(id: 'inf_test_10', level: PromptLevel.suave, category: 'Animales', word: 'Jirafa'),
+  InfiltradoWord(
+    id: 'inf_test_01',
+    level: PromptLevel.suave,
+    category: 'Comida',
+    word: 'Tortilla',
+  ),
+  InfiltradoWord(
+    id: 'inf_test_02',
+    level: PromptLevel.suave,
+    category: 'Comida',
+    word: 'Paella',
+  ),
+  InfiltradoWord(
+    id: 'inf_test_03',
+    level: PromptLevel.suave,
+    category: 'Lugares',
+    word: 'Playa',
+  ),
+  InfiltradoWord(
+    id: 'inf_test_04',
+    level: PromptLevel.suave,
+    category: 'Lugares',
+    word: 'Biblioteca',
+  ),
+  InfiltradoWord(
+    id: 'inf_test_05',
+    level: PromptLevel.suave,
+    category: 'Profesiones',
+    word: 'Bombero',
+  ),
+  InfiltradoWord(
+    id: 'inf_test_06',
+    level: PromptLevel.suave,
+    category: 'Profesiones',
+    word: 'Fontanero',
+  ),
+  InfiltradoWord(
+    id: 'inf_test_07',
+    level: PromptLevel.suave,
+    category: 'Objetos',
+    word: 'Paraguas',
+  ),
+  InfiltradoWord(
+    id: 'inf_test_08',
+    level: PromptLevel.suave,
+    category: 'Objetos',
+    word: 'Linterna',
+  ),
+  InfiltradoWord(
+    id: 'inf_test_09',
+    level: PromptLevel.suave,
+    category: 'Animales',
+    word: 'Delfín',
+  ),
+  InfiltradoWord(
+    id: 'inf_test_10',
+    level: PromptLevel.suave,
+    category: 'Animales',
+    word: 'Jirafa',
+  ),
 ];
 
 /// Parsea `{ "version": 1, "items": [{id, nivel, categoria, palabra}] }`.
@@ -58,17 +108,33 @@ List<InfiltradoWord> parseInfiltradoWords(String json) {
     final category = raw['categoria'];
     final word = raw['palabra'];
     final level = PromptLevel.tryParse(raw['nivel'] as String?);
-    if (id is! String || category is! String || word is! String || level == null) continue;
+    if (id is! String ||
+        category is! String ||
+        word is! String ||
+        level == null) {
+      continue;
+    }
     if (category.trim().isEmpty || word.trim().isEmpty) continue;
-    out.add(InfiltradoWord(id: id, level: level, category: category.trim(), word: word.trim()));
+    out.add(
+      InfiltradoWord(
+        id: id,
+        level: level,
+        category: category.trim(),
+        word: word.trim(),
+      ),
+    );
   }
   return out;
 }
 
 /// Palabras del juego. Si el fichero no existe o está vacío usa [kFallbackWords].
-final infiltradoWordsProvider = FutureProvider<List<InfiltradoWord>>((ref) async {
+final infiltradoWordsProvider = FutureProvider<List<InfiltradoWord>>((
+  ref,
+) async {
   try {
-    final words = parseInfiltradoWords(await rootBundle.loadString(kInfiltradoAsset));
+    final words = parseInfiltradoWords(
+      await rootBundle.loadString(kInfiltradoAsset),
+    );
     if (words.isNotEmpty) return words;
   } catch (_) {
     // Sin fichero de contenido: se usa el mínimo de prueba.
@@ -112,7 +178,8 @@ class InfiltradoSetup {
 
   factory InfiltradoSetup.fromJson(Map<String, dynamic> j) {
     final levels = <PromptLevel>{
-      for (final n in (j['levels'] as List? ?? const [])) ?PromptLevel.tryParse(n as String?),
+      for (final n in (j['levels'] as List? ?? const []))
+        ?PromptLevel.tryParse(n as String?),
     };
     final debate = j['debate'] as int? ?? 0;
     return InfiltradoSetup(
@@ -125,7 +192,9 @@ class InfiltradoSetup {
 }
 
 final infiltradoSetupProvider =
-    NotifierProvider<InfiltradoSetupController, InfiltradoSetup>(InfiltradoSetupController.new);
+    NotifierProvider<InfiltradoSetupController, InfiltradoSetup>(
+      InfiltradoSetupController.new,
+    );
 
 class InfiltradoSetupController extends Notifier<InfiltradoSetup> {
   static const _key = 'infiltrado.setup.v1';
@@ -152,7 +221,9 @@ final infiltradoRandomProvider = Provider<Random>((ref) => Random());
 
 /// Ids de palabras ya usadas esta noche, para no repetir hasta agotarlas.
 final infiltradoUsedProvider =
-    NotifierProvider<InfiltradoUsedController, Set<String>>(InfiltradoUsedController.new);
+    NotifierProvider<InfiltradoUsedController, Set<String>>(
+      InfiltradoUsedController.new,
+    );
 
 class InfiltradoUsedController extends Notifier<Set<String>> {
   @override
@@ -194,20 +265,23 @@ class InfiltradoGame {
   /// `null` hasta que se resuelve (puede faltar la última oportunidad).
   final InfiltradoOutcome? outcome;
 
-  InfiltradoGame copyWith({VoteResult? lastVote, InfiltradoOutcome? outcome}) => InfiltradoGame(
-    roundId: roundId,
-    deal: deal,
-    round: round,
-    debateSeconds: debateSeconds,
-    lastVote: lastVote ?? this.lastVote,
-    outcome: outcome ?? this.outcome,
-  );
+  InfiltradoGame copyWith({VoteResult? lastVote, InfiltradoOutcome? outcome}) =>
+      InfiltradoGame(
+        roundId: roundId,
+        deal: deal,
+        round: round,
+        debateSeconds: debateSeconds,
+        lastVote: lastVote ?? this.lastVote,
+        outcome: outcome ?? this.outcome,
+      );
 }
 
 enum InfiltradoStart { ok, notEnoughPlayers, noWords }
 
 final infiltradoGameProvider =
-    NotifierProvider<InfiltradoGameController, InfiltradoGame?>(InfiltradoGameController.new);
+    NotifierProvider<InfiltradoGameController, InfiltradoGame?>(
+      InfiltradoGameController.new,
+    );
 
 class InfiltradoGameController extends Notifier<InfiltradoGame?> {
   int _counter = 0;
@@ -222,14 +296,19 @@ class InfiltradoGameController extends Notifier<InfiltradoGame?> {
     required InfiltradoSetup setup,
     required List<InfiltradoWord> words,
   }) {
-    if (players.length < InfiltradoEngine.minPlayers) return InfiltradoStart.notEnoughPlayers;
+    if (players.length < InfiltradoEngine.minPlayers) {
+      return InfiltradoStart.notEnoughPlayers;
+    }
     final used = ref.read(infiltradoUsedProvider);
     final pool = availableWords(words, setup.levels, used);
     if (pool.isEmpty) return InfiltradoStart.noWords;
 
     final random = ref.read(infiltradoRandomProvider);
     final word = pool[random.nextInt(pool.length)];
-    final impostors = setup.impostors.clamp(1, InfiltradoEngine.maxImpostors(players.length));
+    final impostors = setup.impostors.clamp(
+      1,
+      InfiltradoEngine.maxImpostors(players.length),
+    );
     final deal = InfiltradoEngine.deal(
       players: [for (final p in players) p.id],
       word: word.word,
@@ -260,7 +339,9 @@ class InfiltradoGameController extends Notifier<InfiltradoGame?> {
     if (g == null) return null;
     if (g.outcome != null) return g.outcome;
     final outcome = g.round.resolve(guess: guess);
-    ref.read(sessionProvider.notifier).award(g.roundId, kInfiltradoId, outcome.deltas);
+    ref
+        .read(sessionProvider.notifier)
+        .award(g.roundId, kInfiltradoId, outcome.deltas);
     state = g.copyWith(outcome: outcome);
     return outcome;
   }

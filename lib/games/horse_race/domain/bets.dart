@@ -25,13 +25,21 @@ class Bet {
 
   bool get isAllIn => chips == allIn;
 
-  Bet copyWith({Suit? suit, int? chips}) =>
-      Bet(playerId: playerId, suit: suit ?? this.suit, chips: chips ?? this.chips);
+  Bet copyWith({Suit? suit, int? chips}) => Bet(
+    playerId: playerId,
+    suit: suit ?? this.suit,
+    chips: chips ?? this.chips,
+  );
 
   /// Ajusta unas fichas guardadas al rango válido: 0 es All-in, el resto se recorta a 1–5.
-  static int normalizeChips(int raw) => raw == allIn ? allIn : raw.clamp(minChips, maxChips);
+  static int normalizeChips(int raw) =>
+      raw == allIn ? allIn : raw.clamp(minChips, maxChips);
 
-  Map<String, dynamic> toJson() => {'player': playerId, 'suit': suit.name, 'chips': chips};
+  Map<String, dynamic> toJson() => {
+    'player': playerId,
+    'suit': suit.name,
+    'chips': chips,
+  };
 
   /// Lee también el formato antiguo (clave `sips`, de 1 a 10 y 0 para el vaso entero).
   factory Bet.fromJson(Map<String, dynamic> j) {
@@ -45,7 +53,12 @@ class Bet {
 }
 
 class BetOutcome {
-  const BetOutcome({required this.bet, required this.won, required this.chips, this.allIns = 0});
+  const BetOutcome({
+    required this.bet,
+    required this.won,
+    required this.chips,
+    this.allIns = 0,
+  });
 
   final Bet bet;
   final bool won;
@@ -70,16 +83,20 @@ class BetOutcome {
 
 /// Quien acierta reparte lo apostado × [winMultiplier]; quien falla pierde lo apostado.
 /// Un All-in ganador reparte siempre [kAllInShares] All-in; uno perdedor paga 1.
-List<BetOutcome> settleBets(List<Bet> bets, Suit winner, {int winMultiplier = 1}) => [
-      for (final b in bets)
-        b.suit == winner
-            ? (b.isAllIn
-                ? BetOutcome(bet: b, won: true, chips: 0, allIns: kAllInShares)
-                : BetOutcome(bet: b, won: true, chips: b.chips * winMultiplier))
-            : (b.isAllIn
-                ? BetOutcome(bet: b, won: false, chips: 0, allIns: 1)
-                : BetOutcome(bet: b, won: false, chips: b.chips)),
-    ];
+List<BetOutcome> settleBets(
+  List<Bet> bets,
+  Suit winner, {
+  int winMultiplier = 1,
+}) => [
+  for (final b in bets)
+    b.suit == winner
+        ? (b.isAllIn
+              ? BetOutcome(bet: b, won: true, chips: 0, allIns: kAllInShares)
+              : BetOutcome(bet: b, won: true, chips: b.chips * winMultiplier))
+        : (b.isAllIn
+              ? BetOutcome(bet: b, won: false, chips: 0, allIns: 1)
+              : BetOutcome(bet: b, won: false, chips: b.chips)),
+];
 
 /// A cuántas personas puede repartir un All-in ganador si hay [others] jugadores más.
 int allInTargetCount(int others) => min(kAllInShares, max(0, others));
@@ -98,7 +115,10 @@ class RaceSettlement {
 /// Calcula las fichas de cada jugador. [allInTargets] es, para cada jugador con un All-in
 /// ganador, a quién reparte sus All-in (se ignoran repetidos, él mismo y lo que pase de
 /// [kAllInShares]). Un All-in ganador gana [kAllInChips] por cada persona elegida.
-RaceSettlement settleChips(List<BetOutcome> outcomes, Map<String, Set<String>> allInTargets) {
+RaceSettlement settleChips(
+  List<BetOutcome> outcomes,
+  Map<String, Set<String>> allInTargets,
+) {
   final deltas = <String, int>{};
   final losses = <String, int>{};
   void add(Map<String, int> m, String id, int v) => m[id] = (m[id] ?? 0) + v;

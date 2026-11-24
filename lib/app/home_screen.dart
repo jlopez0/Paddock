@@ -2,13 +2,18 @@ import 'package:material_ui/material_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../core/audio/app_sound.dart';
+import '../core/players/player.dart';
 import '../core/players/player_widgets.dart';
 import '../core/players/players_controller.dart';
 import '../core/session/session_controller.dart';
+import '../core/settings/app_feedback.dart';
 import '../games/game_module.dart';
 import '../games/registry.dart';
+import 'app_icons.dart';
 import 'app_info.dart';
 import 'cup_screen.dart';
+import 'mascot.dart';
 import 'theme.dart';
 
 class HomeScreen extends ConsumerWidget {
@@ -22,23 +27,48 @@ class HomeScreen extends ConsumerWidget {
         child: CustomScrollView(
           slivers: [
             SliverPadding(
-              padding: const EdgeInsets.fromLTRB(20, 24, 12, 8),
+              padding: const EdgeInsets.fromLTRB(20, 20, 12, 8),
               sliver: SliverToBoxAdapter(
                 child: Row(
                   children: [
-                    const Expanded(
+                    const Jockey(size: 64),
+                    const SizedBox(width: 12),
+                    Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(kAppName,
-                              style: TextStyle(fontSize: 34, fontWeight: FontWeight.w900, letterSpacing: -0.5)),
-                          Text('Juegos para la previa', style: TextStyle(color: AppColors.textMuted)),
+                          // La marca nunca desborda: se reduce con letra grande.
+                          Semantics(
+                            header: true,
+                            child: FittedBox(
+                              fit: BoxFit.scaleDown,
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                kAppName,
+                                style: TextStyle(
+                                  fontFamily: AppFonts.display,
+                                  fontSize: 34,
+                                  height: 1.1,
+                                  color: AppColors.gold,
+                                  letterSpacing: 0.5,
+                                ),
+                              ),
+                            ),
+                          ),
+                          const Text(
+                            'Se abre el paddock',
+                            style: TextStyle(
+                              color: AppColors.textMuted,
+                              fontWeight: FontWeight.w700,
+                              letterSpacing: 0.4,
+                            ),
+                          ),
                         ],
                       ),
                     ),
                     IconButton(
                       tooltip: 'Ajustes',
-                      icon: const Icon(Icons.settings_rounded),
+                      icon: AppIcon.settings.widget(),
                       onPressed: () => context.push('/settings'),
                     ),
                   ],
@@ -46,34 +76,11 @@ class HomeScreen extends ConsumerWidget {
               ),
             ),
             SliverPadding(
-              padding: const EdgeInsets.fromLTRB(20, 12, 20, 8),
+              padding: const EdgeInsets.fromLTRB(20, 4, 20, 8),
               sliver: SliverToBoxAdapter(
-                child: Card(
-                  child: InkWell(
-                    borderRadius: BorderRadius.circular(20),
-                    onTap: () => context.push('/players'),
-                    child: Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: Row(
-                        children: [
-                          const Icon(Icons.groups_rounded, color: AppColors.gold),
-                          const SizedBox(width: 12),
-                          Expanded(
-                            child: players.isEmpty
-                                ? const Text('Añade jugadores')
-                                : Text(playersLabel(players.length),
-                                    style: const TextStyle(fontWeight: FontWeight.w600)),
-                          ),
-                          for (final p in players.take(5))
-                            Padding(
-                              padding: const EdgeInsets.only(left: 4),
-                              child: PlayerAvatar(p, size: 28),
-                            ),
-                          const Icon(Icons.chevron_right_rounded, color: AppColors.textMuted),
-                        ],
-                      ),
-                    ),
-                  ),
+                child: _Entrance(
+                  index: 0,
+                  child: _StableCard(players: players),
                 ),
               ),
             ),
@@ -83,13 +90,112 @@ class HomeScreen extends ConsumerWidget {
             ),
             SliverPadding(
               padding: const EdgeInsets.fromLTRB(20, 12, 20, 32),
-              sliver: SliverList.separated(
-                itemCount: gameModules.length,
-                separatorBuilder: (_, _) => const SizedBox(height: 14),
-                itemBuilder: (context, i) => _GameTile(gameModules[i]),
+              sliver: SliverToBoxAdapter(
+                child: Column(
+                  children: [
+                    for (var i = 0; i < gameModules.length; i++) ...[
+                      if (i > 0) const SizedBox(height: 14),
+                      _Entrance(
+                        index: i + 1,
+                        child: _GameTile(gameModules[i], number: i + 1),
+                      ),
+                    ],
+                  ],
+                ),
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+/// Entrada escalonada: las tarjetas posteriores tardan un poco más en
+/// asentarse. Sin animación si el sistema las desactiva.
+class _Entrance extends StatelessWidget {
+  const _Entrance({required this.index, required this.child});
+
+  final int index;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    if (MediaQuery.disableAnimationsOf(context)) return child;
+    return TweenAnimationBuilder<double>(
+      tween: Tween(begin: 0, end: 1),
+      duration: Duration(milliseconds: 260 + 70 * index.clamp(0, 8)),
+      curve: Curves.easeOutCubic,
+      child: child,
+      builder: (context, t, child) => Opacity(
+        opacity: t,
+        child: Transform.translate(
+          offset: Offset(0, 18 * (1 - t)),
+          child: child,
+        ),
+      ),
+    );
+  }
+}
+
+/// Tarjeta de fieltro con filete de latón.
+ShapeBorder _brassShape([double radius = 20]) => RoundedRectangleBorder(
+  borderRadius: BorderRadius.circular(radius),
+  side: BorderSide(color: AppColors.brass.withValues(alpha: 0.75)),
+);
+
+/// La cuadra: el grupo de jugadores guardado.
+class _StableCard extends StatelessWidget {
+  const _StableCard({required this.players});
+
+  final List<Player> players;
+
+  @override
+  Widget build(BuildContext context) {
+    final empty = players.isEmpty;
+    return Material(
+      color: AppColors.surface,
+      shape: _brassShape(),
+      clipBehavior: Clip.antiAlias,
+      child: InkWell(
+        onTap: () {
+          AppFeedback.selection();
+          context.push('/players');
+        },
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(minHeight: 64),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            child: Row(
+              children: [
+                if (empty)
+                  const Jockey(size: 40)
+                else
+                  AppIcon.horse.widget(size: 30),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: empty
+                      ? const Text(
+                          'Forma la cuadra',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w700,
+                            fontSize: 16,
+                          ),
+                        )
+                      : Text(
+                          playersLabel(players.length),
+                          style: const TextStyle(fontWeight: FontWeight.w700),
+                        ),
+                ),
+                for (final p in players.take(5))
+                  Padding(
+                    padding: const EdgeInsets.only(left: 4),
+                    child: PlayerAvatar(p, size: 28),
+                  ),
+                AppIcon.chevronRight.widget(color: AppColors.textMuted),
+              ],
+            ),
+          ),
         ),
       ),
     );
@@ -107,44 +213,81 @@ class _CupSlot extends ConsumerWidget {
   }
 }
 
+/// Cartel de un juego: fieltro, filete de latón, franja y medallón con el
+/// color del juego, y el número de carrera a la derecha.
 class _GameTile extends StatelessWidget {
-  const _GameTile(this.game);
+  const _GameTile(this.game, {required this.number});
 
   final GameModule game;
+  final int number;
 
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Colors.transparent,
+      color: AppColors.surface,
+      shape: _brassShape(22),
+      clipBehavior: Clip.antiAlias,
       child: InkWell(
-        borderRadius: BorderRadius.circular(24),
-        onTap: () => context.push(game.path),
-        child: Ink(
-          padding: const EdgeInsets.all(20),
+        onTap: () {
+          AppFeedback.selection();
+          playSound(AppSound.tap);
+          context.push(game.path);
+        },
+        child: Container(
+          constraints: const BoxConstraints(minHeight: 88),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(24),
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [game.color.withValues(alpha: 0.35), game.color.withValues(alpha: 0.08)],
-            ),
-            border: Border.all(color: game.color.withValues(alpha: 0.5)),
+            border: Border(left: BorderSide(color: game.color, width: 6)),
           ),
+          padding: const EdgeInsets.fromLTRB(14, 14, 16, 14),
           child: Row(
             children: [
-              game.icon(44),
-              const SizedBox(width: 16),
+              Container(
+                width: 56,
+                height: 56,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: game.color.withValues(alpha: 0.16),
+                  border: Border.all(
+                    color: AppColors.brass.withValues(alpha: 0.8),
+                  ),
+                ),
+                child: ExcludeSemantics(child: game.icon(34)),
+              ),
+              const SizedBox(width: 14),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(game.title, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w800)),
+                    Text(
+                      game.title,
+                      style: const TextStyle(
+                        fontFamily: AppFonts.display,
+                        fontSize: 20,
+                        height: 1.15,
+                        color: AppColors.text,
+                      ),
+                    ),
                     const SizedBox(height: 4),
-                    Text(game.subtitle, style: const TextStyle(color: AppColors.textMuted)),
+                    Text(
+                      game.subtitle,
+                      style: const TextStyle(color: AppColors.textMuted),
+                    ),
                   ],
                 ),
               ),
-              const Icon(Icons.play_arrow_rounded, size: 32),
+              const SizedBox(width: 10),
+              ExcludeSemantics(
+                child: Text(
+                  '$number',
+                  textScaler: TextScaler.noScaling,
+                  style: TextStyle(
+                    fontFamily: AppFonts.display,
+                    fontSize: 24,
+                    color: AppColors.brass.withValues(alpha: 0.85),
+                  ),
+                ),
+              ),
             ],
           ),
         ),

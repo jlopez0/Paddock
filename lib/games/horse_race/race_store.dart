@@ -8,7 +8,12 @@ import 'domain/cards.dart';
 import 'domain/race_engine.dart';
 
 class RaceSettings {
-  const RaceSettings({this.length = 6, this.obstacles = true, this.doubleForWinners = false, this.music = true});
+  const RaceSettings({
+    this.length = 6,
+    this.obstacles = true,
+    this.doubleForWinners = false,
+    this.music = true,
+  });
 
   final int length;
   final bool obstacles;
@@ -22,26 +27,40 @@ class RaceSettings {
   RaceConfig get config => RaceConfig(length: length, obstacles: obstacles);
   int get winMultiplier => doubleForWinners ? 2 : 1;
 
-  RaceSettings copyWith({int? length, bool? obstacles, bool? doubleForWinners, bool? music}) => RaceSettings(
-        length: length ?? this.length,
-        obstacles: obstacles ?? this.obstacles,
-        doubleForWinners: doubleForWinners ?? this.doubleForWinners,
-        music: music ?? this.music,
-      );
+  RaceSettings copyWith({
+    int? length,
+    bool? obstacles,
+    bool? doubleForWinners,
+    bool? music,
+  }) => RaceSettings(
+    length: length ?? this.length,
+    obstacles: obstacles ?? this.obstacles,
+    doubleForWinners: doubleForWinners ?? this.doubleForWinners,
+    music: music ?? this.music,
+  );
 
-  Map<String, dynamic> toJson() =>
-      {'length': length, 'obstacles': obstacles, 'double': doubleForWinners, 'music': music};
+  Map<String, dynamic> toJson() => {
+    'length': length,
+    'obstacles': obstacles,
+    'double': doubleForWinners,
+    'music': music,
+  };
 
   factory RaceSettings.fromJson(Map<String, dynamic> j) => RaceSettings(
-        length: j['length'] as int? ?? 6,
-        obstacles: j['obstacles'] as bool? ?? true,
-        doubleForWinners: j['double'] as bool? ?? false,
-        music: j['music'] as bool? ?? true,
-      );
+    length: j['length'] as int? ?? 6,
+    obstacles: j['obstacles'] as bool? ?? true,
+    doubleForWinners: j['double'] as bool? ?? false,
+    music: j['music'] as bool? ?? true,
+  );
 }
 
 class PlayerRaceStats {
-  const PlayerRaceStats({this.races = 0, this.hits = 0, this.chipsLost = 0, this.chipsWon = 0});
+  const PlayerRaceStats({
+    this.races = 0,
+    this.hits = 0,
+    this.chipsLost = 0,
+    this.chipsWon = 0,
+  });
 
   final int races;
   final int hits;
@@ -51,23 +70,28 @@ class PlayerRaceStats {
   double get hitRate => races == 0 ? 0 : hits / races;
 
   PlayerRaceStats add(BetOutcome o) => PlayerRaceStats(
-        races: races + 1,
-        hits: hits + (o.won ? 1 : 0),
-        chipsLost: chipsLost + (o.won ? 0 : o.chipValue),
-        chipsWon: chipsWon + (o.won ? o.chipValue : 0),
-      );
+    races: races + 1,
+    hits: hits + (o.won ? 1 : 0),
+    chipsLost: chipsLost + (o.won ? 0 : o.chipValue),
+    chipsWon: chipsWon + (o.won ? o.chipValue : 0),
+  );
 
   // Limitación asumida (docs/decisions.md D12): las estadísticas antiguas (unidades previas
   // a las fichas, d/g) se leen ahora como fichas, y un All-in ganado cuenta 20 aunque se repartan menos.
   // Claves cortas ya guardadas en el dispositivo: no cambiar (d = perdidas, g = ganadas).
-  Map<String, dynamic> toJson() => {'r': races, 'h': hits, 'd': chipsLost, 'g': chipsWon};
+  Map<String, dynamic> toJson() => {
+    'r': races,
+    'h': hits,
+    'd': chipsLost,
+    'g': chipsWon,
+  };
 
   factory PlayerRaceStats.fromJson(Map<String, dynamic> j) => PlayerRaceStats(
-        races: j['r'] as int? ?? 0,
-        hits: j['h'] as int? ?? 0,
-        chipsLost: j['d'] as int? ?? 0,
-        chipsWon: j['g'] as int? ?? 0,
-      );
+    races: j['r'] as int? ?? 0,
+    hits: j['h'] as int? ?? 0,
+    chipsLost: j['d'] as int? ?? 0,
+    chipsWon: j['g'] as int? ?? 0,
+  );
 }
 
 class RaceStats {
@@ -90,7 +114,9 @@ class RaceSetup {
       RaceSetup(settings: settings ?? this.settings, bets: bets ?? this.bets);
 }
 
-final raceSetupProvider = NotifierProvider<RaceSetupController, RaceSetup>(RaceSetupController.new);
+final raceSetupProvider = NotifierProvider<RaceSetupController, RaceSetup>(
+  RaceSetupController.new,
+);
 
 class RaceSetupController extends Notifier<RaceSetup> {
   static const _key = 'race.setup.v1';
@@ -103,7 +129,10 @@ class RaceSetupController extends Notifier<RaceSetup> {
       final j = jsonDecode(raw) as Map<String, dynamic>;
       return RaceSetup(
         settings: RaceSettings.fromJson(j['settings'] as Map<String, dynamic>),
-        bets: (j['bets'] as List).cast<Map<String, dynamic>>().map(Bet.fromJson).toList(),
+        bets: (j['bets'] as List)
+            .cast<Map<String, dynamic>>()
+            .map(Bet.fromJson)
+            .toList(),
       );
     } catch (_) {
       return const RaceSetup();
@@ -112,11 +141,14 @@ class RaceSetupController extends Notifier<RaceSetup> {
 
   void setSettings(RaceSettings s) => _save(state.copyWith(settings: s));
 
-  void setBets(List<Bet> bets) => _save(state.copyWith(bets: List.unmodifiable(bets)));
+  void setBets(List<Bet> bets) =>
+      _save(state.copyWith(bets: List.unmodifiable(bets)));
 
   void _save(RaceSetup s) {
     state = s;
-    ref.read(sharedPreferencesProvider).setString(
+    ref
+        .read(sharedPreferencesProvider)
+        .setString(
           _key,
           jsonEncode({
             'settings': s.settings.toJson(),
@@ -126,7 +158,9 @@ class RaceSetupController extends Notifier<RaceSetup> {
   }
 }
 
-final raceStatsProvider = NotifierProvider<RaceStatsController, RaceStats>(RaceStatsController.new);
+final raceStatsProvider = NotifierProvider<RaceStatsController, RaceStats>(
+  RaceStatsController.new,
+);
 
 class RaceStatsController extends Notifier<RaceStats> {
   static const _key = 'race.stats.v1';
@@ -139,10 +173,12 @@ class RaceStatsController extends Notifier<RaceStats> {
       final j = jsonDecode(raw) as Map<String, dynamic>;
       return RaceStats(
         byPlayer: (j['players'] as Map<String, dynamic>).map(
-          (k, v) => MapEntry(k, PlayerRaceStats.fromJson(v as Map<String, dynamic>)),
+          (k, v) =>
+              MapEntry(k, PlayerRaceStats.fromJson(v as Map<String, dynamic>)),
         ),
-        winsBySuit: (j['suits'] as Map<String, dynamic>)
-            .map((k, v) => MapEntry(Suit.values.byName(k), v as int)),
+        winsBySuit: (j['suits'] as Map<String, dynamic>).map(
+          (k, v) => MapEntry(Suit.values.byName(k), v as int),
+        ),
       );
     } catch (_) {
       return const RaceStats();
@@ -152,7 +188,8 @@ class RaceStatsController extends Notifier<RaceStats> {
   void record(Suit winner, List<BetOutcome> outcomes) {
     final players = {...state.byPlayer};
     for (final o in outcomes) {
-      players[o.bet.playerId] = (players[o.bet.playerId] ?? const PlayerRaceStats()).add(o);
+      players[o.bet.playerId] =
+          (players[o.bet.playerId] ?? const PlayerRaceStats()).add(o);
     }
     final suits = {...state.winsBySuit};
     suits[winner] = (suits[winner] ?? 0) + 1;
@@ -163,7 +200,9 @@ class RaceStatsController extends Notifier<RaceStats> {
 
   void _save(RaceStats s) {
     state = s;
-    ref.read(sharedPreferencesProvider).setString(
+    ref
+        .read(sharedPreferencesProvider)
+        .setString(
           _key,
           jsonEncode({
             'players': s.byPlayer.map((k, v) => MapEntry(k, v.toJson())),

@@ -4,10 +4,12 @@ import 'package:material_ui/material_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../../app/app_icons.dart';
 import '../../../app/theme.dart';
 import '../domain/country.dart';
 import '../domain/flag_ratios.dart';
 import '../domain/geo_map.dart';
+import '../domain/quiz.dart';
 import '../geo_data.dart';
 
 const geoColor = Color(0xFF3CC9C0);
@@ -34,7 +36,13 @@ class FlagView extends StatelessWidget {
           height: flagWidth / ratio,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(radius),
-            boxShadow: const [BoxShadow(color: Color(0x99000000), blurRadius: 24, offset: Offset(0, 10))],
+            boxShadow: const [
+              BoxShadow(
+                color: Color(0x99000000),
+                blurRadius: 24,
+                offset: Offset(0, 10),
+              ),
+            ],
           ),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(radius),
@@ -57,7 +65,10 @@ class SilhouetteView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final shape = ref.watch(silhouettesProvider).value?[iso];
     if (shape == null) return const SizedBox.shrink();
-    return CustomPaint(painter: _SilhouettePainter(shape, color), size: Size.infinite);
+    return CustomPaint(
+      painter: _SilhouettePainter(shape, color),
+      size: Size.infinite,
+    );
   }
 }
 
@@ -75,7 +86,12 @@ class _SilhouettePainter extends CustomPainter {
     canvas.save();
     canvas.translate(dx, dy);
     canvas.scale(scale);
-    final box = Rect.fromLTWH(0, 0, shape.width.toDouble(), shape.height.toDouble());
+    final box = Rect.fromLTWH(
+      0,
+      0,
+      shape.width.toDouble(),
+      shape.height.toDouble(),
+    );
     // Resplandor suave y simétrico alrededor de la forma.
     canvas.drawPath(
       shape.path,
@@ -96,7 +112,8 @@ class _SilhouettePainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(_SilhouettePainter old) => old.shape != shape || old.color != color;
+  bool shouldRepaint(_SilhouettePainter old) =>
+      old.shape != shape || old.color != color;
 }
 
 final _regionPaths = Expando<Path>();
@@ -105,7 +122,12 @@ Path _regionPath(MapRegion r) => _regionPaths[r] ??= pathFromRings(r.rings);
 /// Mapa completo con una región resaltada. Las regiones diminutas llevan además
 /// un anillo alrededor para que se vean.
 class RegionMapView extends StatelessWidget {
-  const RegionMapView({super.key, required this.map, required this.highlightId, this.color = geoColor});
+  const RegionMapView({
+    super.key,
+    required this.map,
+    required this.highlightId,
+    this.color = geoColor,
+  });
 
   final GeoMap map;
   final String? highlightId;
@@ -141,7 +163,12 @@ class _MapPainter extends CustomPainter {
     for (final f in map.frames) {
       canvas.drawRRect(
         RRect.fromRectAndRadius(
-          Rect.fromLTWH(f[0].toDouble(), f[1].toDouble(), f[2].toDouble(), f[3].toDouble()),
+          Rect.fromLTWH(
+            f[0].toDouble(),
+            f[1].toDouble(),
+            f[2].toDouble(),
+            f[3].toDouble(),
+          ),
           Radius.circular(10 * px),
         ),
         frame,
@@ -177,9 +204,16 @@ class _MapPainter extends CustomPainter {
 
       final maxSide = max(map.width, map.height).toDouble();
       if (target.size < maxSide * 0.03) {
-        final c = Offset(target.center.$1.toDouble(), target.center.$2.toDouble());
+        final c = Offset(
+          target.center.$1.toDouble(),
+          target.center.$2.toDouble(),
+        );
         final radius = max(target.size * 0.9, maxSide * 0.03);
-        canvas.drawCircle(c, radius, Paint()..color = color.withValues(alpha: 0.15));
+        canvas.drawCircle(
+          c,
+          radius,
+          Paint()..color = color.withValues(alpha: 0.15),
+        );
         canvas.drawCircle(
           c,
           radius,
@@ -194,5 +228,52 @@ class _MapPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(_MapPainter old) => old.map != map || old.highlightId != highlightId || old.color != color;
+  bool shouldRepaint(_MapPainter old) =>
+      old.map != map || old.highlightId != highlightId || old.color != color;
+}
+
+/// Icono de una categoría de Geografía: la bandera real (con su proporción) en
+/// los mapas de un país y el `CategoryIcon` en el resto. Decorativo: el texto
+/// de la categoría va al lado.
+class GeoCategoryIcon extends StatelessWidget {
+  const GeoCategoryIcon(this.category, {super.key, this.size = 28});
+
+  final GeoCategory category;
+  final double size;
+
+  @override
+  Widget build(BuildContext context) {
+    final iso = category.flagIso;
+    final Widget icon;
+    if (iso != null) {
+      // Cabe en un marco size × (size·0.75) sin deformar la bandera.
+      final ratio = flagRatio(iso);
+      final boxH = size * 0.75;
+      final w = min(size, boxH * ratio);
+      icon = Center(
+        child: SizedBox(
+          width: w,
+          height: w / ratio,
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(3),
+              border: Border.all(color: AppColors.outline, width: 0.5),
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(3),
+              child: SvgPicture.asset(
+                'assets/geo/flags/$iso.svg',
+                fit: BoxFit.fill,
+              ),
+            ),
+          ),
+        ),
+      );
+    } else {
+      icon = CategoryIcon(category.iconId!, size: size);
+    }
+    return ExcludeSemantics(
+      child: SizedBox(width: size, height: size, child: icon),
+    );
+  }
 }

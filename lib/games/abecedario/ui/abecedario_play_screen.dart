@@ -2,11 +2,15 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:material_ui/material_ui.dart';
+import '../../../core/audio/app_sound.dart';
 import '../../../core/settings/app_feedback.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../app/app_icons.dart';
+import '../../../app/mascot.dart';
 import '../../../app/theme.dart';
+import '../../prompt_deck/bounce_in.dart';
 import '../abecedario_data.dart';
 
 enum _Phase { thinking, revealed }
@@ -71,6 +75,7 @@ class _AbecedarioPlayScreenState extends ConsumerState<AbecedarioPlayScreen> {
 
   void _reveal() {
     AppFeedback.medium();
+    playSound(AppSound.card);
     setState(() {
       _phase = _Phase.revealed;
       _elapsedMs = 0;
@@ -80,6 +85,8 @@ class _AbecedarioPlayScreenState extends ConsumerState<AbecedarioPlayScreen> {
   void _next() {
     if (_index + 1 >= _entries!.length) {
       _timer?.cancel();
+      AppFeedback.medium();
+      playSound(AppSound.podium);
       setState(() => _finished = true);
       return;
     }
@@ -171,7 +178,7 @@ class _AbecedarioPlayScreenState extends ConsumerState<AbecedarioPlayScreen> {
                     IconButton(
                       tooltip: 'Salir',
                       onPressed: _exit,
-                      icon: const Icon(Icons.close_rounded),
+                      icon: AppIcon.close.widget(),
                     ),
                     const Spacer(),
                     if (!_finished)
@@ -219,7 +226,9 @@ class _AbecedarioPlayScreenState extends ConsumerState<AbecedarioPlayScreen> {
         // Abecedario arriba, lo más grande que quepa (deja sitio a la definición, la respuesta y el botón).
         LayoutBuilder(
           builder: (context, box) {
-            final room = MediaQuery.sizeOf(context).height * 0.36;
+            // Con letra grande del sistema, el abecedario cede sitio a la tarjeta.
+            final big = MediaQuery.textScalerOf(context).scale(10) > 13;
+            final room = MediaQuery.sizeOf(context).height * (big ? 0.3 : 0.36);
             return _Abecedario(
               size: room,
               index: _index,
@@ -252,13 +261,16 @@ class _AbecedarioPlayScreenState extends ConsumerState<AbecedarioPlayScreen> {
                     color: abecedarioColor.withValues(alpha: 0.16),
                     borderRadius: BorderRadius.circular(30),
                   ),
-                  child: Text(
-                    _entry.clue.toUpperCase(),
-                    style: const TextStyle(
-                      color: abecedarioColor,
-                      fontWeight: FontWeight.w900,
-                      letterSpacing: 1.4,
-                      fontSize: 22,
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Text(
+                      _entry.clue.toUpperCase(),
+                      style: const TextStyle(
+                        color: abecedarioColor,
+                        fontWeight: FontWeight.w900,
+                        letterSpacing: 1.4,
+                        fontSize: 22,
+                      ),
                     ),
                   ),
                 ),
@@ -404,18 +416,25 @@ class _Abecedario extends StatelessWidget {
             builder: (context, box) {
               const gap = 5.0;
               final cell = (box.maxWidth - gap * (_columns - 1)) / _columns;
-              return Wrap(
-                spacing: gap,
-                runSpacing: gap,
-                children: [
-                  for (var i = 0; i < abecedarioLetters.length; i++)
-                    _Tile(
-                      letter: abecedarioLetters[i],
-                      size: cell,
-                      done: i < index,
-                      current: i == index,
-                    ),
-                ],
+              return Semantics(
+                label: 'Letra ${index + 1} de ${abecedarioLetters.length}',
+                excludeSemantics: true,
+                child: Wrap(
+                  spacing: gap,
+                  runSpacing: gap,
+                  children: [
+                    for (var i = 0; i < abecedarioLetters.length; i++)
+                      _Tile(
+                        letter: abecedarioLetters[i],
+                        size: cell,
+                        state: i == index
+                            ? LetterChipState.current
+                            : i < index
+                            ? LetterChipState.done
+                            : LetterChipState.pending,
+                      ),
+                  ],
+                ),
               );
             },
           ),
@@ -439,11 +458,15 @@ class _Abecedario extends StatelessWidget {
                     Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
+                        // La letra es ilustración: no escala con el texto del sistema.
                         Text(
                           letter,
+                          textScaler: TextScaler.noScaling,
                           style: TextStyle(
+                            fontFamily: AppFonts.display,
+                            fontWeight: FontWeight.w400,
                             fontSize: ring * 0.42,
-                            fontWeight: FontWeight.w900,
+                            color: AppColors.gold,
                             height: 1,
                           ),
                         ),
@@ -474,59 +497,132 @@ class _Abecedario extends StatelessWidget {
   }
 }
 
+/// Baldosa del abecedario: una ficha dibujada con la letra. La actual rebota
+/// al llegar su turno (salvo con "quitar animaciones").
 class _Tile extends StatelessWidget {
-  const _Tile({
-    required this.letter,
+  const _Tile({required this.letter, required this.size, required this.state});
+
+  final String letter;
+  final double size;
+  final LetterChipState state;
+
+  @override
+  Widget build(BuildContext context) {
+    final reduce = MediaQuery.disableAnimationsOf(context);
+    return AnimatedScale(
+      scale: state == LetterChipState.current ? 1.14 : 1,
+      duration: reduce ? Duration.zero : const Duration(milliseconds: 420),
+      curve: Curves.elasticOut,
+      child: LetterChip(letter, size: size, state: state),
+    );
+  }
+}
+
+enum LetterChipState { pending, done, current }
+
+/// Ficha de letra dibujada con la paleta de la casa: pendiente (fieltro con aro
+/// apagado), hecha (burdeos con aro de papel) y actual (oro con brillo).
+/// La letra va en Alfa Slab One y no escala con el texto del sistema.
+class LetterChip extends StatelessWidget {
+  const LetterChip(
+    this.letter, {
+    super.key,
     required this.size,
-    required this.done,
-    required this.current,
+    this.state = LetterChipState.pending,
   });
 
   final String letter;
   final double size;
-  final bool done;
-  final bool current;
+  final LetterChipState state;
 
   @override
   Widget build(BuildContext context) {
-    final fill = current
-        ? abecedarioColor
-        : done
-        ? abecedarioColor.withValues(alpha: 0.28)
-        : AppColors.surface;
-    return AnimatedContainer(
-      duration: const Duration(milliseconds: 250),
+    return SizedBox(
       width: size,
       height: size,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(size * 0.22),
-        color: fill,
-        border: Border.all(
-          color: current ? Colors.white : AppColors.outline,
-          width: current ? 2 : 1,
-        ),
-        boxShadow: current
-            ? [
-                BoxShadow(
-                  color: abecedarioColor.withValues(alpha: 0.6),
-                  blurRadius: 8,
-                ),
-              ]
-            : null,
-      ),
-      child: Text(
-        letter,
-        style: TextStyle(
-          fontSize: size * 0.5,
-          fontWeight: FontWeight.w800,
-          color: current
-              ? Colors.black
-              : (done ? AppColors.textMuted : AppColors.text),
-        ),
-      ),
+      child: CustomPaint(painter: _LetterChipPainter(letter, state)),
     );
   }
+}
+
+class _LetterChipPainter extends CustomPainter {
+  _LetterChipPainter(this.letter, this.state);
+
+  final String letter;
+  final LetterChipState state;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final c = size.center(Offset.zero);
+    final r = size.shortestSide / 2;
+    final (disc, rim, ink) = switch (state) {
+      LetterChipState.pending => (
+        AppColors.surface,
+        AppColors.outline,
+        AppColors.textMuted,
+      ),
+      LetterChipState.done => (
+        AppColors.burgundy,
+        AppColors.brass,
+        AppColors.paper,
+      ),
+      LetterChipState.current => (
+        AppColors.gold,
+        AppColors.brass,
+        const Color(0xFF241A00),
+      ),
+    };
+
+    if (state == LetterChipState.current) {
+      canvas.drawCircle(
+        c,
+        r * 1.05,
+        Paint()
+          ..color = AppColors.gold.withValues(alpha: 0.55)
+          ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 6),
+      );
+    }
+    canvas.drawCircle(c, r, Paint()..color = rim);
+    canvas.drawCircle(c, r * 0.9, Paint()..color = disc);
+
+    // Aro punteado: solo si la ficha es lo bastante grande para que se lea.
+    if (state != LetterChipState.pending && size.shortestSide >= 24) {
+      final dash = Paint()
+        ..color = ink.withValues(alpha: 0.85)
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = r * 0.1;
+      const n = 14;
+      for (var i = 0; i < n; i++) {
+        canvas.drawArc(
+          Rect.fromCircle(center: c, radius: r * 0.74),
+          i * 2 * pi / n,
+          pi / n,
+          false,
+          dash,
+        );
+      }
+    }
+
+    final tp = TextPainter(
+      text: TextSpan(
+        text: letter,
+        style: TextStyle(
+          fontFamily: AppFonts.display,
+          fontWeight: FontWeight.w400,
+          fontSize: r * 0.92,
+          height: 1,
+          color: ink,
+        ),
+      ),
+      textDirection: TextDirection.ltr,
+      textScaler: TextScaler.noScaling,
+    )..layout();
+    tp.paint(canvas, c - Offset(tp.width / 2, tp.height / 2));
+  }
+
+  @override
+  bool shouldRepaint(_LetterChipPainter old) =>
+      old.letter != letter || old.state != state;
 }
 
 class _Finished extends StatelessWidget {
@@ -534,37 +630,76 @@ class _Finished extends StatelessWidget {
   final VoidCallback onAgain;
 
   @override
-  Widget build(BuildContext context) => Column(
-    mainAxisAlignment: MainAxisAlignment.center,
-    children: [
-      const Text('🔤', style: TextStyle(fontSize: 64)),
-      const SizedBox(height: 12),
-      const Text(
-        '¡Abecedario completo!',
-        style: TextStyle(fontSize: 28, fontWeight: FontWeight.w900),
-      ),
-      const SizedBox(height: 28),
-      Row(
-        children: [
-          Expanded(
-            child: OutlinedButton(
-              onPressed: () => context.go('/'),
-              child: const Text('Menú'),
-            ),
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: FilledButton(
-              style: FilledButton.styleFrom(
-                backgroundColor: abecedarioColor,
-                foregroundColor: Colors.black,
+  Widget build(BuildContext context) => LayoutBuilder(
+    builder: (context, box) => SingleChildScrollView(
+      child: ConstrainedBox(
+        constraints: BoxConstraints(
+          minHeight: box.hasBoundedHeight ? box.maxHeight : 0,
+        ),
+        child: Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              BounceIn(
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const LetterChip(
+                      'A',
+                      size: 48,
+                      state: LetterChipState.done,
+                    ),
+                    const SizedBox(width: 8),
+                    const Jockey(pose: JockeyPose.celebra, size: 96),
+                    const SizedBox(width: 8),
+                    const LetterChip(
+                      'Z',
+                      size: 48,
+                      state: LetterChipState.current,
+                    ),
+                  ],
+                ),
               ),
-              onPressed: onAgain,
-              child: const Text('Otra vez'),
-            ),
+              const SizedBox(height: 16),
+              Text(
+                'Llegasteis a la Z',
+                textAlign: TextAlign.center,
+                textScaler: MediaQuery.textScalerOf(
+                  context,
+                ).clamp(maxScaleFactor: 1.5),
+                style: const TextStyle(
+                  fontFamily: AppFonts.display,
+                  fontWeight: FontWeight.w400,
+                  fontSize: 28,
+                  height: 1.2,
+                ),
+              ),
+              const SizedBox(height: 28),
+              Row(
+                children: [
+                  Expanded(
+                    child: OutlinedButton(
+                      onPressed: () => context.go('/'),
+                      child: const Text('Menú'),
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: FilledButton(
+                      style: FilledButton.styleFrom(
+                        backgroundColor: abecedarioColor,
+                        foregroundColor: Colors.black,
+                      ),
+                      onPressed: onAgain,
+                      child: const Text('Otra vuelta'),
+                    ),
+                  ),
+                ],
+              ),
+            ],
           ),
-        ],
+        ),
       ),
-    ],
+    ),
   );
 }

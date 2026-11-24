@@ -3,7 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../storage.dart';
 
 /// Indicador de "bienvenida +18 ya vista". Va aparte de `AppSettings`.
-final onboardingProvider = NotifierProvider<OnboardingController, bool>(OnboardingController.new);
+final onboardingProvider = NotifierProvider<OnboardingController, bool>(
+  OnboardingController.new,
+);
 
 class OnboardingController extends Notifier<bool> {
   static const welcomeKey = 'onboarding.welcome.v1';

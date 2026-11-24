@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
 
+import '../../app/app_icons.dart';
 import '../../app/theme.dart';
 import '../../core/content/prompts.dart';
 import '../../core/settings/app_feedback.dart';
@@ -43,6 +44,28 @@ Future<bool> ensureLevelAllowed(
   return true;
 }
 
+/// Icono dibujado del nivel + su nombre. Es la etiqueta de los chips de nivel y
+/// del distintivo de la carta. El icono es decorativo: el texto da el sentido.
+class LevelLabel extends StatelessWidget {
+  const LevelLabel(this.level, {super.key, this.iconSize = 20, this.style});
+
+  final PromptLevel level;
+  final double iconSize;
+  final TextStyle? style;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        ExcludeSemantics(child: LevelIcon(level.id, size: iconSize)),
+        const SizedBox(width: 6),
+        Flexible(child: Text(level.label, style: style)),
+      ],
+    );
+  }
+}
+
 /// Selector de niveles común a los mazos y al Infiltrado: chips con check, selección múltiple.
 /// Los niveles se combinan; quien lo usa decide qué hacer si no queda ninguno.
 class LevelChips extends StatelessWidget {
@@ -69,7 +92,7 @@ class LevelChips extends StatelessWidget {
             for (final level in PromptLevel.values)
               FilterChip(
                 key: ValueKey('level-${level.name}'),
-                label: Text('${level.emoji} ${level.label}'),
+                label: LevelLabel(level),
                 selected: levels.contains(level),
                 showCheckmark: true,
                 checkmarkColor: AppColors.text,
@@ -86,7 +109,7 @@ class LevelChips extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         const Text(
-          'Puedes combinar varios niveles.',
+          'Se pueden mezclar niveles.',
           style: TextStyle(color: GameColors.mutedText, fontSize: 13),
         ),
       ],

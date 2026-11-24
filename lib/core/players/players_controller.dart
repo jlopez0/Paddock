@@ -6,7 +6,9 @@ import '../storage.dart';
 import 'player.dart';
 
 /// Lista global de jugadores, compartida por todos los juegos y guardada en el dispositivo.
-final playersProvider = NotifierProvider<PlayersController, List<Player>>(PlayersController.new);
+final playersProvider = NotifierProvider<PlayersController, List<Player>>(
+  PlayersController.new,
+);
 
 class PlayersController extends Notifier<List<Player>> {
   static const _key = 'players.v1';
@@ -75,8 +77,9 @@ class PlayersController extends Notifier<List<Player>> {
     return id;
   }
 
-  void rename(String id, String name) =>
-      _save([for (final p in state) p.id == id ? p.copyWith(name: name.trim()) : p]);
+  void rename(String id, String name) => _save([
+    for (final p in state) p.id == id ? p.copyWith(name: name.trim()) : p,
+  ]);
 
   void remove(String id) => _save(state.where((p) => p.id != id).toList());
 

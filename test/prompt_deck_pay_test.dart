@@ -172,7 +172,7 @@ void main() {
 
     await tester.tap(find.byTooltip('Anterior'));
     await tester.pumpAndSettle();
-    expect(find.text('Ya registrado en la Copa'), findsOneWidget);
+    expect(find.text('Ya anotado en la Copa'), findsOneWidget);
     // Tocar un chip bloqueado no cambia nada.
     await tester.tap(find.byKey(const ValueKey('pay-p2')));
     await tester.pump();
@@ -197,9 +197,9 @@ void main() {
     final c = await _pump(tester, _game(), withPlayers: false);
     expect(find.textContaining('¿Quién paga?'), findsNothing);
     expect(find.byType(FilterChip), findsNothing);
-    expect(find.text('1/3'), findsOneWidget);
+    expect(find.text('1 / 3'), findsOneWidget);
     await _next(tester);
-    expect(find.text('2/3'), findsOneWidget);
+    expect(find.text('2 / 3'), findsOneWidget);
     expect(c.read(sessionProvider).events, isEmpty);
   });
 

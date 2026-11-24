@@ -20,17 +20,21 @@ Widget _duo(
   Color primary,
   Color secondary, {
   String? semanticLabel,
-}) =>
-    Stack(
-      alignment: Alignment.center,
-      children: [
-        Opacity(
-          opacity: 0.5,
-          child: Icon(icon.secondary, size: size, color: secondary),
-        ),
-        Icon(icon.primary, size: size, color: primary, semanticLabel: semanticLabel),
-      ],
-    );
+}) => Stack(
+  alignment: Alignment.center,
+  children: [
+    Opacity(
+      opacity: 0.5,
+      child: Icon(icon.secondary, size: size, color: secondary),
+    ),
+    Icon(
+      icon.primary,
+      size: size,
+      color: primary,
+      semanticLabel: semanticLabel,
+    ),
+  ],
+);
 
 // ---------------------------------------------------------------------------
 // Iconos de juego
@@ -54,16 +58,16 @@ enum GameIconKind {
   final Color color;
 
   _Duo get _data => switch (this) {
-        carrera => _D.horse,
-        infiltrado => _D.detective,
-        trivia => _D.brain,
-        geografia => _D.globeHemisphereWest,
-        abecedario => _D.textAa,
-        quienEsMasProbable => _D.handPointing,
-        quePreferirias => _D.scales,
-        yoNunca => _D.fingerprint,
-        copa => _D.trophy,
-      };
+    carrera => _D.horse,
+    infiltrado => _D.detective,
+    trivia => _D.brain,
+    geografia => _D.globeHemisphereWest,
+    abecedario => _D.textAa,
+    quienEsMasProbable => _D.handPointing,
+    quePreferirias => _D.scales,
+    yoNunca => _D.fingerprint,
+    copa => _D.trophy,
+  };
 
   static GameIconKind? fromId(String id) {
     for (final k in values) {
@@ -77,10 +81,14 @@ enum GameIconKind {
 /// icono genérico (nunca lanza).
 class GameIcon extends StatelessWidget {
   GameIcon(String id, {super.key, this.size = 44, this.semanticLabel})
-      : kind = GameIconKind.fromId(id);
+    : kind = GameIconKind.fromId(id);
 
-  const GameIcon.kind(GameIconKind this.kind,
-      {super.key, this.size = 44, this.semanticLabel});
+  const GameIcon.kind(
+    GameIconKind this.kind, {
+    super.key,
+    this.size = 44,
+    this.semanticLabel,
+  });
 
   final GameIconKind? kind;
   final double size;
@@ -118,10 +126,10 @@ class MedalIcon extends StatelessWidget {
   final double size;
 
   Color get _color => switch (place) {
-        1 => AppColors.medalGold,
-        2 => AppColors.medalSilver,
-        _ => AppColors.medalBronze,
-      };
+    1 => AppColors.medalGold,
+    2 => AppColors.medalSilver,
+    _ => AppColors.medalBronze,
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -197,29 +205,39 @@ class CategoryIcon extends StatelessWidget {
   final Color? color;
 
   static const triviaIds = [
-    'historia', 'ciencia', 'naturaleza', 'arte', 'deporte', 'ocio', 'curiosidades',
+    'historia',
+    'ciencia',
+    'naturaleza',
+    'arte',
+    'deporte',
+    'ocio',
+    'curiosidades',
   ];
   static const geoIds = [
-    'banderas', 'capitales', 'capital-a-pais', 'siluetas', 'mezcla',
+    'banderas',
+    'capitales',
+    'capital-a-pais',
+    'siluetas',
+    'mezcla',
   ];
 
   static bool hasIcon(String id) => _lookup(id) != null;
 
   static (_Duo, Color)? _lookup(String id) => switch (id) {
-        'historia' => (_D.bank, _kOrange),
-        'ciencia' => (_D.flask, _kOrange),
-        'naturaleza' => (_D.plant, _kOrange),
-        'arte' => (_D.paintBrush, _kOrange),
-        'deporte' => (_D.soccerBall, _kOrange),
-        'ocio' || 'cine' => (_D.filmSlate, _kOrange),
-        'curiosidades' => (_D.puzzlePiece, _kOrange),
-        'banderas' => (_D.flag, _kTeal),
-        'capitales' => (_D.bank, _kTeal),
-        'capital-a-pais' => (_D.mapPin, _kTeal),
-        'siluetas' => (_D.mapTrifold, _kTeal),
-        'mezcla' => (_D.shuffle, _kTeal),
-        _ => null,
-      };
+    'historia' => (_D.bank, _kOrange),
+    'ciencia' => (_D.flask, _kOrange),
+    'naturaleza' => (_D.plant, _kOrange),
+    'arte' => (_D.paintBrush, _kOrange),
+    'deporte' => (_D.soccerBall, _kOrange),
+    'ocio' || 'cine' => (_D.filmSlate, _kOrange),
+    'curiosidades' => (_D.puzzlePiece, _kOrange),
+    'banderas' => (_D.flag, _kTeal),
+    'capitales' => (_D.bank, _kTeal),
+    'capital-a-pais' => (_D.mapPin, _kTeal),
+    'siluetas' => (_D.mapTrifold, _kTeal),
+    'mezcla' => (_D.shuffle, _kTeal),
+    _ => null,
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -257,11 +275,45 @@ enum AppIcon {
   medal(_D.medal, AppColors.gold),
   smiley(_D.smiley, AppColors.success),
   pepper(_D.pepper, _kOrange),
-  shareNetwork(_D.shareNetwork, AppColors.gold);
+  shareNetwork(_D.shareNetwork, AppColors.gold),
+  // Interfaz (sustituyen a los iconos redondeados de Material).
+  close(_D.x, AppColors.textMuted),
+  replay(_D.arrowCounterClockwise, AppColors.gold),
+  restart(_D.arrowCounterClockwise, AppColors.gold),
+  undo(_D.arrowUUpLeft, AppColors.gold),
+  pause(_D.pause, AppColors.gold),
+  fastForward(_D.fastForward, AppColors.gold),
+  add(_D.plus, AppColors.gold),
+  remove(_D.minus, AppColors.gold),
+  delete(_D.trash, AppColors.danger),
+  settings(_D.gear, AppColors.gold),
+  volume(_D.speakerHigh, AppColors.gold),
+  volumeOff(_D.speakerSlash, AppColors.textMuted),
+  privacy(_D.shieldCheck, AppColors.success),
+  help(_D.question, AppColors.gold),
+  info(_D.info, AppColors.gold),
+  tag(_D.tag, AppColors.gold),
+  external(_D.arrowSquareOut, AppColors.gold),
+  chevronRight(_D.caretRight, AppColors.gold),
+  chevronLeft(_D.caretLeft, AppColors.gold),
+  shuffle(_D.shuffle, AppColors.gold),
+  check(_D.check, AppColors.success),
+  checkCircle(_D.checkCircle, AppColors.success),
+  cancel(_D.xCircle, AppColors.danger),
+  visibility(_D.eye, AppColors.gold),
+  keyboard(_D.keyboard, AppColors.gold),
+  grid(_D.squaresFour, AppColors.gold);
 
   const AppIcon(this._data, this.accent);
 
   final _Duo _data;
+
+  /// Codigos de glifo (principal y secundario) en la fuente PhosphorDuotone.
+  @visibleForTesting
+  List<int> get codePoints => [
+    _data.primary.codePoint,
+    _data.secondary.codePoint,
+  ];
 
   /// Color de la capa secundaria (y del trazo si no se indica [color]).
   final Color accent;
@@ -482,7 +534,8 @@ class _TicketBorder extends ShapeBorder {
   void paint(Canvas canvas, Rect rect, {TextDirection? textDirection}) {}
 
   @override
-  ShapeBorder scale(double t) => _TicketBorder(radius: radius * t, notch: notch);
+  ShapeBorder scale(double t) =>
+      _TicketBorder(radius: radius * t, notch: notch);
 }
 
 class _DottedLinePainter extends CustomPainter {
@@ -523,36 +576,228 @@ class _Duo {
 const _fillMedal = IconData(0xe320, fontFamily: 'PhosphorFill');
 
 abstract final class _D {
-  static const horse = _Duo(IconData(0xe2b1, fontFamily: 'PhosphorDuotone'), IconData(0xe2b0, fontFamily: 'PhosphorDuotone'));
-  static const detective = _Duo(IconData(0xe83f, fontFamily: 'PhosphorDuotone'), IconData(0xe83e, fontFamily: 'PhosphorDuotone'));
-  static const brain = _Duo(IconData(0xe74f, fontFamily: 'PhosphorDuotone'), IconData(0xe74e, fontFamily: 'PhosphorDuotone'));
-  static const globeHemisphereWest = _Duo(IconData(0xe28d, fontFamily: 'PhosphorDuotone'), IconData(0xe28c, fontFamily: 'PhosphorDuotone'));
-  static const textAa = _Duo(IconData(0xe6ef, fontFamily: 'PhosphorDuotone'), IconData(0xe6ee, fontFamily: 'PhosphorDuotone'));
-  static const handPointing = _Duo(IconData(0xe29b, fontFamily: 'PhosphorDuotone'), IconData(0xe29a, fontFamily: 'PhosphorDuotone'));
-  static const scales = _Duo(IconData(0xe751, fontFamily: 'PhosphorDuotone'), IconData(0xe750, fontFamily: 'PhosphorDuotone'));
-  static const fingerprint = _Duo(IconData(0xe23f, fontFamily: 'PhosphorDuotone'), IconData(0xe23e, fontFamily: 'PhosphorDuotone'));
-  static const trophy = _Duo(IconData(0xe67f, fontFamily: 'PhosphorDuotone'), IconData(0xe67e, fontFamily: 'PhosphorDuotone'));
-  static const smiley = _Duo(IconData(0xe437, fontFamily: 'PhosphorDuotone'), IconData(0xe436, fontFamily: 'PhosphorDuotone'));
-  static const pepper = _Duo(IconData(0xe94b, fontFamily: 'PhosphorDuotone'), IconData(0xe94a, fontFamily: 'PhosphorDuotone'));
-  static const flame = _Duo(IconData(0xe625, fontFamily: 'PhosphorDuotone'), IconData(0xe624, fontFamily: 'PhosphorDuotone'));
-  static const bank = _Duo(IconData(0xe0b5, fontFamily: 'PhosphorDuotone'), IconData(0xe0b4, fontFamily: 'PhosphorDuotone'));
-  static const flask = _Duo(IconData(0xe79f, fontFamily: 'PhosphorDuotone'), IconData(0xe79e, fontFamily: 'PhosphorDuotone'));
-  static const plant = _Duo(IconData(0xebaf, fontFamily: 'PhosphorDuotone'), IconData(0xebae, fontFamily: 'PhosphorDuotone'));
-  static const paintBrush = _Duo(IconData(0xe6f1, fontFamily: 'PhosphorDuotone'), IconData(0xe6f0, fontFamily: 'PhosphorDuotone'));
-  static const soccerBall = _Duo(IconData(0xe717, fontFamily: 'PhosphorDuotone'), IconData(0xe716, fontFamily: 'PhosphorDuotone'));
-  static const filmSlate = _Duo(IconData(0xe8c3, fontFamily: 'PhosphorDuotone'), IconData(0xe8c2, fontFamily: 'PhosphorDuotone'));
-  static const puzzlePiece = _Duo(IconData(0xe597, fontFamily: 'PhosphorDuotone'), IconData(0xe596, fontFamily: 'PhosphorDuotone'));
-  static const flag = _Duo(IconData(0xe245, fontFamily: 'PhosphorDuotone'), IconData(0xe244, fontFamily: 'PhosphorDuotone'));
-  static const mapPin = _Duo(IconData(0xe317, fontFamily: 'PhosphorDuotone'), IconData(0xe316, fontFamily: 'PhosphorDuotone'));
-  static const mapTrifold = _Duo(IconData(0xe31b, fontFamily: 'PhosphorDuotone'), IconData(0xe31a, fontFamily: 'PhosphorDuotone'));
-  static const shuffle = _Duo(IconData(0xe423, fontFamily: 'PhosphorDuotone'), IconData(0xe422, fontFamily: 'PhosphorDuotone'));
-  static const crown = _Duo(IconData(0xe615, fontFamily: 'PhosphorDuotone'), IconData(0xe614, fontFamily: 'PhosphorDuotone'));
-  static const confetti = _Duo(IconData(0xe81b, fontFamily: 'PhosphorDuotone'), IconData(0xe81a, fontFamily: 'PhosphorDuotone'));
-  static const coins = _Duo(IconData(0xe78f, fontFamily: 'PhosphorDuotone'), IconData(0xe78e, fontFamily: 'PhosphorDuotone'));
-  static const trendDown = _Duo(IconData(0xe4ad, fontFamily: 'PhosphorDuotone'), IconData(0xe4ac, fontFamily: 'PhosphorDuotone'));
-  static const flagCheckered = _Duo(IconData(0xea39, fontFamily: 'PhosphorDuotone'), IconData(0xea38, fontFamily: 'PhosphorDuotone'));
-  static const target = _Duo(IconData(0xe47d, fontFamily: 'PhosphorDuotone'), IconData(0xe47c, fontFamily: 'PhosphorDuotone'));
-  static const deviceMobile = _Duo(IconData(0xe1e1, fontFamily: 'PhosphorDuotone'), IconData(0xe1e0, fontFamily: 'PhosphorDuotone'));
-  static const medal = _Duo(IconData(0xe321, fontFamily: 'PhosphorDuotone'), IconData(0xe320, fontFamily: 'PhosphorDuotone'));
-  static const shareNetwork = _Duo(IconData(0xe40b, fontFamily: 'PhosphorDuotone'), IconData(0xe408, fontFamily: 'PhosphorDuotone'));
+  static const horse = _Duo(
+    IconData(0xe2b1, fontFamily: 'PhosphorDuotone'),
+    IconData(0xe2b0, fontFamily: 'PhosphorDuotone'),
+  );
+  static const detective = _Duo(
+    IconData(0xe83f, fontFamily: 'PhosphorDuotone'),
+    IconData(0xe83e, fontFamily: 'PhosphorDuotone'),
+  );
+  static const brain = _Duo(
+    IconData(0xe74f, fontFamily: 'PhosphorDuotone'),
+    IconData(0xe74e, fontFamily: 'PhosphorDuotone'),
+  );
+  static const globeHemisphereWest = _Duo(
+    IconData(0xe28d, fontFamily: 'PhosphorDuotone'),
+    IconData(0xe28c, fontFamily: 'PhosphorDuotone'),
+  );
+  static const textAa = _Duo(
+    IconData(0xe6ef, fontFamily: 'PhosphorDuotone'),
+    IconData(0xe6ee, fontFamily: 'PhosphorDuotone'),
+  );
+  static const handPointing = _Duo(
+    IconData(0xe29b, fontFamily: 'PhosphorDuotone'),
+    IconData(0xe29a, fontFamily: 'PhosphorDuotone'),
+  );
+  static const scales = _Duo(
+    IconData(0xe751, fontFamily: 'PhosphorDuotone'),
+    IconData(0xe750, fontFamily: 'PhosphorDuotone'),
+  );
+  static const fingerprint = _Duo(
+    IconData(0xe23f, fontFamily: 'PhosphorDuotone'),
+    IconData(0xe23e, fontFamily: 'PhosphorDuotone'),
+  );
+  static const trophy = _Duo(
+    IconData(0xe67f, fontFamily: 'PhosphorDuotone'),
+    IconData(0xe67e, fontFamily: 'PhosphorDuotone'),
+  );
+  static const smiley = _Duo(
+    IconData(0xe437, fontFamily: 'PhosphorDuotone'),
+    IconData(0xe436, fontFamily: 'PhosphorDuotone'),
+  );
+  static const pepper = _Duo(
+    IconData(0xe94b, fontFamily: 'PhosphorDuotone'),
+    IconData(0xe94a, fontFamily: 'PhosphorDuotone'),
+  );
+  static const flame = _Duo(
+    IconData(0xe625, fontFamily: 'PhosphorDuotone'),
+    IconData(0xe624, fontFamily: 'PhosphorDuotone'),
+  );
+  static const bank = _Duo(
+    IconData(0xe0b5, fontFamily: 'PhosphorDuotone'),
+    IconData(0xe0b4, fontFamily: 'PhosphorDuotone'),
+  );
+  static const flask = _Duo(
+    IconData(0xe79f, fontFamily: 'PhosphorDuotone'),
+    IconData(0xe79e, fontFamily: 'PhosphorDuotone'),
+  );
+  static const plant = _Duo(
+    IconData(0xebaf, fontFamily: 'PhosphorDuotone'),
+    IconData(0xebae, fontFamily: 'PhosphorDuotone'),
+  );
+  static const paintBrush = _Duo(
+    IconData(0xe6f1, fontFamily: 'PhosphorDuotone'),
+    IconData(0xe6f0, fontFamily: 'PhosphorDuotone'),
+  );
+  static const soccerBall = _Duo(
+    IconData(0xe717, fontFamily: 'PhosphorDuotone'),
+    IconData(0xe716, fontFamily: 'PhosphorDuotone'),
+  );
+  static const filmSlate = _Duo(
+    IconData(0xe8c3, fontFamily: 'PhosphorDuotone'),
+    IconData(0xe8c2, fontFamily: 'PhosphorDuotone'),
+  );
+  static const puzzlePiece = _Duo(
+    IconData(0xe597, fontFamily: 'PhosphorDuotone'),
+    IconData(0xe596, fontFamily: 'PhosphorDuotone'),
+  );
+  static const flag = _Duo(
+    IconData(0xe245, fontFamily: 'PhosphorDuotone'),
+    IconData(0xe244, fontFamily: 'PhosphorDuotone'),
+  );
+  static const mapPin = _Duo(
+    IconData(0xe317, fontFamily: 'PhosphorDuotone'),
+    IconData(0xe316, fontFamily: 'PhosphorDuotone'),
+  );
+  static const mapTrifold = _Duo(
+    IconData(0xe31b, fontFamily: 'PhosphorDuotone'),
+    IconData(0xe31a, fontFamily: 'PhosphorDuotone'),
+  );
+  static const shuffle = _Duo(
+    IconData(0xe423, fontFamily: 'PhosphorDuotone'),
+    IconData(0xe422, fontFamily: 'PhosphorDuotone'),
+  );
+  static const crown = _Duo(
+    IconData(0xe615, fontFamily: 'PhosphorDuotone'),
+    IconData(0xe614, fontFamily: 'PhosphorDuotone'),
+  );
+  static const confetti = _Duo(
+    IconData(0xe81b, fontFamily: 'PhosphorDuotone'),
+    IconData(0xe81a, fontFamily: 'PhosphorDuotone'),
+  );
+  static const coins = _Duo(
+    IconData(0xe78f, fontFamily: 'PhosphorDuotone'),
+    IconData(0xe78e, fontFamily: 'PhosphorDuotone'),
+  );
+  static const trendDown = _Duo(
+    IconData(0xe4ad, fontFamily: 'PhosphorDuotone'),
+    IconData(0xe4ac, fontFamily: 'PhosphorDuotone'),
+  );
+  static const flagCheckered = _Duo(
+    IconData(0xea39, fontFamily: 'PhosphorDuotone'),
+    IconData(0xea38, fontFamily: 'PhosphorDuotone'),
+  );
+  static const target = _Duo(
+    IconData(0xe47d, fontFamily: 'PhosphorDuotone'),
+    IconData(0xe47c, fontFamily: 'PhosphorDuotone'),
+  );
+  static const deviceMobile = _Duo(
+    IconData(0xe1e1, fontFamily: 'PhosphorDuotone'),
+    IconData(0xe1e0, fontFamily: 'PhosphorDuotone'),
+  );
+  static const medal = _Duo(
+    IconData(0xe321, fontFamily: 'PhosphorDuotone'),
+    IconData(0xe320, fontFamily: 'PhosphorDuotone'),
+  );
+  static const shareNetwork = _Duo(
+    IconData(0xe40b, fontFamily: 'PhosphorDuotone'),
+    IconData(0xe408, fontFamily: 'PhosphorDuotone'),
+  );
+  static const x = _Duo(
+    IconData(0xe4f7, fontFamily: 'PhosphorDuotone'),
+    IconData(0xe4f6, fontFamily: 'PhosphorDuotone'),
+  );
+  static const arrowCounterClockwise = _Duo(
+    IconData(0xe039, fontFamily: 'PhosphorDuotone'),
+    IconData(0xe038, fontFamily: 'PhosphorDuotone'),
+  );
+  static const arrowUUpLeft = _Duo(
+    IconData(0xe08b, fontFamily: 'PhosphorDuotone'),
+    IconData(0xe08a, fontFamily: 'PhosphorDuotone'),
+  );
+  static const pause = _Duo(
+    IconData(0xe39f, fontFamily: 'PhosphorDuotone'),
+    IconData(0xe39e, fontFamily: 'PhosphorDuotone'),
+  );
+  static const fastForward = _Duo(
+    IconData(0xe6a7, fontFamily: 'PhosphorDuotone'),
+    IconData(0xe6a6, fontFamily: 'PhosphorDuotone'),
+  );
+  static const plus = _Duo(
+    IconData(0xe3d5, fontFamily: 'PhosphorDuotone'),
+    IconData(0xe3d4, fontFamily: 'PhosphorDuotone'),
+  );
+  static const minus = _Duo(
+    IconData(0xe32b, fontFamily: 'PhosphorDuotone'),
+    IconData(0xe32a, fontFamily: 'PhosphorDuotone'),
+  );
+  static const trash = _Duo(
+    IconData(0xe4a7, fontFamily: 'PhosphorDuotone'),
+    IconData(0xe4a6, fontFamily: 'PhosphorDuotone'),
+  );
+  static const gear = _Duo(
+    IconData(0xe271, fontFamily: 'PhosphorDuotone'),
+    IconData(0xe270, fontFamily: 'PhosphorDuotone'),
+  );
+  static const speakerHigh = _Duo(
+    IconData(0xe44b, fontFamily: 'PhosphorDuotone'),
+    IconData(0xe44a, fontFamily: 'PhosphorDuotone'),
+  );
+  static const speakerSlash = _Duo(
+    IconData(0xe45b, fontFamily: 'PhosphorDuotone'),
+    IconData(0xe45a, fontFamily: 'PhosphorDuotone'),
+  );
+  static const shieldCheck = _Duo(
+    IconData(0xe40f, fontFamily: 'PhosphorDuotone'),
+    IconData(0xe40c, fontFamily: 'PhosphorDuotone'),
+  );
+  static const question = _Duo(
+    IconData(0xe3eb, fontFamily: 'PhosphorDuotone'),
+    IconData(0xe3e8, fontFamily: 'PhosphorDuotone'),
+  );
+  static const info = _Duo(
+    IconData(0xe2cf, fontFamily: 'PhosphorDuotone'),
+    IconData(0xe2ce, fontFamily: 'PhosphorDuotone'),
+  );
+  static const tag = _Duo(
+    IconData(0xe479, fontFamily: 'PhosphorDuotone'),
+    IconData(0xe478, fontFamily: 'PhosphorDuotone'),
+  );
+  static const arrowSquareOut = _Duo(
+    IconData(0xe5df, fontFamily: 'PhosphorDuotone'),
+    IconData(0xe5de, fontFamily: 'PhosphorDuotone'),
+  );
+  static const caretRight = _Duo(
+    IconData(0xe13b, fontFamily: 'PhosphorDuotone'),
+    IconData(0xe13a, fontFamily: 'PhosphorDuotone'),
+  );
+  static const caretLeft = _Duo(
+    IconData(0xe139, fontFamily: 'PhosphorDuotone'),
+    IconData(0xe138, fontFamily: 'PhosphorDuotone'),
+  );
+  static const check = _Duo(
+    IconData(0xe183, fontFamily: 'PhosphorDuotone'),
+    IconData(0xe182, fontFamily: 'PhosphorDuotone'),
+  );
+  static const checkCircle = _Duo(
+    IconData(0xe185, fontFamily: 'PhosphorDuotone'),
+    IconData(0xe184, fontFamily: 'PhosphorDuotone'),
+  );
+  static const xCircle = _Duo(
+    IconData(0xe4f9, fontFamily: 'PhosphorDuotone'),
+    IconData(0xe4f8, fontFamily: 'PhosphorDuotone'),
+  );
+  static const eye = _Duo(
+    IconData(0xe221, fontFamily: 'PhosphorDuotone'),
+    IconData(0xe220, fontFamily: 'PhosphorDuotone'),
+  );
+  static const keyboard = _Duo(
+    IconData(0xe2d9, fontFamily: 'PhosphorDuotone'),
+    IconData(0xe2d8, fontFamily: 'PhosphorDuotone'),
+  );
+  static const squaresFour = _Duo(
+    IconData(0xe465, fontFamily: 'PhosphorDuotone'),
+    IconData(0xe464, fontFamily: 'PhosphorDuotone'),
+  );
 }

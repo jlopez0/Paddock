@@ -3,5 +3,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 /// Se sobrescribe en `main()` con la instancia ya cargada.
 final sharedPreferencesProvider = Provider<SharedPreferences>(
-  (ref) => throw UnimplementedError('sharedPreferencesProvider sin inicializar'),
+  (ref) =>
+      throw UnimplementedError('sharedPreferencesProvider sin inicializar'),
 );

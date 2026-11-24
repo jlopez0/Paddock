@@ -3,6 +3,8 @@ import 'dart:math' as math;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
+import 'package:paddock/app/app_icons.dart';
+import 'package:paddock/app/theme.dart';
 import 'package:paddock/core/content/prompts.dart';
 import 'package:paddock/core/storage.dart';
 import 'package:paddock/games/prompt_deck/game_colors.dart';
@@ -34,6 +36,29 @@ void main() {
       expect(
         _contrast(GameColors.infiltradoText, s),
         greaterThanOrEqualTo(4.5),
+      );
+    }
+  });
+
+  test('texto sobre papel: tinta y colores de juego >= 4,5:1', () {
+    expect(
+      _contrast(GameColors.ink, AppColors.paper),
+      greaterThanOrEqualTo(4.5),
+    );
+    expect(
+      _contrast(GameColors.inkMuted, AppColors.paper),
+      greaterThanOrEqualTo(4.5),
+    );
+    for (final c in const [
+      Color(0xFF3FA796), // quién es más probable
+      Color(0xFFB57BEE), // qué preferirías
+      Color(0xFFE5575C), // yo nunca
+      Color(0xFF4FA3F7), // segunda opción
+    ]) {
+      expect(
+        _contrast(GameColors.onPaper(c), AppColors.paper),
+        greaterThanOrEqualTo(4.5),
+        reason: c.toARGB32().toRadixString(16),
       );
     }
   });
@@ -79,6 +104,11 @@ void main() {
   ) async {
     final levels = await pumpChips(tester);
     expect(find.byType(FilterChip), findsNWidgets(PromptLevel.values.length));
+    // Cada chip lleva el icono dibujado del nivel y su texto.
+    expect(find.byType(LevelIcon), findsNWidgets(PromptLevel.values.length));
+    for (final l in PromptLevel.values) {
+      expect(find.text(l.label), findsOneWidget);
+    }
     expect(
       tester
           .widgetList<FilterChip>(find.byType(FilterChip))

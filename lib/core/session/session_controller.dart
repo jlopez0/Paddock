@@ -4,7 +4,9 @@ import '../storage.dart';
 import 'session_score.dart';
 
 /// Reloj inyectable (los tests lo sustituyen).
-final sessionClockProvider = Provider<DateTime Function()>((ref) => DateTime.now);
+final sessionClockProvider = Provider<DateTime Function()>(
+  (ref) => DateTime.now,
+);
 
 /// La Copa de la noche: eventos de puntuación de todos los juegos, guardados en el dispositivo.
 final sessionProvider = NotifierProvider<SessionScoreController, Session>(
@@ -17,8 +19,10 @@ class SessionScoreController extends Notifier<Session> {
   DateTime _now() => ref.read(sessionClockProvider)();
 
   @override
-  Session build() =>
-      Session.decode(ref.read(sharedPreferencesProvider).getString(_key), _now());
+  Session build() => Session.decode(
+    ref.read(sharedPreferencesProvider).getString(_key),
+    _now(),
+  );
 
   /// `true` si la noche tiene más de 12 h (la home ofrece "Nueva noche").
   bool get isStale => state.isStale(_now());

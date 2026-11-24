@@ -71,4 +71,61 @@ void main() {
     expect(tester.takeException(), isNull);
     await tester.pumpWidget(const SizedBox());
   });
+
+  testWidgets(
+    'fichas de letra y fin de partida: sin overflow con letra 2.0 en 320x568',
+    (tester) async {
+      tester.view.physicalSize = const Size(320, 568);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.reset);
+      SharedPreferences.setMockInitialValues({
+        'abecedario.setup.v1': '{"seconds":10,"auto":true,"read":3}',
+      });
+      final prefs = await SharedPreferences.getInstance();
+      await tester.pumpWidget(
+        ProviderScope(
+          overrides: [
+            sharedPreferencesProvider.overrideWithValue(prefs),
+            // El banco ya está leído: evita compartir el Future cacheado de rootBundle entre tests.
+            abecedarioBankProvider.overrideWith((ref) async => bank),
+          ],
+          child: Builder(
+            builder: (context) => MediaQuery(
+              data: MediaQuery.of(
+                context,
+              ).copyWith(textScaler: const TextScaler.linear(2.0)),
+              child: const MaterialApp(home: AbecedarioPlayScreen()),
+            ),
+          ),
+        ),
+      );
+      for (
+        var i = 0;
+        i < 200 && find.text('Desvelar ya').evaluate().isEmpty;
+        i++
+      ) {
+        await tester.runAsync(
+          () => Future<void>.delayed(const Duration(milliseconds: 50)),
+        );
+        await tester.pump(const Duration(milliseconds: 50));
+      }
+      await tester.pump(const Duration(milliseconds: 50));
+      final ex = tester.takeException();
+      expect(ex, isNull, reason: '$ex');
+      expect(find.byType(LetterChip), findsNWidgets(27));
+
+      // Toda la partida en automático hasta la pantalla de fin.
+      for (var i = 0; i < abecedarioLetters.length; i++) {
+        await tester.pump(const Duration(seconds: 10));
+        await tester.pump(const Duration(seconds: 3));
+        expect(tester.takeException(), isNull, reason: 'letra $i');
+      }
+      await tester.pumpAndSettle();
+      expect(find.text('Llegasteis a la Z'), findsOneWidget);
+      expect(find.text('Otra vuelta'), findsOneWidget);
+      expect(find.text('Otra vez'), findsNothing);
+      expect(tester.takeException(), isNull);
+      await tester.pumpWidget(const SizedBox());
+    },
+  );
 }

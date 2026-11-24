@@ -213,8 +213,8 @@ void main() {
         ],
       );
       expect(find.text('−2 en la Copa'), findsOneWidget);
-      expect(find.text('Ana gana 3 fichas'), findsOneWidget);
-      expect(find.text('Ganan: Ana (+3)'), findsOneWidget);
+      expect(find.text('Ana cobra 3 fichas'), findsOneWidget);
+      expect(find.text('Cobran: Ana (+3)'), findsOneWidget);
       expect(find.text('Pagan: Luis (−2)'), findsOneWidget);
       expect(find.text('Apostó 2 fichas a Oros y falló'), findsOneWidget);
       final events = c.read(sessionProvider).events;
@@ -265,7 +265,7 @@ void main() {
           Bet(playerId: 'p1', suit: Suit.bastos, chips: 4),
         ],
       );
-      expect(find.text('Nadie acertó. ¡Todos pagan!'), findsOneWidget);
+      expect(find.text('Nadie acertó. Pagan todos.'), findsOneWidget);
       expect(find.text('−4 en la Copa'), findsOneWidget);
     });
 
@@ -310,7 +310,7 @@ void main() {
 
     test('resumen de quién paga y línea de la Copa', () {
       expect(chipsLine('Pagan', {'Ana': 2, 'Luis': 3}, gain: false), 'Pagan: Ana (−2), Luis (−3)');
-      expect(chipsLine('Ganan', {'Marta': 5}, gain: true), 'Ganan: Marta (+5)');
+      expect(chipsLine('Cobran', {'Marta': 5}, gain: true), 'Cobran: Marta (+5)');
       expect(chipsLine('Pagan', {}, gain: false), '');
       expect(cupLineFor(ConsequenceMode.puntos, 10), isNull);
       expect(cupLineFor(ConsequenceMode.sorbos, 10), '−10 en la Copa');
@@ -342,7 +342,7 @@ void main() {
     testWidgets('sin jugadores explica qué hacer y ofrece añadirlos', (tester) async {
       await pumpSetup(tester, players: 0);
       expect(find.text('Carrera de caballos'), findsOneWidget);
-      expect(find.textContaining('Añade jugadores para apostar.'), findsOneWidget);
+      expect(find.textContaining('Sin jugadores no hay apuestas.'), findsOneWidget);
       expect(find.text('Añade jugadores para apostar'), findsOneWidget); // botón
       expect(find.byType(TextField), findsOneWidget);
       expect(find.textContaining('Gira el móvil'), findsOneWidget);
@@ -350,7 +350,7 @@ void main() {
 
     testWidgets('con jugadores pide elegir quién apuesta y el valor del slider va en la etiqueta', (tester) async {
       await pumpSetup(tester, players: 2);
-      expect(find.text('Elige quién apuesta'), findsOneWidget);
+      expect(find.text('Haced vuestras apuestas'), findsOneWidget);
       expect(find.text('Casillas hasta la meta: 6'), findsOneWidget);
     });
   });

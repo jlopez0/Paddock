@@ -3,12 +3,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
 
+import '../../../app/app_icons.dart';
 import '../../prompt_deck/game_colors.dart';
 import '../../prompt_deck/level_chips.dart';
 import '../../../core/content/prompts.dart';
 import '../../../core/players/player.dart';
 import '../../../core/players/player_widgets.dart';
 import '../../../core/players/players_controller.dart';
+import '../../../core/audio/app_sound.dart';
 import '../../../core/settings/app_feedback.dart';
 import '../domain/infiltrado_engine.dart';
 import '../infiltrado_store.dart';
@@ -18,7 +20,8 @@ class InfiltradoSetupScreen extends ConsumerStatefulWidget {
   const InfiltradoSetupScreen({super.key});
 
   @override
-  ConsumerState<InfiltradoSetupScreen> createState() => _InfiltradoSetupScreenState();
+  ConsumerState<InfiltradoSetupScreen> createState() =>
+      _InfiltradoSetupScreenState();
 }
 
 class _InfiltradoSetupScreenState extends ConsumerState<InfiltradoSetupScreen> {
@@ -36,7 +39,9 @@ class _InfiltradoSetupScreenState extends ConsumerState<InfiltradoSetupScreen> {
   InfiltradoSetup get _setup => ref.read(infiltradoSetupProvider);
 
   void _update(InfiltradoSetup Function(InfiltradoSetup) f) {
-    ref.read(infiltradoSetupProvider.notifier).set(f(_setup.copyWith(playerIds: {..._selected})));
+    ref
+        .read(infiltradoSetupProvider.notifier)
+        .set(f(_setup.copyWith(playerIds: {..._selected})));
   }
 
   void _toggle(Player p) {
@@ -65,7 +70,10 @@ class _InfiltradoSetupScreenState extends ConsumerState<InfiltradoSetupScreen> {
     final result = ref
         .read(infiltradoGameProvider.notifier)
         .start(players: chosen, setup: _setup, words: words);
-    if (result == InfiltradoStart.ok) context.push('/game/infiltrado/reveal');
+    if (result == InfiltradoStart.ok) {
+      playSound(AppSound.tap);
+      context.push('/game/infiltrado/reveal');
+    }
   }
 
   @override
@@ -78,12 +86,20 @@ class _InfiltradoSetupScreenState extends ConsumerState<InfiltradoSetupScreen> {
 
     final ids = {for (final p in players) p.id};
     _selected.retainAll(ids);
-    final chosen = [for (final p in players) if (_selected.contains(p.id)) p];
+    final chosen = [
+      for (final p in players)
+        if (_selected.contains(p.id)) p,
+    ];
     final enough = chosen.length >= InfiltradoEngine.minPlayers;
     final maxImpostors = InfiltradoEngine.maxImpostors(chosen.length);
-    final impostors = setup.impostors.clamp(1, maxImpostors < 1 ? 1 : maxImpostors);
+    final impostors = setup.impostors.clamp(
+      1,
+      maxImpostors < 1 ? 1 : maxImpostors,
+    );
 
-    final available = words == null ? null : availableWords(words, setup.levels, used);
+    final available = words == null
+        ? null
+        : availableWords(words, setup.levels, used);
     final exhausted = available != null && available.isEmpty;
 
     String buttonLabel;
@@ -91,7 +107,9 @@ class _InfiltradoSetupScreenState extends ConsumerState<InfiltradoSetupScreen> {
     if (!enough) {
       buttonLabel = 'Elige al menos ${InfiltradoEngine.minPlayers} jugadores';
     } else if (words == null) {
-      buttonLabel = wordsAsync.hasError ? 'No se pudieron cargar las palabras' : 'Cargando palabras…';
+      buttonLabel = wordsAsync.hasError
+          ? 'No se pudieron cargar las palabras'
+          : 'Barajando palabras…';
     } else if (exhausted) {
       buttonLabel = 'No quedan palabras';
     } else {
@@ -100,18 +118,30 @@ class _InfiltradoSetupScreenState extends ConsumerState<InfiltradoSetupScreen> {
     }
 
     return Scaffold(
-      appBar: AppBar(title: const Text('El Infiltrado'), actions: const [HowToPlayButton('infiltrado')]),
+      appBar: AppBar(
+        title: const Text('El Infiltrado'),
+        actions: const [HowToPlayButton('infiltrado')],
+      ),
       body: SafeArea(
         child: ListView(
           padding: const EdgeInsets.fromLTRB(20, 4, 20, 24),
           children: [
-            const Card(
+            Card(
               child: Padding(
-                padding: EdgeInsets.all(16),
-                child: Text(
-                  'Todos reciben la misma palabra menos el infiltrado, que solo conoce la '
-                  'categoría. Debatid y votad: si lo pilláis, pierde 2 fichas; si se escapa, '
-                  'los demás pierden 1 cada uno.',
+                padding: const EdgeInsets.all(16),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    AppIcon.detective.widget(size: 36),
+                    const SizedBox(width: 12),
+                    const Expanded(
+                      child: Text(
+                        'Todos reciben la misma palabra salvo el infiltrado, que solo sabe la '
+                        'categoría. Debatid y votad: si lo pilláis, paga 2 fichas; si se escapa, '
+                        'los demás pagan 1 cada uno.',
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -119,7 +149,10 @@ class _InfiltradoSetupScreenState extends ConsumerState<InfiltradoSetupScreen> {
             if (players.isEmpty)
               const Padding(
                 padding: EdgeInsets.only(bottom: 12),
-                child: Text('Añade jugadores para empezar.', style: TextStyle(color: GameColors.mutedText)),
+                child: Text(
+                  'Forma la cuadra para empezar.',
+                  style: TextStyle(color: GameColors.mutedText),
+                ),
               ),
             Wrap(
               spacing: 8,
@@ -156,7 +189,11 @@ class _InfiltradoSetupScreenState extends ConsumerState<InfiltradoSetupScreen> {
               showSelectedIcon: false,
               segments: [
                 const ButtonSegment(value: 1, label: Text('1')),
-                ButtonSegment(value: 2, label: const Text('2'), enabled: maxImpostors >= 2),
+                ButtonSegment(
+                  value: 2,
+                  label: const Text('2'),
+                  enabled: maxImpostors >= 2,
+                ),
               ],
               selected: {impostors},
               onSelectionChanged: (s) {
@@ -184,16 +221,20 @@ class _InfiltradoSetupScreenState extends ConsumerState<InfiltradoSetupScreen> {
                 child: Text(
                   exhausted
                       ? 'No quedan palabras con estos niveles.'
-                      : '${available.length} palabras disponibles',
-                  style: const TextStyle(color: GameColors.mutedText, fontSize: 13),
+                      : '${available.length} palabras en el mazo',
+                  style: const TextStyle(
+                    color: GameColors.mutedText,
+                    fontSize: 13,
+                  ),
                 ),
               ),
             if (exhausted) ...[
               const SizedBox(height: 8),
               OutlinedButton.icon(
-                onPressed: () => ref.read(infiltradoUsedProvider.notifier).reset(),
-                icon: const Icon(Icons.refresh_rounded),
-                label: const Text('Volver a empezar con todas'),
+                onPressed: () =>
+                    ref.read(infiltradoUsedProvider.notifier).reset(),
+                icon: const CategoryIcon('mezcla', size: 20),
+                label: const Text('Barajar todas de nuevo'),
               ),
             ],
             const _SectionTitle('Debate'),
@@ -203,7 +244,7 @@ class _InfiltradoSetupScreenState extends ConsumerState<InfiltradoSetupScreen> {
               children: [
                 for (final s in kDebateOptions)
                   ChoiceChip(
-                    label: Text(s == 0 ? 'Sin temporizador' : '${s ~/ 60} min'),
+                    label: Text(s == 0 ? 'Sin reloj' : '${s ~/ 60} min'),
                     selected: setup.debateSeconds == s,
                     onSelected: (_) {
                       AppFeedback.selection();
@@ -217,7 +258,10 @@ class _InfiltradoSetupScreenState extends ConsumerState<InfiltradoSetupScreen> {
       ),
       bottomNavigationBar: SafeArea(
         minimum: const EdgeInsets.fromLTRB(20, 8, 20, 16),
-        child: FilledButton(onPressed: onPressed, child: Text(buttonLabel, textAlign: TextAlign.center)),
+        child: FilledButton(
+          onPressed: onPressed,
+          child: Text(buttonLabel, textAlign: TextAlign.center),
+        ),
       ),
     );
   }

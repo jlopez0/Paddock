@@ -26,7 +26,8 @@ class PlayingCard {
   static String horseAsset(Suit s) => 'assets/cards/${s.name}_$horseRank.png';
 
   @override
-  bool operator ==(Object other) => other is PlayingCard && other.suit == suit && other.rank == rank;
+  bool operator ==(Object other) =>
+      other is PlayingCard && other.suit == suit && other.rank == rank;
 
   @override
   int get hashCode => Object.hash(suit, rank);

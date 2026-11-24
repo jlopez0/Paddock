@@ -42,12 +42,12 @@ class Country {
   List<String> get acceptedCapitals => [capital, ...capitalAliases];
 
   factory Country.fromJson(Map<String, dynamic> j) => Country(
-        iso: (j['iso'] as String).toLowerCase(),
-        name: j['nombre'] as String,
-        capital: j['capital'] as String,
-        continent: Continent.values.byName(j['continente'] as String),
-        hasSilhouette: j['silueta'] as bool,
-        aliases: (j['alias'] as List?)?.cast<String>() ?? const [],
-        capitalAliases: (j['aliasCapital'] as List?)?.cast<String>() ?? const [],
-      );
+    iso: (j['iso'] as String).toLowerCase(),
+    name: j['nombre'] as String,
+    capital: j['capital'] as String,
+    continent: Continent.values.byName(j['continente'] as String),
+    hasSilhouette: j['silueta'] as bool,
+    aliases: (j['alias'] as List?)?.cast<String>() ?? const [],
+    capitalAliases: (j['aliasCapital'] as List?)?.cast<String>() ?? const [],
+  );
 }

@@ -50,7 +50,10 @@ class AbecedarioSetupScreen extends ConsumerWidget {
     return Theme(
       data: tinted,
       child: Scaffold(
-        appBar: AppBar(title: const Text('Abecedario'), actions: const [HowToPlayButton('abecedario')]),
+        appBar: AppBar(
+          title: const Text('Abecedario'),
+          actions: const [HowToPlayButton('abecedario')],
+        ),
         body: SafeArea(
           top: false,
           child: ListView(

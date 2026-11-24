@@ -1,0 +1,10 @@
+Sonidos de mesa de Paddock (chip.ogg, chip_soft.ogg, card.ogg, correct.ogg, wrong.ogg, tap.ogg, podium.ogg)
+Autor: Kenney Vleugels (www.kenney.nl). Licencia: Creative Commons Zero (CC0 1.0), http://creativecommons.org/publicdomain/zero/1.0/
+Uso personal y comercial permitido; la atribucion no es obligatoria (cortesia).
+
+Origen (packs descargados de kenney.nl el 2026-11-25; cada License.txt del pack confirma CC0):
+- Casino Audio 1.1 (https://kenney.nl/assets/casino-audio): chips-stack-1 -> chip, chip-lay-1 -> chip_soft, card-slide-1 -> card
+- Music Jingles (https://kenney.nl/assets/music-jingles): jingles_HIT00 -> correct, jingles_HIT13 -> wrong, jingles_HIT15 -> podium
+- UI Audio (https://kenney.nl/assets/ui-audio): click1 -> tap
+
+El archivo guillermo_tell.ogg (musica de la carrera) es independiente de este.

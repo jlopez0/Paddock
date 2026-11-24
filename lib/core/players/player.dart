@@ -14,22 +14,37 @@ const playerPalette = <Color>[
 
 @immutable
 class Player {
-  const Player({required this.id, required this.name, required this.colorIndex});
+  const Player({
+    required this.id,
+    required this.name,
+    required this.colorIndex,
+  });
 
   final String id;
   final String name;
   final int colorIndex;
 
   Color get color => playerPalette[colorIndex % playerPalette.length];
-  String get initial => name.isEmpty ? '?' : name.characters.first.toUpperCase();
+  String get initial =>
+      name.isEmpty ? '?' : name.characters.first.toUpperCase();
 
-  Player copyWith({String? name, int? colorIndex}) =>
-      Player(id: id, name: name ?? this.name, colorIndex: colorIndex ?? this.colorIndex);
+  Player copyWith({String? name, int? colorIndex}) => Player(
+    id: id,
+    name: name ?? this.name,
+    colorIndex: colorIndex ?? this.colorIndex,
+  );
 
-  Map<String, dynamic> toJson() => {'id': id, 'name': name, 'color': colorIndex};
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'name': name,
+    'color': colorIndex,
+  };
 
-  factory Player.fromJson(Map<String, dynamic> j) =>
-      Player(id: j['id'] as String, name: j['name'] as String, colorIndex: j['color'] as int);
+  factory Player.fromJson(Map<String, dynamic> j) => Player(
+    id: j['id'] as String,
+    name: j['name'] as String,
+    colorIndex: j['color'] as int,
+  );
 
   @override
   bool operator ==(Object other) => other is Player && other.id == id;

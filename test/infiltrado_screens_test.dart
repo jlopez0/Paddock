@@ -1,9 +1,11 @@
+import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
+import 'package:paddock/app/theme.dart';
 import 'package:paddock/core/content/prompts.dart';
 import 'package:paddock/core/players/players_controller.dart';
 import 'package:paddock/core/session/session_controller.dart';
@@ -32,8 +34,11 @@ Future<_Env> _pump(
   List<String> players = _names,
   List<InfiltradoWord> words = kFallbackWords,
   String location = '/game/infiltrado',
+  Size size = const Size(400, 900),
+  double textScale = 1,
+  bool disableAnimations = false,
 }) async {
-  tester.view.physicalSize = const Size(400, 900);
+  tester.view.physicalSize = size;
   tester.view.devicePixelRatio = 1;
   addTearDown(tester.view.reset);
 
@@ -71,7 +76,17 @@ Future<_Env> _pump(
   await tester.pumpWidget(
     UncontrolledProviderScope(
       container: c,
-      child: MaterialApp.router(routerConfig: router),
+      child: MaterialApp.router(
+        routerConfig: router,
+        theme: buildAppTheme(),
+        builder: (context, child) => MediaQuery(
+          data: MediaQuery.of(context).copyWith(
+            textScaler: TextScaler.linear(textScale),
+            disableAnimations: disableAnimations,
+          ),
+          child: child!,
+        ),
+      ),
     ),
   );
   await tester.pumpAndSettle();
@@ -182,7 +197,7 @@ void main() {
       );
       expect(find.text('No quedan palabras con estos niveles.'), findsOneWidget);
 
-      await _tapText(tester, 'Volver a empezar con todas');
+      await _tapText(tester, 'Barajar todas de nuevo');
       expect(find.text('Repartir roles'), findsOneWidget);
     });
 
@@ -333,8 +348,83 @@ void main() {
       await tester.pump(const Duration(seconds: 1));
       expect(find.text('1:59'), findsOneWidget);
 
-      await _tapText(tester, 'Pasar a votar');
+      await _tapText(tester, 'A votar');
       expect(find.text('Voto 1 de 4'), findsOneWidget);
+    });
+  });
+
+  group('diseño con alma', () {
+    testWidgets('sello del resultado: SALVADOS si lo pillan, INFILTRADO si se escapa', (tester) async {
+      final env = await _pump(tester);
+      await _tapText(tester, 'Repartir roles');
+      final game = env.game;
+      final impostor = game.deal.impostors.single;
+      await _reveal(tester, env);
+      final other = game.deal.civils.first;
+      await _vote(tester, env, {
+        for (final id in game.deal.players) id: id == impostor ? other : impostor,
+      });
+      await _tapText(tester, 'Ni idea');
+      expect(find.text('SALVADOS'), findsOneWidget);
+      expect(find.text('INFILTRADO'), findsNothing);
+    });
+
+    testWidgets('sello INFILTRADO cuando el infiltrado se escapa', (tester) async {
+      final env = await _pump(tester);
+      await _tapText(tester, 'Repartir roles');
+      final game = env.game;
+      await _reveal(tester, env);
+      final civils = game.deal.civils.toList();
+      await _vote(tester, env, {
+        for (final id in game.deal.players) id: id == civils.first ? civils.last : civils.first,
+      });
+      expect(find.text('INFILTRADO'), findsOneWidget);
+      expect(find.text('SALVADOS'), findsNothing);
+    });
+
+    for (final disable in [false, true]) {
+      testWidgets(
+        'partida completa en 320x568 con texto x2 sin desbordes (animaciones ${disable ? 'off' : 'on'})',
+        (tester) async {
+          final env = await _pump(
+            tester,
+            size: const Size(320, 568),
+            textScale: 2,
+            disableAnimations: disable,
+          );
+          await _tapText(tester, 'Repartir roles');
+          final game = env.game;
+          final impostor = game.deal.impostors.single;
+          await _reveal(tester, env);
+          final other = game.deal.civils.first;
+          await _vote(tester, env, {
+            for (final id in game.deal.players) id: id == impostor ? other : impostor,
+          });
+          expect(find.text('Última oportunidad'), findsOneWidget);
+          await _tapText(tester, 'Ni idea');
+          expect(find.text('SALVADOS'), findsOneWidget);
+          expect(tester.takeException(), isNull);
+        },
+      );
+    }
+
+    testWidgets('sin partida y con texto x2 tampoco desborda', (tester) async {
+      await _pump(
+        tester,
+        location: '/game/infiltrado/result',
+        size: const Size(320, 568),
+        textScale: 2,
+      );
+      expect(find.text('Nadie está disimulando ahora mismo.'), findsOneWidget);
+      expect(tester.takeException(), isNull);
+    });
+
+    test('ni un emoji en el código del Infiltrado', () {
+      final emoji = RegExp(r'[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{FE0F}\u{2B50}\u{2B55}]', unicode: true);
+      for (final f in Directory('lib/games/infiltrado').listSync(recursive: true).whereType<File>()) {
+        if (!f.path.endsWith('.dart')) continue;
+        expect(emoji.hasMatch(f.readAsStringSync()), isFalse, reason: f.path);
+      }
     });
   });
 
@@ -369,8 +459,8 @@ void main() {
 
     testWidgets('sin partida en curso no se enseña nada y se ofrece preparar una', (tester) async {
       await _pump(tester, location: '/game/infiltrado/reveal');
-      expect(find.text('No hay ninguna partida en curso.'), findsOneWidget);
-      await _tapText(tester, 'Preparar una partida');
+      expect(find.text('Nadie está disimulando ahora mismo.'), findsOneWidget);
+      await _tapText(tester, 'Preparar partida');
       expect(find.text('Repartir roles'), findsOneWidget);
     });
 

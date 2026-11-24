@@ -4,10 +4,12 @@ import 'dart:math';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:flutter/services.dart';
+import '../../../core/audio/app_sound.dart';
 import '../../../core/settings/app_feedback.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../app/app_icons.dart';
 import '../../../app/theme.dart';
 import '../../../core/players/player.dart';
 import '../../../core/players/player_widgets.dart';
@@ -18,6 +20,7 @@ import '../domain/cards.dart';
 import '../domain/race_engine.dart';
 import '../race_result.dart';
 import '../race_store.dart';
+import 'race_widgets.dart';
 
 const _cardAspect = 300 / 460;
 
@@ -46,7 +49,10 @@ class _RaceScreenState extends ConsumerState<RaceScreen> {
   @override
   void initState() {
     super.initState();
-    SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft, DeviceOrientation.landscapeRight]);
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeRight,
+    ]);
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
     if (_setup.settings.music && AppFeedback.soundEnabled) _startMusic();
   }
@@ -96,7 +102,9 @@ class _RaceScreenState extends ConsumerState<RaceScreen> {
   void _stopMusic() {
     final p = _music;
     _music = null;
-    if (p != null) unawaited(p.stop().then((_) => p.dispose()).catchError((_) {}));
+    if (p != null) {
+      unawaited(p.stop().then((_) => p.dispose()).catchError((_) {}));
+    }
   }
 
   @override
@@ -120,6 +128,8 @@ class _RaceScreenState extends ConsumerState<RaceScreen> {
           await _wait(700);
         case HorseAdvanced(:final card):
           AppFeedback.selection();
+          // Si esta carta decide la carrera, solo suena el podio.
+          if (_engine.winner == null) playSound(AppSound.card);
           setState(() {
             _lastCard = card;
             _pos[card.suit] = _pos[card.suit]! + 1;
@@ -129,6 +139,7 @@ class _RaceScreenState extends ConsumerState<RaceScreen> {
           await _wait(450);
         case ObstacleRevealed(:final card):
           AppFeedback.medium();
+          playSound(AppSound.card);
           setState(() {
             _revealed++;
             _message = '¡Obstáculo! ${card.suit.label} retrocede';
@@ -142,6 +153,7 @@ class _RaceScreenState extends ConsumerState<RaceScreen> {
           await _wait(500);
         case HorseWon(:final suit):
           AppFeedback.heavy();
+          playSound(AppSound.podium);
           _finish(suit);
       }
     }
@@ -153,7 +165,11 @@ class _RaceScreenState extends ConsumerState<RaceScreen> {
   }
 
   void _finish(Suit winner) {
-    final outcomes = settleBets(_setup.bets, winner, winMultiplier: _setup.settings.winMultiplier);
+    final outcomes = settleBets(
+      _setup.bets,
+      winner,
+      winMultiplier: _setup.settings.winMultiplier,
+    );
     ref.read(raceStatsProvider.notifier).record(winner, outcomes);
     ref
         .read(lastRaceResultProvider.notifier)
@@ -190,8 +206,14 @@ class _RaceScreenState extends ConsumerState<RaceScreen> {
         title: const Text('¿Abandonar la carrera?'),
         content: const Text('No contará para las estadísticas.'),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Seguir')),
-          FilledButton(onPressed: () => Navigator.pop(ctx, true), child: const Text('Salir')),
+          TextButton(
+            onPressed: () => Navigator.pop(ctx, false),
+            child: const Text('Seguir'),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.pop(ctx, true),
+            child: const Text('Salir'),
+          ),
         ],
       ),
     );
@@ -205,7 +227,8 @@ class _RaceScreenState extends ConsumerState<RaceScreen> {
       for (final s in Suit.values)
         s: [
           for (final b in _setup.bets)
-            if (b.suit == s && players[b.playerId] != null) players[b.playerId]!,
+            if (b.suit == s && players[b.playerId] != null)
+              players[b.playerId]!,
         ],
     };
     final leaderPos = _pos.values.reduce(max);
@@ -394,13 +417,23 @@ class _Toast extends StatelessWidget {
               key: ValueKey(message),
               alignment: Alignment.centerLeft,
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                decoration: BoxDecoration(color: AppColors.danger, borderRadius: BorderRadius.circular(14)),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 5,
+                ),
+                decoration: BoxDecoration(
+                  color: AppColors.danger,
+                  borderRadius: BorderRadius.circular(14),
+                ),
                 child: Text(
                   message!,
                   maxLines: 3,
                   overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 11, height: 1.15),
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w800,
+                    fontSize: 11,
+                    height: 1.15,
+                  ),
                 ),
               ),
             ),
@@ -422,7 +455,12 @@ class _LaneLabel extends StatelessWidget {
       children: [
         Text(
           suit.label.toUpperCase(),
-          style: TextStyle(color: suit.color, fontWeight: FontWeight.w900, letterSpacing: 1, fontSize: 13),
+          style: TextStyle(
+            color: suit.color,
+            fontWeight: FontWeight.w900,
+            letterSpacing: 1,
+            fontSize: 13,
+          ),
         ),
         if (bettors.isNotEmpty) ...[
           const SizedBox(height: 4),
@@ -431,7 +469,10 @@ class _LaneLabel extends StatelessWidget {
             child: Stack(
               children: [
                 for (var i = 0; i < min(bettors.length, 4); i++)
-                  Positioned(left: i * 14.0, child: PlayerAvatar(bettors[i], size: 22)),
+                  Positioned(
+                    left: i * 14.0,
+                    child: PlayerAvatar(bettors[i], size: 22),
+                  ),
               ],
             ),
           ),
@@ -476,10 +517,23 @@ class _Lane extends StatelessWidget {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(14),
                 gradient: LinearGradient(
-                  colors: [suit.color.withValues(alpha: 0.22), suit.color.withValues(alpha: 0.06)],
+                  colors: [
+                    suit.color.withValues(alpha: 0.22),
+                    suit.color.withValues(alpha: 0.06),
+                  ],
                 ),
-                border: Border.all(color: glow ? suit.color : suit.color.withValues(alpha: 0.25), width: glow ? 2 : 1),
-                boxShadow: glow ? [BoxShadow(color: suit.color.withValues(alpha: 0.35), blurRadius: 10)] : null,
+                border: Border.all(
+                  color: glow ? suit.color : suit.color.withValues(alpha: 0.25),
+                  width: glow ? 2 : 1,
+                ),
+                boxShadow: glow
+                    ? [
+                        BoxShadow(
+                          color: suit.color.withValues(alpha: 0.35),
+                          blurRadius: 10,
+                        ),
+                      ]
+                    : null,
               ),
               child: Stack(
                 clipBehavior: Clip.none,
@@ -490,9 +544,18 @@ class _Lane extends StatelessWidget {
                       left: c * cellW,
                       top: 6,
                       bottom: 6,
-                      child: Container(width: 1, color: Colors.white.withValues(alpha: 0.08)),
+                      child: Container(
+                        width: 1,
+                        color: Colors.white.withValues(alpha: 0.08),
+                      ),
                     ),
-                  Positioned(left: (cols - 1) * cellW, top: 0, bottom: 0, width: cellW, child: const _FinishLine()),
+                  Positioned(
+                    left: (cols - 1) * cellW,
+                    top: 0,
+                    bottom: 0,
+                    width: cellW,
+                    child: const _FinishLine(),
+                  ),
                 ],
               ),
             ),
@@ -516,7 +579,8 @@ class _Lane extends StatelessWidget {
                     borderRadius: BorderRadius.circular(6),
                     boxShadow: [
                       BoxShadow(
-                        color: (bumped ? AppColors.danger : Colors.black).withValues(alpha: 0.5),
+                        color: (bumped ? AppColors.danger : Colors.black)
+                            .withValues(alpha: 0.5),
                         blurRadius: bumped ? 10 : 6,
                         offset: const Offset(0, 3),
                       ),
@@ -532,7 +596,13 @@ class _Lane extends StatelessWidget {
     );
     // Solo se atenúa al terminar (bajo la capa oscura); mientras corre no hay capas con opacidad.
     return RepaintBoundary(
-      child: dimmed ? AnimatedOpacity(duration: const Duration(milliseconds: 400), opacity: 0.4, child: lane) : lane,
+      child: dimmed
+          ? AnimatedOpacity(
+              duration: const Duration(milliseconds: 400),
+              opacity: 0.4,
+              child: lane,
+            )
+          : lane,
     );
   }
 }
@@ -579,7 +649,11 @@ class _CardImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) => ClipRRect(
     borderRadius: BorderRadius.circular(6),
-    child: Image.asset(asset, fit: BoxFit.contain, filterQuality: FilterQuality.medium),
+    child: Image.asset(
+      asset,
+      fit: BoxFit.contain,
+      filterQuality: FilterQuality.medium,
+    ),
   );
 }
 
@@ -615,9 +689,13 @@ class _SidePanel extends StatelessWidget {
                   IconButton.filledTonal(
                     tooltip: auto ? 'Pausar' : 'Automático',
                     onPressed: enabled ? onToggleAuto : null,
-                    icon: Icon(auto ? Icons.pause_rounded : Icons.fast_forward_rounded),
+                    icon: (auto ? AppIcon.pause : AppIcon.fastForward).widget(),
                   ),
-                  IconButton.filledTonal(tooltip: 'Salir', onPressed: onExit, icon: const Icon(Icons.close_rounded)),
+                  IconButton.filledTonal(
+                    tooltip: 'Salir',
+                    onPressed: onExit,
+                    icon: AppIcon.close.widget(),
+                  ),
                 ],
               ),
               const Spacer(),
@@ -628,10 +706,16 @@ class _SidePanel extends StatelessWidget {
                 child: AnimatedSwitcher(
                   duration: const Duration(milliseconds: 300),
                   transitionBuilder: (child, a) => SlideTransition(
-                    position: Tween(
-                      begin: const Offset(0, 0.6),
-                      end: Offset.zero,
-                    ).animate(CurvedAnimation(parent: a, curve: Curves.easeOutCubic)),
+                    position:
+                        Tween(
+                          begin: const Offset(0, 0.6),
+                          end: Offset.zero,
+                        ).animate(
+                          CurvedAnimation(
+                            parent: a,
+                            curve: Curves.easeOutCubic,
+                          ),
+                        ),
                     child: FadeTransition(opacity: a, child: child),
                   ),
                   child: lastCard == null
@@ -639,13 +723,19 @@ class _SidePanel extends StatelessWidget {
                           key: const ValueKey('empty'),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(8),
-                            border: Border.all(color: AppColors.outline, width: 2),
+                            border: Border.all(
+                              color: AppColors.outline,
+                              width: 2,
+                            ),
                           ),
                           child: const Center(
                             child: Text(
                               'Toca el mazo',
                               textAlign: TextAlign.center,
-                              style: TextStyle(color: AppColors.textMuted, fontSize: 12),
+                              style: TextStyle(
+                                color: AppColors.textMuted,
+                                fontSize: 12,
+                              ),
                             ),
                           ),
                         )
@@ -653,7 +743,14 @@ class _SidePanel extends StatelessWidget {
                           key: ValueKey(lastCard),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(8),
-                            boxShadow: [BoxShadow(color: lastCard!.suit.color.withValues(alpha: 0.6), blurRadius: 16)],
+                            boxShadow: [
+                              BoxShadow(
+                                color: lastCard!.suit.color.withValues(
+                                  alpha: 0.6,
+                                ),
+                                blurRadius: 16,
+                              ),
+                            ],
                           ),
                           child: _CardImage(lastCard!.asset),
                         ),
@@ -682,11 +779,21 @@ class _SidePanel extends StatelessWidget {
                         right: 0,
                         bottom: 0,
                         child: Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                          decoration: BoxDecoration(color: AppColors.gold, borderRadius: BorderRadius.circular(20)),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 8,
+                            vertical: 2,
+                          ),
+                          decoration: BoxDecoration(
+                            color: AppColors.gold,
+                            borderRadius: BorderRadius.circular(20),
+                          ),
                           child: Text(
                             '$deckCount',
-                            style: const TextStyle(color: Colors.black, fontWeight: FontWeight.w900, fontSize: 12),
+                            style: const TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.w900,
+                              fontSize: 12,
+                            ),
                           ),
                         ),
                       ),
@@ -717,8 +824,15 @@ class _WinnerOverlay extends StatelessWidget {
         builder: (context, t, child) => Opacity(opacity: t, child: child),
         child: Stack(
           children: [
-            Positioned.fill(child: ColoredBox(color: Colors.black.withValues(alpha: 0.65))),
-            Positioned.fill(child: Confetti(colors: [winner.color, AppColors.gold, Colors.white])),
+            Positioned.fill(
+              child: ColoredBox(color: Colors.black.withValues(alpha: 0.65)),
+            ),
+            if (!MediaQuery.disableAnimationsOf(context))
+              Positioned.fill(
+                child: Confetti(
+                  colors: [winner.color, AppColors.gold, Colors.white],
+                ),
+              ),
             Center(
               child: Row(
                 mainAxisSize: MainAxisSize.min,
@@ -727,12 +841,18 @@ class _WinnerOverlay extends StatelessWidget {
                     tween: Tween(begin: 0.4, end: 1),
                     duration: const Duration(milliseconds: 700),
                     curve: Curves.elasticOut,
-                    builder: (context, s, child) => Transform.scale(scale: s, child: child),
+                    builder: (context, s, child) =>
+                        Transform.scale(scale: s, child: child),
                     child: Container(
                       height: 200,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(12),
-                        boxShadow: [BoxShadow(color: winner.color.withValues(alpha: 0.7), blurRadius: 40)],
+                        boxShadow: [
+                          BoxShadow(
+                            color: winner.color.withValues(alpha: 0.7),
+                            blurRadius: 40,
+                          ),
+                        ],
                       ),
                       child: _CardImage(PlayingCard.horseAsset(winner)),
                     ),
@@ -742,15 +862,36 @@ class _WinnerOverlay extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text('🏆 ¡GANA!', style: TextStyle(fontSize: 18, color: AppColors.textMuted)),
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          AppIcon.trophy.widget(size: 28),
+                          const SizedBox(width: 8),
+                          const Text(
+                            '¡GANA!',
+                            style: TextStyle(
+                              fontFamily: AppFonts.display,
+                              fontSize: 22,
+                              letterSpacing: 1.5,
+                              color: AppColors.gold,
+                            ),
+                          ),
+                        ],
+                      ),
                       Text(
                         winner.label,
-                        style: TextStyle(fontSize: 48, fontWeight: FontWeight.w900, color: winner.color),
+                        style: TextStyle(
+                          fontFamily: AppFonts.display,
+                          fontSize: 48,
+                          fontWeight: FontWeight.w400,
+                          color: winner.color,
+                        ),
                       ),
                       const SizedBox(height: 16),
                       FilledButton.icon(
-                        onPressed: () => context.pushReplacement('/game/carrera/result'),
-                        icon: const Icon(Icons.toll_rounded),
+                        onPressed: () =>
+                            context.pushReplacement('/game/carrera/result'),
+                        icon: AppIcon.coins.widget(size: 22, color: raceInk),
                         label: const Text('¿Quién paga?'),
                       ),
                     ],

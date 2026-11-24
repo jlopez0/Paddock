@@ -18,25 +18,29 @@ class ScoreEvent {
 
   // Claves cortas: formato `session.v1`, no cambiar sin pasar a `.v2` con migración.
   Map<String, dynamic> toJson() => {
-        'r': roundId,
-        'g': gameId,
-        'p': playerId,
-        'd': delta,
-        't': at.millisecondsSinceEpoch,
-      };
+    'r': roundId,
+    'g': gameId,
+    'p': playerId,
+    'd': delta,
+    't': at.millisecondsSinceEpoch,
+  };
 
   factory ScoreEvent.fromJson(Map<String, dynamic> json) => ScoreEvent(
-        roundId: json['r'] as String,
-        gameId: json['g'] as String,
-        playerId: json['p'] as String,
-        delta: json['d'] as int,
-        at: DateTime.fromMillisecondsSinceEpoch(json['t'] as int),
-      );
+    roundId: json['r'] as String,
+    gameId: json['g'] as String,
+    playerId: json['p'] as String,
+    delta: json['d'] as int,
+    at: DateTime.fromMillisecondsSinceEpoch(json['t'] as int),
+  );
 }
 
 /// Total de fichas de un jugador, con su puesto (los empates comparten puesto: 1, 1, 3...).
 class Standing {
-  const Standing({required this.playerId, required this.total, required this.rank});
+  const Standing({
+    required this.playerId,
+    required this.total,
+    required this.rank,
+  });
 
   final String playerId;
   final int total;
@@ -45,7 +49,11 @@ class Standing {
 
 /// Resumen de un juego dentro de la noche.
 class GameStats {
-  const GameStats({required this.gameId, required this.rounds, required this.standings});
+  const GameStats({
+    required this.gameId,
+    required this.rounds,
+    required this.standings,
+  });
 
   final String gameId;
   final int rounds;
@@ -54,7 +62,11 @@ class GameStats {
 
 /// La noche en curso: una lista de eventos de la que se deduce todo lo demás.
 class Session {
-  const Session({required this.id, required this.startedAt, this.events = const []});
+  const Session({
+    required this.id,
+    required this.startedAt,
+    this.events = const [],
+  });
 
   /// Noche vacía que empieza en `now`.
   factory Session.empty(DateTime now) =>
@@ -72,7 +84,8 @@ class Session {
   bool get isEmpty => events.isEmpty;
 
   /// `true` si la noche tiene eventos y empezó hace más de 12 h.
-  bool isStale(DateTime now) => !isEmpty && now.difference(startedAt) > staleAfter;
+  bool isStale(DateTime now) =>
+      !isEmpty && now.difference(startedAt) > staleAfter;
 
   bool hasRound(String roundId) => events.any((e) => e.roundId == roundId);
 
@@ -103,7 +116,13 @@ class Session {
       events: List.unmodifiable([
         ...events,
         for (final e in entries)
-          ScoreEvent(roundId: roundId, gameId: gameId, playerId: e.key, delta: e.value, at: at),
+          ScoreEvent(
+            roundId: roundId,
+            gameId: gameId,
+            playerId: e.key,
+            delta: e.value,
+            at: at,
+          ),
       ]),
     );
   }
@@ -155,11 +174,11 @@ class Session {
   }
 
   Map<String, dynamic> toJson() => {
-        'v': version,
-        'id': id,
-        's': startedAt.millisecondsSinceEpoch,
-        'e': events.map((e) => e.toJson()).toList(),
-      };
+    'v': version,
+    'id': id,
+    's': startedAt.millisecondsSinceEpoch,
+    'e': events.map((e) => e.toJson()).toList(),
+  };
 
   String encode() => jsonEncode(toJson());
 
@@ -174,7 +193,9 @@ class Session {
         id: json['id'] as String,
         startedAt: DateTime.fromMillisecondsSinceEpoch(json['s'] as int),
         events: List.unmodifiable(
-          (json['e'] as List).map((e) => ScoreEvent.fromJson(e as Map<String, dynamic>)),
+          (json['e'] as List).map(
+            (e) => ScoreEvent.fromJson(e as Map<String, dynamic>),
+          ),
         ),
       );
     } catch (_) {
@@ -188,11 +209,16 @@ List<Standing> _rank(List<ScoreEvent> events) {
   for (final e in events) {
     totals[e.playerId] = (totals[e.playerId] ?? 0) + e.delta;
   }
-  final sorted = totals.entries.toList()..sort((a, b) => b.value.compareTo(a.value));
+  final sorted = totals.entries.toList()
+    ..sort((a, b) => b.value.compareTo(a.value));
   final result = <Standing>[];
   for (var i = 0; i < sorted.length; i++) {
-    final rank = i > 0 && sorted[i].value == sorted[i - 1].value ? result[i - 1].rank : i + 1;
-    result.add(Standing(playerId: sorted[i].key, total: sorted[i].value, rank: rank));
+    final rank = i > 0 && sorted[i].value == sorted[i - 1].value
+        ? result[i - 1].rank
+        : i + 1;
+    result.add(
+      Standing(playerId: sorted[i].key, total: sorted[i].value, rank: rank),
+    );
   }
   return List.unmodifiable(result);
 }

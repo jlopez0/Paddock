@@ -25,28 +25,45 @@ class GeoSetup {
   final Set<Continent> regions;
   final int count;
 
-  QuizConfig get config =>
-      QuizConfig(category: category, withOptions: withOptions, regions: regions, count: count);
+  QuizConfig get config => QuizConfig(
+    category: category,
+    withOptions: withOptions,
+    regions: regions,
+    count: count,
+  );
 
-  GeoSetup copyWith({GeoCategory? category, AnswerMode? mode, Set<Continent>? regions, int? count}) => GeoSetup(
-        category: category ?? this.category,
-        mode: mode ?? this.mode,
-        regions: regions ?? this.regions,
-        count: count ?? this.count,
-      );
+  GeoSetup copyWith({
+    GeoCategory? category,
+    AnswerMode? mode,
+    Set<Continent>? regions,
+    int? count,
+  }) => GeoSetup(
+    category: category ?? this.category,
+    mode: mode ?? this.mode,
+    regions: regions ?? this.regions,
+    count: count ?? this.count,
+  );
 
   /// Clave para los récords: mismo tipo de partida = mismo récord.
-  String get recordKey => '${category.name}|${switch (mode) { AnswerMode.options => 'op', AnswerMode.typed => 'esc', AnswerMode.reveal => 'ver' }}|$count|${regions.length == Continent.values.length ? 'mundo' : (regions.map((r) => r.name).toList()..sort()).join('+')}';
+  String get recordKey =>
+      '${category.name}|${switch (mode) {
+        AnswerMode.options => 'op',
+        AnswerMode.typed => 'esc',
+        AnswerMode.reveal => 'ver',
+      }}|$count|${regions.length == Continent.values.length ? 'mundo' : (regions.map((r) => r.name).toList()..sort()).join('+')}';
 
   Map<String, dynamic> toJson() => {
-        'category': category.name,
-        'mode': mode.name,
-        'regions': regions.map((r) => r.name).toList(),
-        'count': count,
-      };
+    'category': category.name,
+    'mode': mode.name,
+    'regions': regions.map((r) => r.name).toList(),
+    'count': count,
+  };
 
   factory GeoSetup.fromJson(Map<String, dynamic> j) {
-    final regions = (j['regions'] as List).cast<String>().map(Continent.values.byName).toSet();
+    final regions = (j['regions'] as List)
+        .cast<String>()
+        .map(Continent.values.byName)
+        .toSet();
     return GeoSetup(
       category: GeoCategory.values.byName(j['category'] as String),
       mode: switch (j['mode']) {
@@ -59,7 +76,9 @@ class GeoSetup {
   }
 }
 
-final geoSetupProvider = NotifierProvider<GeoSetupController, GeoSetup>(GeoSetupController.new);
+final geoSetupProvider = NotifierProvider<GeoSetupController, GeoSetup>(
+  GeoSetupController.new,
+);
 
 class GeoSetupController extends Notifier<GeoSetup> {
   static const _key = 'geo.setup.v1';
@@ -77,12 +96,16 @@ class GeoSetupController extends Notifier<GeoSetup> {
 
   void update(GeoSetup Function(GeoSetup s) change) {
     state = change(state);
-    ref.read(sharedPreferencesProvider).setString(_key, jsonEncode(state.toJson()));
+    ref
+        .read(sharedPreferencesProvider)
+        .setString(_key, jsonEncode(state.toJson()));
   }
 }
 
 /// Mejor puntuación por tipo de partida.
-final geoRecordsProvider = NotifierProvider<GeoRecords, Map<String, int>>(GeoRecords.new);
+final geoRecordsProvider = NotifierProvider<GeoRecords, Map<String, int>>(
+  GeoRecords.new,
+);
 
 class GeoRecords extends Notifier<Map<String, int>> {
   static const _key = 'geo.records.v1';
@@ -135,7 +158,9 @@ class QuizResult {
   final int best;
 }
 
-final lastQuizResultProvider = NotifierProvider<LastQuizResult, QuizResult?>(LastQuizResult.new);
+final lastQuizResultProvider = NotifierProvider<LastQuizResult, QuizResult?>(
+  LastQuizResult.new,
+);
 
 class LastQuizResult extends Notifier<QuizResult?> {
   @override

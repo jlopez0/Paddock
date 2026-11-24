@@ -9,19 +9,19 @@ import '../../core/storage.dart';
 const triviaColor = Color(0xFFF2994A);
 const triviaAsset = 'assets/content/es/trivia.json';
 
+/// El `name` de cada categoría es también el id de su `CategoryIcon`.
 enum TriviaCategory {
-  historia('Historia', '🏛️'),
-  ciencia('Ciencia', '🔬'),
-  naturaleza('Naturaleza', '🌿'),
-  arte('Arte y letras', '🎨'),
-  deporte('Deporte', '⚽'),
-  ocio('Cine y música', '🎬'),
-  curiosidades('Curiosidades', '🧩');
+  historia('Historia'),
+  ciencia('Ciencia'),
+  naturaleza('Naturaleza'),
+  arte('Arte y letras'),
+  deporte('Deporte'),
+  ocio('Cine y música'),
+  curiosidades('Curiosidades');
 
-  const TriviaCategory(this.label, this.emoji);
+  const TriviaCategory(this.label);
 
   final String label;
-  final String emoji;
 }
 
 enum TriviaLevel {
@@ -34,10 +34,10 @@ enum TriviaLevel {
   final String label;
 
   bool accepts(TriviaQuestion q) => switch (this) {
-        TriviaLevel.normal => !q.hard,
-        TriviaLevel.hard => q.hard,
-        TriviaLevel.all => true,
-      };
+    TriviaLevel.normal => !q.hard,
+    TriviaLevel.hard => q.hard,
+    TriviaLevel.all => true,
+  };
 }
 
 class TriviaQuestion {
@@ -64,38 +64,48 @@ class TriviaQuestion {
   final List<String> options;
 
   factory TriviaQuestion.fromJson(Map<String, dynamic> j) => TriviaQuestion(
-        id: j['id'] as String,
-        category: TriviaCategory.values.byName(j['cat'] as String),
-        text: j['q'] as String,
-        answer: j['a'] as String,
-        wrong: (j['w'] as List).cast<String>(),
-        hard: j['dif'] == 'dificil',
-      );
+    id: j['id'] as String,
+    category: TriviaCategory.values.byName(j['cat'] as String),
+    text: j['q'] as String,
+    answer: j['a'] as String,
+    wrong: (j['w'] as List).cast<String>(),
+    hard: j['dif'] == 'dificil',
+  );
 
   TriviaQuestion shuffled(Random random) => TriviaQuestion(
-        id: id,
-        category: category,
-        text: text,
-        answer: answer,
-        wrong: wrong,
-        hard: hard,
-        options: [answer, ...wrong]..shuffle(random),
-      );
+    id: id,
+    category: category,
+    text: text,
+    answer: answer,
+    wrong: wrong,
+    hard: hard,
+    options: [answer, ...wrong]..shuffle(random),
+  );
 }
 
-List<TriviaQuestion> parseTrivia(String json) => ((jsonDecode(json) as Map<String, dynamic>)['items'] as List)
-    .cast<Map<String, dynamic>>()
-    .map(TriviaQuestion.fromJson)
-    .toList();
+List<TriviaQuestion> parseTrivia(String json) =>
+    ((jsonDecode(json) as Map<String, dynamic>)['items'] as List)
+        .cast<Map<String, dynamic>>()
+        .map(TriviaQuestion.fromJson)
+        .toList();
 
-final triviaBankProvider =
-    FutureProvider<List<TriviaQuestion>>((ref) async => parseTrivia(await rootBundle.loadString(triviaAsset)));
+final triviaBankProvider = FutureProvider<List<TriviaQuestion>>(
+  (ref) async => parseTrivia(await rootBundle.loadString(triviaAsset)),
+);
 
 /// Elige [count] preguntas (0 = todas) de las categorías dadas, mezcladas y con las opciones barajadas.
 List<TriviaQuestion> generateTrivia(
-    List<TriviaQuestion> bank, Set<TriviaCategory> categories, int count, Random random,
-    {TriviaLevel level = TriviaLevel.all}) {
-  final pool = bank.where((q) => categories.contains(q.category) && level.accepts(q)).toList()..shuffle(random);
+  List<TriviaQuestion> bank,
+  Set<TriviaCategory> categories,
+  int count,
+  Random random, {
+  TriviaLevel level = TriviaLevel.all,
+}) {
+  final pool =
+      bank
+          .where((q) => categories.contains(q.category) && level.accepts(q))
+          .toList()
+        ..shuffle(random);
   final picked = count == 0 ? pool : pool.take(count);
   return [for (final q in picked) q.shuffled(random)];
 }
@@ -111,19 +121,39 @@ class TriviaSetup {
   final int count;
   final TriviaLevel level;
 
-  TriviaSetup copyWith({Set<TriviaCategory>? categories, int? count, TriviaLevel? level}) => TriviaSetup(
-      categories: categories ?? this.categories, count: count ?? this.count, level: level ?? this.level);
+  TriviaSetup copyWith({
+    Set<TriviaCategory>? categories,
+    int? count,
+    TriviaLevel? level,
+  }) => TriviaSetup(
+    categories: categories ?? this.categories,
+    count: count ?? this.count,
+    level: level ?? this.level,
+  );
 
-  Map<String, dynamic> toJson() => {'cats': categories.map((c) => c.name).toList(), 'count': count, 'level': level.name};
+  Map<String, dynamic> toJson() => {
+    'cats': categories.map((c) => c.name).toList(),
+    'count': count,
+    'level': level.name,
+  };
 
   factory TriviaSetup.fromJson(Map<String, dynamic> j) {
-    final cats = (j['cats'] as List).cast<String>().map(TriviaCategory.values.byName).toSet();
-    return TriviaSetup(categories: cats.isEmpty ? const {...TriviaCategory.values} : cats, count: j['count'] as int,
-        level: TriviaLevel.values.asNameMap()[j['level']] ?? TriviaLevel.all);
+    final cats = (j['cats'] as List)
+        .cast<String>()
+        .map(TriviaCategory.values.byName)
+        .toSet();
+    return TriviaSetup(
+      categories: cats.isEmpty ? const {...TriviaCategory.values} : cats,
+      count: j['count'] as int,
+      level: TriviaLevel.values.asNameMap()[j['level']] ?? TriviaLevel.all,
+    );
   }
 }
 
-final triviaSetupProvider = NotifierProvider<TriviaSetupController, TriviaSetup>(TriviaSetupController.new);
+final triviaSetupProvider =
+    NotifierProvider<TriviaSetupController, TriviaSetup>(
+      TriviaSetupController.new,
+    );
 
 class TriviaSetupController extends Notifier<TriviaSetup> {
   static const _key = 'trivia.setup.v1';
@@ -141,7 +171,9 @@ class TriviaSetupController extends Notifier<TriviaSetup> {
 
   void update(TriviaSetup Function(TriviaSetup s) change) {
     state = change(state);
-    ref.read(sharedPreferencesProvider).setString(_key, jsonEncode(state.toJson()));
+    ref
+        .read(sharedPreferencesProvider)
+        .setString(_key, jsonEncode(state.toJson()));
   }
 }
 
@@ -153,14 +185,19 @@ class TriviaMistake {
 }
 
 class TriviaResult {
-  const TriviaResult({required this.total, required this.correct, required this.mistakes});
+  const TriviaResult({
+    required this.total,
+    required this.correct,
+    required this.mistakes,
+  });
 
   final int total;
   final int correct;
   final List<TriviaMistake> mistakes;
 }
 
-final lastTriviaResultProvider = NotifierProvider<LastTriviaResult, TriviaResult?>(LastTriviaResult.new);
+final lastTriviaResultProvider =
+    NotifierProvider<LastTriviaResult, TriviaResult?>(LastTriviaResult.new);
 
 class LastTriviaResult extends Notifier<TriviaResult?> {
   @override

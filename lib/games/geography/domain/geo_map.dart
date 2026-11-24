@@ -28,20 +28,34 @@ class GeoMap {
   final List<MapRegion> regions;
 
   factory GeoMap.fromJson(Map<String, dynamic> j) => GeoMap(
-        id: j['id'] as String,
-        title: j['titulo'] as String,
-        question: j['pregunta'] as String,
-        flagIso: j['bandera'] as String,
-        width: j['w'] as int,
-        height: j['h'] as int,
-        frames: (j['recuadros'] as List).map((f) => (f as List).cast<int>()).toList(),
-        regions: (j['regiones'] as List).cast<Map<String, dynamic>>().map(MapRegion.fromJson).toList(),
-      );
+    id: j['id'] as String,
+    title: j['titulo'] as String,
+    question: j['pregunta'] as String,
+    flagIso: j['bandera'] as String,
+    width: j['w'] as int,
+    height: j['h'] as int,
+    frames: (j['recuadros'] as List)
+        .map((f) => (f as List).cast<int>())
+        .toList(),
+    regions: (j['regiones'] as List)
+        .cast<Map<String, dynamic>>()
+        .map(MapRegion.fromJson)
+        .toList(),
+  );
 }
 
 class MapRegion {
-  MapRegion({required this.id, required this.name, required this.center, required this.rings, this.aliases = const []}) {
-    var x0 = double.infinity, y0 = double.infinity, x1 = -double.infinity, y1 = -double.infinity;
+  MapRegion({
+    required this.id,
+    required this.name,
+    required this.center,
+    required this.rings,
+    this.aliases = const [],
+  }) {
+    var x0 = double.infinity,
+        y0 = double.infinity,
+        x1 = -double.infinity,
+        y1 = -double.infinity;
     for (final r in rings) {
       for (var i = 0; i < r.length; i += 2) {
         x0 = min(x0, r[i].toDouble());

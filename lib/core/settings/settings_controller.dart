@@ -30,7 +30,9 @@ class AppSettings {
   );
 }
 
-final settingsProvider = NotifierProvider<SettingsController, AppSettings>(SettingsController.new);
+final settingsProvider = NotifierProvider<SettingsController, AppSettings>(
+  SettingsController.new,
+);
 
 class SettingsController extends Notifier<AppSettings> {
   static const _soundKey = 'settings.sound.v1';

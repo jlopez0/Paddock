@@ -2,11 +2,14 @@ import '../../core/help/how_to_play.dart';
 import 'dart:math';
 
 import 'package:material_ui/material_ui.dart';
+import '../../core/audio/app_sound.dart';
 import '../../core/settings/app_feedback.dart';
 import '../../core/settings/settings_controller.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../app/app_icons.dart';
+import '../../app/mascot.dart';
 import '../../app/theme.dart';
 import '../../core/consequences/consequence_banner.dart';
 import '../../core/consequences/consequences.dart';
@@ -18,6 +21,7 @@ import '../../core/players/players_controller.dart';
 import '../../core/session/session_controller.dart';
 import 'game_colors.dart';
 import 'level_chips.dart';
+import 'bounce_in.dart';
 import 'prompt_deck_module.dart';
 
 /// Mazo de retos que alimenta al [ConsequenceBanner] en los modos Retos y Sorbos.
@@ -66,7 +70,10 @@ class _PromptDeckSetupScreenState extends ConsumerState<PromptDeckSetupScreen> {
         0;
 
     return Scaffold(
-      appBar: AppBar(title: Text(game.title), actions: [HowToPlayButton(game.id)]),
+      appBar: AppBar(
+        title: Text(game.title),
+        actions: [HowToPlayButton(game.id)],
+      ),
       body: ListView(
         padding: const EdgeInsets.fromLTRB(20, 16, 20, 24),
         children: [
@@ -88,11 +95,7 @@ class _PromptDeckSetupScreenState extends ConsumerState<PromptDeckSetupScreen> {
             ),
           ),
           const SizedBox(height: 10),
-          LevelChips(
-            levels: _levels,
-            color: game.color,
-            onToggle: _toggle,
-          ),
+          LevelChips(levels: _levels, color: game.color, onToggle: _toggle),
           if (prompts.hasError)
             Text(
               'No se pudo cargar el contenido: ${prompts.error}',
@@ -109,7 +112,7 @@ class _PromptDeckSetupScreenState extends ConsumerState<PromptDeckSetupScreen> {
                   '${game.path}/play?levels=${_levels.map((l) => l.name).join(',')}',
                 ),
           child: Text(
-            count == 0 ? 'Elige al menos un nivel' : 'Empezar · $count cartas',
+            count == 0 ? 'Elige al menos un nivel' : 'Jugar · $count cartas',
           ),
         ),
       ),
@@ -185,10 +188,13 @@ class _PromptDeckPlayScreenState extends ConsumerState<PromptDeckPlayScreen> {
 
   void _toggleMark(String playerId) {
     if (_awarded.contains(_index)) return;
-    AppFeedback.selection();
+    AppFeedback.light();
     setState(() {
       final set = _marks.putIfAbsent(_index, () => <String>{});
-      if (!set.remove(playerId)) set.add(playerId);
+      if (!set.remove(playerId)) {
+        set.add(playerId);
+        playSound(AppSound.chipSoft);
+      }
     });
   }
 
@@ -198,8 +204,8 @@ class _PromptDeckPlayScreenState extends ConsumerState<PromptDeckPlayScreen> {
       builder: (ctx) => AlertDialog(
         title: const Text('¿Salir de la partida?'),
         content: const Text(
-          'Se pierde el punto por el que ibas en el mazo. '
-          'Las fichas que ya has marcado se quedan en la Copa.',
+          'Pierdes el sitio en el mazo. '
+          'Las fichas ya marcadas se quedan en la Copa.',
         ),
         actions: [
           TextButton(
@@ -223,6 +229,7 @@ class _PromptDeckPlayScreenState extends ConsumerState<PromptDeckPlayScreen> {
     final next = _index + delta;
     if (next < 0 || next > deck.length) return;
     AppFeedback.selection();
+    playSound(AppSound.card);
     _commit(_index);
     setState(() {
       _forward = delta > 0;
@@ -239,10 +246,15 @@ class _PromptDeckPlayScreenState extends ConsumerState<PromptDeckPlayScreen> {
       if (async.hasError) {
         return Scaffold(
           appBar: AppBar(),
-          body: const Center(child: Padding(
-            padding: EdgeInsets.all(24),
-            child: Text('No se pudo cargar el contenido. Vuelve atrás e inténtalo de nuevo.', textAlign: TextAlign.center),
-          )),
+          body: const Center(
+            child: Padding(
+              padding: EdgeInsets.all(24),
+              child: Text(
+                'No se pudo cargar el contenido. Vuelve atrás e inténtalo de nuevo.',
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
         );
       }
       return const Scaffold(body: Center(child: CircularProgressIndicator()));
@@ -254,6 +266,7 @@ class _PromptDeckPlayScreenState extends ConsumerState<PromptDeckPlayScreen> {
         ? const <Player>[]
         : ref.watch(playersProvider);
     final showPay = players.isNotEmpty && !finished;
+    final reduceMotion = MediaQuery.disableAnimationsOf(context);
 
     return PopScope(
       // Con el mazo a medias, salir (X, atrás o atrás predictivo) pide confirmación.
@@ -285,15 +298,26 @@ class _PromptDeckPlayScreenState extends ConsumerState<PromptDeckPlayScreen> {
                   padding: const EdgeInsets.symmetric(horizontal: 8),
                   child: Row(
                     children: [
-                      IconButton(
-                        tooltip: 'Salir',
-                        icon: const Icon(Icons.close_rounded),
-                        onPressed: () => Navigator.of(context).maybePop(),
+                      SizedBox(
+                        width: 72,
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: IconButton(
+                            tooltip: 'Salir',
+                            icon: AppIcon.close.widget(),
+                            onPressed: () => Navigator.of(context).maybePop(),
+                          ),
+                        ),
                       ),
                       Expanded(
                         child: Text(
                           game.title,
                           textAlign: TextAlign.center,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          textScaler: MediaQuery.textScalerOf(
+                            context,
+                          ).clamp(maxScaleFactor: 1.2),
                           style: const TextStyle(
                             fontWeight: FontWeight.w800,
                             fontSize: 18,
@@ -301,11 +325,23 @@ class _PromptDeckPlayScreenState extends ConsumerState<PromptDeckPlayScreen> {
                         ),
                       ),
                       SizedBox(
-                        width: 48,
-                        child: Text(
-                          finished ? '' : '${_index + 1}/${deck.length}',
-                          style: const TextStyle(color: GameColors.mutedText),
-                        ),
+                        width: 72,
+                        child: finished
+                            ? null
+                            : Padding(
+                                padding: const EdgeInsets.only(right: 8),
+                                child: FittedBox(
+                                  fit: BoxFit.scaleDown,
+                                  alignment: Alignment.centerRight,
+                                  child: Text(
+                                    '${_index + 1} / ${deck.length}',
+                                    style: const TextStyle(
+                                      color: GameColors.mutedText,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                ),
+                              ),
                       ),
                     ],
                   ),
@@ -334,8 +370,12 @@ class _PromptDeckPlayScreenState extends ConsumerState<PromptDeckPlayScreen> {
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(20, 24, 20, 12),
                       child: AnimatedSwitcher(
-                        duration: const Duration(milliseconds: 320),
+                        duration: reduceMotion
+                            ? Duration.zero
+                            : const Duration(milliseconds: 320),
                         switchInCurve: Curves.easeOutCubic,
+                        // La carta entra deslizándose y con un giro leve, como
+                        // una carta que se reparte sobre el fieltro.
                         transitionBuilder: (child, a) {
                           final incoming = child.key == ValueKey(_index);
                           final dx = (_forward == incoming) ? 1.0 : -1.0;
@@ -344,7 +384,13 @@ class _PromptDeckPlayScreenState extends ConsumerState<PromptDeckPlayScreen> {
                               begin: Offset(dx * 0.6, 0),
                               end: Offset.zero,
                             ).animate(a),
-                            child: FadeTransition(opacity: a, child: child),
+                            child: RotationTransition(
+                              turns: Tween(
+                                begin: dx * 0.015,
+                                end: 0.0,
+                              ).animate(a),
+                              child: FadeTransition(opacity: a, child: child),
+                            ),
                           );
                         },
                         child: KeyedSubtree(
@@ -377,13 +423,18 @@ class _PromptDeckPlayScreenState extends ConsumerState<PromptDeckPlayScreen> {
                       IconButton.filledTonal(
                         tooltip: 'Anterior',
                         onPressed: _index > 0 ? () => _go(-1) : null,
-                        icon: const Icon(Icons.undo_rounded),
+                        icon: AppIcon.undo.widget(),
                       ),
                       const SizedBox(width: 12),
                       Expanded(
                         child: Text(
                           finished ? '' : 'Toca o desliza para la siguiente',
                           textAlign: TextAlign.center,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          textScaler: MediaQuery.textScalerOf(
+                            context,
+                          ).clamp(maxScaleFactor: 1.3),
                           style: const TextStyle(
                             color: GameColors.mutedText,
                             fontSize: 13,
@@ -432,8 +483,9 @@ class _PaySection extends ConsumerWidget {
     final retosPrompts = mode == ConsequenceMode.retos
         ? ref.watch(promptsProvider(promptRetosAsset)).asData?.value
         : null;
-    final retosAll =
-        retosPrompts == null ? null : filterRetos(retosPrompts, adultConfirmed: adult);
+    final retosAll = retosPrompts == null
+        ? null
+        : filterRetos(retosPrompts, adultConfirmed: adult);
     // Se rota el mazo según la carta para no repetir siempre el primer reto.
     final retos = (retosAll == null || retosAll.isEmpty)
         ? retosAll
@@ -452,15 +504,23 @@ class _PaySection extends ConsumerWidget {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                '¿Quién paga? · $kPromptPayChips ficha',
-                style: const TextStyle(
-                  fontWeight: FontWeight.w800,
-                  fontSize: 15,
-                ),
+              Row(
+                children: [
+                  Flexible(
+                    child: Text(
+                      '¿Quién paga? · $kPromptPayChips ficha',
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w800,
+                        fontSize: 15,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  const ChipToken(kPromptPayChips, size: 22),
+                ],
               ),
               Text(
-                locked ? 'Ya registrado en la Copa' : game.payHint,
+                locked ? 'Ya anotado en la Copa' : game.payHint,
                 style: const TextStyle(
                   color: GameColors.mutedText,
                   fontSize: 13,
@@ -476,7 +536,10 @@ class _PaySection extends ConsumerWidget {
                       key: ValueKey('pay-${p.id}'),
                       selected: marked.contains(p.id),
                       showCheckmark: false,
-                      avatar: PlayerAvatar(p, size: 24),
+                      avatar: _MarkAvatar(
+                        player: p,
+                        marked: marked.contains(p.id),
+                      ),
                       label: Text(p.name),
                       selectedColor: game.color.withValues(alpha: 0.3),
                       side: BorderSide(
@@ -510,17 +573,24 @@ class _PaySection extends ConsumerWidget {
                     child: names.isEmpty
                         ? const SizedBox.shrink()
                         : mode == ConsequenceMode.puntos
-                        ? Text(
-                            '−$kPromptPayChips en la Copa: ${names.join(', ')}',
-                            style: const TextStyle(
-                              color: GameColors.mutedText,
-                              fontSize: 13,
-                            ),
+                        ? Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const ChipToken(kPromptPayChips, size: 20),
+                              const SizedBox(width: 8),
+                              Expanded(
+                                child: Text(
+                                  '−$kPromptPayChips en la Copa: ${names.join(', ')}',
+                                  style: const TextStyle(
+                                    color: GameColors.mutedText,
+                                    fontSize: 13,
+                                  ),
+                                ),
+                              ),
+                            ],
                           )
                         : ConsequenceBanner(
-                            losses: {
-                              for (final n in names) n: kPromptPayChips,
-                            },
+                            losses: {for (final n in names) n: kPromptPayChips},
                             mode: mode,
                             retos: retos,
                           ),
@@ -535,6 +605,43 @@ class _PaySection extends ConsumerWidget {
   }
 }
 
+/// Avatar del chip de jugador: la inicial y, al marcarlo, una ficha que entra
+/// con rebote (la ficha que va a pagar).
+class _MarkAvatar extends StatelessWidget {
+  const _MarkAvatar({required this.player, required this.marked});
+
+  final Player player;
+  final bool marked;
+
+  static const _size = 26.0;
+
+  @override
+  Widget build(BuildContext context) {
+    final reduce = MediaQuery.disableAnimationsOf(context);
+    return SizedBox(
+      width: _size,
+      height: _size,
+      child: AnimatedSwitcher(
+        duration: reduce ? Duration.zero : const Duration(milliseconds: 320),
+        switchInCurve: Curves.elasticOut,
+        switchOutCurve: Curves.easeIn,
+        // Solo escala: el rebote de elasticOut supera 1 y no vale para opacidad.
+        transitionBuilder: (child, a) =>
+            ScaleTransition(scale: a, child: child),
+        child: marked
+            ? const ChipToken(
+                kPromptPayChips,
+                key: ValueKey('ficha'),
+                size: _size,
+              )
+            : PlayerAvatar(player, key: const ValueKey('inicial'), size: _size),
+      ),
+    );
+  }
+}
+
+/// La carta es un boleto de papel: cuerpo con el nivel y el enunciado, y la
+/// regla en la matriz, bajo la línea de puntos.
 class _PromptCard extends StatelessWidget {
   const _PromptCard({required this.game, required this.prompt});
 
@@ -543,196 +650,296 @@ class _PromptCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(28),
-      decoration: BoxDecoration(
-        color: AppColors.surface,
-        borderRadius: BorderRadius.circular(32),
-        border: Border.all(color: game.color.withValues(alpha: 0.6), width: 2),
-        boxShadow: [
-          BoxShadow(
-            color: game.color.withValues(alpha: 0.25),
-            blurRadius: 30,
-            offset: const Offset(0, 10),
+    final accent = GameColors.onPaper(game.color);
+    return LayoutBuilder(
+      builder: (context, box) => SingleChildScrollView(
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            minHeight: box.hasBoundedHeight ? box.maxHeight : 0,
           ),
-        ],
-      ),
-      child: Column(
-        children: [
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-              decoration: BoxDecoration(
-                color: AppColors.surfaceHigh,
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Text(
-                '${prompt.level.emoji} ${prompt.level.label}',
-                style: const TextStyle(
-                  fontSize: 13,
-                  fontWeight: FontWeight.w600,
+          child: Center(
+            child: SizedBox(
+              width: double.infinity,
+              child: TicketCard(
+                padding: const EdgeInsets.fromLTRB(22, 18, 22, 22),
+                stub: Text(
+                  game.rule,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    color: GameColors.inkMuted,
+                    fontSize: 14,
+                    height: 1.3,
+                  ),
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: _LevelPill(level: prompt.level),
+                    ),
+                    const SizedBox(height: 18),
+                    switch (game.style) {
+                      PromptCardStyle.statement => _Statement(
+                        prefix: prompt['prefijo'].isEmpty
+                            ? game.prefix
+                            : prompt['prefijo'],
+                        text: prompt['texto'],
+                        accent: accent,
+                      ),
+                      PromptCardStyle.choice => _Choice(
+                        a: prompt['a'],
+                        b: prompt['b'],
+                        accent: accent,
+                        accentB: GameColors.onPaper(const Color(0xFF4FA3F7)),
+                      ),
+                      PromptCardStyle.question => _Statement(
+                        prefix: kQuestionPrefix,
+                        text: prompt['texto'],
+                        accent: accent,
+                        closing: '?',
+                      ),
+                    },
+                    const SizedBox(height: 10),
+                  ],
                 ),
               ),
             ),
           ),
-          Expanded(
-            child: Center(
-              child: switch (game.style) {
-                PromptCardStyle.statement => _Statement(
-                  prefix: prompt['prefijo'].isEmpty
-                      ? game.prefix
-                      : prompt['prefijo'],
-                  text: prompt['texto'],
-                  color: game.color,
-                ),
-                PromptCardStyle.choice => _Choice(
-                  a: prompt['a'],
-                  b: prompt['b'],
-                  color: game.color,
-                ),
-                PromptCardStyle.question => _Statement(
-                  prefix: kQuestionPrefix,
-                  text: prompt['texto'],
-                  color: game.color,
-                  closing: '?',
-                ),
-              },
-            ),
-          ),
-          Text(
-            game.rule,
-            textAlign: TextAlign.center,
-            style: const TextStyle(color: GameColors.mutedText),
-          ),
-        ],
+        ),
       ),
     );
   }
 }
 
+/// Nivel de la carta: icono dibujado + texto, en una pastilla oscura sobre el papel.
+class _LevelPill extends StatelessWidget {
+  const _LevelPill({required this.level});
+
+  final PromptLevel level;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      decoration: BoxDecoration(
+        color: AppColors.surface,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: LevelLabel(
+        level,
+        iconSize: 18,
+        style: const TextStyle(
+          fontSize: 13,
+          fontWeight: FontWeight.w700,
+          color: AppColors.text,
+        ),
+      ),
+    );
+  }
+}
+
+/// Enunciado de la carta. Corto: Alfa Slab One (tipografía de cartelería, con la
+/// escala del sistema limitada para que no rompa palabras). Largo: Figtree 700,
+/// que se lee mejor en varias líneas.
 class _Statement extends StatelessWidget {
   const _Statement({
     required this.prefix,
     required this.text,
-    required this.color,
+    required this.accent,
     this.closing = '.',
   });
 
   final String? prefix;
   final String text;
-  final Color color;
+  final Color accent;
   final String closing;
+
+  /// Hasta este largo (prefijo incluido) se usa la tipografía de ceremonia.
+  static const shortLimit = 70;
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Text.rich(
-        TextSpan(
-          children: [
-            if (prefix != null)
-              TextSpan(
-                text: '$prefix ',
-                style: TextStyle(color: color, fontWeight: FontWeight.w900),
+    final total =
+        (prefix == null ? 0 : prefix!.length + 1) +
+        text.length +
+        closing.length;
+    final short = total <= shortLimit;
+    final style = short
+        ? const TextStyle(
+            fontFamily: AppFonts.display,
+            fontWeight: FontWeight.w400,
+            fontSize: 26,
+            height: 1.25,
+            color: GameColors.ink,
+          )
+        : const TextStyle(
+            fontFamily: AppFonts.body,
+            fontWeight: FontWeight.w700,
+            fontSize: 26,
+            height: 1.3,
+            color: GameColors.ink,
+          );
+    return Text.rich(
+      TextSpan(
+        children: [
+          if (prefix != null)
+            TextSpan(
+              text: '$prefix ',
+              style: TextStyle(
+                color: accent,
+                fontWeight: short ? FontWeight.w400 : FontWeight.w900,
               ),
-            TextSpan(text: '$text$closing'),
-          ],
-        ),
-        textAlign: TextAlign.center,
-        style: const TextStyle(
-          fontSize: 30,
-          fontWeight: FontWeight.w700,
-          height: 1.25,
-        ),
+            ),
+          TextSpan(text: '$text$closing'),
+        ],
       ),
+      textAlign: TextAlign.center,
+      style: style,
+      textScaler: short
+          ? MediaQuery.textScalerOf(context).clamp(maxScaleFactor: 1.5)
+          : null,
     );
   }
 }
 
 class _Choice extends StatelessWidget {
-  const _Choice({required this.a, required this.b, required this.color});
+  const _Choice({
+    required this.a,
+    required this.b,
+    required this.accent,
+    required this.accentB,
+  });
 
   final String a;
   final String b;
-  final Color color;
+  final Color accent;
+  final Color accentB;
 
   @override
   Widget build(BuildContext context) {
     Widget option(String text, Color c) => Container(
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 22),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
       decoration: BoxDecoration(
-        color: c.withValues(alpha: 0.16),
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: c.withValues(alpha: 0.6)),
+        color: c.withValues(alpha: 0.12),
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: c.withValues(alpha: 0.7), width: 1.5),
       ),
       child: Text(
         text,
         textAlign: TextAlign.center,
         style: const TextStyle(
+          fontFamily: AppFonts.body,
           fontSize: 22,
           fontWeight: FontWeight.w700,
           height: 1.25,
+          color: GameColors.ink,
         ),
       ),
     );
 
-    return SingleChildScrollView(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            '¿Qué preferirías?',
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text(
+          '¿Qué preferirías?',
+          textAlign: TextAlign.center,
+          textScaler: MediaQuery.textScalerOf(
+            context,
+          ).clamp(maxScaleFactor: 1.5),
+          style: TextStyle(
+            fontFamily: AppFonts.display,
+            fontWeight: FontWeight.w400,
+            color: accent,
+            fontSize: 22,
+          ),
+        ),
+        const SizedBox(height: 14),
+        option(a, accent),
+        const Padding(
+          padding: EdgeInsets.symmetric(vertical: 8),
+          child: Text(
+            '— o —',
             style: TextStyle(
-              color: color,
-              fontWeight: FontWeight.w900,
-              fontSize: 18,
+              color: GameColors.inkMuted,
+              fontWeight: FontWeight.w700,
             ),
           ),
-          const SizedBox(height: 16),
-          option(a, color),
-          const Padding(
-            padding: EdgeInsets.symmetric(vertical: 10),
-            child: Text(
-              '— o —',
-              style: TextStyle(
-                color: GameColors.mutedText,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-          ),
-          option(b, const Color(0xFF4FA3F7)),
-        ],
-      ),
+        ),
+        option(b, accentB),
+      ],
     );
   }
 }
 
-class _EndCard extends StatelessWidget {
+class _EndCard extends StatefulWidget {
   const _EndCard({required this.color, required this.onRestart});
 
   final Color color;
   final VoidCallback onRestart;
 
   @override
+  State<_EndCard> createState() => _EndCardState();
+}
+
+class _EndCardState extends State<_EndCard> {
+  @override
+  void initState() {
+    super.initState();
+    AppFeedback.light();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        const Text('🎉', style: TextStyle(fontSize: 64)),
-        const SizedBox(height: 12),
-        const Text(
-          '¡Se acabaron las cartas!',
-          style: TextStyle(fontSize: 24, fontWeight: FontWeight.w800),
+    return LayoutBuilder(
+      builder: (context, box) => SingleChildScrollView(
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            minHeight: box.hasBoundedHeight ? box.maxHeight : 0,
+          ),
+          child: Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                BounceIn(
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      AppIcon.confetti.widget(size: 44),
+                      const SizedBox(width: 8),
+                      const Jockey(pose: JockeyPose.celebra, size: 96),
+                      const SizedBox(width: 8),
+                      AppIcon.confetti.widget(size: 44),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  'Se acabó el mazo',
+                  textAlign: TextAlign.center,
+                  textScaler: MediaQuery.textScalerOf(
+                    context,
+                  ).clamp(maxScaleFactor: 1.5),
+                  style: const TextStyle(
+                    fontFamily: AppFonts.display,
+                    fontWeight: FontWeight.w400,
+                    fontSize: 26,
+                    height: 1.2,
+                  ),
+                ),
+                const SizedBox(height: 24),
+                FilledButton.icon(
+                  onPressed: widget.onRestart,
+                  icon: AppIcon.shuffle.widget(color: Colors.black),
+                  label: const Text('Barajar otra vez'),
+                ),
+              ],
+            ),
+          ),
         ),
-        const SizedBox(height: 24),
-        FilledButton.icon(
-          onPressed: onRestart,
-          icon: const Icon(Icons.shuffle_rounded),
-          label: const Text('Barajar otra vez'),
-        ),
-      ],
+      ),
     );
   }
 }

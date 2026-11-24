@@ -1,11 +1,14 @@
+import 'dart:math' as math;
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
 
+import '../../../app/app_icons.dart';
 import '../../../app/theme.dart';
-import '../../prompt_deck/game_colors.dart';
 import '../../../core/players/player.dart';
 import '../../../core/players/players_controller.dart';
+import '../../../core/audio/app_sound.dart';
 import '../../../core/settings/app_feedback.dart';
 import '../domain/infiltrado_engine.dart';
 import '../infiltrado_store.dart';
@@ -17,10 +20,12 @@ class InfiltradoRevealScreen extends ConsumerStatefulWidget {
   const InfiltradoRevealScreen({super.key});
 
   @override
-  ConsumerState<InfiltradoRevealScreen> createState() => _InfiltradoRevealScreenState();
+  ConsumerState<InfiltradoRevealScreen> createState() =>
+      _InfiltradoRevealScreenState();
 }
 
-class _InfiltradoRevealScreenState extends ConsumerState<InfiltradoRevealScreen> {
+class _InfiltradoRevealScreenState
+    extends ConsumerState<InfiltradoRevealScreen> {
   int _index = 0;
   bool _shown = false;
 
@@ -37,6 +42,7 @@ class _InfiltradoRevealScreenState extends ConsumerState<InfiltradoRevealScreen>
 
     void next() {
       AppFeedback.light();
+      playSound(AppSound.tap);
       if (last) {
         context.pushReplacement('/game/infiltrado/vote');
         return;
@@ -54,22 +60,29 @@ class _InfiltradoRevealScreenState extends ConsumerState<InfiltradoRevealScreen>
             padding: const EdgeInsets.fromLTRB(20, 8, 20, 16),
             child: Column(
               children: [
-                InfiltradoTopBar(title: 'Roles', trailing: '${_index + 1}/${deal.players.length}'),
+                InfiltradoTopBar(
+                  title: 'Roles',
+                  trailing: '${_index + 1}/${deal.players.length}',
+                ),
                 Expanded(
                   child: _shown
                       ? _CardView(
                           player: player,
                           card: deal.cardFor(id),
-                          buttonLabel: last ? 'Ocultar y empezar el debate' : 'Ocultar y pasar el móvil',
+                          buttonLabel: last
+                              ? 'Ocultar y empezar el debate'
+                              : 'Ocultar y pasar el móvil',
                           onNext: next,
                         )
                       : PassPhoneCover(
                           player: player,
                           heading: 'Pasa el móvil a',
-                          progress: 'Jugador ${_index + 1} de ${deal.players.length}',
+                          progress:
+                              'Jugador ${_index + 1} de ${deal.players.length}',
                           buttonLabel: 'Soy ${player.name}, ver mi tarjeta',
                           onContinue: () {
                             AppFeedback.medium();
+                            playSound(AppSound.card);
                             setState(() => _shown = true);
                           },
                         ),
@@ -99,77 +112,71 @@ class _CardView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final impostor = card.isImpostor;
-    final accent = impostor ? AppColors.danger : infiltradoColor;
+    const label = TextStyle(
+      color: infiltradoInkMuted,
+      letterSpacing: 1.2,
+      fontSize: 12,
+      fontWeight: FontWeight.w800,
+    );
     return InfiltradoBody(
-      footer: FilledButton(onPressed: onNext, child: Text(buttonLabel, textAlign: TextAlign.center)),
+      footer: FilledButton(
+        onPressed: onNext,
+        child: Text(buttonLabel, textAlign: TextAlign.center),
+      ),
       children: [
-        Card(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(24),
-            side: BorderSide(color: accent, width: 2),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(24),
+        _FlipIn(
+          child: TicketCard(
+            padding: const EdgeInsets.fromLTRB(24, 24, 24, 20),
+            stub: Text(
+              impostor
+                  ? 'No sabes la palabra. Escucha, disimula y adivínala.'
+                  : 'Da pistas sin decirla. El infiltrado tiene la oreja puesta.',
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                color: infiltradoInk,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
             child: Column(
               children: [
                 Text(
                   player.name,
-                  style: const TextStyle(color: GameColors.mutedText, fontWeight: FontWeight.w700),
-                ),
-                const SizedBox(height: 16),
-                Text(
-                  'CATEGORÍA',
+                  textAlign: TextAlign.center,
                   style: const TextStyle(
-                    color: GameColors.mutedText,
-                    letterSpacing: 1.2,
-                    fontSize: 12,
+                    color: infiltradoInkMuted,
                     fontWeight: FontWeight.w700,
                   ),
                 ),
+                const SizedBox(height: 16),
+                const Text('CATEGORÍA', style: label),
                 const SizedBox(height: 4),
-                Text(
+                SlabText(
                   card.category,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w800),
+                  size: 24,
+                  color: infiltradoInk,
+                  fit: true,
                 ),
                 const SizedBox(height: 24),
                 if (impostor) ...[
-                  Semantics(
-                    label: 'Infiltrado',
-                    excludeSemantics: true,
-                    child: const Text('🕵️', style: TextStyle(fontSize: 56)),
+                  AppIcon.detective.widget(
+                    size: 56,
+                    color: AppColors.burgundy,
+                    semanticLabel: 'Infiltrado',
                   ),
                   const SizedBox(height: 8),
-                  Text(
+                  SlabText(
                     'Eres el infiltrado',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 28, fontWeight: FontWeight.w900, color: accent),
-                  ),
-                  const SizedBox(height: 8),
-                  const Text(
-                    'No conoces la palabra. Disimula y averigua cuál es.',
-                    textAlign: TextAlign.center,
+                    size: 26,
+                    color: AppColors.burgundy,
                   ),
                 ] else ...[
-                  const Text(
-                    'LA PALABRA',
-                    style: TextStyle(
-                      color: GameColors.mutedText,
-                      letterSpacing: 1.2,
-                      fontSize: 12,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
+                  const Text('LA PALABRA', style: label),
                   const SizedBox(height: 4),
-                  Text(
+                  SlabText(
                     card.word!,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 36, fontWeight: FontWeight.w900, color: GameColors.infiltradoText),
-                  ),
-                  const SizedBox(height: 8),
-                  const Text(
-                    'Da pistas sin decirla. Cuidado: el infiltrado escucha.',
-                    textAlign: TextAlign.center,
+                    size: 36,
+                    color: infiltradoInk,
+                    fit: true,
                   ),
                 ],
               ],
@@ -177,6 +184,32 @@ class _CardView extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+/// La tarjeta entra girando sobre su eje vertical, como un boleto que se da
+/// la vuelta. Con animaciones desactivadas aparece directamente.
+class _FlipIn extends StatelessWidget {
+  const _FlipIn({required this.child});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    final reduce = infiltradoReduceMotion(context);
+    return TweenAnimationBuilder<double>(
+      tween: Tween(begin: reduce ? 0 : 1, end: 0),
+      duration: reduce ? Duration.zero : const Duration(milliseconds: 450),
+      curve: Curves.easeOutCubic,
+      builder: (context, t, child) => Transform(
+        alignment: Alignment.center,
+        transform: Matrix4.identity()
+          ..setEntry(3, 2, 0.0012)
+          ..rotateY(t * math.pi / 2),
+        child: child,
+      ),
+      child: child,
     );
   }
 }

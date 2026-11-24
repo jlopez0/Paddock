@@ -2,9 +2,10 @@ import '../../../core/help/how_to_play.dart';
 import 'package:material_ui/material_ui.dart';
 import '../../../core/settings/app_feedback.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../app/app_icons.dart';
+import '../../../app/mascot.dart';
 import '../../../app/theme.dart';
 import '../domain/country.dart';
 import '../domain/quiz.dart';
@@ -55,7 +56,10 @@ class GeoSetupScreen extends ConsumerWidget {
     return Theme(
       data: tealTheme,
       child: Scaffold(
-        appBar: AppBar(title: const Text('Geografía'), actions: const [HowToPlayButton('geografia')]),
+        appBar: AppBar(
+          title: const Text('Geografía'),
+          actions: const [HowToPlayButton('geografia')],
+        ),
         body: ListView(
           padding: const EdgeInsets.fromLTRB(20, 4, 20, 24),
           children: [
@@ -77,16 +81,36 @@ class GeoSetupScreen extends ConsumerWidget {
             Row(
               children: [
                 for (final (i, (mode, icon, title, subtitle)) in const [
-                  (AnswerMode.options, Icons.grid_view_rounded, 'Fácil', '4 opciones'),
-                  (AnswerMode.reveal, Icons.visibility_rounded, 'Mental', 'Piensa y mira'),
-                  (AnswerMode.typed, Icons.keyboard_rounded, 'Difícil', 'Escribe'),
+                  (
+                    AnswerMode.options,
+                    AppIcon.grid,
+                    'Fácil',
+                    '4 opciones',
+                  ),
+                  (
+                    AnswerMode.reveal,
+                    AppIcon.visibility,
+                    'Mental',
+                    'Piensa y mira',
+                  ),
+                  (
+                    AnswerMode.typed,
+                    AppIcon.keyboard,
+                    'Difícil',
+                    'Escribe',
+                  ),
                 ].indexed) ...[
                   if (i > 0) const SizedBox(width: 8),
                   Expanded(
                     child: _Tile(
                       selected: setup.mode == mode,
-                      onTap: () => controller.update((s) => s.copyWith(mode: mode)),
-                      child: _Difficulty(icon: icon, title: title, subtitle: subtitle),
+                      onTap: () =>
+                          controller.update((s) => s.copyWith(mode: mode)),
+                      child: _Difficulty(
+                        icon: icon,
+                        title: title,
+                        subtitle: subtitle,
+                      ),
                     ),
                   ),
                 ],
@@ -145,6 +169,10 @@ class GeoSetupScreen extends ConsumerWidget {
               onSelectionChanged: (v) =>
                   controller.update((s) => s.copyWith(count: v.first)),
             ),
+            if (questions == 0 && quiz.hasValue) ...[
+              const SizedBox(height: 24),
+              const Center(child: Jockey(size: 80)),
+            ],
           ],
         ),
         bottomNavigationBar: SafeArea(
@@ -175,7 +203,9 @@ class GeoSetupScreen extends ConsumerWidget {
                       : () => context.push('/game/geografia/play'),
                   child: Text(
                     questions == 0
-                        ? (quiz.hasError ? 'No se pudo cargar el contenido' : 'Sin preguntas con estos filtros')
+                        ? (quiz.hasError
+                              ? 'No se pudo cargar el contenido'
+                              : 'Sin preguntas con estos filtros')
                         : 'Jugar · $questions preguntas',
                   ),
                 ),
@@ -220,25 +250,33 @@ class _Tile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        AppFeedback.selection();
-        onTap();
-      },
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 180),
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
-        decoration: BoxDecoration(
-          color: selected
-              ? geoColor.withValues(alpha: 0.16)
-              : AppColors.surface,
-          borderRadius: BorderRadius.circular(16),
-          border: Border.all(
-            color: selected ? geoColor : AppColors.outline,
-            width: selected ? 2 : 1,
+    return Semantics(
+      button: true,
+      selected: selected,
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: () {
+          AppFeedback.selection();
+          onTap();
+        },
+        child: AnimatedContainer(
+          duration: MediaQuery.disableAnimationsOf(context)
+              ? Duration.zero
+              : const Duration(milliseconds: 180),
+          constraints: const BoxConstraints(minHeight: 56),
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
+          decoration: BoxDecoration(
+            color: selected
+                ? geoColor.withValues(alpha: 0.16)
+                : AppColors.surface,
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(
+              color: selected ? geoColor : AppColors.outline,
+              width: selected ? 2 : 1,
+            ),
           ),
+          child: child,
         ),
-        child: child,
       ),
     );
   }
@@ -251,7 +289,7 @@ class _Difficulty extends StatelessWidget {
     required this.subtitle,
   });
 
-  final IconData icon;
+  final AppIcon icon;
   final String title;
   final String subtitle;
 
@@ -259,7 +297,7 @@ class _Difficulty extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Icon(icon, color: geoColor),
+        icon.widget(color: geoColor),
         const SizedBox(height: 6),
         Text(
           title,
@@ -308,21 +346,7 @@ class _CategoryGrid extends StatelessWidget {
                   onTap: () => onSelect(c),
                   child: Row(
                     children: [
-                      SizedBox(
-                        width: 34,
-                        child: c.flagIso != null
-                            ? ClipRRect(
-                                borderRadius: BorderRadius.circular(4),
-                                child: SvgPicture.asset(
-                                  'assets/geo/flags/${c.flagIso}.svg',
-                                  height: 24,
-                                ),
-                              )
-                            : Text(
-                                c.emoji,
-                                style: const TextStyle(fontSize: 28),
-                              ),
-                      ),
+                      GeoCategoryIcon(c, size: 34),
                       const SizedBox(width: 12),
                       Expanded(
                         child: Column(

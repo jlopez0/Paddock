@@ -7,10 +7,13 @@ import 'package:url_launcher/url_launcher.dart';
 import '../core/consequences/consequences.dart';
 import '../core/settings/app_feedback.dart';
 import '../core/settings/settings_controller.dart';
+import 'app_icons.dart';
 import 'app_info.dart';
 import 'theme.dart';
 
-final _packageInfoProvider = FutureProvider<PackageInfo>((ref) => PackageInfo.fromPlatform());
+final _packageInfoProvider = FutureProvider<PackageInfo>(
+  (ref) => PackageInfo.fromPlatform(),
+);
 
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
@@ -19,15 +22,27 @@ class SettingsScreen extends ConsumerWidget {
     final messenger = ScaffoldMessenger.of(context);
     var ok = false;
     try {
-      ok = await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
+      ok = await launchUrl(
+        Uri.parse(url),
+        mode: LaunchMode.externalApplication,
+      );
     } catch (_) {}
-    if (!ok) messenger.showSnackBar(const SnackBar(content: Text('No se pudo abrir el enlace')));
+    if (!ok) {
+      messenger.showSnackBar(
+        const SnackBar(content: Text('No se pudo abrir el enlace')),
+      );
+    }
   }
 
   /// Sorbos exige confirmar la edad una sola vez; si se cancela, se mantiene el modo anterior.
-  Future<void> _selectMode(BuildContext context, WidgetRef ref, ConsequenceMode mode) async {
+  Future<void> _selectMode(
+    BuildContext context,
+    WidgetRef ref,
+    ConsequenceMode mode,
+  ) async {
     final controller = ref.read(settingsProvider.notifier);
-    if (mode == ConsequenceMode.sorbos && !ref.read(settingsProvider).adultConfirmed) {
+    if (mode == ConsequenceMode.sorbos &&
+        !ref.read(settingsProvider).adultConfirmed) {
       final ok = await showDialog<bool>(
         context: context,
         builder: (ctx) => AlertDialog(
@@ -37,7 +52,10 @@ class SettingsScreen extends ConsumerWidget {
             'Nadie está obligado a beber: siempre se puede elegir agua o un reto.',
           ),
           actions: [
-            TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Cancelar')),
+            TextButton(
+              onPressed: () => Navigator.pop(ctx, false),
+              child: const Text('Cancelar'),
+            ),
             FilledButton(
               onPressed: () => Navigator.pop(ctx, true),
               child: const Text('Tengo 18 o más'),
@@ -59,20 +77,29 @@ class SettingsScreen extends ConsumerWidget {
     final version = info == null ? '' : '${info.version} (${info.buildNumber})';
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Ajustes')),
+      appBar: AppBar(
+        title: const Text(
+          'Ajustes',
+          style: TextStyle(fontFamily: AppFonts.display, fontSize: 22),
+        ),
+      ),
       body: SafeArea(
         child: ListView(
           padding: const EdgeInsets.symmetric(vertical: 8),
           children: [
             SwitchListTile(
-              secondary: const Icon(Icons.volume_up_rounded),
+              secondary: (settings.sound ? AppIcon.volume : AppIcon.volumeOff)
+                  .widget(),
               title: const Text('Sonido'),
               subtitle: const Text('Música y efectos'),
               value: settings.sound,
               onChanged: controller.setSound,
             ),
             SwitchListTile(
-              secondary: const Icon(Icons.vibration_rounded),
+              secondary: AppIcon.deviceMobile.widget(
+                size: 24,
+                semanticLabel: 'Vibración',
+              ),
               title: const Text('Vibración'),
               value: settings.vibration,
               onChanged: (v) {
@@ -86,10 +113,17 @@ class SettingsScreen extends ConsumerWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text('Consecuencias', style: TextStyle(fontWeight: FontWeight.w600)),
+                  const Text(
+                    'Consecuencias',
+                    style: TextStyle(
+                      fontFamily: AppFonts.display,
+                      fontSize: 20,
+                      height: 1.2,
+                    ),
+                  ),
                   const SizedBox(height: 4),
                   const Text(
-                    'Qué pasa cuando alguien pierde fichas',
+                    'Cómo se pagan las fichas perdidas',
                     style: TextStyle(color: AppColors.textMuted),
                   ),
                   const SizedBox(height: 12),
@@ -98,12 +132,22 @@ class SettingsScreen extends ConsumerWidget {
                     child: SegmentedButton<ConsequenceMode>(
                       showSelectedIcon: false,
                       segments: const [
-                        ButtonSegment(value: ConsequenceMode.puntos, label: Text('Puntos')),
-                        ButtonSegment(value: ConsequenceMode.retos, label: Text('Retos')),
-                        ButtonSegment(value: ConsequenceMode.sorbos, label: Text('Sorbos')),
+                        ButtonSegment(
+                          value: ConsequenceMode.puntos,
+                          label: Text('Puntos'),
+                        ),
+                        ButtonSegment(
+                          value: ConsequenceMode.retos,
+                          label: Text('Retos'),
+                        ),
+                        ButtonSegment(
+                          value: ConsequenceMode.sorbos,
+                          label: Text('Sorbos'),
+                        ),
                       ],
                       selected: {settings.consequenceMode},
-                      onSelectionChanged: (s) => _selectMode(context, ref, s.first),
+                      onSelectionChanged: (s) =>
+                          _selectMode(context, ref, s.first),
                     ),
                   ),
                 ],
@@ -111,26 +155,32 @@ class SettingsScreen extends ConsumerWidget {
             ),
             const Divider(height: 32),
             ListTile(
-              leading: const Icon(Icons.privacy_tip_outlined),
+              leading: AppIcon.privacy.widget(),
               title: const Text('Política de privacidad'),
-              trailing: const Icon(Icons.open_in_new_rounded, size: 18, color: AppColors.textMuted),
+              trailing: AppIcon.external.widget(
+                size: 18,
+                color: AppColors.textMuted,
+              ),
               onTap: () => _open(context, kPrivacyUrl),
             ),
             ListTile(
-              leading: const Icon(Icons.help_outline_rounded),
+              leading: AppIcon.help.widget(),
               title: const Text('Soporte'),
-              trailing: const Icon(Icons.open_in_new_rounded, size: 18, color: AppColors.textMuted),
+              trailing: AppIcon.external.widget(
+                size: 18,
+                color: AppColors.textMuted,
+              ),
               onTap: () => _open(context, kSupportUrl),
             ),
             ListTile(
-              leading: const Icon(Icons.info_outline_rounded),
+              leading: AppIcon.info.widget(),
               title: const Text('Créditos'),
-              trailing: const Icon(Icons.chevron_right_rounded, color: AppColors.textMuted),
+              trailing: AppIcon.chevronRight.widget(color: AppColors.textMuted),
               onTap: () => context.push('/settings/credits'),
             ),
             const Divider(height: 32),
             ListTile(
-              leading: const Icon(Icons.tag_rounded),
+              leading: AppIcon.tag.widget(),
               title: const Text('Versión'),
               subtitle: Text(version.isEmpty ? '…' : '$kAppName $version'),
             ),

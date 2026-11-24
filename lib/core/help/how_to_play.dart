@@ -4,10 +4,17 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
 
+import '../../app/app_icons.dart';
+
 const howToPlayAsset = 'assets/content/es/ayuda.json';
 
 class HowToPlay {
-  const HowToPlay({required this.id, required this.titulo, required this.pasos, this.consejo});
+  const HowToPlay({
+    required this.id,
+    required this.titulo,
+    required this.pasos,
+    this.consejo,
+  });
   final String id;
   final String titulo;
   final List<String> pasos;
@@ -30,7 +37,12 @@ Map<String, HowToPlay> parseHowToPlay(String raw) {
           if (p is String) p,
       ];
       final consejo = e['consejo'];
-      out[id] = HowToPlay(id: id, titulo: titulo, pasos: pasos, consejo: consejo is String ? consejo : null);
+      out[id] = HowToPlay(
+        id: id,
+        titulo: titulo,
+        pasos: pasos,
+        consejo: consejo is String ? consejo : null,
+      );
     }
     return out;
   } catch (_) {
@@ -62,7 +74,7 @@ class HowToPlayButton extends ConsumerWidget {
       excludeSemantics: true,
       child: IconButton(
         tooltip: '¿Cómo se juega?',
-        icon: const Icon(Icons.help_outline_rounded),
+        icon: AppIcon.help.widget(),
         onPressed: () => showModalBottomSheet<void>(
           context: context,
           isScrollControlled: true,
@@ -96,14 +108,20 @@ class _HowToPlaySheet extends StatelessWidget {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(width: 28, child: Text('${i + 1}.', style: t.titleSmall)),
+                    SizedBox(
+                      width: 28,
+                      child: Text('${i + 1}.', style: t.titleSmall),
+                    ),
                     Expanded(child: Text(p, style: t.bodyMedium)),
                   ],
                 ),
               ),
             if (help.consejo != null) ...[
               const SizedBox(height: 8),
-              Text('Consejo: ${help.consejo}', style: t.bodyMedium?.copyWith(fontStyle: FontStyle.italic)),
+              Text(
+                'Consejo: ${help.consejo}',
+                style: t.bodyMedium?.copyWith(fontStyle: FontStyle.italic),
+              ),
             ],
           ],
         ),

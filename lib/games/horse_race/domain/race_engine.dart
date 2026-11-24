@@ -13,7 +13,7 @@ import 'cards.dart';
 /// - Si el mazo se agota, se barajan los descartes y se sigue.
 class RaceConfig {
   const RaceConfig({this.length = 6, this.obstacles = true})
-      : assert(length >= 4 && length <= 9);
+    : assert(length >= 4 && length <= 9);
 
   /// Casillas hasta la meta. 6 = la versión clásica (5 obstáculos).
   final int length;
@@ -50,7 +50,7 @@ class HorseWon extends RaceEvent {
 
 class RaceEngine {
   RaceEngine({this.config = const RaceConfig(), Random? random})
-      : _random = random ?? Random() {
+    : _random = random ?? Random() {
     final cards = [
       for (final s in Suit.values)
         for (var r = 1; r <= 12; r++)

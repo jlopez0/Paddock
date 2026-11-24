@@ -28,19 +28,24 @@ class RaceResult {
   /// `true` cuando las fichas ya se han enviado a la Copa.
   final bool settled;
 
-  RaceResult copyWith({Map<String, Set<String>>? allInTargets, bool? settled}) => RaceResult(
-        roundId: roundId,
-        winner: winner,
-        standings: standings,
-        outcomes: outcomes,
-        draws: draws,
-        allInTargets: allInTargets ?? this.allInTargets,
-        settled: settled ?? this.settled,
-      );
+  RaceResult copyWith({
+    Map<String, Set<String>>? allInTargets,
+    bool? settled,
+  }) => RaceResult(
+    roundId: roundId,
+    winner: winner,
+    standings: standings,
+    outcomes: outcomes,
+    draws: draws,
+    allInTargets: allInTargets ?? this.allInTargets,
+    settled: settled ?? this.settled,
+  );
 }
 
 /// Resultado de la última carrera, para la pantalla de resultados.
-final lastRaceResultProvider = NotifierProvider<LastRaceResult, RaceResult?>(LastRaceResult.new);
+final lastRaceResultProvider = NotifierProvider<LastRaceResult, RaceResult?>(
+  LastRaceResult.new,
+);
 
 class LastRaceResult extends Notifier<RaceResult?> {
   @override
@@ -52,7 +57,9 @@ class LastRaceResult extends Notifier<RaceResult?> {
   void setTargets(String winnerId, Set<String> targets) {
     final r = state;
     if (r == null || r.settled) return;
-    state = r.copyWith(allInTargets: {...r.allInTargets, winnerId: Set.unmodifiable(targets)});
+    state = r.copyWith(
+      allInTargets: {...r.allInTargets, winnerId: Set.unmodifiable(targets)},
+    );
   }
 
   void markSettled() {

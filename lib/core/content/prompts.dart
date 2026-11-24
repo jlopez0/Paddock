@@ -3,15 +3,21 @@ import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+/// Nivel de una carta. No guarda icono: las pantallas dibujan el de [id] con
+/// `LevelIcon` (lib/app/app_icons.dart).
 enum PromptLevel {
-  suave('Suave', '😇'),
-  picante('Picante', '🌶️'),
-  atrevido('Atrevido', '🔥');
+  suave('Suave'),
+  picante('Picante'),
+  atrevido('Atrevido');
 
-  const PromptLevel(this.label, this.emoji);
+  const PromptLevel(this.label);
 
+  /// Texto visible del nivel.
   final String label;
-  final String emoji;
+
+  /// Identificador estable ('suave' | 'picante' | 'atrevido'): el de la ruta,
+  /// el guardado y `LevelIcon`.
+  String get id => name;
 
   /// Convierte un nombre guardado o recibido por ruta. Acepta el antiguo `hot`
   /// como `atrevido` y devuelve `null` si no se reconoce (nunca lanza).
@@ -60,6 +66,9 @@ List<Prompt> parsePrompts(String json) {
 }
 
 /// Carga (y cachea) un fichero de contenido de `assets/content/`.
-final promptsProvider = FutureProvider.family<List<Prompt>, String>((ref, asset) async {
+final promptsProvider = FutureProvider.family<List<Prompt>, String>((
+  ref,
+  asset,
+) async {
   return parsePrompts(await rootBundle.loadString(asset));
 });

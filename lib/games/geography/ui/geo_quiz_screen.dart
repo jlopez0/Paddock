@@ -2,11 +2,14 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:material_ui/material_ui.dart';
+import '../../../core/audio/app_sound.dart';
 import '../../../core/settings/app_feedback.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../app/app_icons.dart';
 import '../../../app/theme.dart';
+import '../../trivia/ui/quiz_fx.dart';
 import '../domain/geo_map.dart';
 import '../domain/quiz.dart';
 import '../geo_data.dart';
@@ -64,6 +67,7 @@ class _GeoQuizScreenState extends ConsumerState<GeoQuizScreen> {
       ok = _engine!.isCorrect(_q, typed ?? '');
     }
     ok ? AppFeedback.light() : AppFeedback.heavy();
+    playSound(ok ? AppSound.correct : AppSound.wrong);
     setState(() {
       _wasCorrect = ok;
       _picked = option;
@@ -100,14 +104,21 @@ class _GeoQuizScreenState extends ConsumerState<GeoQuizScreen> {
   void _finish() {
     final records = ref.read(geoRecordsProvider.notifier);
     final isRecord = records.submit(_setup.recordKey, _correct);
-    ref.read(lastQuizResultProvider.notifier).set(QuizResult(
-          setup: _setup,
-          total: _questions.length,
-          correct: _correct,
-          mistakes: List.unmodifiable(_mistakes),
-          newRecord: isRecord,
-          best: max(_correct, ref.read(geoRecordsProvider)[_setup.recordKey] ?? 0),
-        ));
+    ref
+        .read(lastQuizResultProvider.notifier)
+        .set(
+          QuizResult(
+            setup: _setup,
+            total: _questions.length,
+            correct: _correct,
+            mistakes: List.unmodifiable(_mistakes),
+            newRecord: isRecord,
+            best: max(
+              _correct,
+              ref.read(geoRecordsProvider)[_setup.recordKey] ?? 0,
+            ),
+          ),
+        );
     context.pushReplacement('/game/geografia/result');
   }
 
@@ -117,8 +128,14 @@ class _GeoQuizScreenState extends ConsumerState<GeoQuizScreen> {
       builder: (ctx) => AlertDialog(
         title: const Text('¿Salir de la partida?'),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Seguir')),
-          FilledButton(onPressed: () => Navigator.pop(ctx, true), child: const Text('Salir')),
+          TextButton(
+            onPressed: () => Navigator.pop(ctx, false),
+            child: const Text('Seguir'),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.pop(ctx, true),
+            child: const Text('Salir'),
+          ),
         ],
       ),
     );
@@ -137,7 +154,10 @@ class _GeoQuizScreenState extends ConsumerState<GeoQuizScreen> {
           body: const Center(
             child: Padding(
               padding: EdgeInsets.all(24),
-              child: Text('No se pudo cargar el contenido. Vuelve atrás e inténtalo de nuevo.', textAlign: TextAlign.center),
+              child: Text(
+                'No se pudo cargar el contenido. Vuelve atrás e inténtalo de nuevo.',
+                textAlign: TextAlign.center,
+              ),
             ),
           ),
         );
@@ -152,7 +172,18 @@ class _GeoQuizScreenState extends ConsumerState<GeoQuizScreen> {
       final MapQuizEngine m => m.map,
       _ => null,
     };
-    if (_questions.isEmpty) return const Scaffold(body: Center(child: Text('No hay preguntas')));
+    if (_questions.isEmpty) {
+      return Scaffold(
+        appBar: AppBar(),
+        body: SafeArea(
+          child: QuizEmptyState(
+            message: 'Sin preguntas con estos filtros',
+            actionLabel: 'Cambiar ajustes',
+            onAction: () => context.pop(),
+          ),
+        ),
+      );
+    }
 
     final q = _q;
     return PopScope(
@@ -161,95 +192,124 @@ class _GeoQuizScreenState extends ConsumerState<GeoQuizScreen> {
         if (!didPop) _exit();
       },
       child: Scaffold(
-      body: SafeArea(
-        child: Column(
-          children: [
-            _Header(
-              index: _index,
-              total: _questions.length,
-              streak: _streak,
-              onClose: _exit,
-            ),
-            Expanded(
-              child: AnimatedSwitcher(
-                duration: const Duration(milliseconds: 280),
-                transitionBuilder: (child, a) => FadeTransition(
-                  opacity: a,
-                  child: SlideTransition(
-                    position: Tween(begin: const Offset(0.08, 0), end: Offset.zero).animate(a),
-                    child: child,
-                  ),
+        body: SafeArea(
+          child: LayoutBuilder(
+            builder: (context, box) => Column(
+              children: [
+                _Header(
+                  index: _index,
+                  total: _questions.length,
+                  streak: _streak,
+                  onClose: _exit,
                 ),
-                child: KeyedSubtree(key: ValueKey(_index), child: _Prompt(question: q, map: map)),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(20, 8, 20, 16),
-              child: switch (_setup.mode) {
-                AnswerMode.options => _Options(
-                    question: q,
-                    picked: _picked,
-                    answered: _answered,
-                    onPick: (o) => _answer(option: o),
-                  ),
-                AnswerMode.reveal => _RevealAnswer(
-                    question: q,
-                    revealed: _revealed,
-                    onReveal: () {
-                      AppFeedback.selection();
-                      setState(() => _revealed = true);
-                    },
-                    onScore: (ok) {
-                      _answer(option: ok ? q.answer : null, giveUp: !ok);
-                      _autoNext?.cancel();
-                      _next();
-                    },
-                  ),
-                AnswerMode.typed => _TypedAnswer(
-                      controller: _text,
-                      focus: _focus,
-                      question: q,
-                      answered: _answered,
-                      wasCorrect: _wasCorrect,
-                      typed: _typed,
-                      onSubmit: () => _answer(typed: _text.text),
-                      onGiveUp: () => _answer(giveUp: true),
-                    ),
-              },
-            ),
-            // El hueco del botón está siempre reservado para que nada salte al fallar.
-            Padding(
-              padding: const EdgeInsets.fromLTRB(20, 0, 20, 16),
-              child: AnimatedOpacity(
-                duration: const Duration(milliseconds: 200),
-                opacity: _answered && !_wasCorrect! ? 1 : 0,
-                child: IgnorePointer(
-                  ignoring: !(_answered && !_wasCorrect!),
-                  child: SizedBox(
-                    width: double.infinity,
-                    height: 56,
-                    child: FilledButton(
-                      style: FilledButton.styleFrom(
-                        backgroundColor: geoColor,
-                        foregroundColor: const Color(0xFF042320),
+                Expanded(
+                  child: AnimatedSwitcher(
+                    duration: MediaQuery.disableAnimationsOf(context)
+                        ? Duration.zero
+                        : const Duration(milliseconds: 280),
+                    transitionBuilder: (child, a) => FadeTransition(
+                      opacity: a,
+                      child: SlideTransition(
+                        position: Tween(
+                          begin: const Offset(0.08, 0),
+                          end: Offset.zero,
+                        ).animate(a),
+                        child: child,
                       ),
-                      onPressed: _next,
-                      child: Text(_index + 1 >= _questions.length ? 'Ver resultado' : 'Siguiente'),
+                    ),
+                    child: KeyedSubtree(
+                      key: ValueKey(_index),
+                      child: _Prompt(question: q, map: map),
                     ),
                   ),
                 ),
-              ),
+                // Las respuestas se desplazan si no caben (letra grande, pantallas pequeñas).
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 8, 20, 16),
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(
+                      maxHeight: max(200.0, box.maxHeight * 0.6),
+                    ),
+                    child: SingleChildScrollView(
+                      child: switch (_setup.mode) {
+                        AnswerMode.options => _Options(
+                          question: q,
+                          picked: _picked,
+                          answered: _answered,
+                          onPick: (o) => _answer(option: o),
+                        ),
+                        AnswerMode.reveal => _RevealAnswer(
+                          question: q,
+                          revealed: _revealed,
+                          onReveal: () {
+                            AppFeedback.selection();
+                            setState(() => _revealed = true);
+                          },
+                          onScore: (ok) {
+                            _answer(option: ok ? q.answer : null, giveUp: !ok);
+                            _autoNext?.cancel();
+                            _next();
+                          },
+                        ),
+                        AnswerMode.typed => _TypedAnswer(
+                          controller: _text,
+                          focus: _focus,
+                          question: q,
+                          answered: _answered,
+                          wasCorrect: _wasCorrect,
+                          typed: _typed,
+                          onSubmit: () => _answer(typed: _text.text),
+                          onGiveUp: () => _answer(giveUp: true),
+                        ),
+                      },
+                    ),
+                  ),
+                ),
+                // El hueco del botón está siempre reservado para que nada salte al fallar.
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 0, 20, 16),
+                  child: AnimatedOpacity(
+                    duration: MediaQuery.disableAnimationsOf(context)
+                        ? Duration.zero
+                        : const Duration(milliseconds: 200),
+                    opacity: _answered && !_wasCorrect! ? 1 : 0,
+                    child: IgnorePointer(
+                      ignoring: !(_answered && !_wasCorrect!),
+                      child: SizedBox(
+                        width: double.infinity,
+                        height: 56,
+                        child: FilledButton(
+                          style: FilledButton.styleFrom(
+                            backgroundColor: geoColor,
+                            foregroundColor: const Color(0xFF042320),
+                          ),
+                          onPressed: _next,
+                          child: Text(
+                            _index + 1 >= _questions.length
+                                ? 'Ver resultado'
+                                : 'Siguiente',
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
-      ),
       ),
     );
   }
 }
 
 class _Header extends StatelessWidget {
-  const _Header({required this.index, required this.total, required this.streak, required this.onClose});
+  const _Header({
+    required this.index,
+    required this.total,
+    required this.streak,
+    required this.onClose,
+  });
 
   final int index;
   final int total;
@@ -258,24 +318,42 @@ class _Header extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final fast = MediaQuery.disableAnimationsOf(context);
     return Padding(
       padding: const EdgeInsets.fromLTRB(8, 4, 20, 0),
       child: Column(
         children: [
           Row(
             children: [
-              IconButton(tooltip: 'Salir', icon: const Icon(Icons.close_rounded), onPressed: onClose),
+              IconButton(
+                tooltip: 'Salir',
+                icon: AppIcon.close.widget(),
+                onPressed: onClose,
+              ),
               Expanded(
-                child: Text('${index + 1} / $total',
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(color: AppColors.textMuted, fontWeight: FontWeight.w700)),
+                child: Text(
+                  '${index + 1} / $total',
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    color: AppColors.textMuted,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
               ),
               SizedBox(
-                width: 64,
+                width: 80,
                 child: AnimatedOpacity(
-                  duration: const Duration(milliseconds: 200),
+                  duration: fast
+                      ? Duration.zero
+                      : const Duration(milliseconds: 200),
                   opacity: streak >= 2 ? 1 : 0,
-                  child: Text('🔥 $streak', textAlign: TextAlign.right, style: const TextStyle(fontWeight: FontWeight.w800)),
+                  child: streak >= 2
+                      ? Semantics(
+                          label: 'Racha de $streak aciertos',
+                          excludeSemantics: true,
+                          child: _Streak(streak: streak),
+                        )
+                      : const SizedBox.shrink(),
                 ),
               ),
             ],
@@ -286,7 +364,9 @@ class _Header extends StatelessWidget {
               borderRadius: BorderRadius.circular(4),
               child: TweenAnimationBuilder<double>(
                 tween: Tween(end: index / total),
-                duration: const Duration(milliseconds: 350),
+                duration: fast
+                    ? Duration.zero
+                    : const Duration(milliseconds: 350),
                 curve: Curves.easeOutCubic,
                 builder: (context, v, _) => LinearProgressIndicator(
                   value: v,
@@ -298,6 +378,37 @@ class _Header extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+/// Contador de racha: llama + cifra en Alfa Slab One. Late al sumar un acierto.
+class _Streak extends StatelessWidget {
+  const _Streak({required this.streak});
+
+  final int streak;
+
+  @override
+  Widget build(BuildContext context) {
+    final fast = MediaQuery.disableAnimationsOf(context);
+    return FittedBox(
+      fit: BoxFit.scaleDown,
+      alignment: Alignment.centerRight,
+      child: TweenAnimationBuilder<double>(
+        key: ValueKey(streak),
+        tween: Tween(begin: fast ? 1 : 0, end: 1),
+        duration: fast ? Duration.zero : const Duration(milliseconds: 450),
+        builder: (_, v, child) =>
+            Transform.scale(scale: 1 + 0.35 * sin(v * pi), child: child),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            AppIcon.flame.widget(size: 24),
+            const SizedBox(width: 4),
+            Text('$streak', style: quizDisplay(20, color: AppColors.text)),
+          ],
+        ),
       ),
     );
   }
@@ -317,17 +428,37 @@ class _Prompt extends StatelessWidget {
       QuestionKind.flag => ('¿De qué país es esta bandera?', _flag(context)),
       QuestionKind.silhouette => ('¿Qué país tiene esta forma?', _silhouette()),
       QuestionKind.capital => ('¿Cuál es la capital de…?', _bigText(c!.name)),
-      QuestionKind.capitalOwner => ('¿De qué país es capital…?', _bigText(c!.capital)),
+      QuestionKind.capitalOwner => (
+        '¿De qué país es capital…?',
+        _bigText(c!.capital),
+      ),
     };
+    // Todo el enunciado se encoge a la vez si el hueco es bajo (pantallas
+    // pequeñas, letra grande): nunca desborda.
     return Padding(
       padding: const EdgeInsets.fromLTRB(24, 16, 24, 0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(label, textAlign: TextAlign.center, style: const TextStyle(color: AppColors.textMuted, fontSize: 15)),
-          const SizedBox(height: 20),
-          Flexible(child: body),
-        ],
+      child: LayoutBuilder(
+        builder: (context, box) => FittedBox(
+          fit: BoxFit.scaleDown,
+          child: ConstrainedBox(
+            constraints: BoxConstraints.tightFor(width: box.maxWidth),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  label,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    color: AppColors.textMuted,
+                    fontSize: 15,
+                  ),
+                ),
+                const SizedBox(height: 16),
+                body,
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -338,27 +469,38 @@ class _Prompt extends StatelessWidget {
   }
 
   Widget _silhouette() => ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: 340, maxHeight: 300),
-        child: AspectRatio(aspectRatio: 1.15, child: SilhouetteView(question.country!.iso)),
-      );
+    constraints: const BoxConstraints(maxWidth: 340, maxHeight: 300),
+    child: AspectRatio(
+      aspectRatio: 1.15,
+      child: SilhouetteView(question.country!.iso),
+    ),
+  );
 
   /// Se puede ampliar con dos dedos para ver bien las regiones pequeñas.
   Widget _map() => InteractiveViewer(
-        maxScale: 6,
-        child: Center(child: RegionMapView(map: map!, highlightId: question.region!.id)),
-      );
+    maxScale: 6,
+    child: Center(
+      child: RegionMapView(map: map!, highlightId: question.region!.id),
+    ),
+  );
 
-  Widget _bigText(String text) => Text(
-        text,
-        textAlign: TextAlign.center,
-        style: const TextStyle(fontSize: 40, fontWeight: FontWeight.w900, height: 1.1),
-      );
+  /// El nombre impreso en un boleto de papel.
+  Widget _bigText(String text) => TicketCard(
+    padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 22),
+    child: SizedBox(
+      width: double.infinity,
+      child: Text(text, textAlign: TextAlign.center, style: quizDisplay(34)),
+    ),
+  );
 }
 
-enum _OptionState { idle, correct, wrong, dimmed }
-
 class _Options extends StatelessWidget {
-  const _Options({required this.question, required this.picked, required this.answered, required this.onPick});
+  const _Options({
+    required this.question,
+    required this.picked,
+    required this.answered,
+    required this.onPick,
+  });
 
   final Question question;
   final String? picked;
@@ -369,72 +511,24 @@ class _Options extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        for (final o in question.options)
+        for (final (i, o) in question.options.indexed)
           Padding(
             padding: const EdgeInsets.only(bottom: 10),
-            child: _OptionButton(
+            child: QuizOptionTile(
               label: o,
+              letter: String.fromCharCode(0x41 + i),
+              maxLines: 2,
               state: !answered
-                  ? _OptionState.idle
+                  ? QuizOptionState.idle
                   : o == question.answer
-                      ? _OptionState.correct
-                      : o == picked
-                          ? _OptionState.wrong
-                          : _OptionState.dimmed,
+                  ? QuizOptionState.correct
+                  : o == picked
+                  ? QuizOptionState.wrong
+                  : QuizOptionState.dimmed,
               onTap: answered ? null : () => onPick(o),
             ),
           ),
       ],
-    );
-  }
-}
-
-class _OptionButton extends StatelessWidget {
-  const _OptionButton({required this.label, required this.state, required this.onTap});
-
-  final String label;
-  final _OptionState state;
-  final VoidCallback? onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    final (Color border, Color fill, IconData? icon) = switch (state) {
-      _OptionState.idle => (AppColors.outline, AppColors.surface, null),
-      _OptionState.correct => (AppColors.success, AppColors.success.withValues(alpha: 0.2), Icons.check_circle_rounded),
-      _OptionState.wrong => (AppColors.danger, AppColors.danger.withValues(alpha: 0.2), Icons.cancel_rounded),
-      _OptionState.dimmed => (AppColors.outline, AppColors.surface, null),
-    };
-    return AnimatedOpacity(
-      duration: const Duration(milliseconds: 200),
-      opacity: state == _OptionState.dimmed ? 0.35 : 1,
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          borderRadius: BorderRadius.circular(16),
-          onTap: onTap,
-          child: AnimatedContainer(
-            duration: const Duration(milliseconds: 200),
-            height: 56,
-            padding: const EdgeInsets.symmetric(horizontal: 18),
-            decoration: BoxDecoration(
-              color: fill,
-              borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: border, width: state == _OptionState.idle ? 1 : 2),
-            ),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Text(label,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w700)),
-                ),
-                if (icon != null) Icon(icon, color: border),
-              ],
-            ),
-          ),
-        ),
-      ),
     );
   }
 }
@@ -463,11 +557,16 @@ class _RevealAnswer extends StatelessWidget {
           style: FilledButton.styleFrom(
             backgroundColor: geoColor,
             foregroundColor: const Color(0xFF042320),
-            textStyle: const TextStyle(fontSize: 18, fontWeight: FontWeight.w800),
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+            textStyle: const TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.w800,
+            ),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
           ),
           onPressed: onReveal,
-          icon: const Icon(Icons.visibility_rounded),
+          icon: AppIcon.visibility.widget(color: Colors.black),
           label: const Text('Ver respuesta'),
         ),
       );
@@ -486,7 +585,10 @@ class _RevealAnswer extends StatelessWidget {
           ),
           child: FittedBox(
             fit: BoxFit.scaleDown,
-            child: Text(question.answer, style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w900)),
+            child: Text(
+              question.answer,
+              style: quizDisplay(22, color: AppColors.text),
+            ),
           ),
         ),
         const SizedBox(height: 10),
@@ -501,7 +603,7 @@ class _RevealAnswer extends StatelessWidget {
                     side: const BorderSide(color: AppColors.danger),
                   ),
                   onPressed: () => onScore(false),
-                  icon: const Icon(Icons.close_rounded),
+                  icon: AppIcon.close.widget(color: AppColors.danger),
                   label: const Text('Fallé'),
                 ),
               ),
@@ -511,9 +613,12 @@ class _RevealAnswer extends StatelessWidget {
               child: SizedBox(
                 height: 54,
                 child: FilledButton.icon(
-                  style: FilledButton.styleFrom(backgroundColor: AppColors.success, foregroundColor: Colors.black),
+                  style: FilledButton.styleFrom(
+                    backgroundColor: AppColors.success,
+                    foregroundColor: Colors.black,
+                  ),
                   onPressed: () => onScore(true),
-                  icon: const Icon(Icons.check_rounded),
+                  icon: AppIcon.check.widget(color: Colors.black),
                   label: const Text('Acerté'),
                 ),
               ),
@@ -551,33 +656,53 @@ class _TypedAnswer extends StatelessWidget {
     if (answered) {
       final ok = wasCorrect!;
       final color = ok ? AppColors.success : AppColors.danger;
-      return Container(
-        width: double.infinity,
-        padding: const EdgeInsets.all(18),
-        decoration: BoxDecoration(
-          color: color.withValues(alpha: 0.16),
-          borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: color, width: 2),
-        ),
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(ok ? Icons.check_circle_rounded : Icons.cancel_rounded, color: color),
-                const SizedBox(width: 8),
-                Flexible(
-                  child: Text(question.answer,
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w900)),
-                ),
+      return Shake(
+        active: !ok,
+        child: Pulse(
+          active: ok,
+          child: Container(
+            width: double.infinity,
+            padding: const EdgeInsets.all(18),
+            decoration: BoxDecoration(
+              color: color.withValues(alpha: 0.16),
+              borderRadius: BorderRadius.circular(16),
+              border: Border.all(color: color, width: 2),
+              boxShadow: [
+                if (ok)
+                  BoxShadow(
+                    color: color.withValues(alpha: 0.45),
+                    blurRadius: 16,
+                  ),
               ],
             ),
-            if (!ok && typed != null && typed!.trim().isNotEmpty) ...[
-              const SizedBox(height: 4),
-              Text('Escribiste: ${typed!.trim()}', style: const TextStyle(color: AppColors.textMuted)),
-            ],
-          ],
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    (ok ? AppIcon.checkCircle : AppIcon.cancel).widget(
+                      color: color,
+                    ),
+                    const SizedBox(width: 8),
+                    Flexible(
+                      child: Text(
+                        question.answer,
+                        textAlign: TextAlign.center,
+                        style: quizDisplay(22, color: AppColors.text),
+                      ),
+                    ),
+                  ],
+                ),
+                if (!ok && typed != null && typed!.trim().isNotEmpty) ...[
+                  const SizedBox(height: 4),
+                  Text(
+                    'Escribiste: ${typed!.trim()}',
+                    style: const TextStyle(color: AppColors.textMuted),
+                  ),
+                ],
+              ],
+            ),
+          ),
         ),
       );
     }
@@ -605,12 +730,20 @@ class _TypedAnswer extends StatelessWidget {
         const SizedBox(height: 10),
         Row(
           children: [
-            Expanded(child: OutlinedButton(onPressed: onGiveUp, child: const Text('Ni idea'))),
+            Expanded(
+              child: OutlinedButton(
+                onPressed: onGiveUp,
+                child: const Text('Ni idea'),
+              ),
+            ),
             const SizedBox(width: 10),
             Expanded(
               flex: 2,
               child: FilledButton(
-                style: FilledButton.styleFrom(backgroundColor: geoColor, foregroundColor: const Color(0xFF042320)),
+                style: FilledButton.styleFrom(
+                  backgroundColor: geoColor,
+                  foregroundColor: const Color(0xFF042320),
+                ),
                 onPressed: onSubmit,
                 child: const Text('Comprobar'),
               ),

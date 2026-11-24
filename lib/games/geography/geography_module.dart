@@ -24,7 +24,7 @@ class GeographyModule extends GameModule {
 
   @override
   List<RouteBase> get subRoutes => [
-        GoRoute(path: 'play', builder: (_, _) => const GeoQuizScreen()),
-        GoRoute(path: 'result', builder: (_, _) => const GeoResultScreen()),
-      ];
+    GoRoute(path: 'play', builder: (_, _) => const GeoQuizScreen()),
+    GoRoute(path: 'result', builder: (_, _) => const GeoResultScreen()),
+  ];
 }

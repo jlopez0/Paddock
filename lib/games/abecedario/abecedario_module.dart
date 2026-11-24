@@ -14,7 +14,7 @@ class AbecedarioModule extends GameModule {
   @override
   String get title => 'Abecedario';
   @override
-  String get subtitle => 'Adivina la palabra de cada letra';
+  String get subtitle => 'Una palabra por letra, de la A a la Z';
   @override
   Color get color => abecedarioColor;
 

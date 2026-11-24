@@ -1,8 +1,31 @@
 import 'package:material_ui/material_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../app/app_icons.dart';
+import '../audio/app_sound.dart';
+import '../settings/app_feedback.dart';
 import 'player.dart';
 import 'players_controller.dart';
+
+/// Ficha que rebota al aparecer (alta de un jugador). Sin animación si el
+/// sistema las desactiva.
+class PopIn extends StatelessWidget {
+  const PopIn({super.key, required this.child});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    if (MediaQuery.disableAnimationsOf(context)) return child;
+    return TweenAnimationBuilder<double>(
+      tween: Tween(begin: 0, end: 1),
+      duration: const Duration(milliseconds: 550),
+      curve: Curves.elasticOut,
+      child: child,
+      builder: (context, t, child) => Transform.scale(scale: t, child: child),
+    );
+  }
+}
 
 class PlayerAvatar extends StatelessWidget {
   const PlayerAvatar(this.player, {super.key, this.size = 36});
@@ -64,11 +87,13 @@ class _AddPlayerFieldState extends ConsumerState<AddPlayerField> {
       return;
     }
     if (notifier.nameTaken(name)) {
-      setState(() => _error = 'Ya hay un jugador con ese nombre');
+      setState(() => _error = 'Ese nombre ya está en la cuadra');
       _focus.requestFocus();
       return;
     }
     final player = notifier.add(name);
+    AppFeedback.light();
+    playSound(AppSound.chipSoft);
     setState(() => _error = null);
     _controller.clear();
     widget.onAdded?.call(player);
@@ -90,10 +115,13 @@ class _AddPlayerFieldState extends ConsumerState<AddPlayerField> {
       decoration: InputDecoration(
         hintText: 'Nombre del jugador',
         errorText: _error,
-        prefixIcon: const Icon(Icons.person_add_alt_1_rounded),
+        prefixIcon: Padding(
+          padding: const EdgeInsets.all(12),
+          child: AppIcon.horse.widget(size: 24),
+        ),
         suffixIcon: IconButton(
           tooltip: 'Añadir',
-          icon: const Icon(Icons.add_circle_rounded),
+          icon: AppIcon.add.widget(),
           onPressed: _submit,
         ),
       ),

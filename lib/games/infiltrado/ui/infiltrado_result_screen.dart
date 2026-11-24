@@ -2,6 +2,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
 
+import '../../../app/app_icons.dart';
+import '../../../app/mascot.dart';
+import '../../../app/theme.dart';
 import '../../prompt_deck/game_colors.dart';
 import '../../../core/consequences/consequence_banner.dart';
 import '../../../core/consequences/retos_filter.dart';
@@ -19,10 +22,12 @@ class InfiltradoResultScreen extends ConsumerStatefulWidget {
   const InfiltradoResultScreen({super.key});
 
   @override
-  ConsumerState<InfiltradoResultScreen> createState() => _InfiltradoResultScreenState();
+  ConsumerState<InfiltradoResultScreen> createState() =>
+      _InfiltradoResultScreenState();
 }
 
-class _InfiltradoResultScreenState extends ConsumerState<InfiltradoResultScreen> {
+class _InfiltradoResultScreenState
+    extends ConsumerState<InfiltradoResultScreen> {
   final _guess = TextEditingController();
 
   @override
@@ -44,7 +49,8 @@ class _InfiltradoResultScreenState extends ConsumerState<InfiltradoResultScreen>
       for (final p in players)
         if (ids == null || ids.contains(p.id)) p,
     ];
-    final words = ref.read(infiltradoWordsProvider).asData?.value ?? kFallbackWords;
+    final words =
+        ref.read(infiltradoWordsProvider).asData?.value ?? kFallbackWords;
     final result = ref
         .read(infiltradoGameProvider.notifier)
         .start(players: chosen, setup: setup, words: words);
@@ -61,7 +67,8 @@ class _InfiltradoResultScreenState extends ConsumerState<InfiltradoResultScreen>
     final game = ref.watch(infiltradoGameProvider);
     if (game == null) return const InfiltradoNoGame();
     final byId = {for (final p in ref.watch(playersProvider)) p.id: p};
-    String nameOf(String id) => (byId[id] ?? Player(id: id, name: '?', colorIndex: 0)).name;
+    String nameOf(String id) =>
+        (byId[id] ?? Player(id: id, name: '?', colorIndex: 0)).name;
 
     final outcome = game.outcome;
     final Widget body;
@@ -90,7 +97,10 @@ class _InfiltradoResultScreenState extends ConsumerState<InfiltradoResultScreen>
         title: Text(outcome == null ? 'Última oportunidad' : 'Resultado'),
       ),
       body: SafeArea(
-        child: Padding(padding: const EdgeInsets.fromLTRB(20, 0, 20, 16), child: body),
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(20, 0, 20, 16),
+          child: body,
+        ),
       ),
     );
     return outcome == null ? InfiltradoLeaveGuard(child: content) : content;
@@ -120,21 +130,22 @@ class _LastChance extends StatelessWidget {
       children: [
         FilledButton(onPressed: onCheck, child: const Text('Comprobar')),
         const SizedBox(height: 8),
-        TextButton(onPressed: onGiveUp, child: const Text('No lo sé')),
+        TextButton(onPressed: onGiveUp, child: const Text('Ni idea')),
       ],
     ),
     children: [
-      const Text('🎯', textAlign: TextAlign.center, style: TextStyle(fontSize: 56)),
-      const SizedBox(height: 12),
-      Text(
-        '¡$impostor era el infiltrado!',
-        textAlign: TextAlign.center,
-        style: const TextStyle(fontSize: 26, fontWeight: FontWeight.w900),
+      Center(
+        child: AppIcon.target.widget(
+          size: 56,
+          semanticLabel: 'Última oportunidad',
+        ),
       ),
+      const SizedBox(height: 12),
+      SlabText('¡$impostor era el infiltrado!', size: 24),
       const SizedBox(height: 8),
       Text(
         'Última oportunidad: si acierta la palabra de "$category", gana igualmente. '
-        'Que los demás no miren.',
+        'Los demás, mirad a otro lado.',
         textAlign: TextAlign.center,
         style: const TextStyle(color: GameColors.mutedText, fontSize: 16),
       ),
@@ -172,20 +183,29 @@ class _Outcome extends ConsumerWidget {
 
   String get _detail {
     final accused = outcome.accused;
-    if (accused == null) return 'Empate en la votación: nadie fue acusado.';
-    if (!outcome.caught) return 'Acusasteis a ${nameOf(accused)}, pero era inocente.';
-    if (outcome.guessedWord) {
-      return '${nameOf(accused)} estaba pillado, pero adivinó la palabra y gana igualmente.';
+    if (accused == null) {
+      return 'Empate a votos: nadie se sienta en el banquillo.';
     }
-    return 'Acusasteis a ${nameOf(accused)} y era infiltrado.';
+    if (!outcome.caught) {
+      return 'Acusasteis a ${nameOf(accused)}, pero pasaba por allí.';
+    }
+    if (outcome.guessedWord) {
+      return '${nameOf(accused)} estaba cazado, pero adivinó la palabra y gana igualmente.';
+    }
+    return 'Acusasteis a ${nameOf(accused)} y era el infiltrado. Buen ojo.';
   }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final mode = ref.watch(settingsProvider.select((s) => s.consequenceMode));
     final adult = ref.watch(settingsProvider.select((s) => s.adultConfirmed));
-    final retosPrompts = ref.watch(promptsProvider('assets/content/es/retos.json')).asData?.value;
-    final retos = retosPrompts == null ? null : filterRetos(retosPrompts, adultConfirmed: adult);
+    final retosPrompts = ref
+        .watch(promptsProvider('assets/content/es/retos.json'))
+        .asData
+        ?.value;
+    final retos = retosPrompts == null
+        ? null
+        : filterRetos(retosPrompts, adultConfirmed: adult);
     final losses = <String, int>{
       for (final e in outcome.deltas.entries)
         if (e.value < 0) nameOf(e.key): -e.value,
@@ -202,52 +222,73 @@ class _Outcome extends ConsumerWidget {
             padding: const EdgeInsets.only(top: 8, bottom: 8),
             children: [
               Semantics(
-                label: outcome.impostorsWin ? 'Gana el infiltrado' : 'Ganan los civiles',
+                label: outcome.impostorsWin
+                    ? 'Gana el infiltrado'
+                    : 'Ganan los civiles',
                 excludeSemantics: true,
-                child: Text(
-                  outcome.impostorsWin ? '🕵️' : '🎉',
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(fontSize: 56),
+                child: Center(
+                  child: outcome.impostorsWin
+                      ? AppIcon.detective.widget(size: 64)
+                      : const Jockey(pose: JockeyPose.celebra, size: 88),
                 ),
               ),
-              const SizedBox(height: 8),
-              Text(
-                _headline,
-                textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 28, fontWeight: FontWeight.w900),
-              ),
+              const SizedBox(height: 12),
+              InfiltradoStamp(outcome.impostorsWin ? 'INFILTRADO' : 'SALVADOS'),
+              const SizedBox(height: 16),
+              SlabText(_headline, size: 24),
               const SizedBox(height: 6),
               Text(
                 _detail,
                 textAlign: TextAlign.center,
-                style: const TextStyle(color: GameColors.mutedText, fontSize: 16),
+                style: const TextStyle(
+                  color: GameColors.mutedText,
+                  fontSize: 16,
+                ),
               ),
               const SizedBox(height: 16),
-              Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        game.deal.impostors.length == 1 ? 'El infiltrado era' : 'Los infiltrados eran',
-                        style: const TextStyle(color: GameColors.mutedText),
+              TicketCard(
+                padding: const EdgeInsets.all(16),
+                stub: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'La palabra era (${game.deal.category})',
+                      style: const TextStyle(
+                        color: infiltradoInkMuted,
+                        fontWeight: FontWeight.w600,
                       ),
-                      Text(
-                        impostorNames.join(' y '),
-                        style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w800),
+                    ),
+                    Text(
+                      game.deal.word,
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w800,
+                        color: infiltradoInk,
                       ),
-                      const SizedBox(height: 10),
-                      Text(
-                        'La palabra era (${game.deal.category})',
-                        style: const TextStyle(color: GameColors.mutedText),
+                    ),
+                  ],
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      game.deal.impostors.length == 1
+                          ? 'El infiltrado era'
+                          : 'Los infiltrados eran',
+                      style: const TextStyle(
+                        color: infiltradoInkMuted,
+                        fontWeight: FontWeight.w600,
                       ),
-                      Text(
-                        game.deal.word,
-                        style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w800),
+                    ),
+                    Text(
+                      impostorNames.join(' y '),
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w800,
+                        color: AppColors.burgundy,
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
               if (votes.isNotEmpty) ...[
@@ -258,13 +299,18 @@ class _Outcome extends ConsumerWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text('Votos', style: TextStyle(color: GameColors.mutedText)),
+                        const Text(
+                          'Votos',
+                          style: TextStyle(color: GameColors.mutedText),
+                        ),
                         const SizedBox(height: 4),
                         for (final e in votes)
                           Row(
                             children: [
                               Expanded(child: Text(nameOf(e.key))),
-                              Text(e.value == 1 ? '1 voto' : '${e.value} votos'),
+                              Text(
+                                e.value == 1 ? '1 voto' : '${e.value} votos',
+                              ),
                             ],
                           ),
                       ],
@@ -298,7 +344,10 @@ class _Outcome extends ConsumerWidget {
             ),
             const SizedBox(width: 8),
             Expanded(
-              child: OutlinedButton(onPressed: () => context.go('/'), child: const Text('Menú')),
+              child: OutlinedButton(
+                onPressed: () => context.go('/'),
+                child: const Text('Menú'),
+              ),
             ),
           ],
         ),

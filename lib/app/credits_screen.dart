@@ -11,6 +11,13 @@ class CreditsScreen extends StatelessWidget {
 
   static const _ccBySa3 = 'https://creativecommons.org/licenses/by-sa/3.0/';
 
+  static const _ofl =
+      'https://openfontlicense.org/open-font-license-official-text/';
+
+  static const _mit = 'https://opensource.org/license/mit';
+
+  static const _cc0 = 'https://creativecommons.org/publicdomain/zero/1.0/';
+
   Future<void> _openLicense(BuildContext context, String url) async {
     final messenger = ScaffoldMessenger.of(context);
     var ok = false;
@@ -112,6 +119,50 @@ class CreditsScreen extends StatelessWidget {
               'Obertura de Guillermo Tell (Rossini, 1829), final. Grabación de la Banda de la Marina de EE. UU. '
               '("Grand Scenes", 2000), obra del gobierno de EE. UU. en dominio público, vía Wikimedia Commons.',
               style: muted,
+            ),
+            const SizedBox(height: 8),
+            Text(
+              'Sonidos de mesa (fichas, cartas, aciertos y podio): Kenney (kenney.nl), '
+              'licencia CC0 1.0. Atribución voluntaria.',
+              style: muted,
+            ),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: TextButton(
+                onPressed: () => _openLicense(context, _cc0),
+                child: const Text('Ver licencia CC0 1.0'),
+              ),
+            ),
+            const SizedBox(height: 24),
+            Semantics(
+              header: true,
+              child: const Text(
+                'Diseño',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+              ),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              'Iconos: Phosphor Icons (MIT), © 2020-2021 Phosphor Icons, phosphoricons.com.\n'
+              'Tipografías: Alfa Slab One (© 2016 The Alfa Slab One Project Authors) y '
+              'Figtree (© 2022 The Figtree Project Authors), con licencia SIL Open Font License 1.1.\n'
+              'Confeti: paquete confetti (MIT), de Felix Angelov.\n'
+              'Trofeo, mascota, fichas y medallas: dibujados para esta app.',
+              style: muted,
+            ),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: TextButton(
+                onPressed: () => _openLicense(context, _ofl),
+                child: const Text('Ver licencia SIL OFL 1.1'),
+              ),
+            ),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: TextButton(
+                onPressed: () => _openLicense(context, _mit),
+                child: const Text('Ver licencia MIT'),
+              ),
             ),
             SizedBox(height: 24),
             Text(

@@ -16,7 +16,7 @@ class InfiltradoModule extends GameModule {
   @override
   String get title => 'El Infiltrado';
   @override
-  String get subtitle => 'Todos saben la palabra menos uno';
+  String get subtitle => 'Todos saben la palabra. Uno, no';
   @override
   Color get color => const Color(0xFF8E6BE0);
 

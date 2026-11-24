@@ -32,19 +32,20 @@ abstract final class AppFonts {
 }
 
 ThemeData buildAppTheme() {
-  final scheme = ColorScheme.fromSeed(
-    seedColor: AppColors.gold,
-    brightness: Brightness.dark,
-  ).copyWith(
-    primary: AppColors.gold,
-    onPrimary: const Color(0xFF241A00),
-    secondary: AppColors.success,
-    surface: AppColors.surface,
-    onSurface: AppColors.text,
-    surfaceContainerHighest: AppColors.surfaceHigh,
-    outline: AppColors.outline,
-    error: AppColors.danger,
-  );
+  final scheme =
+      ColorScheme.fromSeed(
+        seedColor: AppColors.gold,
+        brightness: Brightness.dark,
+      ).copyWith(
+        primary: AppColors.gold,
+        onPrimary: const Color(0xFF241A00),
+        secondary: AppColors.success,
+        surface: AppColors.surface,
+        onSurface: AppColors.text,
+        surfaceContainerHighest: AppColors.surfaceHigh,
+        outline: AppColors.outline,
+        error: AppColors.danger,
+      );
 
   final base = ThemeData(
     useMaterial3: true,
@@ -56,10 +57,8 @@ ThemeData buildAppTheme() {
     bodyColor: AppColors.text,
     displayColor: AppColors.text,
   );
-  TextStyle? slab(TextStyle? s) => s?.copyWith(
-        fontFamily: AppFonts.display,
-        fontWeight: FontWeight.w400,
-      );
+  TextStyle? slab(TextStyle? s) =>
+      s?.copyWith(fontFamily: AppFonts.display, fontWeight: FontWeight.w400);
   return base.copyWith(
     scaffoldBackgroundColor: AppColors.background,
     appBarTheme: const AppBarTheme(

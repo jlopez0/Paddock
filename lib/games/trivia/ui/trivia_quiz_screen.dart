@@ -1,12 +1,15 @@
 import 'dart:math';
 
 import 'package:material_ui/material_ui.dart';
+import '../../../core/audio/app_sound.dart';
 import '../../../core/settings/app_feedback.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../app/app_icons.dart';
 import '../../../app/theme.dart';
 import '../trivia_data.dart';
+import 'quiz_fx.dart';
 
 class TriviaQuizScreen extends ConsumerStatefulWidget {
   const TriviaQuizScreen({super.key});
@@ -29,6 +32,7 @@ class _TriviaQuizScreenState extends ConsumerState<TriviaQuizScreen> {
     if (_answered) return;
     final ok = option == _q.answer;
     ok ? AppFeedback.light() : AppFeedback.heavy();
+    playSound(ok ? AppSound.correct : AppSound.wrong);
     setState(() {
       _picked = option;
       if (ok) {
@@ -41,8 +45,15 @@ class _TriviaQuizScreenState extends ConsumerState<TriviaQuizScreen> {
 
   void _next() {
     if (_index + 1 >= _questions!.length) {
-      ref.read(lastTriviaResultProvider.notifier).set(
-          TriviaResult(total: _questions!.length, correct: _correct, mistakes: List.of(_mistakes)));
+      ref
+          .read(lastTriviaResultProvider.notifier)
+          .set(
+            TriviaResult(
+              total: _questions!.length,
+              correct: _correct,
+              mistakes: List.of(_mistakes),
+            ),
+          );
       context.pushReplacement('/game/trivia/result');
       return;
     }
@@ -58,8 +69,14 @@ class _TriviaQuizScreenState extends ConsumerState<TriviaQuizScreen> {
       builder: (ctx) => AlertDialog(
         title: const Text('¿Salir de la partida?'),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Seguir')),
-          FilledButton(onPressed: () => Navigator.pop(ctx, true), child: const Text('Salir')),
+          TextButton(
+            onPressed: () => Navigator.pop(ctx, false),
+            child: const Text('Seguir'),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.pop(ctx, true),
+            child: const Text('Salir'),
+          ),
         ],
       ),
     );
@@ -71,17 +88,43 @@ class _TriviaQuizScreenState extends ConsumerState<TriviaQuizScreen> {
     if (_questions == null) {
       final bank = ref.watch(triviaBankProvider);
       return bank.when(
-        loading: () => const Scaffold(body: Center(child: CircularProgressIndicator())),
-        error: (e, _) => Scaffold(appBar: AppBar(), body: Center(child: Text('No se pudo cargar: $e'))),
+        loading: () =>
+            const Scaffold(body: Center(child: CircularProgressIndicator())),
+        error: (e, _) => Scaffold(
+          appBar: AppBar(),
+          body: Center(child: Text('No se pudo cargar: $e')),
+        ),
         data: (b) {
           final setup = ref.read(triviaSetupProvider);
           WidgetsBinding.instance.addPostFrameCallback((_) {
             if (mounted && _questions == null) {
-              setState(() => _questions = generateTrivia(b, setup.categories, setup.count, Random(), level: setup.level));
+              setState(
+                () => _questions = generateTrivia(
+                  b,
+                  setup.categories,
+                  setup.count,
+                  Random(),
+                  level: setup.level,
+                ),
+              );
             }
           });
-          return const Scaffold(body: Center(child: CircularProgressIndicator()));
+          return const Scaffold(
+            body: Center(child: CircularProgressIndicator()),
+          );
         },
+      );
+    }
+    if (_questions!.isEmpty) {
+      return Scaffold(
+        appBar: AppBar(),
+        body: SafeArea(
+          child: QuizEmptyState(
+            message: 'Sin preguntas con estos filtros',
+            actionLabel: 'Cambiar ajustes',
+            onAction: () => context.pop(),
+          ),
+        ),
       );
     }
 
@@ -99,7 +142,11 @@ class _TriviaQuizScreenState extends ConsumerState<TriviaQuizScreen> {
               children: [
                 Row(
                   children: [
-                    IconButton(tooltip: 'Salir', onPressed: _exit, icon: const Icon(Icons.close_rounded)),
+                    IconButton(
+                      tooltip: 'Salir',
+                      onPressed: _exit,
+                      icon: AppIcon.close.widget(),
+                    ),
                     Expanded(
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(6),
@@ -112,62 +159,69 @@ class _TriviaQuizScreenState extends ConsumerState<TriviaQuizScreen> {
                       ),
                     ),
                     const SizedBox(width: 12),
-                    Text('${_index + 1} / $total', style: const TextStyle(fontWeight: FontWeight.w800)),
+                    Text(
+                      '${_index + 1} / $total',
+                      style: const TextStyle(fontWeight: FontWeight.w800),
+                    ),
                   ],
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 12),
+                // Pregunta y opciones se desplazan juntas: con letra grande nada se sale de la pantalla.
                 Expanded(
-                  child: Center(
-                    child: SingleChildScrollView(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text('${_q.category.emoji}  ${_q.category.label}'.toUpperCase(),
-                              style: const TextStyle(
-                                  color: triviaColor, fontWeight: FontWeight.w800, letterSpacing: 1.2, fontSize: 12)),
-                          const SizedBox(height: 14),
-                          Text(_q.text,
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w800, height: 1.25)),
-                          if (_q.id.startsWith('ot-')) ...[
-                            const SizedBox(height: 10),
-                            const Text('Fuente: Open Trivia DB (CC BY-SA 4.0)',
-                                style: TextStyle(fontSize: 11, color: Colors.white54)),
+                  child: LayoutBuilder(
+                    builder: (context, box) => SingleChildScrollView(
+                      child: ConstrainedBox(
+                        constraints: BoxConstraints(minHeight: box.maxHeight),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            _QuestionTicket(question: _q),
+                            const SizedBox(height: 20),
+                            for (final (i, o) in _q.options.indexed)
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 10),
+                                child: QuizOptionTile(
+                                  label: o,
+                                  letter: String.fromCharCode(0x41 + i),
+                                  minHeight: 58,
+                                  state: !_answered
+                                      ? QuizOptionState.idle
+                                      : o == _q.answer
+                                      ? QuizOptionState.correct
+                                      : o == _picked
+                                      ? QuizOptionState.wrong
+                                      : QuizOptionState.dimmed,
+                                  onTap: _answered ? null : () => _pick(o),
+                                ),
+                              ),
                           ],
-                        ],
+                        ),
                       ),
                     ),
                   ),
                 ),
-                for (final o in _q.options)
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 10),
-                    child: _Option(
-                      label: o,
-                      state: !_answered
-                          ? _OptionState.idle
-                          : o == _q.answer
-                              ? _OptionState.correct
-                              : o == _picked
-                                  ? _OptionState.wrong
-                                  : _OptionState.dimmed,
-                      onTap: () => _pick(o),
-                    ),
-                  ),
                 const SizedBox(height: 4),
                 AnimatedOpacity(
                   opacity: _answered ? 1 : 0,
-                  duration: const Duration(milliseconds: 200),
+                  duration: MediaQuery.disableAnimationsOf(context)
+                      ? Duration.zero
+                      : const Duration(milliseconds: 200),
                   child: IgnorePointer(
                     ignoring: !_answered,
                     child: FilledButton(
                       style: FilledButton.styleFrom(
-                          backgroundColor: triviaColor,
-                          foregroundColor: Colors.black,
-                          minimumSize: const Size.fromHeight(52)),
+                        backgroundColor: triviaColor,
+                        foregroundColor: Colors.black,
+                        minimumSize: const Size.fromHeight(52),
+                      ),
                       onPressed: _next,
-                      child: Text(_index + 1 >= total ? 'Ver resultado' : 'Siguiente',
-                          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w800)),
+                      child: Text(
+                        _index + 1 >= total ? 'Ver resultado' : 'Siguiente',
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w800,
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -180,63 +234,70 @@ class _TriviaQuizScreenState extends ConsumerState<TriviaQuizScreen> {
   }
 }
 
-enum _OptionState { idle, correct, wrong, dimmed }
+/// La pregunta, impresa en un boleto de papel con la categoría en una etiqueta oscura.
+class _QuestionTicket extends StatelessWidget {
+  const _QuestionTicket({required this.question});
 
-class _Option extends StatelessWidget {
-  const _Option({required this.label, required this.state, required this.onTap});
-
-  final String label;
-  final _OptionState state;
-  final VoidCallback onTap;
+  final TriviaQuestion question;
 
   @override
   Widget build(BuildContext context) {
-    // Tamaño constante en todos los estados: mismo borde, mismo hueco para el icono y altura mínima,
-    // para que al responder no se desplace nada.
-    final (border, fill, icon) = switch (state) {
-      _OptionState.correct => (AppColors.success, AppColors.success.withValues(alpha: 0.2), Icons.check_circle_rounded),
-      _OptionState.wrong => (AppColors.danger, AppColors.danger.withValues(alpha: 0.2), Icons.cancel_rounded),
-      _ => (AppColors.outline, AppColors.surface, null),
-    };
-    return AnimatedOpacity(
-      opacity: state == _OptionState.dimmed ? 0.35 : 1,
-      duration: const Duration(milliseconds: 250),
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          borderRadius: BorderRadius.circular(16),
-          onTap: onTap,
-          child: AnimatedContainer(
-            duration: const Duration(milliseconds: 250),
-            curve: Curves.easeOut,
-            constraints: const BoxConstraints(minHeight: 58),
-            padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
-            decoration: BoxDecoration(
-              color: fill,
-              borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: border, width: 2),
-            ),
-            child: Row(
-              children: [
-                Expanded(child: Text(label, style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w700))),
-                SizedBox(
-                  width: 28,
-                  height: 24,
-                  child: AnimatedSwitcher(
-                    duration: const Duration(milliseconds: 250),
-                    transitionBuilder: (c, anim) => ScaleTransition(scale: anim, child: c),
-                    child: icon == null
-                        ? const SizedBox.shrink(key: ValueKey('none'))
-                        : Align(
-                            key: ValueKey(icon),
-                            alignment: Alignment.centerRight,
-                            child: Icon(icon, color: border),
-                          ),
+    return TicketCard(
+      padding: const EdgeInsets.fromLTRB(24, 18, 24, 20),
+      child: SizedBox(
+        width: double.infinity,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+              decoration: BoxDecoration(
+                color: AppColors.background,
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  ExcludeSemantics(
+                    child: CategoryIcon(question.category.name, size: 20),
                   ),
-                ),
-              ],
+                  const SizedBox(width: 8),
+                  Flexible(
+                    child: Text(
+                      question.category.label.toUpperCase(),
+                      style: const TextStyle(
+                        color: triviaColor,
+                        fontWeight: FontWeight.w800,
+                        letterSpacing: 1.2,
+                        fontSize: 12,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
+            const SizedBox(height: 14),
+            Text(
+              question.text,
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.w800,
+                height: 1.25,
+                color: quizInk,
+              ),
+            ),
+            if (question.id.startsWith('ot-')) ...[
+              const SizedBox(height: 10),
+              Text(
+                'Fuente: Open Trivia DB (CC BY-SA 4.0)',
+                style: TextStyle(
+                  fontSize: 11,
+                  color: quizInk.withValues(alpha: 0.65),
+                ),
+              ),
+            ],
+          ],
         ),
       ),
     );

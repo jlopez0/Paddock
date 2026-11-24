@@ -15,7 +15,7 @@ class TriviaModule extends GameModule {
   @override
   String get title => 'Trivia';
   @override
-  String get subtitle => 'Cultura general en 4 opciones';
+  String get subtitle => 'Cuatro opciones, una buena';
   @override
   Color get color => triviaColor;
 
@@ -24,7 +24,7 @@ class TriviaModule extends GameModule {
 
   @override
   List<RouteBase> get subRoutes => [
-        GoRoute(path: 'play', builder: (_, _) => const TriviaQuizScreen()),
-        GoRoute(path: 'result', builder: (_, _) => const TriviaResultScreen()),
-      ];
+    GoRoute(path: 'play', builder: (_, _) => const TriviaQuizScreen()),
+    GoRoute(path: 'result', builder: (_, _) => const TriviaResultScreen()),
+  ];
 }

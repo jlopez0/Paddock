@@ -32,7 +32,7 @@ void main() {
     await tester.enterText(find.byType(TextField), 'ana');
     await tester.tap(find.byTooltip('Añadir'));
     await tester.pump();
-    expect(find.text('Ya hay un jugador con ese nombre'), findsOneWidget);
+    expect(find.text('Ese nombre ya está en la cuadra'), findsOneWidget);
     expect(container.read(playersProvider).length, 1);
     expect(find.text('0/16'), findsNothing);
 

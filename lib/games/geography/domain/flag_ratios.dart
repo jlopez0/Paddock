@@ -87,7 +87,7 @@ const Map<String, double> flagRatios = {
   'pl': 1.6,
   'pw': 1.6,
   'py': 1.8182,
-  'qa': 4.1667,
+  'qa': 2.5455,
   'sb': 2,
   'sc': 2,
   'sd': 2,

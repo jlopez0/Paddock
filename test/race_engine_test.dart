@@ -97,29 +97,31 @@ void main() {
     });
   });
 
-  test('settleBets: aciertos reparten (con multiplicador), fallos beben', () {
+  test('settleBets: aciertos reparten (con multiplicador), fallos pierden', () {
     const bets = [
-      Bet(playerId: 'a', suit: Suit.copas, sips: 3),
-      Bet(playerId: 'b', suit: Suit.oros, sips: 5),
+      Bet(playerId: 'a', suit: Suit.copas, chips: 3),
+      Bet(playerId: 'b', suit: Suit.oros, chips: 5),
     ];
     final r = settleBets(bets, Suit.copas, winMultiplier: 2);
     expect(r[0].won, isTrue);
-    expect(r[0].sips, 6);
+    expect(r[0].chips, 6);
+    expect(r[0].label, '6 fichas');
     expect(r[1].won, isFalse);
-    expect(r[1].sips, 5);
+    expect(r[1].chips, 5);
+    expect(r[1].chipValue, 5);
   });
 
-  test('settleBets: hidalgo bebe 1 y, si gana, reparte tantos como el multiplicador', () {
+  test('settleBets: All-in pierde 1 All-in y, si gana, reparte 2 (con o sin multiplicador)', () {
     const bets = [
-      Bet(playerId: 'a', suit: Suit.copas, sips: Bet.hidalgo),
-      Bet(playerId: 'b', suit: Suit.oros, sips: Bet.hidalgo),
+      Bet(playerId: 'a', suit: Suit.copas, chips: Bet.allIn),
+      Bet(playerId: 'b', suit: Suit.oros, chips: Bet.allIn),
     ];
-    var r = settleBets(bets, Suit.copas);
-    expect([r[0].won, r[0].hidalgos, r[0].label], [true, 1, '💀']);
-    expect([r[1].won, r[1].hidalgos], [false, 1]);
-    r = settleBets(bets, Suit.copas, winMultiplier: 2);
-    expect(r[0].hidalgos, 2);
-    expect(r[0].label, '💀💀');
-    expect(r[1].hidalgos, 1);
+    for (final mult in [1, 2]) {
+      final r = settleBets(bets, Suit.copas, winMultiplier: mult);
+      expect([r[0].won, r[0].allIns, r[0].label], [true, 2, 'All-in ×2']);
+      expect([r[1].won, r[1].allIns, r[1].label], [false, 1, 'All-in']);
+      expect(r[1].chipValue, kAllInChips);
+    }
   });
 }
+

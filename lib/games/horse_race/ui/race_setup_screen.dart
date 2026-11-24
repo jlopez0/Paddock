@@ -12,12 +12,12 @@ import '../domain/cards.dart';
 import '../race_store.dart';
 
 class _Draft {
-  _Draft({this.suit, this.sips = 2, this.hidalgo = false});
+  _Draft({this.suit, this.chips = 2, this.allIn = false});
   Suit? suit;
-  int sips;
-  bool hidalgo;
+  int chips;
+  bool allIn;
 
-  int get betSips => hidalgo ? Bet.hidalgo : sips;
+  int get betChips => allIn ? Bet.allIn : chips;
 }
 
 class RaceSetupScreen extends ConsumerStatefulWidget {
@@ -37,7 +37,7 @@ class _RaceSetupScreenState extends ConsumerState<RaceSetupScreen> {
     final players = ref.read(playersProvider);
     final ids = players.map((p) => p.id).toSet();
     for (final b in ref.read(raceSetupProvider).bets) {
-      if (ids.contains(b.playerId)) _drafts[b.playerId] = _Draft(suit: b.suit, sips: b.isHidalgo ? 2 : b.sips, hidalgo: b.isHidalgo);
+      if (ids.contains(b.playerId)) _drafts[b.playerId] = _Draft(suit: b.suit, chips: b.isAllIn ? 2 : b.chips, allIn: b.isAllIn);
     }
   }
 
@@ -51,7 +51,7 @@ class _RaceSetupScreenState extends ConsumerState<RaceSetupScreen> {
   List<Bet>? get _validBets {
     if (_drafts.isEmpty || _drafts.values.any((d) => d.suit == null)) return null;
     return [
-      for (final e in _drafts.entries) Bet(playerId: e.key, suit: e.value.suit!, sips: e.value.betSips),
+      for (final e in _drafts.entries) Bet(playerId: e.key, suit: e.value.suit!, chips: e.value.betChips),
     ];
   }
 
@@ -102,7 +102,7 @@ class _RaceSetupScreenState extends ConsumerState<RaceSetupScreen> {
           const SizedBox(height: 12),
           AddPlayerField(onAdded: (p) => setState(() => _drafts.putIfAbsent(p.id, _Draft.new))),
           if (_drafts.isNotEmpty) ...[
-            const _SectionTitle('Palo y tragos'),
+            const _SectionTitle('Palo y fichas'),
             for (final e in _drafts.entries)
               Padding(
                 padding: const EdgeInsets.only(bottom: 10),
@@ -211,21 +211,21 @@ class _BetCard extends StatelessWidget {
                   child: Text(player.name, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700)),
                 ),
                 _Stepper(
-                  value: draft.sips,
-                  enabled: !draft.hidalgo,
+                  value: draft.chips,
+                  enabled: !draft.allIn,
                   onChanged: (v) {
-                    draft.sips = v;
+                    draft.chips = v;
                     onChanged();
                   },
                 ),
               ],
             ),
             const SizedBox(height: 10),
-            _HidalgoButton(
-              selected: draft.hidalgo,
+            _AllInButton(
+              selected: draft.allIn,
               onTap: () {
                 AppFeedback.selection();
-                draft.hidalgo = !draft.hidalgo;
+                draft.allIn = !draft.allIn;
                 onChanged();
               },
             ),
@@ -312,17 +312,28 @@ class _Stepper extends StatelessWidget {
         children: [
           IconButton(
             visualDensity: VisualDensity.compact,
-            onPressed: enabled && value > 1 ? () => onChanged(value - 1) : null,
+            tooltip: 'Una ficha menos',
+            onPressed: enabled && value > Bet.minChips ? () => onChanged(value - 1) : null,
             icon: const Icon(Icons.remove_rounded),
           ),
           SizedBox(
-            width: 44,
-            child: Text('$value 🍺',
-                textAlign: TextAlign.center, style: const TextStyle(fontWeight: FontWeight.w800)),
+            width: 56,
+            child: Semantics(
+              label: value == 1 ? '1 ficha' : '$value fichas',
+              excludeSemantics: true,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text('$value', style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 16)),
+                  const Text('fichas', style: TextStyle(fontSize: 10, color: AppColors.textMuted)),
+                ],
+              ),
+            ),
           ),
           IconButton(
             visualDensity: VisualDensity.compact,
-            onPressed: enabled && value < 10 ? () => onChanged(value + 1) : null,
+            tooltip: 'Una ficha más',
+            onPressed: enabled && value < Bet.maxChips ? () => onChanged(value + 1) : null,
             icon: const Icon(Icons.add_rounded),
           ),
         ],
@@ -331,8 +342,8 @@ class _Stepper extends StatelessWidget {
   }
 }
 
-class _HidalgoButton extends StatelessWidget {
-  const _HidalgoButton({required this.selected, required this.onTap});
+class _AllInButton extends StatelessWidget {
+  const _AllInButton({required this.selected, required this.onTap});
 
   final bool selected;
   final VoidCallback onTap;
@@ -351,7 +362,7 @@ class _HidalgoButton extends StatelessWidget {
           border: Border.all(color: selected ? AppColors.danger : Colors.transparent, width: 2),
         ),
         child: Text(
-          'Hidalgo 💀  ·  vaso entero',
+          'All-in  ·  $kAllInChips fichas',
           textAlign: TextAlign.center,
           style: TextStyle(fontWeight: FontWeight.w800, color: selected ? AppColors.danger : AppColors.textMuted),
         ),

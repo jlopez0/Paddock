@@ -41,29 +41,32 @@ class RaceSettings {
 }
 
 class PlayerRaceStats {
-  const PlayerRaceStats({this.races = 0, this.hits = 0, this.sipsDrunk = 0, this.sipsGiven = 0});
+  const PlayerRaceStats({this.races = 0, this.hits = 0, this.chipsLost = 0, this.chipsWon = 0});
 
   final int races;
   final int hits;
-  final int sipsDrunk;
-  final int sipsGiven;
+  final int chipsLost;
+  final int chipsWon;
 
   double get hitRate => races == 0 ? 0 : hits / races;
 
   PlayerRaceStats add(BetOutcome o) => PlayerRaceStats(
         races: races + 1,
         hits: hits + (o.won ? 1 : 0),
-        sipsDrunk: sipsDrunk + (o.won ? 0 : o.sips),
-        sipsGiven: sipsGiven + (o.won ? o.sips : 0),
+        chipsLost: chipsLost + (o.won ? 0 : o.chipValue),
+        chipsWon: chipsWon + (o.won ? o.chipValue : 0),
       );
 
-  Map<String, dynamic> toJson() => {'r': races, 'h': hits, 'd': sipsDrunk, 'g': sipsGiven};
+  // Limitación asumida (docs/decisions.md D12): las estadísticas antiguas (unidades previas
+  // a las fichas, d/g) se leen ahora como fichas, y un All-in ganado cuenta 20 aunque se repartan menos.
+  // Claves cortas ya guardadas en el dispositivo: no cambiar (d = perdidas, g = ganadas).
+  Map<String, dynamic> toJson() => {'r': races, 'h': hits, 'd': chipsLost, 'g': chipsWon};
 
   factory PlayerRaceStats.fromJson(Map<String, dynamic> j) => PlayerRaceStats(
-        races: j['r'] as int,
-        hits: j['h'] as int,
-        sipsDrunk: j['d'] as int,
-        sipsGiven: j['g'] as int,
+        races: j['r'] as int? ?? 0,
+        hits: j['h'] as int? ?? 0,
+        chipsLost: j['d'] as int? ?? 0,
+        chipsWon: j['g'] as int? ?? 0,
       );
 }
 

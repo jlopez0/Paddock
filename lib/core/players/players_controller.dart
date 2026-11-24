@@ -38,12 +38,28 @@ class PlayersController extends Notifier<List<Player>> {
       color++;
     }
     final player = Player(
-      id: DateTime.now().microsecondsSinceEpoch.toRadixString(36),
+      id: _newId(),
       name: name,
       colorIndex: color % playerPalette.length,
     );
     _save([...state, player]);
     return player;
+  }
+
+  static int _lastId = 0;
+
+  /// Id único: timestamp en µs forzado a ser estrictamente creciente (en Windows el
+  /// reloj puede repetir valor) y distinto de los ya guardados. Sigue siendo base36.
+  String _newId() {
+    var n = DateTime.now().microsecondsSinceEpoch;
+    if (n <= _lastId) n = _lastId + 1;
+    var id = n.toRadixString(36);
+    while (state.any((p) => p.id == id)) {
+      n++;
+      id = n.toRadixString(36);
+    }
+    _lastId = n;
+    return id;
   }
 
   void rename(String id, String name) =>

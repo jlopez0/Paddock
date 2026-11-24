@@ -25,6 +25,17 @@ void main() {
     expect(c2.read(playersProvider).map((p) => p.name), ['Ana', 'luis']);
   });
 
+  test('50 altas seguidas generan ids únicos', () async {
+    final c = await _container();
+    final n = c.read(playersProvider.notifier);
+    for (var i = 0; i < 50; i++) {
+      n.add('Jugador $i');
+    }
+    final ids = c.read(playersProvider).map((p) => p.id).toList();
+    expect(ids.length, 50);
+    expect(ids.toSet().length, 50);
+  });
+
   test('renombra y elimina', () async {
     final c = await _container();
     final n = c.read(playersProvider.notifier);

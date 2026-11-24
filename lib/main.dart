@@ -31,7 +31,7 @@ class PaddockApp extends ConsumerWidget {
       title: kAppName,
       debugShowCheckedModeBanner: false,
       theme: buildAppTheme(),
-      routerConfig: appRouter,
+      routerConfig: ref.watch(routerProvider),
     );
   }
 }

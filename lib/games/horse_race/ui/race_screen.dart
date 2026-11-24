@@ -124,6 +124,7 @@ class _RaceScreenState extends ConsumerState<RaceScreen> {
     final outcomes = settleBets(_setup.bets, winner, winMultiplier: _setup.settings.winMultiplier);
     ref.read(raceStatsProvider.notifier).record(winner, outcomes);
     ref.read(lastRaceResultProvider.notifier).set(RaceResult(
+          roundId: 'carrera-${DateTime.now().microsecondsSinceEpoch}',
           winner: winner,
           standings: _engine.standings,
           outcomes: outcomes,
@@ -680,8 +681,8 @@ class _WinnerOverlay extends StatelessWidget {
                       const SizedBox(height: 16),
                       FilledButton.icon(
                         onPressed: () => context.pushReplacement('/game/carrera/result'),
-                        icon: const Icon(Icons.local_bar_rounded),
-                        label: const Text('¿Quién bebe?'),
+                        icon: const Icon(Icons.toll_rounded),
+                        label: const Text('¿Quién paga?'),
                       ),
                     ],
                   ),

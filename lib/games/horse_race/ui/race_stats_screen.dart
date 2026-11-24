@@ -113,9 +113,9 @@ class RaceStatsScreen extends ConsumerWidget {
                                 ],
                               ),
                             ),
-                            _Metric(label: 'bebidos', value: r.stats.sipsDrunk, color: AppColors.danger),
+                            _Metric(label: 'fichas perdidas', value: r.stats.chipsLost, color: AppColors.danger),
                             const SizedBox(width: 12),
-                            _Metric(label: 'repartidos', value: r.stats.sipsGiven, color: AppColors.success),
+                            _Metric(label: 'fichas ganadas', value: r.stats.chipsWon, color: AppColors.success),
                           ],
                         ),
                       ),
@@ -138,7 +138,12 @@ class _Metric extends StatelessWidget {
   Widget build(BuildContext context) => Column(
         children: [
           Text('$value', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w900, color: color)),
-          Text(label, style: const TextStyle(fontSize: 11, color: AppColors.textMuted)),
+          SizedBox(
+            width: 56,
+            child: Text(label,
+                textAlign: TextAlign.center,
+                style: const TextStyle(fontSize: 11, color: AppColors.textMuted)),
+          ),
         ],
       );
 }

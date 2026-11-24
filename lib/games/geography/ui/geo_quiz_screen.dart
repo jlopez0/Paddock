@@ -111,6 +111,20 @@ class _GeoQuizScreenState extends ConsumerState<GeoQuizScreen> {
     context.pushReplacement('/game/geografia/result');
   }
 
+  Future<void> _exit() async {
+    final leave = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text('¿Salir de la partida?'),
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Seguir')),
+          FilledButton(onPressed: () => Navigator.pop(ctx, true), child: const Text('Salir')),
+        ],
+      ),
+    );
+    if (leave == true && mounted) context.pop();
+  }
+
   @override
   Widget build(BuildContext context) {
     final quiz = ref.watch(geoQuizProvider(_setup.category)).value;
@@ -127,7 +141,12 @@ class _GeoQuizScreenState extends ConsumerState<GeoQuizScreen> {
     if (_questions.isEmpty) return const Scaffold(body: Center(child: Text('No hay preguntas')));
 
     final q = _q;
-    return Scaffold(
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, _) {
+        if (!didPop) _exit();
+      },
+      child: Scaffold(
       body: SafeArea(
         child: Column(
           children: [
@@ -135,7 +154,7 @@ class _GeoQuizScreenState extends ConsumerState<GeoQuizScreen> {
               index: _index,
               total: _questions.length,
               streak: _streak,
-              onClose: () => context.pop(),
+              onClose: _exit,
             ),
             Expanded(
               child: AnimatedSwitcher(
@@ -209,6 +228,7 @@ class _GeoQuizScreenState extends ConsumerState<GeoQuizScreen> {
             ),
           ],
         ),
+      ),
       ),
     );
   }

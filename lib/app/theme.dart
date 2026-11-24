@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Paleta "hipódromo nocturno": verdes muy oscuros con acentos dorados.
 abstract final class AppColors {

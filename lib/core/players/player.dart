@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Colores disponibles para identificar a cada jugador.
 const playerPalette = <Color>[

@@ -143,18 +143,18 @@ void main() {
   }
 
   group('escala de resultado', () {
-    test('Pleno / Gran carrera / Colocado / Hoy no era tu carrera', () {
+    test('Pleno / Gran carrera / En el podio / Hoy no era tu carrera', () {
       expect(QuizTier.of(10, 10), QuizTier.pleno);
       expect(QuizTier.of(9, 10), QuizTier.granCarrera);
       expect(QuizTier.of(8, 10), QuizTier.granCarrera);
-      expect(QuizTier.of(7, 10), QuizTier.colocado);
-      expect(QuizTier.of(5, 10), QuizTier.colocado);
+      expect(QuizTier.of(7, 10), QuizTier.enElPodio);
+      expect(QuizTier.of(5, 10), QuizTier.enElPodio);
       expect(QuizTier.of(4, 10), QuizTier.hoyNo);
       expect(QuizTier.of(0, 10), QuizTier.hoyNo);
       expect(QuizTier.of(0, 0), QuizTier.hoyNo);
       expect(
         [for (final t in QuizTier.values) t.label],
-        ['Pleno', 'Gran carrera', 'Colocado', 'Hoy no era tu carrera'],
+        ['Pleno', 'Gran carrera', 'En el podio', 'Hoy no era tu carrera'],
       );
     });
   });
@@ -270,7 +270,7 @@ void main() {
             ),
           );
       await settle(tester);
-      expect(find.text('Colocado'), findsOneWidget);
+      expect(find.text('En el podio'), findsOneWidget);
       expect(find.text('1 fallo'), findsOneWidget);
       await tester.scrollUntilVisible(find.text('FALLOS'), 200);
       expect(find.text('Dijiste: ${q.wrong.first}'), findsOneWidget);

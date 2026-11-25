@@ -3,14 +3,14 @@ import 'package:paddock/core/session/session_score.dart';
 import 'package:paddock/games/trivia/ui/quiz_fx.dart';
 
 /// Regla de fichas de Trivia y Geografía (docs/decisions.md, 2026-11-25):
-/// Pleno +3, Gran carrera (>= 80 %) +2, Colocado (>= 50 %) +1, resto 0.
+/// Pleno +3, Gran carrera (>= 80 %) +2, En el podio (>= 50 %) +1, resto 0.
 /// Nunca resta: estos juegos no generan retos ni sorbos.
 void main() {
   group('QuizTier.chips', () {
     test('cada escalón vale lo que dice la regla', () {
       expect(QuizTier.pleno.chips, 3);
       expect(QuizTier.granCarrera.chips, 2);
-      expect(QuizTier.colocado.chips, 1);
+      expect(QuizTier.enElPodio.chips, 1);
       expect(QuizTier.hoyNo.chips, 0);
     });
 

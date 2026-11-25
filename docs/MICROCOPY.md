@@ -37,9 +37,9 @@ Se mantienen: títulos de juego, "Dos opciones, ninguna buena", "Confiesa… o p
 |---|---|---|---|---|
 | `games/trivia/ui/trivia_result_screen.dart:19` | ¡Perfecto! 🧠 | Pleno | Término de apuestas; sin emoji ni exclamación | |
 | `games/trivia/ui/trivia_result_screen.dart:20` | ¡Gran nivel! | Gran carrera | Voz de hipódromo | |
-| `games/trivia/ui/trivia_result_screen.dart:21` | Nada mal | Colocado | En apuestas, "colocado" es entrar en puestos de pago | |
+| `games/trivia/ui/trivia_result_screen.dart:21` | Nada mal | En el podio | Antes "Colocado": jerga de hípica pero también de intoxicación (lista negra anti-alcohol). Ver `docs/decisions.md` 2026-11-25 | |
 | `games/trivia/ui/trivia_result_screen.dart:22` | A seguir practicando | Hoy no era tu carrera | Resultado con carácter, sin sermón | |
-| `games/geography/ui/geo_result_screen.dart:25-28` | ¡Perfecto! 🌍 / ¡Gran nivel! / Nada mal / A seguir practicando | Pleno / Gran carrera / Colocado / Hoy no era tu carrera | Mismo criterio que Trivia | |
+| `games/geography/ui/geo_result_screen.dart:25-28` | ¡Perfecto! 🌍 / ¡Gran nivel! / Nada mal / A seguir practicando | Pleno / Gran carrera / En el podio / Hoy no era tu carrera | Mismo criterio que Trivia | |
 | `games/geography/ui/geo_result_screen.dart:45` | 🏆 ¡Nuevo récord! | Nuevo récord | El trofeo lo pone el icono; sobra la exclamación | |
 | `games/trivia/ui/trivia_result_screen.dart:15` y `geo_result_screen.dart:19` | No hay ninguna partida | Aquí no hay partida | Más corto y natural | |
 | `games/trivia/ui/trivia_result_screen.dart:59` | Otra partida | Otra vuelta | Un solo verbo para repetir en los juegos de preguntas | |
@@ -169,7 +169,7 @@ Solo cambia la entrada `carrera` (mismo esquema y mismos ids):
 | **Boleto** | La apuesta de un jugador en la Carrera (palo + fichas) | ticket |
 | **Paddock** | La app y su arranque. "Se abre el paddock" | |
 | **Haced vuestras apuestas** | Invitación a apostar antes de la carrera | "¡Apostad ya!" |
-| **Colocado / Pleno / Gran carrera** | Escala de resultado en los juegos de preguntas: perfecto = Pleno; 80 % = Gran carrera; 50 % = Colocado; menos = Hoy no era tu carrera | "¡Genial!", "¡Perfecto!" |
+| **En el podio / Pleno / Gran carrera** | Escala de resultado en los juegos de preguntas: perfecto = Pleno; 80 % = Gran carrera; 50 % = En el podio; menos = Hoy no era tu carrera | "¡Genial!", "¡Perfecto!" |
 | **Retirado / se retira** | Jugador borrado | eliminado (además es masculino) |
 | **Otra vuelta** | Repetir en Trivia, Geografía y Abecedario. Carrera usa "Revancha"; Infiltrado, "Otra ronda" | Otra vez, Otra partida |
 | **Jugar · N preguntas / cartas / letras** | Botón de inicio con recuento. Separador " · " | Empezar · |

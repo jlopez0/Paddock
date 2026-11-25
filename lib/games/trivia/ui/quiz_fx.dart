@@ -162,11 +162,11 @@ class QuizSection extends StatelessWidget {
 // Escala de resultado
 // ---------------------------------------------------------------------------
 
-/// Pleno (todo) / Gran carrera (80 %) / Colocado (50 %) / Hoy no era tu carrera.
+/// Pleno (todo) / Gran carrera (80 %) / En el podio (50 %) / Hoy no era tu carrera.
 enum QuizTier {
   pleno('Pleno'),
   granCarrera('Gran carrera'),
-  colocado('Colocado'),
+  enElPodio('En el podio'),
   hoyNo('Hoy no era tu carrera');
 
   const QuizTier(this.label);
@@ -178,16 +178,16 @@ enum QuizTier {
     if (correct >= total) return pleno;
     final ratio = correct / total;
     if (ratio >= 0.8) return granCarrera;
-    if (ratio >= 0.5) return colocado;
+    if (ratio >= 0.5) return enElPodio;
     return hoyNo;
   }
 
-  /// Fichas que esta vuelta suma a la Copa: Pleno 3, Gran carrera 2, Colocado 1.
+  /// Fichas que esta vuelta suma a la Copa: Pleno 3, Gran carrera 2, En el podio 1.
   /// Nunca resta (Trivia y Geografía no generan retos ni sorbos).
   int get chips => switch (this) {
     pleno => 3,
     granCarrera => 2,
-    colocado => 1,
+    enElPodio => 1,
     hoyNo => 0,
   };
 }
@@ -577,7 +577,7 @@ class _Medallion extends StatelessWidget {
     final Widget icon = switch (tier) {
       QuizTier.pleno => AppIcon.trophy.widget(size: 48),
       QuizTier.granCarrera => const MedalIcon(1, size: 48),
-      QuizTier.colocado => const MedalIcon(2, size: 48),
+      QuizTier.enElPodio => const MedalIcon(2, size: 48),
       QuizTier.hoyNo => AppIcon.flagCheckered.widget(size: 48),
     };
     return ExcludeSemantics(

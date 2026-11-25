@@ -38,7 +38,7 @@ Descargados de kenney.nl el 2026-11-25. Detalle en `assets/audio/LICENSE-Kenney-
 Paquete pub.dev `confetti` 0.8.0 (https://pub.dev/packages/confetti), "Copyright (c) 2018 Felix Angelov", dependencia directa (`pubspec.lock`). Aviso en `assets/licenses/confetti-MIT.txt`.
 
 ## Baraja española (CC BY-SA 3.0)
-Las cartas de `assets/cards/` son recortes y reescalados de la baraja de Wikimedia Commons, **salvo las 16 de obra propia** (todas las de oros y los cuatro caballos; ver más abajo):
+Las cartas de `assets/cards/` son recortes y reescalados de la baraja de Wikimedia Commons, **salvo 13 enteramente de obra propia** (`oros_1` a `oros_9`, `oros_11` y los caballos de bastos, copas y espadas) y la moneda de `oros_10` y `oros_12`, que también es propia (ver más abajo):
 - "Baraja española completa.png", de Basquetteur (2014-05-18), obra derivada del trabajo de Germarquezm: https://commons.wikimedia.org/wiki/File:Baraja_espa%C3%B1ola_completa.png (2496 x 1595 px; cuadrícula de 12 x 5 huecos de 208 x 319 px).
 - "Baraja española.svg", de Germarquezm: https://commons.wikimedia.org/wiki/File:Baraja_espa%C3%B1ola.svg
 - Autoría: https://commons.wikimedia.org/wiki/User:Basquetteur y https://commons.wikimedia.org/wiki/User:Germarquezm
@@ -69,7 +69,7 @@ Las siguientes cartas son dibujos propios de Paddock, creados por código, sin c
 - `oros_1` a `oros_9`: monedas con rosetón de 8 puntas; as con laurel y cinta "PADDOCK".
 - `oros_10` y `oros_12`: la figura (sota y rey) sigue siendo de la baraja de Commons (CC BY-SA 3.0); solo la moneda de la esquina es propia.
 - `oros_11`, `copas_11`, `espadas_11`, `bastos_11`: caballo con jinete propios (el caballo de la Carrera, `horseAsset`). Marco, esquinas redondeadas y números de esquina se conservan de las cartas anteriores.
-- Regeneración: `powershell -ExecutionPolicy Bypass -File toolsgen_cartas_propias.ps1` (escribe `assets/cards/` y `docs/cartas/`; con `-Salida <carpeta>` solo prueba). Es idempotente.
+- Regeneración: `powershell -ExecutionPolicy Bypass -File tools\gen_cartas_propias.ps1` (escribe `assets/cards/` y `docs/cartas/`; con `-Salida <carpeta>` solo prueba). Es idempotente.
 - Licencia de las cartas propias: obra propia; las que conservan la figura de Commons (`oros_10`, `oros_12`) siguen en CC BY-SA 3.0 por ese material.
 
 ## Trivia (CC BY-SA 4.0)

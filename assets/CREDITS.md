@@ -39,14 +39,32 @@ Paquete pub.dev `confetti` 0.8.0 (https://pub.dev/packages/confetti), "Copyright
 
 ## Baraja española (CC BY-SA 3.0)
 Las cartas de `assets/cards/` son recortes y reescalados de la baraja de Wikimedia Commons:
-- "Baraja española completa.png", de Basquetteur (2014-05-18), obra derivada del trabajo de Germarquezm: https://commons.wikimedia.org/wiki/File:Baraja_espa%C3%B1ola_completa.png
+- "Baraja española completa.png", de Basquetteur (2014-05-18), obra derivada del trabajo de Germarquezm: https://commons.wikimedia.org/wiki/File:Baraja_espa%C3%B1ola_completa.png (2496 x 1595 px; cuadrícula de 12 x 5 huecos de 208 x 319 px).
 - "Baraja española.svg", de Germarquezm: https://commons.wikimedia.org/wiki/File:Baraja_espa%C3%B1ola.svg
 - Autoría: https://commons.wikimedia.org/wiki/User:Basquetteur y https://commons.wikimedia.org/wiki/User:Germarquezm
 - Licencia de ambos archivos: CC BY-SA 3.0 (https://creativecommons.org/licenses/by-sa/3.0/), según la página de cada archivo (comprobado el 2026-11-25).
-- Cambios: recortadas en cartas individuales y reescaladas. Las cartas derivadas se comparten con la misma licencia (compartir igual).
-- Las páginas de Commons indican además que reutilizan gráficos heráldicos y un caballo de GnuBond (Aisleriot); no se han revisado esas licencias una por una.
-- **NO VERIFICADO:** que `reverso.png` salga de esos mismos archivos.
-- Publicación (R2): `docs/creditos.html` con autoría, fuente, licencia, enlaces y cambios. Las imágenes se sirven desde `docs/cartas/`, que debe ser una copia exacta de `assets/cards/` (si cambian las cartas, volver a copiarlas).
+- Cambios: recortadas en cartas individuales y reescaladas (208 x 319 -> 300 x 460 aprox., misma proporción). Las cartas derivadas se comparten con la misma licencia (compartir igual).
+
+### Reverso (`reverso.png`)
+- Origen identificado (2026-11-25): "Reverso baraja española.svg", de Germarquezm (2013-02-02; versión actual optimizada por Smasongarrison el 2022-10-01), CC BY-SA 3.0: https://commons.wikimedia.org/wiki/File:Reverso_baraja_espa%C3%B1ola.svg . La página indica que incluye elementos de "Baraja española.svg".
+- Cómo se identificó: mismo diseño (fondo azul marino `#28284e` del SVG, trama blanca de cruces, marco redondeado claro con borde gris), mismo tamaño nominal que cada carta de la baraja (208 x 319) y mismo acabado que las demás cartas de `assets/cards/`.
+- **NO VERIFICADO:** comparación byte a byte o píxel a píxel (no había shell), ni si se recortó de "Baraja española completa.png" o se rasterizó desde el SVG. Ninguna de las dos vías cambia autor ni licencia. Historial de git sin revisar (`git log --follow -- assets/cards/reverso.png`).
+
+### Elementos de terceros dentro de la baraja
+Según la página de "Baraja española.svg" (consultada el 2026-11-25), incluye:
+
+| Archivo de Commons | Autor | Licencia según su página |
+|---|---|---|
+| Heckert GNU left white.svg | Fuzzy, a partir de Aurelio A. Heckert | Free Art License (sin versión). Etiqueta "Trademarked": el logo de GNU puede ser marca |
+| Coat of arms of Colombia (Regular use).svg | Milenioscuro | CC BY-SA 4.0/3.0/2.5/2.0/1.0. Aviso "Insignia": uso de símbolos oficiales restringido en muchos países |
+| Héraldique meuble Penne.svg | Ssire | GFDL 1.2+ o CC BY-SA 3.0/2.5/2.0/1.0, a elegir |
+| Lys thick.svg | Mercury13 | Dominio público (PD Mark) |
+| Escudo de Pol.svg | SanchoPanzaXXI | GFDL 1.2+ o CC BY-SA 4.0 a 1.0, a elegir |
+| Heraldique Meuble Epee Pointe en bas.svg | Archimatth | GFDL 1.2+ o CC BY-SA 4.0 a 1.0, a elegir |
+
+- **NO VERIFICADO:** el caballo de GnuBond (Aisleriot) y los "gráficos heráldicos de Wikipedia" que cita la página de "Baraja española completa.png": no enlaza archivos. Los temas de cartas de Aisleriot conocidos (p. ej. Bonded) son GPL-2+ según Debian; si el caballo viene de ahí, sería material GPL dentro de una obra CC BY-SA 3.0, combinación que no consta como compatible. Afecta a las cuatro cartas de caballo (`*_11.png`).
+- **NO VERIFICADO:** que la Free Art License del GNU sea compatible con CC BY-SA 3.0 (CC solo ha declarado compatible FAL 1.3 con BY-SA 4.0). Es un posible defecto de la obra de origen, no de Paddock, pero se hereda.
+- Publicación (R2): `docs/creditos.html` con autoría, fuente, licencia, enlaces, cambios y esta lista. Las imágenes se sirven desde `docs/cartas/`, que debe ser una copia exacta de `assets/cards/` (si cambian las cartas, volver a copiarlas).
 
 ## Trivia (CC BY-SA 4.0)
 Las preguntas con id `ot-` proceden de Open Trivia DB (https://opentdb.com), licencia CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/), traducidas y adaptadas. El resto son originales. Publicación (R2): las 48 `ot-` están en `docs/creditos.html` con su licencia. Si se añaden, quitan o cambian preguntas `ot-` en `assets/content/es/trivia.json`, actualizar esa página.

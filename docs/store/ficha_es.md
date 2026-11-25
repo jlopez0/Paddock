@@ -17,7 +17,7 @@ Fuentes: `docs/PLAN_PUBLICACION.md` (Fase 6), `docs/CONTENIDO.md`, `docs/decisio
 Unos 2.100 caracteres con saltos de línea (límite: 4.000). Recuento a mano, línea a línea; margen de sobra.
 
 Revisión del 25/11/2026:
-- La Copa ya no dice que "cada partida" suma: solo Carrera, El Infiltrado y los juegos de cartas (Trivia y Geografía, en la v1.1).
+- La Copa ya no dice que "cada partida" suma: solo Carrera, El Infiltrado, los juegos de cartas, Trivia y Geografía (esta última pareja, desde la Fase 3.11; el Abecedario no puntúa).
 - Fuera "el mejor caballo" y "¿Te la juegas con un All-in?": evita superlativos y rebaja el tono de apuesta (COMPLIANCE R3). Se aclara que las fichas no tienen valor ni se compran.
 - Títulos de sección en minúscula: Google desaconseja las mayúsculas sostenidas en los metadatos.
 - Open Trivia DB se cita solo por la atribución que exige su licencia (CC BY-SA 4.0), no como reclamo.
@@ -27,7 +27,7 @@ Revisión del 25/11/2026:
 Paddock reúne ocho juegos para jugar en grupo con un solo móvil. Apuntáis los nombres, elegís juego y a jugar. Sin cuentas, sin anuncios y sin conexión.
 
 La Copa de la noche
-Carrera de caballos, El Infiltrado y los juegos de cartas suman o restan fichas en un marcador común. Las fichas son solo puntos: no tienen valor ni se compran. La clasificación aparece en la pantalla de inicio y, al final, hay podio con estadísticas por juego. Comparte el resultado con un toque y empieza una noche nueva cuando quieras.
+Carrera de caballos, El Infiltrado, los juegos de cartas, Trivia y Geografía suman o restan fichas en un marcador común. Las fichas son solo puntos: no tienen valor ni se compran. La clasificación aparece en la pantalla de inicio y, al final, hay podio con estadísticas por juego. Comparte el resultado con un toque y empieza una noche nueva cuando quieras.
 
 Los juegos
 - Carrera de caballos: elige un palo de la baraja, juega de 1 a 5 fichas y sigue la carrera hasta la meta.
@@ -87,5 +87,5 @@ Primera versión de Paddock:
 ## Pendiente de decidir
 
 - La app llama al marcador **"Copa de la noche"** (`lib/app/cup_screen.dart`). Si se prefiere "Copa Paddock", hay que cambiarlo también en la app para que ficha y producto coincidan.
-- Solo Carrera, El Infiltrado y los tres juegos de cartas suman a la Copa (Trivia y Geografía quedan para la v1.1). Por eso la descripción no dice que "todos" los juegos cuentan.
+- Suman a la Copa Carrera, El Infiltrado, los tres juegos de cartas, Trivia y Geografía (estos dos solo suman, nunca restan). El Abecedario no puntúa. Por eso la descripción no dice que "todos" los juegos cuentan.
 - Capturas (Fase 6): sin cartas del modo +18 ni consecuencias del modo opcional para mayores de edad (COMPLIANCE #6 y #7).

@@ -186,11 +186,14 @@ class TriviaMistake {
 
 class TriviaResult {
   const TriviaResult({
+    required this.roundId,
     required this.total,
     required this.correct,
     required this.mistakes,
   });
 
+  /// Identifica esta vuelta en la Copa (una vuelta solo se anota una vez).
+  final String roundId;
   final int total;
   final int correct;
   final List<TriviaMistake> mistakes;

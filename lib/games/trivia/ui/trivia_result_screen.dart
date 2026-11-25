@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../../app/app_icons.dart';
 import '../../../app/theme.dart';
 import '../trivia_data.dart';
+import 'quiz_cup_section.dart';
 import 'quiz_fx.dart';
 
 class TriviaResultScreen extends ConsumerWidget {
@@ -49,6 +50,13 @@ class TriviaResultScreen extends ConsumerWidget {
                     ? '1 fallo'
                     : '${r.mistakes.length} fallos',
               ),
+            ),
+            QuizCupSection(
+              roundId: r.roundId,
+              gameId: 'trivia',
+              correct: r.correct,
+              total: r.total,
+              color: triviaColor,
             ),
             const SizedBox(height: 20),
             Row(

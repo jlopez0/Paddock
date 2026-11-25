@@ -9,6 +9,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../app/app_icons.dart';
 import '../../../app/theme.dart';
+import '../../../core/session/session_controller.dart';
 import '../../trivia/ui/quiz_fx.dart';
 import '../domain/geo_map.dart';
 import '../domain/quiz.dart';
@@ -108,6 +109,8 @@ class _GeoQuizScreenState extends ConsumerState<GeoQuizScreen> {
         .read(lastQuizResultProvider.notifier)
         .set(
           QuizResult(
+            roundId:
+                'geografia-${ref.read(sessionClockProvider)().microsecondsSinceEpoch}',
             setup: _setup,
             total: _questions.length,
             correct: _correct,

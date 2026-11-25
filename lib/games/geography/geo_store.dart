@@ -142,6 +142,7 @@ class QuizMistake {
 
 class QuizResult {
   const QuizResult({
+    required this.roundId,
     required this.setup,
     required this.total,
     required this.correct,
@@ -150,6 +151,8 @@ class QuizResult {
     required this.best,
   });
 
+  /// Identifica esta vuelta en la Copa (una vuelta solo se anota una vez).
+  final String roundId;
   final GeoSetup setup;
   final int total;
   final int correct;

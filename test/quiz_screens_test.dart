@@ -263,6 +263,7 @@ void main() {
           .read(lastTriviaResultProvider.notifier)
           .set(
             TriviaResult(
+              roundId: 'trivia-1',
               total: 10,
               correct: 7,
               mistakes: [TriviaMistake(q, q.wrong.first)],
@@ -438,6 +439,7 @@ void main() {
             .read(lastQuizResultProvider.notifier)
             .set(
               QuizResult(
+                roundId: 'geografia-1',
                 setup: setup,
                 total: 10,
                 correct: 10,

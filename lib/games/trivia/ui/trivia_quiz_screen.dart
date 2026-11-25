@@ -8,6 +8,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../app/app_icons.dart';
 import '../../../app/theme.dart';
+import '../../../core/session/session_controller.dart';
 import '../trivia_data.dart';
 import 'quiz_fx.dart';
 
@@ -49,6 +50,8 @@ class _TriviaQuizScreenState extends ConsumerState<TriviaQuizScreen> {
           .read(lastTriviaResultProvider.notifier)
           .set(
             TriviaResult(
+              roundId:
+                  'trivia-${ref.read(sessionClockProvider)().microsecondsSinceEpoch}',
               total: _questions!.length,
               correct: _correct,
               mistakes: List.of(_mistakes),

@@ -1,4 +1,5 @@
 import '../../../core/help/how_to_play.dart';
+import '../../../app/theme.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
@@ -119,7 +120,7 @@ class _InfiltradoSetupScreenState extends ConsumerState<InfiltradoSetupScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('El Infiltrado'),
+        title: const AppTitle('El Infiltrado'),
         actions: const [HowToPlayButton('infiltrado')],
       ),
       body: SafeArea(

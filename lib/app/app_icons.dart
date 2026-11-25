@@ -23,10 +23,11 @@ Widget _duo(
 }) => Stack(
   alignment: Alignment.center,
   children: [
-    Opacity(
-      opacity: 0.5,
-      child: Icon(icon.secondary, size: size, color: secondary),
-    ),
+    if (icon.secondary != null)
+      Opacity(
+        opacity: 0.5,
+        child: Icon(icon.secondary, size: size, color: secondary),
+      ),
     Icon(
       icon.primary,
       size: size,
@@ -312,7 +313,7 @@ enum AppIcon {
   @visibleForTesting
   List<int> get codePoints => [
     _data.primary.codePoint,
-    _data.secondary.codePoint,
+    ?_data.secondary?.codePoint,
   ];
 
   /// Color de la capa secundaria (y del trazo si no se indica [color]).
@@ -567,10 +568,13 @@ class _DottedLinePainter extends CustomPainter {
 
 /// Icono duotono: capa principal + capa secundaria (translucida).
 class _Duo {
-  const _Duo(this.primary, this.secondary);
+  const _Duo(this.primary, [this.secondary]);
 
+  /// Sin [secondary] el icono es solo trazo: en la fuente Phosphor-Duotone la
+  /// capa par de x, plus, minus y check es un cuadrado macizo (parece una
+  /// imagen rota), asi que esos iconos no la usan.
   final IconData primary;
-  final IconData secondary;
+  final IconData? secondary;
 }
 
 const _fillMedal = IconData(0xe320, fontFamily: 'PhosphorFill');
@@ -704,10 +708,7 @@ abstract final class _D {
     IconData(0xe40b, fontFamily: 'PhosphorDuotone'),
     IconData(0xe408, fontFamily: 'PhosphorDuotone'),
   );
-  static const x = _Duo(
-    IconData(0xe4f7, fontFamily: 'PhosphorDuotone'),
-    IconData(0xe4f6, fontFamily: 'PhosphorDuotone'),
-  );
+  static const x = _Duo(IconData(0xe4f7, fontFamily: 'PhosphorDuotone'));
   static const arrowCounterClockwise = _Duo(
     IconData(0xe039, fontFamily: 'PhosphorDuotone'),
     IconData(0xe038, fontFamily: 'PhosphorDuotone'),
@@ -724,14 +725,8 @@ abstract final class _D {
     IconData(0xe6a7, fontFamily: 'PhosphorDuotone'),
     IconData(0xe6a6, fontFamily: 'PhosphorDuotone'),
   );
-  static const plus = _Duo(
-    IconData(0xe3d5, fontFamily: 'PhosphorDuotone'),
-    IconData(0xe3d4, fontFamily: 'PhosphorDuotone'),
-  );
-  static const minus = _Duo(
-    IconData(0xe32b, fontFamily: 'PhosphorDuotone'),
-    IconData(0xe32a, fontFamily: 'PhosphorDuotone'),
-  );
+  static const plus = _Duo(IconData(0xe3d5, fontFamily: 'PhosphorDuotone'));
+  static const minus = _Duo(IconData(0xe32b, fontFamily: 'PhosphorDuotone'));
   static const trash = _Duo(
     IconData(0xe4a7, fontFamily: 'PhosphorDuotone'),
     IconData(0xe4a6, fontFamily: 'PhosphorDuotone'),
@@ -776,10 +771,7 @@ abstract final class _D {
     IconData(0xe139, fontFamily: 'PhosphorDuotone'),
     IconData(0xe138, fontFamily: 'PhosphorDuotone'),
   );
-  static const check = _Duo(
-    IconData(0xe183, fontFamily: 'PhosphorDuotone'),
-    IconData(0xe182, fontFamily: 'PhosphorDuotone'),
-  );
+  static const check = _Duo(IconData(0xe183, fontFamily: 'PhosphorDuotone'));
   static const checkCircle = _Duo(
     IconData(0xe185, fontFamily: 'PhosphorDuotone'),
     IconData(0xe184, fontFamily: 'PhosphorDuotone'),

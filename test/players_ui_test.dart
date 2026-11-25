@@ -15,12 +15,16 @@ void main() {
   testWidgets('duplicado, vacío y deshacer al borrar', (tester) async {
     SharedPreferences.setMockInitialValues({});
     final prefs = await SharedPreferences.getInstance();
-    final container = ProviderContainer(overrides: [sharedPreferencesProvider.overrideWithValue(prefs)]);
+    final container = ProviderContainer(
+      overrides: [sharedPreferencesProvider.overrideWithValue(prefs)],
+    );
     addTearDown(container.dispose);
-    await tester.pumpWidget(UncontrolledProviderScope(
-      container: container,
-      child: const MaterialApp(home: PlayersScreen()),
-    ));
+    await tester.pumpWidget(
+      UncontrolledProviderScope(
+        container: container,
+        child: const MaterialApp(home: PlayersScreen()),
+      ),
+    );
 
     await tester.tap(find.byTooltip('Añadir'));
     await tester.pump();
@@ -43,5 +47,58 @@ void main() {
     await tester.tap(find.text('Deshacer'));
     await tester.pump();
     expect(container.read(playersProvider).single.name, 'Ana');
+  });
+
+  testWidgets('tras un duplicado el texto queda seleccionado y se reemplaza', (
+    tester,
+  ) async {
+    SharedPreferences.setMockInitialValues({});
+    final prefs = await SharedPreferences.getInstance();
+    final container = ProviderContainer(
+      overrides: [sharedPreferencesProvider.overrideWithValue(prefs)],
+    );
+    addTearDown(container.dispose);
+    await tester.pumpWidget(
+      UncontrolledProviderScope(
+        container: container,
+        child: const MaterialApp(home: PlayersScreen()),
+      ),
+    );
+    await tester.enterText(find.byType(TextField), 'Ana');
+    await tester.tap(find.byTooltip('Añadir'));
+    await tester.pump();
+    await tester.enterText(find.byType(TextField), 'ana');
+    await tester.tap(find.byTooltip('Añadir'));
+    await tester.pump();
+    final field = tester.widget<TextField>(find.byType(TextField));
+    expect(
+      field.controller!.selection,
+      const TextSelection(baseOffset: 0, extentOffset: 3),
+    );
+  });
+
+  testWidgets('el aviso de retirada se descarta solo y al salir', (
+    tester,
+  ) async {
+    SharedPreferences.setMockInitialValues({});
+    final prefs = await SharedPreferences.getInstance();
+    final container = ProviderContainer(
+      overrides: [sharedPreferencesProvider.overrideWithValue(prefs)],
+    );
+    addTearDown(container.dispose);
+    container.read(playersProvider.notifier).add('Ana');
+    await tester.pumpWidget(
+      UncontrolledProviderScope(
+        container: container,
+        child: const MaterialApp(home: PlayersScreen()),
+      ),
+    );
+    await tester.tap(find.byTooltip('Eliminar'));
+    await tester.pump();
+    expect(find.text('Ana se retira'), findsOneWidget);
+    await tester.pump(const Duration(milliseconds: 600));
+    await tester.pump(const Duration(seconds: 5));
+    await tester.pump(const Duration(seconds: 1));
+    expect(find.text('Ana se retira'), findsNothing);
   });
 }

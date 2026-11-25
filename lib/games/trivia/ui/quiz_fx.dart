@@ -26,6 +26,139 @@ TextStyle quizDisplay(double size, {Color color = quizInk}) => TextStyle(
 );
 
 // ---------------------------------------------------------------------------
+// Pantalla de preparación (Trivia y Geografía)
+// ---------------------------------------------------------------------------
+
+/// Filete de latón de las tarjetas de la casa.
+ShapeBorder quizBrassShape([double radius = 20]) => RoundedRectangleBorder(
+  borderRadius: BorderRadius.circular(radius),
+  side: BorderSide(color: AppColors.brass.withValues(alpha: 0.75)),
+);
+
+/// Cabecera de la pantalla de preparación: medallón con el icono duotono del
+/// juego (mismo lenguaje que el menú), el título (aquí y no en la barra, para
+/// que con letra grande pueda ocupar las líneas que necesite) y una frase de
+/// gancho.
+class QuizSetupHeader extends StatelessWidget {
+  const QuizSetupHeader({
+    super.key,
+    required this.gameId,
+    required this.title,
+    required this.hook,
+    required this.color,
+  });
+
+  final String gameId;
+  final String title;
+  final String hook;
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    final scaler = MediaQuery.textScalerOf(context).clamp(maxScaleFactor: 1.5);
+    return Padding(
+      padding: const EdgeInsets.only(top: 4, bottom: 4),
+      child: Column(
+        children: [
+          Container(
+            width: 96,
+            height: 96,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: color.withValues(alpha: 0.16),
+              border: Border.all(
+                color: AppColors.brass.withValues(alpha: 0.85),
+                width: 1.5,
+              ),
+            ),
+            child: ExcludeSemantics(child: GameIcon(gameId, size: 58)),
+          ),
+          const SizedBox(height: 14),
+          Semantics(
+            header: true,
+            child: Text(
+              title,
+              textAlign: TextAlign.center,
+              textScaler: scaler,
+              style: const TextStyle(
+                fontFamily: AppFonts.display,
+                fontWeight: FontWeight.w400,
+                fontSize: 26,
+                height: 1.2,
+                color: AppColors.text,
+              ),
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            hook,
+            textAlign: TextAlign.center,
+            textScaler: scaler,
+            style: const TextStyle(
+              color: AppColors.gold,
+              fontWeight: FontWeight.w700,
+              fontSize: 16,
+              height: 1.3,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Sección de la pantalla de preparación: tarjeta de fieltro con filete de
+/// latón y su título en versalitas arriba.
+class QuizSection extends StatelessWidget {
+  const QuizSection({
+    super.key,
+    required this.title,
+    required this.child,
+    this.padding = const EdgeInsets.fromLTRB(12, 12, 12, 14),
+  });
+
+  final String title;
+  final Widget child;
+  final EdgeInsetsGeometry padding;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 16),
+      child: Material(
+        color: AppColors.surface,
+        shape: quizBrassShape(),
+        child: Padding(
+          padding: padding,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Semantics(
+                header: true,
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(2, 0, 2, 10),
+                  child: Text(
+                    title.toUpperCase(),
+                    style: const TextStyle(
+                      color: AppColors.gold,
+                      fontWeight: FontWeight.w800,
+                      letterSpacing: 1.2,
+                      fontSize: 12,
+                    ),
+                  ),
+                ),
+              ),
+              child,
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+// ---------------------------------------------------------------------------
 // Escala de resultado
 // ---------------------------------------------------------------------------
 
@@ -274,8 +407,8 @@ class QuizOptionTile extends StatelessWidget {
                     children: [
                       AnimatedContainer(
                         duration: d,
-                        width: 32,
-                        height: 32,
+                        width: 40,
+                        height: 40,
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
@@ -286,7 +419,7 @@ class QuizOptionTile extends StatelessWidget {
                           letter,
                           textScaler: TextScaler.noScaling,
                           style: quizDisplay(
-                            15,
+                            20,
                             color: state == QuizOptionState.idle
                                 ? AppColors.gold
                                 : badge,

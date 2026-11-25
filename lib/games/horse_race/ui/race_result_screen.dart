@@ -185,7 +185,7 @@ class _RaceResultScreenState extends ConsumerState<RaceResultScreen> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Carrera de caballos'),
+          title: const AppTitle('Carrera de caballos'),
           leading: IconButton(
             tooltip: 'Cerrar',
             icon: AppIcon.close.widget(),

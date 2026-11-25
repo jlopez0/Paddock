@@ -49,7 +49,7 @@ class RaceStatsScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Estadísticas'),
+        title: const AppTitle('Estadísticas'),
         actions: [
           if (stats.totalRaces > 0)
             IconButton(

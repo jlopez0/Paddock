@@ -183,7 +183,7 @@ void main() {
           expect(tester.takeException(), isNull);
           expect(find.text('Se acabó el mazo'), findsOneWidget);
           expect(find.byType(Jockey), findsOneWidget);
-          expect(find.text('Barajar otra vez'), findsOneWidget);
+          expect(find.text('Barajar de nuevo'), findsOneWidget);
         },
       );
     }

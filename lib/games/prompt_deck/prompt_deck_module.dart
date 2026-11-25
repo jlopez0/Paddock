@@ -73,10 +73,10 @@ class PromptDeckModule extends GameModule {
   /// Ayuda bajo "¿Quién paga?", según el modo y el estilo de la carta.
   String get payHint => switch ((payMode, style)) {
     (PromptPayMode.none, _) => '',
-    (PromptPayMode.multi, _) => 'Marca a quien lo haya hecho',
-    (PromptPayMode.single, PromptCardStyle.choice) => 'Marca a la minoría',
-    (PromptPayMode.single, PromptCardStyle.question) => 'Marca al más votado',
-    (PromptPayMode.single, _) => 'Marca a quien pague',
+    (PromptPayMode.multi, _) => 'Apunta a quien lo haya hecho',
+    (PromptPayMode.single, PromptCardStyle.choice) => 'Apunta a la minoría',
+    (PromptPayMode.single, PromptCardStyle.question) => 'Apunta al más votado',
+    (PromptPayMode.single, _) => 'Apunta a quien pague',
   };
 
   @override

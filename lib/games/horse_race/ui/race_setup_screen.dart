@@ -87,7 +87,7 @@ class _RaceSetupScreenState extends ConsumerState<RaceSetupScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Carrera de caballos'),
+        title: const AppTitle('Carrera de caballos'),
         actions: [
           const HowToPlayButton('carrera'),
           IconButton(

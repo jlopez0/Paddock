@@ -11,6 +11,7 @@ import '../domain/country.dart';
 import '../domain/quiz.dart';
 import '../geo_data.dart';
 import '../geo_store.dart';
+import '../../trivia/ui/quiz_fx.dart';
 import 'geo_widgets.dart';
 
 class GeoSetupScreen extends ConsumerWidget {
@@ -53,127 +54,122 @@ class GeoSetupScreen extends ConsumerWidget {
       ),
     );
 
+    final worldCats = GeoCategory.values.where((c) => !c.isMap).toList();
+    final mapCats = GeoCategory.values.where((c) => c.isMap).toList();
+
     return Theme(
       data: tealTheme,
       child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Geografía'),
-          actions: const [HowToPlayButton('geografia')],
-        ),
-        body: ListView(
-          padding: const EdgeInsets.fromLTRB(20, 4, 20, 24),
-          children: [
-            const _Title('Países del mundo'),
-            _CategoryGrid(
-              categories: GeoCategory.values.where((c) => !c.isMap).toList(),
-              selected: setup.category,
-              onSelect: (c) =>
-                  controller.update((s) => s.copyWith(category: c)),
-            ),
-            const _Title('Mapas · adivina la región marcada'),
-            _CategoryGrid(
-              categories: GeoCategory.values.where((c) => c.isMap).toList(),
-              selected: setup.category,
-              onSelect: (c) =>
-                  controller.update((s) => s.copyWith(category: c)),
-            ),
-            const _Title('Dificultad'),
-            Row(
+        appBar: AppBar(actions: const [HowToPlayButton('geografia')]),
+        body: SafeArea(
+          top: false,
+          bottom: false,
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.fromLTRB(16, 4, 16, 24),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                for (final (i, (mode, icon, title, subtitle)) in const [
-                  (
-                    AnswerMode.options,
-                    AppIcon.grid,
-                    'Fácil',
-                    '4 opciones',
+                const QuizSetupHeader(
+                  gameId: 'geografia',
+                  title: 'Geografía',
+                  color: geoColor,
+                  hook: 'Banderas, capitales y mapas. La casa no regala atlas.',
+                ),
+                QuizSection(
+                  title: 'Países del mundo',
+                  padding: const EdgeInsets.fromLTRB(10, 12, 10, 12),
+                  child: _CategoryGrid(
+                    categories: worldCats,
+                    selected: setup.category,
+                    onSelect: (c) =>
+                        controller.update((s) => s.copyWith(category: c)),
                   ),
-                  (
-                    AnswerMode.reveal,
-                    AppIcon.visibility,
-                    'Mental',
-                    'Piensa y mira',
+                ),
+                QuizSection(
+                  title: 'Mapas · la región marcada',
+                  padding: const EdgeInsets.fromLTRB(10, 12, 10, 12),
+                  child: _CategoryGrid(
+                    categories: mapCats,
+                    selected: setup.category,
+                    onSelect: (c) =>
+                        controller.update((s) => s.copyWith(category: c)),
                   ),
-                  (
-                    AnswerMode.typed,
-                    AppIcon.keyboard,
-                    'Difícil',
-                    'Escribe',
+                ),
+                QuizSection(
+                  title: 'Dificultad',
+                  padding: const EdgeInsets.fromLTRB(10, 12, 10, 12),
+                  child: _DifficultyPicker(
+                    selected: setup.mode,
+                    onSelect: (m) =>
+                        controller.update((s) => s.copyWith(mode: m)),
                   ),
-                ].indexed) ...[
-                  if (i > 0) const SizedBox(width: 8),
-                  Expanded(
-                    child: _Tile(
-                      selected: setup.mode == mode,
-                      onTap: () =>
-                          controller.update((s) => s.copyWith(mode: mode)),
-                      child: _Difficulty(
-                        icon: icon,
-                        title: title,
-                        subtitle: subtitle,
-                      ),
+                ),
+                if (!setup.category.isMap)
+                  QuizSection(
+                    title: 'Región',
+                    child: Wrap(
+                      spacing: 8,
+                      runSpacing: 8,
+                      children: [
+                        FilterChip(
+                          label: const Text('Todo el mundo'),
+                          selected:
+                              setup.regions.length == Continent.values.length,
+                          showCheckmark: false,
+                          onSelected: (_) => controller.update(
+                            (s) => s.copyWith(regions: {...Continent.values}),
+                          ),
+                        ),
+                        for (final r in Continent.values)
+                          FilterChip(
+                            label: Text(r.label),
+                            selected:
+                                setup.regions.length <
+                                    Continent.values.length &&
+                                setup.regions.contains(r),
+                            showCheckmark: false,
+                            onSelected: (_) {
+                              AppFeedback.selection();
+                              controller.update((s) {
+                                // Desde "todo el mundo", tocar una región deja solo esa.
+                                if (s.regions.length ==
+                                    Continent.values.length) {
+                                  return s.copyWith(regions: {r});
+                                }
+                                final next = {...s.regions};
+                                if (!next.remove(r)) next.add(r);
+                                return s.copyWith(
+                                  regions: next.isEmpty
+                                      ? {...Continent.values}
+                                      : next,
+                                );
+                              });
+                            },
+                          ),
+                      ],
                     ),
                   ),
+                QuizSection(
+                  title: 'Cuántas preguntas',
+                  child: SegmentedButton<int>(
+                    showSelectedIcon: false,
+                    segments: const [
+                      ButtonSegment(value: 10, label: _SegLabel('10')),
+                      ButtonSegment(value: 20, label: _SegLabel('20')),
+                      ButtonSegment(value: 0, label: _SegLabel('Todas')),
+                    ],
+                    selected: {setup.count},
+                    onSelectionChanged: (v) =>
+                        controller.update((s) => s.copyWith(count: v.first)),
+                  ),
+                ),
+                if (questions == 0 && quiz.hasValue) ...[
+                  const SizedBox(height: 24),
+                  const Center(child: Jockey(size: 80)),
                 ],
               ],
             ),
-            if (!setup.category.isMap) ...[
-              const _Title('Región'),
-              Wrap(
-                spacing: 8,
-                runSpacing: 8,
-                children: [
-                  FilterChip(
-                    label: const Text('Todo el mundo'),
-                    selected: setup.regions.length == Continent.values.length,
-                    showCheckmark: false,
-                    onSelected: (_) => controller.update(
-                      (s) => s.copyWith(regions: {...Continent.values}),
-                    ),
-                  ),
-                  for (final r in Continent.values)
-                    FilterChip(
-                      label: Text(r.label),
-                      selected:
-                          setup.regions.length < Continent.values.length &&
-                          setup.regions.contains(r),
-                      showCheckmark: false,
-                      onSelected: (_) {
-                        AppFeedback.selection();
-                        controller.update((s) {
-                          // Desde "todo el mundo", tocar una región deja solo esa.
-                          if (s.regions.length == Continent.values.length) {
-                            return s.copyWith(regions: {r});
-                          }
-                          final next = {...s.regions};
-                          if (!next.remove(r)) next.add(r);
-                          return s.copyWith(
-                            regions: next.isEmpty
-                                ? {...Continent.values}
-                                : next,
-                          );
-                        });
-                      },
-                    ),
-                ],
-              ),
-            ],
-            const _Title('Preguntas'),
-            SegmentedButton<int>(
-              showSelectedIcon: false,
-              segments: const [
-                ButtonSegment(value: 10, label: Text('10')),
-                ButtonSegment(value: 20, label: Text('20')),
-                ButtonSegment(value: 0, label: Text('Todas')),
-              ],
-              selected: {setup.count},
-              onSelectionChanged: (v) =>
-                  controller.update((s) => s.copyWith(count: v.first)),
-            ),
-            if (questions == 0 && quiz.hasValue) ...[
-              const SizedBox(height: 24),
-              const Center(child: Jockey(size: 80)),
-            ],
-          ],
+          ),
         ),
         bottomNavigationBar: SafeArea(
           minimum: const EdgeInsets.fromLTRB(20, 8, 20, 16),
@@ -207,6 +203,7 @@ class GeoSetupScreen extends ConsumerWidget {
                               ? 'No se pudo cargar el contenido'
                               : 'Sin preguntas con estos filtros')
                         : 'Jugar · $questions preguntas',
+                    textAlign: TextAlign.center,
                   ),
                 ),
               ),
@@ -218,22 +215,15 @@ class GeoSetupScreen extends ConsumerWidget {
   }
 }
 
-class _Title extends StatelessWidget {
-  const _Title(this.text);
+/// Etiqueta de segmento: no se parte a media palabra con letra grande.
+class _SegLabel extends StatelessWidget {
+  const _SegLabel(this.text);
   final String text;
 
   @override
-  Widget build(BuildContext context) => Padding(
-    padding: const EdgeInsets.only(top: 26, bottom: 10),
-    child: Text(
-      text.toUpperCase(),
-      style: const TextStyle(
-        color: AppColors.textMuted,
-        fontWeight: FontWeight.w700,
-        letterSpacing: 1.2,
-        fontSize: 12,
-      ),
-    ),
+  Widget build(BuildContext context) => FittedBox(
+    fit: BoxFit.scaleDown,
+    child: Text(text, maxLines: 1, softWrap: false),
   );
 }
 
@@ -242,11 +232,13 @@ class _Tile extends StatelessWidget {
     required this.selected,
     required this.onTap,
     required this.child,
+    this.padding = const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
   });
 
   final bool selected;
   final VoidCallback onTap;
   final Widget child;
+  final EdgeInsetsGeometry padding;
 
   @override
   Widget build(BuildContext context) {
@@ -264,11 +256,11 @@ class _Tile extends StatelessWidget {
               ? Duration.zero
               : const Duration(milliseconds: 180),
           constraints: const BoxConstraints(minHeight: 56),
-          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
+          padding: padding,
           decoration: BoxDecoration(
             color: selected
                 ? geoColor.withValues(alpha: 0.16)
-                : AppColors.surface,
+                : AppColors.background.withValues(alpha: 0.5),
             borderRadius: BorderRadius.circular(16),
             border: Border.all(
               color: selected ? geoColor : AppColors.outline,
@@ -278,6 +270,89 @@ class _Tile extends StatelessWidget {
           child: child,
         ),
       ),
+    );
+  }
+}
+
+/// Los tres modos de respuesta. En horizontal si cabe (pantalla ancha y letra
+/// normal); si no, apilados para que nada se parta.
+class _DifficultyPicker extends StatelessWidget {
+  const _DifficultyPicker({required this.selected, required this.onSelect});
+
+  final AnswerMode selected;
+  final ValueChanged<AnswerMode> onSelect;
+
+  static const _modes = [
+    (AnswerMode.options, AppIcon.grid, 'Fácil', '4 opciones'),
+    (AnswerMode.reveal, AppIcon.visibility, 'Mental', 'Piensa y mira'),
+    (AnswerMode.typed, AppIcon.keyboard, 'Difícil', 'Escribe'),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    final scale = MediaQuery.textScalerOf(context).scale(16) / 16;
+    return LayoutBuilder(
+      builder: (context, box) {
+        final horizontal = box.maxWidth >= 290 && scale <= 1.2;
+        Widget tile(
+          (AnswerMode, AppIcon, String, String) m, {
+          required bool wide,
+        }) => _Tile(
+          selected: selected == m.$1,
+          onTap: () => onSelect(m.$1),
+          padding: EdgeInsets.symmetric(
+            horizontal: wide ? 14 : 6,
+            vertical: 12,
+          ),
+          child: wide
+              ? Row(
+                  children: [
+                    m.$2.widget(color: geoColor),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            m.$3,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.w800,
+                              fontSize: 16,
+                            ),
+                          ),
+                          Text(
+                            m.$4,
+                            style: const TextStyle(
+                              color: AppColors.textMuted,
+                              fontSize: 13,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                )
+              : _Difficulty(icon: m.$2, title: m.$3, subtitle: m.$4),
+        );
+        if (horizontal) {
+          return Row(
+            children: [
+              for (final (i, m) in _modes.indexed) ...[
+                if (i > 0) const SizedBox(width: 8),
+                Expanded(child: tile(m, wide: false)),
+              ],
+            ],
+          );
+        }
+        return Column(
+          children: [
+            for (final (i, m) in _modes.indexed) ...[
+              if (i > 0) const SizedBox(height: 8),
+              tile(m, wide: true),
+            ],
+          ],
+        );
+      },
     );
   }
 }
@@ -299,15 +374,16 @@ class _Difficulty extends StatelessWidget {
       children: [
         icon.widget(color: geoColor),
         const SizedBox(height: 6),
-        Text(
-          title,
-          style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 16),
+        FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Text(
+            title,
+            style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 16),
+          ),
         ),
         Text(
           subtitle,
           textAlign: TextAlign.center,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
           style: const TextStyle(color: AppColors.textMuted, fontSize: 12),
         ),
       ],
@@ -328,8 +404,11 @@ class _CategoryGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final scale = MediaQuery.textScalerOf(context).scale(16) / 16;
     return LayoutBuilder(
       builder: (context, box) {
+        // En pantalla estrecha o con letra grande, una columna: el nombre no se parte.
+        final single = box.maxWidth < 300 || scale > 1.3;
         final half = (box.maxWidth - 10) / 2;
         return Wrap(
           spacing: 10,
@@ -338,7 +417,8 @@ class _CategoryGrid extends StatelessWidget {
             for (final c in categories)
               SizedBox(
                 // Si el número es impar, la última ocupa todo el ancho.
-                width: c == categories.last && categories.length.isOdd
+                width:
+                    single || (c == categories.last && categories.length.isOdd)
                     ? box.maxWidth
                     : half,
                 child: _Tile(
@@ -361,7 +441,7 @@ class _CategoryGrid extends StatelessWidget {
                             ),
                             Text(
                               c.description,
-                              maxLines: 1,
+                              maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                               style: const TextStyle(
                                 color: AppColors.textMuted,

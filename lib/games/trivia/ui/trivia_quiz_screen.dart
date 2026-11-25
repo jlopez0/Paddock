@@ -92,7 +92,15 @@ class _TriviaQuizScreenState extends ConsumerState<TriviaQuizScreen> {
             const Scaffold(body: Center(child: CircularProgressIndicator())),
         error: (e, _) => Scaffold(
           appBar: AppBar(),
-          body: Center(child: Text('No se pudo cargar: $e')),
+          body: const Center(
+            child: Padding(
+              padding: EdgeInsets.all(24),
+              child: Text(
+                'No se pudo cargar el contenido. Vuelve atrás e inténtalo de nuevo.',
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
         ),
         data: (b) {
           final setup = ref.read(triviaSetupProvider);

@@ -147,9 +147,14 @@ class _AbecedarioPlayScreenState extends ConsumerState<AbecedarioPlayScreen> {
             loading: () => const Scaffold(
               body: Center(child: CircularProgressIndicator()),
             ),
-            error: (e, _) => Scaffold(
+            error: (_, _) => Scaffold(
               appBar: AppBar(),
-              body: Center(child: Text('No se pudo cargar: $e')),
+              body: Center(
+                child: Text(
+                  'No se pudo cargar el contenido. Vuelve atrás e inténtalo de nuevo.',
+                  textAlign: TextAlign.center,
+                ),
+              ),
             ),
             data: (b) {
               WidgetsBinding.instance.addPostFrameCallback((_) {

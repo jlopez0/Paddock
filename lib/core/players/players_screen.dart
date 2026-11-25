@@ -9,10 +9,41 @@ import 'player.dart';
 import 'player_widgets.dart';
 import 'players_controller.dart';
 
-class PlayersScreen extends ConsumerWidget {
+class PlayersScreen extends ConsumerStatefulWidget {
   const PlayersScreen({super.key});
 
-  Future<void> _rename(BuildContext context, WidgetRef ref, Player p) async {
+  @override
+  ConsumerState<PlayersScreen> createState() => _PlayersScreenState();
+}
+
+class _PlayersScreenState extends ConsumerState<PlayersScreen> {
+  ScaffoldMessengerState? _messenger;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _messenger = ScaffoldMessenger.maybeOf(context);
+  }
+
+  @override
+  void dispose() {
+    // El aviso de "se retira" no sigue vivo en otras pantallas.
+    _messenger?.clearSnackBars();
+    super.dispose();
+  }
+
+  /// Aviso breve: con acción, Material 3 no lo descarta solo salvo con
+  /// `persist: false`.
+  SnackBar _snack(String text, {SnackBarAction? action}) => SnackBar(
+    content: Text(text),
+    action: action,
+    persist: false,
+    duration: const Duration(seconds: 4),
+    behavior: SnackBarBehavior.floating,
+    margin: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+  );
+
+  Future<void> _rename(Player p) async {
     final controller = TextEditingController(text: p.name);
     final name = await showDialog<String>(
       context: context,
@@ -37,23 +68,23 @@ class PlayersScreen extends ConsumerWidget {
         ],
       ),
     );
-    if (name == null || !context.mounted) return;
+    if (name == null || !mounted) return;
     final notifier = ref.read(playersProvider.notifier);
     final messenger = ScaffoldMessenger.of(context);
     if (name.trim().isEmpty) {
-      messenger.showSnackBar(
-        const SnackBar(content: Text('Escribe un nombre')),
-      );
+      messenger
+        ..clearSnackBars()
+        ..showSnackBar(_snack('Escribe un nombre'));
     } else if (notifier.nameTaken(name, exceptId: p.id)) {
-      messenger.showSnackBar(
-        const SnackBar(content: Text('Ese nombre ya está en la cuadra')),
-      );
+      messenger
+        ..clearSnackBars()
+        ..showSnackBar(_snack('Ese nombre ya está en la cuadra'));
     } else {
       notifier.rename(p.id, name);
     }
   }
 
-  void _remove(BuildContext context, WidgetRef ref, Player p) {
+  void _remove(Player p) {
     final notifier = ref.read(playersProvider.notifier);
     final index = ref.read(playersProvider).indexWhere((x) => x.id == p.id);
     notifier.remove(p.id);
@@ -61,8 +92,8 @@ class PlayersScreen extends ConsumerWidget {
     ScaffoldMessenger.of(context)
       ..clearSnackBars()
       ..showSnackBar(
-        SnackBar(
-          content: Text('${p.name} se retira'),
+        _snack(
+          '${p.name} se retira',
           action: SnackBarAction(
             label: 'Deshacer',
             onPressed: () => notifier.restore(p, index),
@@ -72,15 +103,10 @@ class PlayersScreen extends ConsumerWidget {
   }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final players = ref.watch(playersProvider);
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'La cuadra',
-          style: TextStyle(fontFamily: AppFonts.display, fontSize: 22),
-        ),
-      ),
+      appBar: AppBar(title: const AppTitle('La cuadra')),
       body: SafeArea(
         top: false,
         child: ListView(
@@ -119,11 +145,11 @@ class PlayersScreen extends ConsumerWidget {
                       p.name,
                       style: const TextStyle(fontWeight: FontWeight.w600),
                     ),
-                    onTap: () => _rename(context, ref, p),
+                    onTap: () => _rename(p),
                     trailing: IconButton(
                       tooltip: 'Eliminar',
                       icon: AppIcon.delete.widget(),
-                      onPressed: () => _remove(context, ref, p),
+                      onPressed: () => _remove(p),
                     ),
                   ),
                 ),

@@ -23,6 +23,7 @@ import 'game_colors.dart';
 import 'level_chips.dart';
 import 'bounce_in.dart';
 import 'prompt_deck_module.dart';
+import 'setup_hero.dart';
 
 /// Mazo de retos que alimenta al [ConsequenceBanner] en los modos Retos y Sorbos.
 const promptRetosAsset = 'assets/content/es/retos.json';
@@ -70,38 +71,39 @@ class _PromptDeckSetupScreenState extends ConsumerState<PromptDeckSetupScreen> {
         0;
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(game.title),
-        actions: [HowToPlayButton(game.id)],
-      ),
-      body: ListView(
-        padding: const EdgeInsets.fromLTRB(20, 16, 20, 24),
-        children: [
-          Center(child: game.icon(72)),
-          const SizedBox(height: 12),
-          Text(
-            game.rule,
-            textAlign: TextAlign.center,
-            style: const TextStyle(color: GameColors.mutedText, fontSize: 16),
-          ),
-          const SizedBox(height: 32),
-          const Text(
-            'NIVEL',
-            style: TextStyle(
-              color: GameColors.mutedText,
-              fontWeight: FontWeight.w700,
-              letterSpacing: 1.2,
-              fontSize: 12,
+      appBar: AppBar(actions: [HowToPlayButton(game.id)]),
+      body: SafeArea(
+        top: false,
+        bottom: false,
+        child: ListView(
+          padding: const EdgeInsets.fromLTRB(20, 4, 20, 24),
+          children: [
+            SetupHero(
+              gameId: game.id,
+              title: game.title,
+              color: game.color,
+              hook: game.subtitle,
+              detail: game.rule,
             ),
-          ),
-          const SizedBox(height: 10),
-          LevelChips(levels: _levels, color: game.color, onToggle: _toggle),
-          if (prompts.hasError)
-            Text(
-              'No se pudo cargar el contenido: ${prompts.error}',
-              style: const TextStyle(color: AppColors.danger),
+            const SizedBox(height: 24),
+            BrassCard(
+              label: 'Nivel',
+              child: LevelChips(
+                levels: _levels,
+                color: game.color,
+                onToggle: _toggle,
+              ),
             ),
-        ],
+            if (prompts.hasError)
+              const Padding(
+                padding: EdgeInsets.only(top: 16),
+                child: Text(
+                  'No se pudo cargar el contenido. Vuelve atrás e inténtalo de nuevo.',
+                  style: TextStyle(color: AppColors.danger),
+                ),
+              ),
+          ],
+        ),
       ),
       bottomNavigationBar: SafeArea(
         minimum: const EdgeInsets.fromLTRB(20, 8, 20, 16),
@@ -112,7 +114,7 @@ class _PromptDeckSetupScreenState extends ConsumerState<PromptDeckSetupScreen> {
                   '${game.path}/play?levels=${_levels.map((l) => l.name).join(',')}',
                 ),
           child: Text(
-            count == 0 ? 'Elige al menos un nivel' : 'Jugar · $count cartas',
+            count == 0 ? 'Sin nivel no hay mazo' : 'Jugar · $count cartas',
           ),
         ),
       ),
@@ -428,7 +430,7 @@ class _PromptDeckPlayScreenState extends ConsumerState<PromptDeckPlayScreen> {
                       const SizedBox(width: 12),
                       Expanded(
                         child: Text(
-                          finished ? '' : 'Toca o desliza para la siguiente',
+                          finished ? '' : 'Toca o desliza: siguiente carta',
                           textAlign: TextAlign.center,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
@@ -933,7 +935,7 @@ class _EndCardState extends State<_EndCard> {
                 FilledButton.icon(
                   onPressed: widget.onRestart,
                   icon: AppIcon.shuffle.widget(color: Colors.black),
-                  label: const Text('Barajar otra vez'),
+                  label: const Text('Barajar de nuevo'),
                 ),
               ],
             ),

@@ -1,7 +1,7 @@
 import 'package:material_ui/material_ui.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import 'licenses_screen.dart';
 import 'theme.dart';
 
 class CreditsScreen extends StatelessWidget {
@@ -34,17 +34,10 @@ class CreditsScreen extends StatelessWidget {
     }
   }
 
-  Future<void> _showLicenses(BuildContext context) async {
-    var version = '';
-    try {
-      version = (await PackageInfo.fromPlatform()).version;
-    } catch (_) {}
-    if (!context.mounted) return;
-    showLicensePage(
-      context: context,
-      applicationName: 'Paddock',
-      applicationVersion: version,
-    );
+  void _showLicenses(BuildContext context) {
+    Navigator.of(
+      context,
+    ).push(MaterialPageRoute<void>(builder: (_) => const LicensesScreen()));
   }
 
   @override

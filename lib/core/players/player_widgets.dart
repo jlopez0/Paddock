@@ -78,17 +78,26 @@ class _AddPlayerFieldState extends ConsumerState<AddPlayerField> {
     super.dispose();
   }
 
+  /// Muestra el error y deja el texto seleccionado: lo siguiente que se
+  /// escriba lo reemplaza en vez de pegarse al nombre rechazado.
+  void _fail(String message) {
+    setState(() => _error = message);
+    _controller.selection = TextSelection(
+      baseOffset: 0,
+      extentOffset: _controller.text.length,
+    );
+    _focus.requestFocus();
+  }
+
   void _submit() {
     final name = _controller.text.trim();
     final notifier = ref.read(playersProvider.notifier);
     if (name.isEmpty) {
-      setState(() => _error = 'Escribe un nombre');
-      _focus.requestFocus();
+      _fail('Escribe un nombre');
       return;
     }
     if (notifier.nameTaken(name)) {
-      setState(() => _error = 'Ese nombre ya está en la cuadra');
-      _focus.requestFocus();
+      _fail('Ese nombre ya está en la cuadra');
       return;
     }
     final player = notifier.add(name);

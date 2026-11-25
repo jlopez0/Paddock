@@ -77,12 +77,7 @@ class SettingsScreen extends ConsumerWidget {
     final version = info == null ? '' : '${info.version} (${info.buildNumber})';
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'Ajustes',
-          style: TextStyle(fontFamily: AppFonts.display, fontSize: 22),
-        ),
-      ),
+      appBar: AppBar(title: const AppTitle('Ajustes')),
       body: SafeArea(
         child: ListView(
           padding: const EdgeInsets.symmetric(vertical: 8),

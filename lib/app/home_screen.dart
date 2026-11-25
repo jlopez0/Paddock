@@ -284,7 +284,7 @@ class _GameTile extends StatelessWidget {
                   style: TextStyle(
                     fontFamily: AppFonts.display,
                     fontSize: 24,
-                    color: AppColors.brass.withValues(alpha: 0.85),
+                    color: AppColors.brassText,
                   ),
                 ),
               ),

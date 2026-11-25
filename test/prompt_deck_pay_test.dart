@@ -120,20 +120,20 @@ void main() {
 
   test('payHint depende del modo y del estilo', () {
     expect(_game(payMode: PromptPayMode.none).payHint, '');
-    expect(_game().payHint, 'Marca a quien lo haya hecho');
+    expect(_game().payHint, 'Apunta a quien lo haya hecho');
     expect(
       _game(
         payMode: PromptPayMode.single,
         style: PromptCardStyle.choice,
       ).payHint,
-      'Marca a la minoría',
+      'Apunta a la minoría',
     );
     expect(
       _game(
         payMode: PromptPayMode.single,
         style: PromptCardStyle.question,
       ).payHint,
-      'Marca al más votado',
+      'Apunta al más votado',
     );
   });
 
@@ -142,7 +142,7 @@ void main() {
   ) async {
     final c = await _pump(tester, _game());
     expect(find.text('¿Quién paga? · 1 ficha'), findsOneWidget);
-    expect(find.text('Marca a quien lo haya hecho'), findsOneWidget);
+    expect(find.text('Apunta a quien lo haya hecho'), findsOneWidget);
 
     await tester.tap(find.byKey(const ValueKey('pay-p1')));
     await tester.tap(find.byKey(const ValueKey('pay-p2')));
@@ -246,7 +246,7 @@ void main() {
       isTrue,
       reason: rich.join(' | '),
     );
-    expect(find.text('Marca al más votado'), findsOneWidget);
+    expect(find.text('Apunta al más votado'), findsOneWidget);
   });
 
   testWidgets('cerrar la partida registra las fichas de la carta actual', (

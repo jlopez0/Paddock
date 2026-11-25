@@ -14,6 +14,12 @@ abstract final class AppColors {
 
   // Tokens "casa de apuestas de hipódromo" (docs/DISENO_ALMA.md).
   static const brass = Color(0xFFB8862B);
+
+  /// Latón claro para TEXTO sobre fondos verdes oscuros (>= 4.5:1 sobre
+  /// background, surface y surfaceHigh). `brass` queda para bordes y
+  /// rellenos: como texto no llega al contraste. Mismo tono, mas luminoso.
+  static const brassText = Color(0xFFD9A441);
+
   static const paper = Color(0xFFF3EFE0);
   static const burgundy = Color(0xFF7A2430);
   static const medalGold = Color(0xFFE8B84A);
@@ -22,6 +28,34 @@ abstract final class AppColors {
 }
 
 /// Familias tipográficas empaquetadas en `assets/fonts/`.
+/// Tamano minimo recomendado de Alfa Slab One. Por debajo de ~20 px se
+/// empasta y pierde legibilidad: las letras A-D de las opciones de Trivia y
+/// Geografia (~16 px) NO deben usarla; van en Figtree w800 (las ajusta otro
+/// agente en esas pantallas).
+const double kDisplayMinSize = 20;
+
+/// Titulos de AppBar: Alfa Slab One 22 px. El factor de escala del texto del
+/// sistema se limita a [kTitleMaxScale] con [clampedTitleScaler].
+const double kAppBarTitleSize = 22;
+const double kTitleMaxScale = 1.3;
+
+TextScaler clampedTitleScaler(TextScaler s) =>
+    s.clamp(maxScaleFactor: kTitleMaxScale);
+
+/// Titulo de AppBar: hereda el estilo del tema y limita la escala del texto
+/// del sistema a [kTitleMaxScale]. Usar en TODOS los `AppBar.title`.
+class AppTitle extends StatelessWidget {
+  const AppTitle(this.text, {super.key});
+
+  final String text;
+
+  @override
+  Widget build(BuildContext context) => Text(
+    text,
+    textScaler: clampedTitleScaler(MediaQuery.textScalerOf(context)),
+  );
+}
+
 abstract final class AppFonts {
   /// Slab pesada de cartelería; peso único. Solo para títulos y cifras de
   /// ceremonia a partir de ~20 px.
@@ -65,7 +99,14 @@ ThemeData buildAppTheme() {
       backgroundColor: Colors.transparent,
       foregroundColor: AppColors.text,
       elevation: 0,
+      scrolledUnderElevation: 0,
       centerTitle: true,
+      titleTextStyle: TextStyle(
+        fontFamily: AppFonts.display,
+        fontWeight: FontWeight.w400,
+        fontSize: kAppBarTitleSize,
+        color: AppColors.text,
+      ),
     ),
     textTheme: bodyTheme.copyWith(
       displayLarge: slab(bodyTheme.displayLarge),

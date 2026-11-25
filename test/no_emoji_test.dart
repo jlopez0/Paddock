@@ -4,9 +4,6 @@ import 'package:flutter_test/flutter_test.dart';
 
 /// Identidad visual: nada de emoji ni iconos de Material en `lib/`.
 ///
-/// Excepcion documentada de emoji: la constante `kShareTrophy` de
-/// `lib/app/cup_screen.dart` (texto que se comparte fuera de la app).
-///
 /// Excepciones de `Icons.` de Material: ninguna por ahora. Si hiciera falta
 /// un widget de plataforma, anadir aqui su ruta con el motivo.
 const _iconsExceptions = <String, String>{};
@@ -26,16 +23,12 @@ void main() {
       .where((f) => f.path.endsWith('.dart'))
       .toList();
 
-  test('lib/ no contiene emoji (salvo kShareTrophy)', () {
+  test('lib/ no contiene emoji', () {
     final found = <String>[];
     for (final f in files) {
       final lines = f.readAsLinesSync();
       for (var i = 0; i < lines.length; i++) {
         final line = lines[i];
-        if (_rel(f).endsWith('lib/app/cup_screen.dart') &&
-            line.startsWith('const kShareTrophy')) {
-          continue;
-        }
         if (line.runes.any(_isEmoji)) {
           found.add('${_rel(f)}:${i + 1}');
         }

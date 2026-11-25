@@ -27,7 +27,7 @@ class TriviaResultScreen extends ConsumerWidget {
     }
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Resultado'),
+        title: const AppTitle('Resultado'),
         leading: IconButton(
           tooltip: 'Cerrar',
           icon: AppIcon.close.widget(),

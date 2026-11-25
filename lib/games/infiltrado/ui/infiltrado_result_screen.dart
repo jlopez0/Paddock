@@ -94,7 +94,7 @@ class _InfiltradoResultScreenState
     final content = Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: outcome != null,
-        title: Text(outcome == null ? 'Última oportunidad' : 'Resultado'),
+        title: AppTitle(outcome == null ? 'Última oportunidad' : 'Resultado'),
       ),
       body: SafeArea(
         child: Padding(

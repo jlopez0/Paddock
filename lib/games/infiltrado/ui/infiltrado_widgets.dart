@@ -321,7 +321,7 @@ class InfiltradoNoGame extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(title: const Text('El Infiltrado')),
+    appBar: AppBar(title: const AppTitle('El Infiltrado')),
     body: SafeArea(
       child: Center(
         child: SingleChildScrollView(

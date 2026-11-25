@@ -109,7 +109,7 @@ class LevelChips extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         const Text(
-          'Se pueden mezclar niveles.',
+          'Mezclad los niveles a gusto.',
           style: TextStyle(color: GameColors.mutedText, fontSize: 13),
         ),
       ],

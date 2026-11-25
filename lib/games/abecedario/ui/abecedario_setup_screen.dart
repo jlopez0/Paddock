@@ -4,6 +4,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../app/theme.dart';
+import '../../../core/settings/app_feedback.dart';
+import '../../prompt_deck/game_colors.dart';
+import '../../prompt_deck/setup_hero.dart';
 import '../abecedario_data.dart';
 
 class AbecedarioSetupScreen extends ConsumerWidget {
@@ -28,96 +31,91 @@ class AbecedarioSetupScreen extends ConsumerWidget {
               : AppColors.surfaceHigh,
         ),
       ),
-      segmentedButtonTheme: SegmentedButtonThemeData(
-        style: ButtonStyle(
-          backgroundColor: WidgetStateProperty.resolveWith(
-            (s) => s.contains(WidgetState.selected)
-                ? abecedarioColor.withValues(alpha: 0.22)
-                : Colors.transparent,
-          ),
-          foregroundColor: WidgetStateProperty.resolveWith(
-            (s) => s.contains(WidgetState.selected)
-                ? abecedarioColor
-                : AppColors.text,
-          ),
-          side: const WidgetStatePropertyAll(
-            BorderSide(color: AppColors.outline),
-          ),
-        ),
-      ),
     );
 
     return Theme(
       data: tinted,
       child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Abecedario'),
-          actions: const [HowToPlayButton('abecedario')],
-        ),
+        appBar: AppBar(actions: const [HowToPlayButton('abecedario')]),
         body: SafeArea(
           top: false,
           child: ListView(
             padding: const EdgeInsets.fromLTRB(20, 4, 20, 24),
             children: [
-              const Text(
-                'Se lee la definición de cada letra. Cuando se acaba el tiempo, se desvela la palabra.',
-                style: TextStyle(color: AppColors.textMuted, height: 1.4),
+              const SetupHero(
+                gameId: 'abecedario',
+                title: 'Abecedario',
+                color: abecedarioColor,
+                hook: 'Veintisiete letras. Un reloj que no espera.',
+                detail:
+                    'Una definición por letra. Si el reloj llega a cero, '
+                    'se desvela la palabra.',
               ),
-              const _Title('Nivel'),
-              SegmentedButton<AbecedarioLevel>(
-                showSelectedIcon: false,
-                segments: [
-                  for (final l in AbecedarioLevel.values)
-                    ButtonSegment(value: l, label: Text(l.label)),
-                ],
-                selected: {setup.level},
-                onSelectionChanged: (v) =>
-                    controller.update((s) => s.copyWith(level: v.first)),
-              ),
-              const _Title('Tiempo para pensar'),
-              SegmentedButton<int>(
-                showSelectedIcon: false,
-                segments: const [
-                  ButtonSegment(value: 10, label: Text('10 s')),
-                  ButtonSegment(value: 20, label: Text('20 s')),
-                  ButtonSegment(value: 30, label: Text('30 s')),
-                  ButtonSegment(value: 45, label: Text('45 s')),
-                ],
-                selected: {setup.seconds},
-                onSelectionChanged: (v) =>
-                    controller.update((s) => s.copyWith(seconds: v.first)),
-              ),
-              const SizedBox(height: 18),
-              SwitchListTile(
-                contentPadding: EdgeInsets.zero,
-                title: const Text(
-                  'Pasar a la siguiente automáticamente',
-                  style: TextStyle(fontWeight: FontWeight.w700),
+              const SizedBox(height: 24),
+              BrassCard(
+                label: 'Nivel',
+                child: _Options<AbecedarioLevel>(
+                  values: AbecedarioLevel.values,
+                  selected: setup.level,
+                  labelOf: (l) => l.label,
+                  onSelected: (v) =>
+                      controller.update((s) => s.copyWith(level: v)),
                 ),
-                subtitle: const Text(
-                  'Si no, se avanza con un botón',
-                  style: TextStyle(color: AppColors.textMuted),
-                ),
-                value: setup.auto,
-                onChanged: (on) =>
-                    controller.update((s) => s.copyWith(auto: on)),
               ),
-              if (setup.auto) ...[
-                const _Title('Tiempo para leer la respuesta'),
-                SegmentedButton<int>(
-                  showSelectedIcon: false,
-                  segments: const [
-                    ButtonSegment(value: 3, label: Text('3 s')),
-                    ButtonSegment(value: 5, label: Text('5 s')),
-                    ButtonSegment(value: 8, label: Text('8 s')),
+              const SizedBox(height: 14),
+              BrassCard(
+                label: 'Tiempo para pensar',
+                child: _Options<int>(
+                  values: const [10, 20, 30, 45],
+                  selected: setup.seconds,
+                  labelOf: (v) => '$v s',
+                  onSelected: (v) =>
+                      controller.update((s) => s.copyWith(seconds: v)),
+                ),
+              ),
+              const SizedBox(height: 14),
+              BrassCard(
+                label: 'Siguiente letra',
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SwitchListTile(
+                      contentPadding: EdgeInsets.zero,
+                      title: const Text(
+                        'Avanzar sola',
+                        style: TextStyle(fontWeight: FontWeight.w700),
+                      ),
+                      subtitle: const Text(
+                        'Apagado, pasáis vosotros con el botón',
+                        style: TextStyle(color: GameColors.mutedText),
+                      ),
+                      value: setup.auto,
+                      onChanged: (on) =>
+                          controller.update((s) => s.copyWith(auto: on)),
+                    ),
+                    if (setup.auto) ...[
+                      const SizedBox(height: 8),
+                      const Text(
+                        'Tiempo para leer la respuesta',
+                        style: TextStyle(
+                          color: GameColors.mutedText,
+                          fontSize: 13,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      _Options<int>(
+                        values: const [3, 5, 8],
+                        selected: setup.readSeconds,
+                        labelOf: (v) => '$v s',
+                        onSelected: (v) => controller.update(
+                          (s) => s.copyWith(readSeconds: v),
+                        ),
+                      ),
+                    ],
                   ],
-                  selected: {setup.readSeconds},
-                  onSelectionChanged: (v) => controller.update(
-                    (s) => s.copyWith(readSeconds: v.first),
-                  ),
                 ),
-              ],
-              const SizedBox(height: 28),
+              ),
+              const SizedBox(height: 24),
               FilledButton(
                 style: FilledButton.styleFrom(
                   backgroundColor: abecedarioColor,
@@ -138,21 +136,46 @@ class AbecedarioSetupScreen extends ConsumerWidget {
   }
 }
 
-class _Title extends StatelessWidget {
-  const _Title(this.text);
-  final String text;
+/// Opciones de una sola elección como fichas que pasan de línea con letra grande
+/// (un SegmentedButton de cuatro huecos no cabe a 320 px con escala 2.0).
+class _Options<T> extends StatelessWidget {
+  const _Options({
+    required this.values,
+    required this.selected,
+    required this.labelOf,
+    required this.onSelected,
+  });
+
+  final List<T> values;
+  final T selected;
+  final String Function(T) labelOf;
+  final ValueChanged<T> onSelected;
 
   @override
-  Widget build(BuildContext context) => Padding(
-    padding: const EdgeInsets.only(top: 22, bottom: 10),
-    child: Text(
-      text.toUpperCase(),
-      style: const TextStyle(
-        color: AppColors.textMuted,
-        fontWeight: FontWeight.w700,
-        letterSpacing: 1.2,
-        fontSize: 12,
-      ),
-    ),
-  );
+  Widget build(BuildContext context) {
+    return Wrap(
+      spacing: 8,
+      runSpacing: 8,
+      children: [
+        for (final v in values)
+          ChoiceChip(
+            label: Text(labelOf(v)),
+            selected: v == selected,
+            showCheckmark: false,
+            selectedColor: abecedarioColor.withValues(alpha: 0.3),
+            labelStyle: TextStyle(
+              fontWeight: FontWeight.w700,
+              color: v == selected ? AppColors.text : GameColors.mutedText,
+            ),
+            side: BorderSide(
+              color: v == selected ? abecedarioColor : AppColors.outline,
+            ),
+            onSelected: (_) {
+              AppFeedback.selection();
+              onSelected(v);
+            },
+          ),
+      ],
+    );
+  }
 }

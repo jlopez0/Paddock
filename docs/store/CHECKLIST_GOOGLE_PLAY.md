@@ -5,7 +5,7 @@ Orden de pasos para Javier. Respuestas según el código real (sin red propia, s
 ## 0. Antes de nada (local)
 - [ ] Generar keystore de subida y crear `android/key.properties` (NO en git; ya está en `.gitignore`). Ver `docs/PUBLICAR_ANDROID.md`.
 - [ ] Guardar copia del keystore + contraseñas en gestor de contraseñas (si se pierde, solo se recupera vía soporte de Google).
-- [ ] `flutter build appbundle --release --no-tree-shake-icons` -> `build/app/outputs/bundle/release/app-release.aab`.
+- [x] `flutter build appbundle --release --no-tree-shake-icons` compila (2026-11-25, 63,0 MB, firmado con debug por falta de `key.properties`). Repetir tras crear la clave.
 - [ ] Confirmar que el AAB sale firmado con la clave de subida (no la debug).
 - [ ] Confirmar que https://jlopez0.github.io/Paddock/privacidad.html y `soporte.html` cargan (GitHub Pages activo, carpeta `/docs`).
 
@@ -40,13 +40,14 @@ Orden de pasos para Javier. Respuestas según el código real (sin red propia, s
 - [ ] **Aplicación de gobierno**: No.
 - [ ] **Servicios financieros**: No ofrece.
 - [ ] **Salud**: No.
-- [ ] **ID de publicidad (AD_ID)**: **No** usa. (Manifest sin permiso; comprobar en el informe de Play tras subir el AAB.)
+- [ ] **ID de publicidad (AD_ID)**: **No** usa. Manifest fusionado del release verificado sin AD_ID (2026-11-25); confirmar en el informe de Play tras subir el AAB.
 - [ ] **Apps de noticias**: No. **Seguimiento de COVID**: No.
 - [ ] **Permisos sensibles**: ninguno declarado en el Manifest (ver abajo).
 
 ## 4. Ficha de tienda (Presencia en Play Store > Ficha principal)
 - [ ] Descripción corta (<=80 car.) y larga (<=4000) en español (usar agente `redactor-es`). Sin menciones a otras marcas, sin "mejor/nº1", sin promesas de ganar dinero, sin referencias a apuestas reales.
-- [ ] Icono 512x512 PNG, gráfico de funciones 1024x500, >=2 capturas de móvil (idealmente 4-8).
+- [x] Icono 512x512: `docs/store/graficos/icono_512.png`. Gráfico de funciones 1024x500: `docs/store/graficos/grafico_funciones_1024x500.png` (generados con la P dorada y Alfa Slab One; revisar a ojo).
+- [ ] >=2 capturas de móvil (idealmente 4-8).
 - [ ] Categoría, correo de contacto público (el de soporte), web (GitHub Pages).
 - [ ] Si se pide: capturas de tablet 7"/10" (opcional salvo para ciertas funciones).
 
@@ -68,6 +69,7 @@ Orden de pasos para Javier. Respuestas según el código real (sin red propia, s
 - compileSdk 36 y targetSdk 36 OK.
 - Versión `1.0.0+1`.
 - `android:enableOnBackInvokedCallback="true"` presente.
-- Permisos en el Manifest propio: **ninguno** (ni INTERNET). Revisar el manifest fusionado del AAB; `share_plus` no debe añadir permisos peligrosos.
+- Manifest fusionado del release (2026-11-25, `build/app/intermediates/merged_manifests/release`): sin `INTERNET`, sin AD_ID, sin permisos de audioplayers/share_plus/url_launcher. Único `uses-permission`: `es.jlopez0.paddock.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION` (permiso propio de AndroidX, firma local, no se declara en Play). `queries`: solo PROCESS_TEXT de Flutter. minSdk 24, targetSdk 36, `enableOnBackInvokedCallback="true"`.
 - `key.properties`, `*.jks`, `*.keystore` ignorados por git.
 - Aviso: sin `key.properties` el build usa la clave debug y Play rechazará ese AAB.
+- Aviso de build: Flutter avisa de que `audioplayers_android` aplica Kotlin Gradle Plugin (futuras versiones de Flutter exigirán Built-in Kotlin). No bloquea hoy; vigilar actualización del plugin.

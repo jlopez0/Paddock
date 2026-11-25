@@ -181,7 +181,19 @@ enum QuizTier {
     if (ratio >= 0.5) return colocado;
     return hoyNo;
   }
+
+  /// Fichas que esta vuelta suma a la Copa: Pleno 3, Gran carrera 2, Colocado 1.
+  /// Nunca resta (Trivia y Geografía no generan retos ni sorbos).
+  int get chips => switch (this) {
+    pleno => 3,
+    granCarrera => 2,
+    colocado => 1,
+    hoyNo => 0,
+  };
 }
+
+/// Fichas de una vuelta de [correct] aciertos sobre [total] preguntas.
+int quizChips(int correct, int total) => QuizTier.of(correct, total).chips;
 
 // ---------------------------------------------------------------------------
 // Animaciones de un solo disparo

@@ -76,6 +76,8 @@ Escala de Apple: 4+, 9+, 13+, 16+, 18+. Opciones por tema: Ninguno / Poco frecue
 | Publicidad | No | — |
 | Controles parentales / verificación de edad en la app | No ❓ | Solo hay una confirmación +18 declarativa, no verificación |
 
+> **Nota tras el rediseño (2026-11-25), azar simulado:** con las fichas, el sello COBRA/PAGA y los sonidos de casino, la estética recuerda más a las apuestas. Al rellenar el cuestionario real, valorar la respuesta de "Juego de azar simulado" (Poco frecuente / Infrequent-Mild, o Frecuente / Frequent según la redacción vigente de Apple). Justificación: las fichas no tienen valor, no hay dinero real, compras ni premios. Recomendación: capturas que no parezcan apuestas, priorizando Infiltrado, Trivia, Copa y mazos, y evitando la Carrera con fichas y sello COBRA/PAGA. No se cambian las demás respuestas.
+
 **Resultado esperado:** 16+ o 18+. ❓ Si las respuestas dan menos de 18+, usar la opción de App Store Connect para subir la clasificación (comprobar que existe en el formulario actual). El objetivo es 18+ porque la app se dirige a mayores de edad (`docs/privacidad.html`) y lo anuncia en la bienvenida.
 
 ### Otras secciones de App Store Connect

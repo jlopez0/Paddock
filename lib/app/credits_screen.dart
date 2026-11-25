@@ -11,6 +11,9 @@ class CreditsScreen extends StatelessWidget {
 
   static const _ccBySa3 = 'https://creativecommons.org/licenses/by-sa/3.0/';
 
+  static const _commonsBaraja =
+      'https://commons.wikimedia.org/wiki/File:Baraja_espa%C3%B1ola.svg';
+
   static const _ofl =
       'https://openfontlicense.org/open-font-license-official-text/';
 
@@ -69,6 +72,13 @@ class CreditsScreen extends StatelessWidget {
               child: TextButton(
                 onPressed: () => _openLicense(context, _ccBySa3),
                 child: const Text('Ver licencia CC BY-SA 3.0'),
+              ),
+            ),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: TextButton(
+                onPressed: () => _openLicense(context, _commonsBaraja),
+                child: const Text('Ver archivo original en Wikimedia Commons'),
               ),
             ),
             SizedBox(height: 24),

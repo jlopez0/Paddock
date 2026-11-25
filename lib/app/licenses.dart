@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 const _extraLicenses = <(List<String>, String)>[
   (['Alfa Slab One (fuente)'], 'assets/licenses/AlfaSlabOne-OFL.txt'),
   (['Figtree (fuente)'], 'assets/licenses/Figtree-OFL.txt'),
-  (['phosphor_flutter (iconos Phosphor)'], 'assets/licenses/Phosphor-MIT.txt'),
+  (['Phosphor Icons (fuentes de iconos)'], 'assets/licenses/Phosphor-MIT.txt'),
   (['confetti'], 'assets/licenses/confetti-MIT.txt'),
 ];
 

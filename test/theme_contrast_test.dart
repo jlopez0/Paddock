@@ -3,6 +3,8 @@ import 'dart:math' as math;
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:paddock/app/theme.dart';
+import 'package:paddock/games/infiltrado/ui/infiltrado_widgets.dart';
+import 'package:paddock/games/prompt_deck/game_colors.dart';
 
 double _lum(Color c) {
   double f(double v) =>
@@ -57,6 +59,62 @@ void main() {
   test('numero 1-8 del menu (brassText) legible sobre sus fondos', () {
     for (final bg in [AppColors.surface, AppColors.surfaceHigh]) {
       expect(contrast(AppColors.brassText, bg), greaterThanOrEqualTo(4.5));
+    }
+  });
+
+  test('texto sobre el panel burdeos de la Copa (gold, paper) >= 4.5:1', () {
+    expect(
+      contrast(AppColors.gold, AppColors.burgundy),
+      greaterThanOrEqualTo(4.5),
+    );
+    expect(
+      contrast(AppColors.paper, AppColors.burgundy),
+      greaterThanOrEqualTo(4.5),
+    );
+  });
+
+  test('infiltradoText y mutedText sobre las superficies oscuras', () {
+    for (final bg in [
+      AppColors.background,
+      AppColors.surface,
+      AppColors.surfaceHigh,
+      AppColors.outline,
+    ]) {
+      expect(
+        contrast(GameColors.infiltradoText, bg),
+        greaterThanOrEqualTo(4.5),
+      );
+      expect(contrast(GameColors.mutedText, bg), greaterThanOrEqualTo(4.5));
+    }
+  });
+
+  test('tintas sobre papel (infiltradoInk, ink) >= 4.5:1', () {
+    for (final c in [
+      infiltradoInk,
+      infiltradoInkMuted,
+      GameColors.ink,
+      GameColors.inkMuted,
+    ]) {
+      expect(contrast(c, AppColors.paper), greaterThanOrEqualTo(4.5));
+    }
+  });
+
+  test('colores de juego con onPaper sobre papel >= 4.5:1', () {
+    for (final c in const [
+      Color(0xFF3FA796),
+      Color(0xFFB57BEE),
+      Color(0xFFE5575C),
+      Color(0xFFE8B84A),
+      Color(0xFF8E6BE0),
+      Color(0xFF4C8DFF),
+      Color(0xFF3CC9C0),
+      Color(0xFFF2994A),
+    ]) {
+      expect(
+        contrast(GameColors.onPaper(c), AppColors.paper),
+        greaterThanOrEqualTo(4.5),
+        reason: '$c',
+      );
     }
   });
 }

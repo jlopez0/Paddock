@@ -312,18 +312,17 @@ class _PromptDeckPlayScreenState extends ConsumerState<PromptDeckPlayScreen> {
                         ),
                       ),
                       Expanded(
-                        child: Text(
-                          game.title,
+                        child: DefaultTextStyle(
                           textAlign: TextAlign.center,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
-                          textScaler: MediaQuery.textScalerOf(
-                            context,
-                          ).clamp(maxScaleFactor: 1.2),
                           style: const TextStyle(
-                            fontWeight: FontWeight.w800,
-                            fontSize: 18,
+                            fontFamily: AppFonts.display,
+                            fontWeight: FontWeight.w400,
+                            fontSize: kDisplayMinSize,
+                            color: AppColors.text,
                           ),
+                          child: AppTitle(game.title),
                         ),
                       ),
                       SizedBox(

@@ -60,6 +60,7 @@ class ConsequenceBanner extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,
+      spacing: 8,
       children: rows,
     );
   }

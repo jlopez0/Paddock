@@ -117,6 +117,16 @@ class _AddPlayerFieldState extends ConsumerState<AddPlayerField> {
       textCapitalization: TextCapitalization.words,
       textInputAction: TextInputAction.done,
       maxLength: 16,
+      buildCounter:
+          (
+            context, {
+            required currentLength,
+            required isFocused,
+            required maxLength,
+          }) => Text(
+            '$currentLength/$maxLength letras',
+            semanticsLabel: '$currentLength de $maxLength letras',
+          ),
       onChanged: (_) {
         if (_error != null) setState(() => _error = null);
       },

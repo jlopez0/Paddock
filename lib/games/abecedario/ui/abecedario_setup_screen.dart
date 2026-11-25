@@ -161,14 +161,16 @@ class _Options<T> extends StatelessWidget {
           ChoiceChip(
             label: Text(labelOf(v)),
             selected: v == selected,
-            showCheckmark: false,
-            selectedColor: abecedarioColor.withValues(alpha: 0.3),
-            labelStyle: TextStyle(
+            showCheckmark: true,
+            checkmarkColor: AppColors.text,
+            selectedColor: abecedarioColor.withValues(alpha: 0.45),
+            labelStyle: const TextStyle(
               fontWeight: FontWeight.w700,
-              color: v == selected ? AppColors.text : GameColors.mutedText,
+              color: AppColors.text,
             ),
             side: BorderSide(
-              color: v == selected ? abecedarioColor : AppColors.outline,
+              color: v == selected ? abecedarioColor : AppColors.textMuted,
+              width: v == selected ? 2 : 1,
             ),
             onSelected: (_) {
               AppFeedback.selection();

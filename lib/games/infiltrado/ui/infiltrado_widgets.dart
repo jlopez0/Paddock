@@ -190,10 +190,17 @@ class InfiltradoTopBar extends StatelessWidget {
         onPressed: () => Navigator.of(context).maybePop(),
       ),
       Expanded(
-        child: Text(
-          title,
+        child: DefaultTextStyle(
           textAlign: TextAlign.center,
-          style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 16),
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
+          style: const TextStyle(
+            fontFamily: AppFonts.display,
+            fontWeight: FontWeight.w400,
+            fontSize: kDisplayMinSize,
+            color: AppColors.text,
+          ),
+          child: AppTitle(title),
         ),
       ),
       SizedBox(

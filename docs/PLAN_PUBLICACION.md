@@ -101,7 +101,14 @@ Al terminar, marca la fase como hecha en el plan y apunta las decisiones tomadas
 - ✅ Fase 5: "¿Cómo se juega?" en los 8 juegos, accesibilidad (tooltips, letra al doble sin desbordes, estados vacíos y de error), orientación, copia de seguridad de Android desactivada, licencias en Créditos. i18n con ARB aplazado a la v1.1 (la v1 sale solo en español).
 - ✅ Fase 6, textos: ficha, notas para el revisor de Apple, cuestionarios y lista de pasos de Google Play en `docs/store/`; informe de cumplimiento en `docs/COMPLIANCE.md`. ⏳ Capturas de pantalla (necesitan emulador) y revisar los ❓ de los cuestionarios con los formularios reales.
 
+## Rediseño con alma (rama `diseno-alma`, 25/11/2026)
+- Rama aparte de `fase-0-publicacion` (versión publicable previa al rediseño, intacta). Sin fusionar con `main`.
+- Dirección: "casa de apuestas de hipódromo de los años 30 de noche". Alfa Slab One + Figtree, iconos Phosphor duotono tras `AppIcon`, ficha, boleto, medalla, Jockey y trofeo dibujados por código, sin emojis ni `Icons` de Material (vigilado por `no_emoji_test`), microcopy con voz propia, 7 sonidos CC0 de Kenney y animaciones que respetan `disableAnimations` y el ajuste de vibración.
+- Detalle en `docs/DISENO_ALMA.md`, `docs/MICROCOPY.md`, `docs/COMPLIANCE.md` y `docs/decisions.md`.
+- Pendiente de Javier: oír `correct`, `wrong` y `podium`; probar la Carrera en móvil físico; comprobar en un build real que `confetti` no sale duplicada en Licencias; enlazar en Créditos las páginas de autoría de la baraja que faltan.
+
 ## Bitácora del jefe
+- 2026-11-25 · Rediseño · jefe + arquitecto de recursos, implementador, juego-flutter, redactor-es, cumplimiento, revisor · 2 rondas de QA visual en emulador Android 16 (sin bloqueantes en la 2.ª), revisión final LISTO, 426 tests en verde y `flutter analyze` limpio · APK release 64,4 MB.
 - 2026-11-24 · Fase 0 · jefe · commit del estado y 4 tareas manuales en Todoist.
 - 2026-11-24 · Fase 4 · implementador, redactor-es, revisor · Abecedario hecho y revisado (LISTO) → commits 841ddbf y 28e1f47.
 - 2026-11-24 · Fases 1–3 · arquitecto (desglose en docs/FASES_1_3.md), implementador, juego-flutter, contenido-fiesta, mecanico, redactor-es · 2 revisiones; la 1.ª encontró 1 bloqueante (retos atrevidos sin +18), corregido en la 1.ª vuelta; la 2.ª dio LISTO · 216 tests en verde y `flutter analyze` limpio → commits 6a35abe, b1839d1, 7317722 y a2e6b94.

@@ -49,6 +49,28 @@ void main() {
     expect(container.read(playersProvider).single.name, 'Ana');
   });
 
+  testWidgets('el contador del nombre cuenta letras, no jugadores', (
+    tester,
+  ) async {
+    SharedPreferences.setMockInitialValues({});
+    final prefs = await SharedPreferences.getInstance();
+    final container = ProviderContainer(
+      overrides: [sharedPreferencesProvider.overrideWithValue(prefs)],
+    );
+    addTearDown(container.dispose);
+    await tester.pumpWidget(
+      UncontrolledProviderScope(
+        container: container,
+        child: const MaterialApp(home: PlayersScreen()),
+      ),
+    );
+    expect(find.text('0/16 letras'), findsOneWidget);
+    await tester.enterText(find.byType(TextField), 'Ana');
+    await tester.pump();
+    expect(find.text('3/16 letras'), findsOneWidget);
+    expect(find.text('3/16'), findsNothing);
+  });
+
   testWidgets('tras un duplicado el texto queda seleccionado y se reemplaza', (
     tester,
   ) async {

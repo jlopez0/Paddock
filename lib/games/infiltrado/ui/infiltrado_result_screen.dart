@@ -219,7 +219,7 @@ class _Outcome extends ConsumerWidget {
       children: [
         Expanded(
           child: ListView(
-            padding: const EdgeInsets.only(top: 8, bottom: 8),
+            padding: const EdgeInsets.only(top: 8, bottom: 20),
             children: [
               Semantics(
                 label: outcome.impostorsWin

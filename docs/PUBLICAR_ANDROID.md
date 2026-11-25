@@ -28,7 +28,7 @@ Crea el archivo `android\key.properties` (ya está en `.gitignore`, igual que `*
 storePassword=<contraseña del almacén>
 keyPassword=<contraseña de la clave>
 keyAlias=upload
-storeFile=C:\Users\<usuario>\paddock-upload.jks
+storeFile=C:/Users/<usuario>/paddock-upload.jks
 ```
 
 Detalles: barras invertidas dobles (o barras normales `C:/Users/...`), sin comillas ni espacios sobrantes al final de línea. Comprobación: `git status` no debe mostrar `key.properties` ni el `.jks`.

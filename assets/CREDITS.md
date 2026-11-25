@@ -45,10 +45,11 @@ Las cartas de `assets/cards/` son recortes y reescalados de la baraja de Wikimed
 - Licencia de ambos archivos: CC BY-SA 3.0 (https://creativecommons.org/licenses/by-sa/3.0/), según la página de cada archivo (comprobado el 2026-11-25).
 - Cambios: recortadas en cartas individuales y reescaladas. Las cartas derivadas se comparten con la misma licencia (compartir igual).
 - Las páginas de Commons indican además que reutilizan gráficos heráldicos y un caballo de GnuBond (Aisleriot); no se han revisado esas licencias una por una.
-- **Pendiente (R2):** publicar las cartas recortadas en `docs/` con su licencia.
+- **NO VERIFICADO:** que `reverso.png` salga de esos mismos archivos.
+- Publicación (R2): `docs/creditos.html` con autoría, fuente, licencia, enlaces y cambios. Las imágenes se sirven desde `docs/cartas/`, que debe ser una copia exacta de `assets/cards/` (si cambian las cartas, volver a copiarlas).
 
 ## Trivia (CC BY-SA 4.0)
-Las preguntas con id `ot-` proceden de Open Trivia DB (https://opentdb.com), licencia CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/), traducidas y adaptadas. El resto son originales. **Pendiente (R2):** publicar las `ot-` en `docs/` con su licencia.
+Las preguntas con id `ot-` proceden de Open Trivia DB (https://opentdb.com), licencia CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/), traducidas y adaptadas. El resto son originales. Publicación (R2): las 48 `ot-` están en `docs/creditos.html` con su licencia. Si se añaden, quitan o cambian preguntas `ot-` en `assets/content/es/trivia.json`, actualizar esa página.
 
 ## Geografía
 Natural Earth (dominio público, https://www.naturalearthdata.com) para siluetas y mapas; banderas de flagcdn.com / Flagpedia (https://flagpedia.net, dominio público según su web). **NO VERIFICADO:** fecha y versión de la descarga.

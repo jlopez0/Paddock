@@ -2,6 +2,9 @@
 name: juego-flutter
 description: Implementa juegos y mecánicas nuevas en Paddock (Infiltrado, ¿Quién es más probable?, Patata caliente, la Copa, sistema de fichas) siguiendo el patrón GameModule. Úsalo para código de juegos en lib/games o lib/core.
 disallowedTools: Agent
+# Depende del plugin habin (habin@habin-agents): sin él, esta skill no se precarga.
+skills:
+  - habin:verification-before-completion
 model: sonnet
 effort: high
 color: yellow
@@ -20,6 +23,11 @@ Calidad:
 - Vertical en menús; horizontal solo donde el juego lo exige, de forma controlada.
 - Estados vacíos: menos jugadores de los necesarios, mazo agotado.
 - Tests del motor del juego en `test/` (como `race_engine_test.dart`).
+
+Método (skills del plugin habin):
+- TDD: solo en lógica del motor (puntuación, fichas, Copa) o bugs de lógica; entonces invoca `habin:test-driven-development` (herramienta Skill). En UI no.
+- Al primer fallo de tests, invoca `habin:systematic-debugging` antes de tocar nada; al segundo fallo por lo mismo, para y devuelve el diagnóstico.
+- Termina con un estado final en la última línea: HECHO, HECHO_CON_DUDAS (di la duda) o BLOQUEADO (qué falta).
 
 Antes de terminar: `flutter analyze` sin avisos y `flutter test` en verde. Para compilar en esta máquina usa `--no-tree-shake-icons` (Device Guard bloquea font-subset). Marca en `docs/PLAN_PUBLICACION.md` lo que quede hecho.
 

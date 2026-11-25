@@ -347,6 +347,8 @@ class _PromptDeckPlayScreenState extends ConsumerState<PromptDeckPlayScreen> {
                     ],
                   ),
                 ),
+                // Aire bajo la cabecera: con el título a dos líneas no toca la barra.
+                const SizedBox(height: 10),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 24),
                   child: ClipRRect(

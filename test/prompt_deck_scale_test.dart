@@ -124,6 +124,7 @@ Future<ProviderContainer> _pump(
 }
 
 void main() {
+  _gapTest();
   for (final style in PromptCardStyle.values) {
     for (final reduce in [false, true]) {
       testWidgets(
@@ -188,4 +189,20 @@ void main() {
       );
     }
   }
+}
+
+void _gapTest() {
+  testWidgets(
+    'el título de la cabecera no toca la barra de progreso (letra 2.0)',
+    (tester) async {
+      await _pump(
+        tester,
+        _game(PromptCardStyle.statement, PromptPayMode.multi),
+        mode: 'retos',
+      );
+      final title = tester.getRect(find.text('¿Quién es más probable?'));
+      final bar = tester.getRect(find.byType(LinearProgressIndicator));
+      expect(bar.top - title.bottom, greaterThanOrEqualTo(8));
+    },
+  );
 }

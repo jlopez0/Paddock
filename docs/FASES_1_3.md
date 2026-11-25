@@ -187,7 +187,7 @@ Origen: `docs/PLAN_PUBLICACION.md` (Fase 1, sistema de consecuencias; Fase 3, Co
 - **Agente**: `mecanico` (Haiku, bajo).
 - **Depende de**: 1.6, 3.4, 3.5, 3.8 y el commit de Fase 4.
 
-### 3.11 (Opcional, v1.1) Trivia y Geografía → Copa
+### 3.11 (Opcional, v1.1) Trivia y Geografía → Copa · HECHO 2026-11-25
 - **Qué**: en la pantalla de resultado, un selector "¿Quién ha jugado?" que suma los aciertos a ese jugador. Hoy son juegos de un solo jugador sin jugadores asociados.
 - **Archivos**: `lib/games/trivia/ui/trivia_result_screen.dart` y `lib/games/geography/ui/geo_result_screen.dart`.
 - **Agente**: `implementador` (Sonnet, medio).

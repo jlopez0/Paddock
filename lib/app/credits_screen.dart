@@ -14,6 +14,15 @@ class CreditsScreen extends StatelessWidget {
   static const _commonsBaraja =
       'https://commons.wikimedia.org/wiki/File:Baraja_espa%C3%B1ola.svg';
 
+  static const _commonsBarajaCompleta =
+      'https://commons.wikimedia.org/wiki/File:Baraja_espa%C3%B1ola_completa.png';
+
+  static const _commonsBasquetteur =
+      'https://commons.wikimedia.org/wiki/User:Basquetteur';
+
+  static const _commonsGermarquezm =
+      'https://commons.wikimedia.org/wiki/User:Germarquezm';
+
   static const _ofl =
       'https://openfontlicense.org/open-font-license-official-text/';
 
@@ -79,6 +88,27 @@ class CreditsScreen extends StatelessWidget {
               child: TextButton(
                 onPressed: () => _openLicense(context, _commonsBaraja),
                 child: const Text('Ver archivo original en Wikimedia Commons'),
+              ),
+            ),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: TextButton(
+                onPressed: () => _openLicense(context, _commonsBarajaCompleta),
+                child: const Text('Ver "Baraja española completa.png"'),
+              ),
+            ),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: TextButton(
+                onPressed: () => _openLicense(context, _commonsBasquetteur),
+                child: const Text('Autoría: Basquetteur en Commons'),
+              ),
+            ),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: TextButton(
+                onPressed: () => _openLicense(context, _commonsGermarquezm),
+                child: const Text('Autoría: Germarquezm en Commons'),
               ),
             ),
             SizedBox(height: 24),

@@ -63,6 +63,25 @@ void main() {
     },
   );
 
+  testWidgets('la baraja enlaza archivos originales y autoría en Commons', (
+    tester,
+  ) async {
+    await pump(tester);
+    for (final label in [
+      'Ver archivo original en Wikimedia Commons',
+      'Ver "Baraja española completa.png"',
+      'Autoría: Basquetteur en Commons',
+      'Autoría: Germarquezm en Commons',
+    ]) {
+      await tester.scrollUntilVisible(
+        find.text(label),
+        300,
+        scrollable: find.byType(Scrollable).first,
+      );
+      expect(find.text(label), findsOneWidget);
+    }
+  });
+
   testWidgets('conserva atribuciones y aviso legal previos', (tester) async {
     await pump(tester);
     expect(find.text('Baraja española'), findsOneWidget);

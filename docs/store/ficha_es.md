@@ -14,13 +14,14 @@ Fuentes: `docs/PLAN_PUBLICACION.md` (Fase 6), `docs/CONTENIDO.md`, `docs/decisio
 
 ## Descripción larga (Google Play y App Store)
 
-Unos 2.150 caracteres con saltos de línea (límite: 4.000). Recuento a mano, línea a línea; margen de sobra.
+Unos 2.100 caracteres con saltos de línea (límite: 4.000). Recuento a mano, línea a línea; margen de sobra.
 
 Revisión del 25/11/2026:
 - La Copa ya no dice que "cada partida" suma: solo Carrera, El Infiltrado y los juegos de cartas (Trivia y Geografía, en la v1.1).
 - Fuera "el mejor caballo" y "¿Te la juegas con un All-in?": evita superlativos y rebaja el tono de apuesta (COMPLIANCE R3). Se aclara que las fichas no tienen valor ni se compran.
 - Títulos de sección en minúscula: Google desaconseja las mayúsculas sostenidas en los metadatos.
 - Open Trivia DB se cita solo por la atribución que exige su licencia (CC BY-SA 4.0), no como reclamo.
+- Los niveles se presentan como Suave y Picante más un modo opcional +18 genérico, sin nombrarlo ni describirlo (COMPLIANCE #7). El modo de consecuencias para mayores de edad no nombra la bebida: solo tope y alternativa (COMPLIANCE #6). La declaración completa está en `docs/store/cuestionarios.md`.
 
 ```
 Paddock reúne ocho juegos para jugar en grupo con un solo móvil. Apuntáis los nombres, elegís juego y a jugar. Sin cuentas, sin anuncios y sin conexión.
@@ -39,10 +40,10 @@ Los juegos
 - Yo nunca: confiesa… o paga.
 
 Tú eliges el tono
-Las cartas y las palabras del Infiltrado tienen tres niveles:
+Las cartas y las palabras del Infiltrado se adaptan al grupo:
 - Suave: para cualquier grupo.
 - Picante: ligues, ex y celos, sin nada sexual.
-- Atrevido: sugerente, nunca explícito. Está desactivado de serie y solo se activa tras confirmar que todos sois mayores de 18.
+- Modo +18: opcional y desactivado de serie. Solo se activa tras confirmar que todos sois mayores de 18.
 
 Consecuencias a tu manera
 Perder fichas significa lo que decidáis en Ajustes:
@@ -79,7 +80,7 @@ Para producción (texto anterior, se mantiene):
 Primera versión de Paddock:
 - Ocho juegos de grupo: Carrera de caballos, El Infiltrado, Trivia, Geografía, Abecedario, ¿Quién es más probable?, ¿Qué preferirías? y Yo nunca.
 - Copa de la noche: marcador común, podio final y resultado para compartir.
-- Niveles Suave, Picante y Atrevido (este último, solo para mayores de 18).
+- Niveles de contenido: Suave y Picante, más un modo opcional +18.
 - Consecuencias a elegir: Puntos o Retos.
 ```
 
@@ -87,4 +88,4 @@ Primera versión de Paddock:
 
 - La app llama al marcador **"Copa de la noche"** (`lib/app/cup_screen.dart`). Si se prefiere "Copa Paddock", hay que cambiarlo también en la app para que ficha y producto coincidan.
 - Solo Carrera, El Infiltrado y los tres juegos de cartas suman a la Copa (Trivia y Geografía quedan para la v1.1). Por eso la descripción no dice que "todos" los juegos cuentan.
-- Capturas (Fase 6): sin nivel Atrevido ni modo Sorbos.
+- Capturas (Fase 6): sin cartas del modo +18 ni consecuencias del modo opcional para mayores de edad (COMPLIANCE #6 y #7).

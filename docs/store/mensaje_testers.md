@@ -72,7 +72,7 @@ A adultos (18+) que quedan en grupo y quieren jugar con un solo móvil, sin cuen
 
 **¿Qué valor aporta a los usuarios?**
 ```
-Reúne ocho juegos de grupo (trivia, geografía, El Infiltrado, carrera de caballos con fichas sin valor y tres juegos de cartas) con un marcador común para toda la noche. Funciona sin internet, no tiene anuncios ni compras y no recoge datos. El contenido tiene niveles y el más atrevido está desactivado de serie.
+Reúne ocho juegos de grupo (trivia, geografía, El Infiltrado, carrera de caballos con fichas sin valor y tres juegos de cartas) con un marcador común para toda la noche. Funciona sin internet, no tiene anuncios ni compras y no recoge datos. El contenido tiene niveles y el modo para mayores de 18 está desactivado de serie.
 ```
 
 **Instalaciones previstas el primer año**

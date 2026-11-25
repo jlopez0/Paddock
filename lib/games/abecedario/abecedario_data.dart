@@ -42,7 +42,7 @@ class AbecedarioEntry {
   final String id;
   final String letter;
 
-  /// `true` = "Lleva una X dentro"; `false` = "Arranca con la X".
+  /// `true` = "Lleva una X"; `false` = "Con X al principio".
   final bool contains;
   final String answer;
   final String definition;
@@ -51,7 +51,7 @@ class AbecedarioEntry {
   final String level;
 
   String get clue =>
-      contains ? 'Lleva una $letter dentro' : 'Arranca con la $letter';
+      contains ? 'Lleva una $letter' : 'Con $letter al principio';
 
   factory AbecedarioEntry.fromJson(Map<String, dynamic> j) => AbecedarioEntry(
     id: j['id'] as String,

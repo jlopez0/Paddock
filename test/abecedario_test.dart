@@ -36,6 +36,24 @@ void main() {
     }
   });
 
+  test('pistas: redacción propia, sin "Empieza por" ni "Contiene la"', () {
+    AbecedarioEntry entry(String letter, {required bool contains}) =>
+        AbecedarioEntry(
+          id: 'x',
+          letter: letter,
+          contains: contains,
+          answer: 'a',
+          definition: 'd',
+          level: 'facil',
+        );
+    expect(entry('B', contains: false).clue, 'Con B al principio');
+    expect(entry('X', contains: true).clue, 'Lleva una X');
+    for (final e in bank) {
+      expect(e.clue, isNot(contains('Empieza por')));
+      expect(e.clue, isNot(contains('Contiene la')));
+    }
+  });
+
   testWidgets('partida: cuenta atrás, desvela, avanza solo y no desborda', (
     tester,
   ) async {

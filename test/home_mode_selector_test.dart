@@ -94,9 +94,9 @@ void main() {
   testWidgets('home: orden de los carteles y sin Copa ni insignias', (tester) async {
     await _pump(tester);
     final titles = [
+      'Carrera de caballos',
       '¿Quién es más probable?',
       'Yo nunca',
-      'Carrera de caballos',
       'El Infiltrado',
       '¿Qué preferirías?',
       'Abecedario',

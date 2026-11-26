@@ -180,7 +180,7 @@ class _PromptDeckPlayScreenState extends ConsumerState<PromptDeckPlayScreen> {
       ),
     );
     if (leave != true || !mounted) return;
-    context.pop();
+    context.go('/');
   }
 
   void _go(int delta) {

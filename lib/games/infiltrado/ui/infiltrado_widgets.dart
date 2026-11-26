@@ -161,7 +161,7 @@ class InfiltradoLeaveGuard extends StatelessWidget {
   final Widget child;
 
   Future<void> _exit(BuildContext context) async {
-    if (await confirmLeaveInfiltrado(context) && context.mounted) context.pop();
+    if (await confirmLeaveInfiltrado(context) && context.mounted) context.go('/');
   }
 
   @override

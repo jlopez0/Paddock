@@ -8,9 +8,10 @@ import 'prompt_deck/prompt_deck_module.dart';
 import 'abecedario/abecedario_module.dart';
 import 'trivia/trivia_module.dart';
 
-/// Juegos disponibles, en el orden en que aparecen en el menú: primero los de
-/// previa (sin preparación) y después los que piden más puesta en marcha.
+/// Juegos disponibles, en el orden en que aparecen en el menú: la Carrera siempre
+/// la primera, luego los de previa (sin preparación) y después los que piden más puesta en marcha.
 const List<GameModule> gameModules = [
+  HorseRaceModule(),
   PromptDeckModule(
     id: 'quien-es-mas-probable',
     title: '¿Quién es más probable?',
@@ -33,7 +34,6 @@ const List<GameModule> gameModules = [
     payMode: PromptPayMode.fixed,
     rounds: 20,
   ),
-  HorseRaceModule(),
   InfiltradoModule(),
   PromptDeckModule(
     id: 'que-preferirias',

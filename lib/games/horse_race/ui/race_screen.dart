@@ -199,7 +199,7 @@ class _RaceScreenState extends ConsumerState<RaceScreen> {
 
   Future<void> _exit() async {
     if (_winner != null || _engine.draws == 0) {
-      context.pop();
+      context.go('/');
       return;
     }
     final leave = await showDialog<bool>(
@@ -219,7 +219,7 @@ class _RaceScreenState extends ConsumerState<RaceScreen> {
         ],
       ),
     );
-    if (leave == true && mounted) context.pop();
+    if (leave == true && mounted) context.go('/');
   }
 
   @override

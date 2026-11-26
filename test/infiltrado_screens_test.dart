@@ -550,8 +550,7 @@ void main() {
       await tester.pumpAndSettle();
       expect(find.text('¿Salir de la partida?'), findsOneWidget);
       await _tapText(tester, 'Salir');
-      expect(find.text('Repartir roles'), findsOneWidget);
-      expect(env.router.state.matchedLocation, '/game/infiltrado');
+      expect(env.router.state.matchedLocation, '/');
     });
 
     testWidgets('sin partida en curso no se enseña nada y se ofrece preparar una', (tester) async {

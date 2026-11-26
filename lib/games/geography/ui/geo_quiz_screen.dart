@@ -142,7 +142,7 @@ class _GeoQuizScreenState extends ConsumerState<GeoQuizScreen> {
         ],
       ),
     );
-    if (leave == true && mounted) context.pop();
+    if (leave == true && mounted) context.go('/');
   }
 
   @override

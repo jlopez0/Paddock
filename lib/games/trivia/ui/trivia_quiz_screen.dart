@@ -83,7 +83,7 @@ class _TriviaQuizScreenState extends ConsumerState<TriviaQuizScreen> {
         ],
       ),
     );
-    if (leave == true && mounted) context.pop();
+    if (leave == true && mounted) context.go('/');
   }
 
   @override

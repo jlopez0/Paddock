@@ -114,7 +114,7 @@ class _AbecedarioPlayScreenState extends ConsumerState<AbecedarioPlayScreen> {
 
   Future<void> _exit() async {
     if (_finished) {
-      context.pop();
+      context.go('/');
       return;
     }
     _paused = true;
@@ -135,7 +135,7 @@ class _AbecedarioPlayScreenState extends ConsumerState<AbecedarioPlayScreen> {
       ),
     );
     _paused = false;
-    if (leave == true && mounted) context.pop();
+    if (leave == true && mounted) context.go('/');
   }
 
   @override

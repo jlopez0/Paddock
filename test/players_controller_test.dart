@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:paddock/core/players/players_controller.dart';
-import 'package:paddock/core/storage.dart';
+import 'package:habinson/core/players/players_controller.dart';
+import 'package:habinson/core/storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Future<ProviderContainer> _container() async {

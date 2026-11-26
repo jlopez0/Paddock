@@ -19,6 +19,11 @@ abstract class GameModule {
   /// Icono del juego (duotono, ver `GameIcon`). Se resuelve por [id].
   Widget icon(double size) => GameIcon(id, size: size);
 
+  /// `true` si el juego anota fichas en la Copa de la noche (llama a `award`). Por defecto
+  /// no: solo suman los juegos en los que la app sabe quién gana o pierde por persona
+  /// (hoy Carrera e Infiltrado). Lo vigila `test/cup_guard_test.dart`.
+  bool get scoresCup => false;
+
   String get path => '/game/$id';
 
   /// Pantalla de entrada del juego.

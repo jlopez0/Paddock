@@ -186,17 +186,6 @@ class _AbecedarioPlayScreenState extends ConsumerState<AbecedarioPlayScreen> {
                       icon: AppIcon.close.widget(),
                     ),
                     const Spacer(),
-                    if (!_finished)
-                      Padding(
-                        padding: const EdgeInsets.only(right: 12),
-                        child: Text(
-                          '${_index + 1} / ${_entries!.length}',
-                          style: const TextStyle(
-                            fontWeight: FontWeight.w800,
-                            color: AppColors.textMuted,
-                          ),
-                        ),
-                      ),
                   ],
                 ),
                 Expanded(

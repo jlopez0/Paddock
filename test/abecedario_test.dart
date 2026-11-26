@@ -4,10 +4,10 @@ import 'dart:math';
 import 'package:material_ui/material_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:paddock/core/storage.dart';
-import 'package:paddock/games/abecedario/ui/abecedario_play_screen.dart';
+import 'package:habinson/core/storage.dart';
+import 'package:habinson/games/abecedario/ui/abecedario_play_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:paddock/games/abecedario/abecedario_data.dart';
+import 'package:habinson/games/abecedario/abecedario_data.dart';
 
 void main() {
   final bank = parseAbecedario(File(abecedarioAsset).readAsStringSync());
@@ -36,7 +36,7 @@ void main() {
     }
   });
 
-  test('pistas: redacción propia, sin "Empieza por" ni "Contiene la"', () {
+  test('pistas: "Comienza por la X" / "Contiene la X", sin marcas ajenas', () {
     AbecedarioEntry entry(String letter, {required bool contains}) =>
         AbecedarioEntry(
           id: 'x',
@@ -46,11 +46,15 @@ void main() {
           definition: 'd',
           level: 'facil',
         );
-    expect(entry('B', contains: false).clue, 'Con B al principio');
-    expect(entry('X', contains: true).clue, 'Lleva una X');
+    expect(entry('B', contains: false).clue, 'Comienza por la B');
+    expect(entry('X', contains: true).clue, 'Contiene la X');
     for (final e in bank) {
-      expect(e.clue, isNot(contains('Empieza por')));
-      expect(e.clue, isNot(contains('Contiene la')));
+      expect(
+        e.clue,
+        e.contains ? 'Contiene la ${e.letter}' : 'Comienza por la ${e.letter}',
+      );
+      expect(e.clue.toLowerCase(), isNot(contains('rosco')));
+      expect(e.clue.toLowerCase(), isNot(contains('pasapalabra')));
     }
   });
 

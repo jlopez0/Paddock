@@ -1,7 +1,8 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
-import 'package:paddock/app/credits_screen.dart';
-import 'package:paddock/app/theme.dart';
+import 'package:habinson/app/credits_screen.dart';
+import 'package:habinson/app/theme.dart';
 
 void main() {
   Future<void> pump(WidgetTester tester, {double scale = 1}) async {
@@ -9,14 +10,16 @@ void main() {
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.reset);
     await tester.pumpWidget(
-      MaterialApp(
-        theme: buildAppTheme(),
-        home: Builder(
-          builder: (context) => MediaQuery(
-            data: MediaQuery.of(
-              context,
-            ).copyWith(textScaler: TextScaler.linear(scale)),
-            child: const CreditsScreen(),
+      ProviderScope(
+        child: MaterialApp(
+          theme: buildAppTheme(),
+          home: Builder(
+            builder: (context) => MediaQuery(
+              data: MediaQuery.of(
+                context,
+              ).copyWith(textScaler: TextScaler.linear(scale)),
+              child: const CreditsScreen(),
+            ),
           ),
         ),
       ),

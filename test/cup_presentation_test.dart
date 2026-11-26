@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:paddock/core/session/cup_presentation.dart';
-import 'package:paddock/core/session/session_score.dart';
+import 'package:habinson/core/session/cup_presentation.dart';
+import 'package:habinson/core/session/session_score.dart';
 
 void main() {
   test('groupStandings agrupa empates por puesto', () {

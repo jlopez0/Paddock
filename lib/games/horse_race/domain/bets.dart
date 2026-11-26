@@ -14,14 +14,15 @@ class Bet {
   final String playerId;
   final Suit suit;
 
-  /// Fichas apostadas (1–5), o [allIn].
+  /// Fichas apostadas (1–9), o [allIn].
   final int chips;
 
-  /// Apuesta máxima: All-in (vale [kAllInChips] fichas).
+  /// Apuesta máxima: All-in (vale [kAllInChips] fichas). En el selector, subir
+  /// de [maxChips] salta al All-in.
   static const allIn = 0;
 
   static const minChips = 1;
-  static const maxChips = 5;
+  static const maxChips = 9;
 
   bool get isAllIn => chips == allIn;
 
@@ -31,7 +32,7 @@ class Bet {
     chips: chips ?? this.chips,
   );
 
-  /// Ajusta unas fichas guardadas al rango válido: 0 es All-in, el resto se recorta a 1–5.
+  /// Ajusta unas fichas guardadas al rango válido: 0 es All-in, el resto se recorta a 1–9.
   static int normalizeChips(int raw) =>
       raw == allIn ? allIn : raw.clamp(minChips, maxChips);
 

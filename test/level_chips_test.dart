@@ -3,12 +3,12 @@ import 'dart:math' as math;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
-import 'package:paddock/app/app_icons.dart';
-import 'package:paddock/app/theme.dart';
-import 'package:paddock/core/content/prompts.dart';
-import 'package:paddock/core/storage.dart';
-import 'package:paddock/games/prompt_deck/game_colors.dart';
-import 'package:paddock/games/prompt_deck/level_chips.dart';
+import 'package:habinson/app/app_icons.dart';
+import 'package:habinson/app/theme.dart';
+import 'package:habinson/core/content/prompts.dart';
+import 'package:habinson/core/storage.dart';
+import 'package:habinson/games/prompt_deck/game_colors.dart';
+import 'package:habinson/games/prompt_deck/level_chips.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 double _contrast(Color a, Color b) {

@@ -18,7 +18,9 @@ import '../../../core/widgets/effects.dart';
 import '../domain/bets.dart';
 import '../domain/cards.dart';
 import '../domain/race_engine.dart';
+import '../../../core/settings/settings_controller.dart';
 import '../race_result.dart';
+import '../race_texts.dart';
 import '../race_store.dart';
 import 'race_widgets.dart';
 
@@ -810,13 +812,14 @@ class _SidePanel extends StatelessWidget {
   }
 }
 
-class _WinnerOverlay extends StatelessWidget {
+class _WinnerOverlay extends ConsumerWidget {
   const _WinnerOverlay({required this.winner});
 
   final Suit winner;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final mode = ref.watch(settingsProvider.select((s) => s.consequenceMode));
     return Positioned.fill(
       child: TweenAnimationBuilder<double>(
         tween: Tween(begin: 0, end: 1),
@@ -892,7 +895,7 @@ class _WinnerOverlay extends StatelessWidget {
                         onPressed: () =>
                             context.pushReplacement('/game/carrera/result'),
                         icon: AppIcon.coins.widget(size: 22, color: raceInk),
-                        label: const Text('¿Quién paga?'),
+                        label: Text(whoPaysLabel(mode)),
                       ),
                     ],
                   ),

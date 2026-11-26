@@ -1,10 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
-import 'package:paddock/app/settings_screen.dart';
-import 'package:paddock/core/consequences/consequences.dart';
-import 'package:paddock/core/settings/settings_controller.dart';
-import 'package:paddock/core/storage.dart';
+import 'package:habinson/app/settings_screen.dart';
+import 'package:habinson/core/consequences/consequences.dart';
+import 'package:habinson/core/settings/settings_controller.dart';
+import 'package:habinson/core/storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Future<ProviderContainer> _pump(WidgetTester tester, Map<String, Object> initial) async {
@@ -22,10 +22,10 @@ Future<ProviderContainer> _pump(WidgetTester tester, Map<String, Object> initial
 }
 
 void main() {
-  testWidgets('Puntos es el modo por defecto', (tester) async {
+  testWidgets('Fichas (enum puntos) es el modo por defecto', (tester) async {
     final c = await _pump(tester, {});
     expect(c.read(settingsProvider).consequenceMode, ConsequenceMode.puntos);
-    expect(find.text('Puntos'), findsOneWidget);
+    expect(find.text('Fichas'), findsOneWidget);
     expect(find.text('Retos'), findsOneWidget);
     expect(find.text('Sorbos'), findsOneWidget);
   });
@@ -63,7 +63,7 @@ void main() {
     expect(s.consequenceMode, ConsequenceMode.sorbos);
     expect(s.adultConfirmed, isTrue);
 
-    await tester.tap(find.text('Puntos'));
+    await tester.tap(find.text('Fichas'));
     await tester.pumpAndSettle();
     await tester.tap(find.text('Sorbos'));
     await tester.pumpAndSettle();

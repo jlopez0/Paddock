@@ -21,15 +21,15 @@ Future<void> main() async {
   runApp(
     ProviderScope(
       overrides: [sharedPreferencesProvider.overrideWithValue(prefs)],
-      child: const PaddockApp(),
+      child: const HabinsonApp(),
     ),
   );
   // Sin bloquear el arranque: evita el retardo del primer sonido.
   unawaited(preloadSounds());
 }
 
-class PaddockApp extends ConsumerWidget {
-  const PaddockApp({super.key});
+class HabinsonApp extends ConsumerWidget {
+  const HabinsonApp({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:paddock/core/consequences/retos_filter.dart';
-import 'package:paddock/core/content/prompts.dart';
+import 'package:habinson/core/consequences/retos_filter.dart';
+import 'package:habinson/core/content/prompts.dart';
 
 void main() {
   const json = '''

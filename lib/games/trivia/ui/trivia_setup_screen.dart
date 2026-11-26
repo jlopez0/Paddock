@@ -150,7 +150,7 @@ class TriviaSetupScreen extends ConsumerWidget {
                   child: Text(
                     bank.hasError
                         ? 'No se pudo cargar el contenido'
-                        : 'Jugar · $questions preguntas',
+                        : 'Jugar',
                     textAlign: TextAlign.center,
                     style: const TextStyle(
                       fontSize: 17,

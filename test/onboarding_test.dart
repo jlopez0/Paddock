@@ -1,9 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
-import 'package:paddock/app/router.dart';
-import 'package:paddock/core/settings/onboarding_controller.dart';
-import 'package:paddock/core/storage.dart';
+import 'package:habinson/app/router.dart';
+import 'package:habinson/core/settings/onboarding_controller.dart';
+import 'package:habinson/core/storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Future<ProviderContainer> _container(Map<String, Object> initial) async {

@@ -90,10 +90,16 @@ class _RaceResultScreenState extends ConsumerState<RaceResultScreen> {
       }
     }
     final s = settleChips(outcomes, r.allInTargets);
-    ref.read(sessionProvider.notifier).award(r.roundId, 'carrera', {
-      for (final e in s.deltas.entries)
-        if (ids.contains(e.key)) e.key: e.value,
-    });
+    // `recordZeros`: quien acertó con All-in y sale sin repartir queda a 0, pero sigue en la Copa.
+    ref.read(sessionProvider.notifier).award(
+      r.roundId,
+      'carrera',
+      {
+        for (final e in s.deltas.entries)
+          if (ids.contains(e.key)) e.key: e.value,
+      },
+      recordZeros: true,
+    );
     ref.read(lastRaceResultProvider.notifier).markSettled();
   }
 
@@ -156,7 +162,7 @@ class _RaceResultScreenState extends ConsumerState<RaceResultScreen> {
     for (final o in known) {
       if (!o.won) {
         (reasons[o.bet.playerId] ??= []).add(
-          'Apostó ${betText(o.bet)} a ${o.bet.suit.label} y falló',
+          betReasonText(mode, o.bet, failed: true),
         );
       } else if (o.isAllIn) {
         final pool = _pool(players, o.bet.playerId).map((p) => p.id).toSet();
@@ -169,14 +175,6 @@ class _RaceResultScreenState extends ConsumerState<RaceResultScreen> {
         }
       }
     }
-    final lossesByName = {
-      for (final e in losses.entries) byId[e.key]!.name: e.value,
-    };
-    final gainsByName = {
-      for (final w in winners)
-        if ((settlement.deltas[w.bet.playerId] ?? 0) > 0)
-          byId[w.bet.playerId]!.name: settlement.deltas[w.bet.playerId]!,
-    };
     final outcomeByPlayer = {for (final o in known) o.bet.playerId: o};
 
     return PopScope(
@@ -208,9 +206,9 @@ class _RaceResultScreenState extends ConsumerState<RaceResultScreen> {
                       style: const TextStyle(color: AppColors.textMuted),
                     ),
                     if (winners.isNotEmpty) ...[
-                      const _SectionHeader(
+                      _SectionHeader(
                         icon: AppIcon.confetti,
-                        title: 'Cobran',
+                        title: winnersTitle(mode),
                         color: AppColors.success,
                       ),
                       for (final (i, o) in winners.indexed)
@@ -230,24 +228,12 @@ class _RaceResultScreenState extends ConsumerState<RaceResultScreen> {
                             max,
                           ),
                         ),
-                      if (gainsByName.isNotEmpty)
-                        Text(
-                          chipsLine('Cobran', gainsByName, gain: true),
-                          style: const TextStyle(color: AppColors.textMuted),
-                        ),
                     ],
                     if (losses.isNotEmpty) ...[
-                      const _SectionHeader(
+                      _SectionHeader(
                         icon: AppIcon.coins,
-                        title: 'Pagan',
+                        title: losersTitle(mode),
                         color: AppColors.danger,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 8),
-                        child: Text(
-                          chipsLine('Pagan', lossesByName, gain: false),
-                          style: const TextStyle(color: AppColors.textMuted),
-                        ),
                       ),
                       _Payers(
                         losses: losses,
@@ -259,13 +245,27 @@ class _RaceResultScreenState extends ConsumerState<RaceResultScreen> {
                       ),
                     ],
                     if (winners.isEmpty)
-                      const Padding(
-                        padding: EdgeInsets.only(top: 16),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 16),
                         child: Text(
-                          'Nadie acertó. Pagan todos.',
+                          nobodyWonText(mode),
                           textAlign: TextAlign.center,
                         ),
                       ),
+                    const SizedBox(height: 16),
+                    Text(
+                      cupNoteText(mode),
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        color: AppColors.textMuted,
+                        fontSize: 13,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    OutlinedButton(
+                      onPressed: () => _leave(() => context.push('/copa')),
+                      child: const Text('Ver Copa'),
+                    ),
                   ],
                 ),
               ),
@@ -455,7 +455,7 @@ class _WinnerTicket extends StatelessWidget {
     final chosen = targets.where((id) => pool.any((p) => p.id == id)).length;
     final title = outcome.isAllIn
         ? '${player.name} reparte ${allInCountText(outcome.allIns)}'
-        : '${player.name} cobra ${chipsText(outcome.chips)}';
+        : winnerTicketTitle(mode, player.name, outcome.chips);
     return Padding(
       padding: const EdgeInsets.only(bottom: 12),
       child: TicketCard(
@@ -465,7 +465,9 @@ class _WinnerTicket extends StatelessWidget {
             children: [
               RaceChip(outcome.chips, allIn: outcome.isAllIn, size: 40),
               const Spacer(),
-              RaceStamp.cobra(delayMs: stampDelayMs),
+              mode == ConsequenceMode.puntos
+                  ? RaceStamp.cobra(delayMs: stampDelayMs)
+                  : RaceStamp.acierta(delayMs: stampDelayMs),
             ],
           ),
         ),
@@ -489,7 +491,7 @@ class _WinnerTicket extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          'Apostó ${betText(bet)} a ${bet.suit.label}',
+                          betReasonText(mode, bet),
                           style: TextStyle(
                             color: raceInk.withValues(alpha: 0.72),
                           ),
@@ -526,13 +528,14 @@ class _WinnerTicket extends StatelessWidget {
                           style: const TextStyle(fontWeight: FontWeight.w700),
                         ),
                         const SizedBox(height: 2),
-                        Text(
-                          allInCupNote,
-                          style: const TextStyle(
-                            color: AppColors.textMuted,
-                            fontSize: 12,
+                        if (allInCupNote(mode) case final note?)
+                          Text(
+                            note,
+                            style: const TextStyle(
+                              color: AppColors.textMuted,
+                              fontSize: 12,
+                            ),
                           ),
-                        ),
                         if (max > 0) ...[
                           const SizedBox(height: 8),
                           Wrap(
@@ -567,9 +570,9 @@ class _WinnerTicket extends StatelessWidget {
   }
 }
 
-/// Quién paga y por qué, un boleto por jugador con el sello "PAGA". Misma lógica que
-/// `ConsequenceBanner`, más el motivo y, en retos y sorbos, una línea aparte con lo que se
-/// registra en la Copa. No hay transferencias entre jugadores.
+/// Quién paga (o a quién le toca) y por qué, un boleto por jugador con el sello "PAGA" (Fichas) o
+/// "LE TOCA" (Retos y Sorbos). Misma lógica que `ConsequenceBanner`, más el motivo. En Retos y
+/// Sorbos no se muestra lo que va a la Copa (D19). No hay transferencias entre jugadores.
 class _Payers extends StatelessWidget {
   const _Payers({
     required this.losses,
@@ -600,7 +603,6 @@ class _Payers extends StatelessWidget {
       final reto = mode == ConsequenceMode.retos
           ? pool[retoIndex++ % pool.length]
           : null;
-      final cup = cupLineFor(mode, e.value);
       final why = reasons[e.key]?.join(' · ');
       final player = players[e.key];
       final outcome = outcomes[e.key];
@@ -623,7 +625,9 @@ class _Payers extends StatelessWidget {
                 children: [
                   RaceChip(e.value, allIn: lostAllIn, size: 40),
                   const Spacer(),
-                  RaceStamp.paga(delayMs: 150 * stampIndex++),
+                  mode == ConsequenceMode.puntos
+                      ? RaceStamp.paga(delayMs: 150 * stampIndex++)
+                      : RaceStamp.leToca(delayMs: 150 * stampIndex++),
                 ],
               ),
             ),
@@ -639,25 +643,24 @@ class _Payers extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Row(
+                        // Wrap: si el importe ("3 sorbos · o agua o reto") no cabe junto al
+                        // nombre, baja a su propia línea en vez de partirse en una columna estrecha.
+                        Wrap(
+                          alignment: WrapAlignment.spaceBetween,
+                          spacing: 12,
+                          runSpacing: 2,
                           children: [
-                            Flexible(
-                              child: Text(
-                                player?.name ?? '',
-                                style: theme.textTheme.titleMedium?.copyWith(
-                                  color: raceInk,
-                                  fontWeight: FontWeight.w800,
-                                ),
+                            Text(
+                              player?.name ?? '',
+                              style: theme.textTheme.titleMedium?.copyWith(
+                                color: raceInk,
+                                fontWeight: FontWeight.w800,
                               ),
                             ),
-                            const SizedBox(width: 8),
-                            Flexible(
-                              child: Text(
-                                ConsequenceBanner.amountText(loss),
-                                textAlign: TextAlign.end,
-                                style: theme.textTheme.titleMedium?.copyWith(
-                                  color: raceInk,
-                                ),
+                            Text(
+                              ConsequenceBanner.amountText(loss),
+                              style: theme.textTheme.titleMedium?.copyWith(
+                                color: raceInk,
                               ),
                             ),
                           ],
@@ -672,11 +675,6 @@ class _Payers extends StatelessWidget {
                             ),
                           ),
                         ],
-                        if (cup != null)
-                          Padding(
-                            padding: const EdgeInsets.only(top: 4),
-                            child: Text(cup, style: muted),
-                          ),
                       ],
                     ),
                   ),

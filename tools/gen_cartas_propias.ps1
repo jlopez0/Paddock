@@ -290,8 +290,8 @@ public static class CartasPropias
         {
             sf.Alignment = StringAlignment.Center; sf.LineAlignment = StringAlignment.Center;
             var rc = new RectangleF(70, by - 6, 160, 36);
-            using (var b = new SolidBrush(Ink)) g.DrawString("PADDOCK", f, b, new RectangleF(rc.X + 1, rc.Y + 1.2f, rc.Width, rc.Height), sf);
-            g.DrawString("PADDOCK", f, Brushes.White, rc, sf);
+            using (var b = new SolidBrush(Ink)) g.DrawString("HABINSON", f, b, new RectangleF(rc.X + 1, rc.Y + 1.2f, rc.Width, rc.Height), sf);
+            g.DrawString("HABINSON", f, Brushes.White, rc, sf);
         }
         // estrella superior
         var st5 = new PointF[10];

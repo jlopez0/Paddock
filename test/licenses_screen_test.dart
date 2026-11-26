@@ -1,10 +1,11 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
-import 'package:paddock/app/credits_screen.dart';
-import 'package:paddock/app/licenses.dart';
-import 'package:paddock/app/licenses_screen.dart';
-import 'package:paddock/app/theme.dart';
+import 'package:habinson/app/credits_screen.dart';
+import 'package:habinson/app/licenses.dart';
+import 'package:habinson/app/licenses_screen.dart';
+import 'package:habinson/app/theme.dart';
 
 Widget _app(Widget home, {double scale = 1}) => MaterialApp(
   theme: buildAppTheme(),
@@ -78,7 +79,7 @@ void main() {
     tester.view.physicalSize = const Size(320, 568);
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.reset);
-    await tester.pumpWidget(_app(const CreditsScreen()));
+    await tester.pumpWidget(ProviderScope(child: _app(const CreditsScreen())));
     await tester.scrollUntilVisible(
       find.text('Licencias de paquetes'),
       300,

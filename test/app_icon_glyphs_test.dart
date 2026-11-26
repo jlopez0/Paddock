@@ -2,7 +2,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:paddock/app/app_icons.dart';
+import 'package:habinson/app/app_icons.dart';
 
 /// Lee la tabla `cmap` (formatos 4 y 12) de un TTF y devuelve los codigos.
 Set<int> _cmapCodes(Uint8List bytes) {

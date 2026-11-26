@@ -5,13 +5,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
-import 'package:paddock/app/app_icons.dart';
-import 'package:paddock/app/mascot.dart';
-import 'package:paddock/core/content/prompts.dart';
-import 'package:paddock/core/session/session_controller.dart';
-import 'package:paddock/core/storage.dart';
-import 'package:paddock/games/prompt_deck/prompt_deck_module.dart';
-import 'package:paddock/games/prompt_deck/prompt_deck_screens.dart';
+import 'package:habinson/app/app_icons.dart';
+import 'package:habinson/app/mascot.dart';
+import 'package:habinson/core/content/prompts.dart';
+import 'package:habinson/core/session/session_controller.dart';
+import 'package:habinson/core/storage.dart';
+import 'package:habinson/games/prompt_deck/prompt_deck_module.dart';
+import 'package:habinson/games/prompt_deck/prompt_deck_screens.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 const _asset = 'assets/content/es/test_scale.json';
@@ -40,6 +40,14 @@ List<Prompt> _cards(PromptCardStyle style) => [
   ),
 ];
 
+/// Modo de pago de cada estilo en la app real: Yo nunca muestra una consecuencia fija,
+/// ¿Quién es más probable? anuncia una apuesta y ¿Qué preferirías? no paga nada.
+PromptPayMode _payModeOf(PromptCardStyle style) => switch (style) {
+  PromptCardStyle.statement => PromptPayMode.fixed,
+  PromptCardStyle.question => PromptPayMode.stake,
+  PromptCardStyle.choice => PromptPayMode.none,
+};
+
 PromptDeckModule _game(PromptCardStyle style, PromptPayMode pay) =>
     PromptDeckModule(
       id: 'test-game',
@@ -48,7 +56,7 @@ PromptDeckModule _game(PromptCardStyle style, PromptPayMode pay) =>
       color: const Color(0xFF3FA796),
       contentAsset: _asset,
       style: style,
-      rule: 'A la de tres, todos señalan. El más señalado paga una ficha',
+      rule: 'A la de tres, todos señalan. Al más señalado le toca lo que diga la carta',
       prefix: 'Yo nunca',
       payMode: pay,
     );
@@ -125,6 +133,7 @@ Future<ProviderContainer> _pump(
 
 void main() {
   _gapTest();
+  _sorbosTest();
   for (final style in PromptCardStyle.values) {
     for (final reduce in [false, true]) {
       testWidgets(
@@ -132,12 +141,7 @@ void main() {
         (tester) async {
           final c = await _pump(
             tester,
-            _game(
-              style,
-              style == PromptCardStyle.statement
-                  ? PromptPayMode.multi
-                  : PromptPayMode.single,
-            ),
+            _game(style, _payModeOf(style)),
             mode: 'retos',
             reduceMotion: reduce,
           );
@@ -155,54 +159,81 @@ void main() {
             (w) => w is Text && (w.data == 'Suave' || w.data == 'Atrevido'),
           );
           expect(levelFinder, findsOneWidget);
-          expect(find.text('1 / 2'), findsOneWidget);
+          // Solo el número de carta: ni barra de progreso ni total del mazo.
+          expect(find.text('Carta 1'), findsOneWidget);
+          expect(find.byType(LinearProgressIndicator), findsNothing);
+          expect(find.text('1 / 2'), findsNothing);
 
-          // Marcar a varios jugadores: la ficha sustituye a la inicial.
-          // Con letra 2.0 la fila de jugadores se desplaza dentro de su hueco.
-          await tester.ensureVisible(find.byKey(const ValueKey('pay-p0')));
-          await tester.tap(find.byKey(const ValueKey('pay-p0')));
-          await tester.pumpAndSettle();
-          expect(
-            find.descendant(
-              of: find.byKey(const ValueKey('pay-p0')),
-              matching: find.byType(ChipToken),
-            ),
-            findsOneWidget,
-          );
-          await tester.ensureVisible(find.byKey(const ValueKey('pay-p1')));
-          await tester.tap(find.byKey(const ValueKey('pay-p1')));
-          await tester.pumpAndSettle();
-          expect(tester.takeException(), isNull);
+          // Ningún mazo pide marcar jugadores ni habla de "¿Quién paga?".
+          expect(find.byType(FilterChip), findsNothing);
+          expect(find.textContaining('¿Quién paga?'), findsNothing);
+          if (style == PromptCardStyle.statement) {
+            // Yo nunca: banner fijo de lo que le toca a quien lo haya hecho.
+            expect(find.byKey(const ValueKey('fixed-banner')), findsOneWidget);
+            expect(find.text('Quien lo haya hecho'), findsOneWidget);
+          } else {
+            expect(find.byKey(const ValueKey('fixed-banner')), findsNothing);
+          }
+          if (style == PromptCardStyle.question) {
+            // La apuesta se anuncia sobre la pregunta y en Retos sale el banner.
+            expect(find.textContaining('¡Por '), findsOneWidget);
+            expect(find.byKey(const ValueKey('stake-banner')), findsOneWidget);
+          } else {
+            expect(find.textContaining('¡Por '), findsNothing);
+          }
 
-          // Siguiente carta (nivel suave) y fin de mazo.
+          // Siguiente carta (nivel suave) y fin de la partida.
           await tester.tapAt(const Offset(160, 120));
           await tester.pumpAndSettle();
           expect(levelFinder, findsOneWidget);
-          expect(c.read(sessionProvider).events.length, 2);
+          expect(
+            c.read(sessionProvider).events,
+            isEmpty,
+            reason: 'ningún mazo anota en la Copa',
+          );
           await tester.tapAt(const Offset(160, 120));
           await tester.pumpAndSettle();
           expect(tester.takeException(), isNull);
-          expect(find.text('Se acabó el mazo'), findsOneWidget);
+          expect(find.text('Fin de la partida'), findsOneWidget);
           expect(find.byType(Jockey), findsOneWidget);
-          expect(find.text('Barajar de nuevo'), findsOneWidget);
+          expect(find.text('Otra partida'), findsOneWidget);
         },
       );
     }
   }
 }
 
+void _sorbosTest() {
+  for (final style in [PromptCardStyle.question, PromptCardStyle.statement]) {
+    testWidgets('modo Sorbos $style: titular con "o agua o reto" sin duplicado ni desbordes (letra 2.0)', (
+      tester,
+    ) async {
+      await _pump(tester, _game(style, _payModeOf(style)), mode: 'sorbos');
+      final ex = tester.takeException();
+      expect(ex, isNull, reason: ex is FlutterError ? ex.toStringDeep() : '$ex');
+      expect(find.textContaining('o agua o reto'), findsOneWidget);
+      expect(find.textContaining('ficha'), findsNothing);
+      expect(find.textContaining('paga'), findsNothing);
+      if (style == PromptCardStyle.question) {
+        expect(find.textContaining(RegExp(r'^Por [123] sorbos? · o agua o reto$')), findsOneWidget);
+        expect(find.byKey(const ValueKey('stake-banner')), findsNothing);
+      }
+    });
+  }
+}
+
 void _gapTest() {
   testWidgets(
-    'el título de la cabecera no toca la barra de progreso (letra 2.0)',
+    'el título de la cabecera no pisa el número de carta (letra 2.0)',
     (tester) async {
       await _pump(
         tester,
-        _game(PromptCardStyle.statement, PromptPayMode.multi),
+        _game(PromptCardStyle.statement, PromptPayMode.fixed),
         mode: 'retos',
       );
       final title = tester.getRect(find.text('¿Quién es más probable?'));
-      final bar = tester.getRect(find.byType(LinearProgressIndicator));
-      expect(bar.top - title.bottom, greaterThanOrEqualTo(8));
+      final counter = tester.getRect(find.text('Carta 1'));
+      expect(title.overlaps(counter), isFalse);
     },
   );
 }

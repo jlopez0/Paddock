@@ -24,17 +24,27 @@ class ConsequenceBanner extends StatelessWidget {
     required this.losses,
     required this.mode,
     this.retos,
+    this.retoOnly = false,
+    this.inCup = true,
   });
+
+  /// En Retos, omite la cantidad (ya dicha en otro sitio) y deja nombre + reto.
+  final bool retoOnly;
+
+  /// `false` si esas fichas ya no están en la Copa (p. ej. tras "Nueva noche"): en Fichas
+  /// se dice solo la cantidad, sin "en la Copa".
+  final bool inCup;
 
   final Map<String, int> losses;
   final ConsequenceMode mode;
   final List<String>? retos;
 
   /// Texto de la cantidad para [loss] (p. ej. "−2 en la Copa", "2 retos").
-  static String amountText(ConsequenceLoss loss) {
+  static String amountText(ConsequenceLoss loss, {bool inCup = true}) {
     final n = loss.amount;
     switch (loss.mode) {
       case ConsequenceMode.puntos:
+        if (!inCup) return n == 1 ? '−1 ficha' : '−$n fichas';
         return '−$n en la Copa';
       case ConsequenceMode.retos:
         return n == 1 ? '1 reto' : '$n retos';
@@ -54,7 +64,13 @@ class ConsequenceBanner extends StatelessWidget {
       final reto = mode == ConsequenceMode.retos
           ? pool[retoIndex++ % pool.length]
           : null;
-      rows.add(_Row(name: e.key, text: amountText(loss), reto: reto));
+      rows.add(
+        _Row(
+          name: e.key,
+          text: retoOnly ? '' : amountText(loss, inCup: inCup),
+          reto: reto,
+        ),
+      );
     }
     if (rows.isEmpty) return const SizedBox.shrink();
     return Column(
@@ -82,10 +98,16 @@ class _Row extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
+            // Wrap: con letra grande o texto largo ("2 sorbos · o agua o reto") el
+            // importe baja a la línea siguiente en vez de desbordar.
+            Wrap(
+              alignment: WrapAlignment.spaceBetween,
+              spacing: 12,
+              runSpacing: 2,
               children: [
-                Expanded(child: Text(name, style: theme.textTheme.titleMedium)),
-                Text(text, style: theme.textTheme.titleMedium),
+                Text(name, style: theme.textTheme.titleMedium),
+                if (text.isNotEmpty)
+                  Text(text, style: theme.textTheme.titleMedium),
               ],
             ),
             if (reto != null) ...[

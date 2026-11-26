@@ -348,7 +348,7 @@ class ChipToken extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Semantics(
-      label: 'Ficha de $value',
+      label: 'Apuesta de $value',
       excludeSemantics: true,
       child: SizedBox(
         width: size,

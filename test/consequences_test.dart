@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:paddock/core/consequences/consequences.dart';
+import 'package:habinson/core/consequences/consequences.dart';
 
 void main() {
   test('constantes', () {

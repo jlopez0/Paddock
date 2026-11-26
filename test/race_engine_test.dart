@@ -1,9 +1,9 @@
 import 'dart:math';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:paddock/games/horse_race/domain/bets.dart';
-import 'package:paddock/games/horse_race/domain/cards.dart';
-import 'package:paddock/games/horse_race/domain/race_engine.dart';
+import 'package:habinson/games/horse_race/domain/bets.dart';
+import 'package:habinson/games/horse_race/domain/cards.dart';
+import 'package:habinson/games/horse_race/domain/race_engine.dart';
 
 void main() {
   group('RaceEngine', () {

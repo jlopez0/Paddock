@@ -110,6 +110,7 @@ class _PlayersScreenState extends ConsumerState<PlayersScreen> {
       body: SafeArea(
         top: false,
         child: ListView(
+          keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
           padding: const EdgeInsets.fromLTRB(20, 8, 20, 32),
           children: [
             const AddPlayerField(),

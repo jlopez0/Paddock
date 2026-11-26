@@ -50,8 +50,16 @@ app.*.map.json
 Paddock-ipa.zip
 siguientes-pasos.md
 Paddock-ipa/Paddock.ipa
+Habinson-ipa.zip
+Habinson-ipa/Habinson.ipa
 
 # Firma de release Android (nunca en git)
 android/key.properties
 *.jks
 *.keystore
+
+# Paquetes de entrega a tiendas (no van a git)
+Paddock-ipa_version_for_stores/
+Paddock-ipa_version_for_stores.zip
+Habinson-ipa_version_for_stores/
+Habinson-ipa_version_for_stores.zip

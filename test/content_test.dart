@@ -6,8 +6,8 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:paddock/games/prompt_deck/prompt_deck_module.dart';
-import 'package:paddock/games/registry.dart';
+import 'package:habinson/games/prompt_deck/prompt_deck_module.dart';
+import 'package:habinson/games/registry.dart';
 
 const niveles = {'suave', 'picante', 'atrevido'};
 
@@ -246,6 +246,17 @@ void main() {
   test('Yo nunca: Suave tiene sustancia (~100 cartas)', () {
     final suaves = items('assets/content/es/yo_nunca.json').where((p) => p['nivel'] == 'suave');
     expect(suaves.length, greaterThanOrEqualTo(90));
+  });
+
+  test('¿Qué preferirías? no habla de fichas: no significan nada en Retos ni en Sorbos', () {
+    final cartas = items('assets/content/es/que_preferirias.json');
+    for (final c in cartas) {
+      expect('${c['a']} ${c['b']}'.toLowerCase(), isNot(contains('ficha')), reason: '${c['id']}');
+    }
+    final qp043 = cartas.firstWhere((c) => c['id'] == 'qp043');
+    expect(qp043['a'], 'Besar a alguien de este grupo');
+    expect(qp043['b'], 'Confesar a quién de aquí besarías');
+    expect(qp043['nivel'], 'atrevido');
   });
 
   test('¿Qué preferirías?: 120 cartas o más (3.6)', () {

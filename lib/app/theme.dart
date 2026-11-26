@@ -49,10 +49,18 @@ class AppTitle extends StatelessWidget {
 
   final String text;
 
+  /// Un título largo ("Carrera de caballos") con letra grande no cabe entre los iconos
+  /// de la barra: se reduce lo justo en vez de cortarse con puntos suspensivos.
   @override
-  Widget build(BuildContext context) => Text(
-    text,
-    textScaler: clampedTitleScaler(MediaQuery.textScalerOf(context)),
+  Widget build(BuildContext context) => FittedBox(
+    fit: BoxFit.scaleDown,
+    child: Text(
+      text,
+      maxLines: 1,
+      softWrap: false,
+      overflow: TextOverflow.visible,
+      textScaler: clampedTitleScaler(MediaQuery.textScalerOf(context)),
+    ),
   );
 }
 

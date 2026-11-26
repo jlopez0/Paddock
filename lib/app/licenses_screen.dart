@@ -131,7 +131,7 @@ class _Header extends StatelessWidget {
           Semantics(
             header: true,
             child: Text(
-              version.isEmpty ? 'Paddock' : 'Paddock $version',
+              version.isEmpty ? 'Habinson' : 'Habinson $version',
               style: const TextStyle(
                 fontFamily: AppFonts.display,
                 fontSize: 22,
@@ -142,8 +142,8 @@ class _Header extends StatelessWidget {
           const SizedBox(height: 8),
           Text(
             total == 0
-                ? 'Paddock funciona sin conexión y sin enviar datos a ningún sitio.'
-                : 'Paddock usa $total paquetes y recursos de código abierto. '
+                ? 'Habinson funciona sin conexión y sin enviar datos a ningún sitio.'
+                : 'Habinson usa $total paquetes y recursos de código abierto. '
                       'Toca uno para leer sus licencias; los textos legales '
                       'se muestran en su idioma original.',
             style: const TextStyle(color: AppColors.textMuted, height: 1.4),

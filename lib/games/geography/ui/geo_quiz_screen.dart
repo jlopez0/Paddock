@@ -201,7 +201,6 @@ class _GeoQuizScreenState extends ConsumerState<GeoQuizScreen> {
               children: [
                 _Header(
                   index: _index,
-                  total: _questions.length,
                   streak: _streak,
                   onClose: _exit,
                 ),
@@ -309,13 +308,11 @@ class _GeoQuizScreenState extends ConsumerState<GeoQuizScreen> {
 class _Header extends StatelessWidget {
   const _Header({
     required this.index,
-    required this.total,
     required this.streak,
     required this.onClose,
   });
 
   final int index;
-  final int total;
   final int streak;
   final VoidCallback onClose;
 
@@ -335,7 +332,8 @@ class _Header extends StatelessWidget {
               ),
               Expanded(
                 child: Text(
-                  '${index + 1} / $total',
+                  // Solo el número de pregunta: nunca el total ni una barra de progreso.
+                  'Pregunta ${index + 1}',
                   textAlign: TextAlign.center,
                   style: const TextStyle(
                     color: AppColors.textMuted,
@@ -360,25 +358,6 @@ class _Header extends StatelessWidget {
                 ),
               ),
             ],
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 12),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(4),
-              child: TweenAnimationBuilder<double>(
-                tween: Tween(end: index / total),
-                duration: fast
-                    ? Duration.zero
-                    : const Duration(milliseconds: 350),
-                curve: Curves.easeOutCubic,
-                builder: (context, v, _) => LinearProgressIndicator(
-                  value: v,
-                  minHeight: 4,
-                  color: geoColor,
-                  backgroundColor: AppColors.surfaceHigh,
-                ),
-              ),
-            ),
           ),
         ],
       ),

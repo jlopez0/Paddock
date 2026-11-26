@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../core/consequences/consequences.dart';
+import '../core/consequences/consequence_mode_selector.dart';
 import '../core/settings/app_feedback.dart';
 import '../core/settings/settings_controller.dart';
 import 'app_icons.dart';
@@ -32,41 +32,6 @@ class SettingsScreen extends ConsumerWidget {
         const SnackBar(content: Text('No se pudo abrir el enlace')),
       );
     }
-  }
-
-  /// Sorbos exige confirmar la edad una sola vez; si se cancela, se mantiene el modo anterior.
-  Future<void> _selectMode(
-    BuildContext context,
-    WidgetRef ref,
-    ConsequenceMode mode,
-  ) async {
-    final controller = ref.read(settingsProvider.notifier);
-    if (mode == ConsequenceMode.sorbos &&
-        !ref.read(settingsProvider).adultConfirmed) {
-      final ok = await showDialog<bool>(
-        context: context,
-        builder: (ctx) => AlertDialog(
-          title: const Text('Solo para mayores de 18'),
-          content: const Text(
-            'El modo Sorbos es solo para mayores de edad. '
-            'Nadie está obligado a beber: siempre se puede elegir agua o un reto.',
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(ctx, false),
-              child: const Text('Cancelar'),
-            ),
-            FilledButton(
-              onPressed: () => Navigator.pop(ctx, true),
-              child: const Text('Tengo 18 o más'),
-            ),
-          ],
-        ),
-      );
-      if (ok != true) return;
-      controller.confirmAdult();
-    }
-    controller.setConsequenceMode(mode);
   }
 
   @override
@@ -105,48 +70,7 @@ class SettingsScreen extends ConsumerWidget {
             const Divider(height: 32),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    'Consecuencias',
-                    style: TextStyle(
-                      fontFamily: AppFonts.display,
-                      fontSize: 20,
-                      height: 1.2,
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  const Text(
-                    'Cómo se pagan las fichas perdidas',
-                    style: TextStyle(color: AppColors.textMuted),
-                  ),
-                  const SizedBox(height: 12),
-                  SizedBox(
-                    width: double.infinity,
-                    child: SegmentedButton<ConsequenceMode>(
-                      showSelectedIcon: false,
-                      segments: const [
-                        ButtonSegment(
-                          value: ConsequenceMode.puntos,
-                          label: Text('Puntos'),
-                        ),
-                        ButtonSegment(
-                          value: ConsequenceMode.retos,
-                          label: Text('Retos'),
-                        ),
-                        ButtonSegment(
-                          value: ConsequenceMode.sorbos,
-                          label: Text('Sorbos'),
-                        ),
-                      ],
-                      selected: {settings.consequenceMode},
-                      onSelectionChanged: (s) =>
-                          _selectMode(context, ref, s.first),
-                    ),
-                  ),
-                ],
-              ),
+              child: const ConsequenceModeSelector(),
             ),
             const Divider(height: 32),
             ListTile(

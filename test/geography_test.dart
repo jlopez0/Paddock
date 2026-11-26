@@ -3,9 +3,9 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:paddock/games/geography/domain/country.dart';
-import 'package:paddock/games/geography/domain/quiz.dart';
-import 'package:paddock/games/geography/domain/text_match.dart';
+import 'package:habinson/games/geography/domain/country.dart';
+import 'package:habinson/games/geography/domain/quiz.dart';
+import 'package:habinson/games/geography/domain/text_match.dart';
 
 List<Country> loadCountries() {
   final j = jsonDecode(File('assets/content/es/geografia/paises.json').readAsStringSync()) as Map<String, dynamic>;

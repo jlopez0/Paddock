@@ -4,12 +4,12 @@
     "titulo": "¿Cómo se juega a la Carrera de caballos?",
     "pasos": [
       "Cada persona elige un caballo: Oros, Copas, Espadas o Bastos.",
-      "Apuesta de 1 a 5 fichas o ve a por todas con el All-in, que vale 10.",
+      "Haz tu apuesta o ve a por todas con el All-in.",
       "Cada carta hace avanzar al caballo de su palo. Ojo con los obstáculos: hacen retroceder.",
-      "Si aciertas, cobras fichas; si fallas, pagas lo apostado. El modo de Ajustes decide cómo se pagan.",
-      "¿Ganas con All-in? Repartes 2 All-in a 2 personas distintas."
+      "Si aciertas, sumas en la Copa; si fallas, te toca lo que apostaste. El modo elegido decide qué se juega.",
+      "¿Aciertas con All-in? Repartes hasta 2 All-in, cada uno a una persona distinta."
     ],
-    "consejo": "Activa «Acertar gana el doble» si queréis que cada apuesta cuente más."
+    "consejo": "Activa «Acertar gana el doble» y quien acierte sumará el doble en la Copa."
   },
   {
     "id": "infiltrado",
@@ -19,7 +19,7 @@
       "Pasad el móvil: todos ven la palabra secreta menos el infiltrado, que solo ve la categoría.",
       "Hablad de la palabra sin decirla y descubrid quién va de farol.",
       "Votad en secreto pasando el móvil. Si hay empate, se vota otra vez entre los empatados.",
-      "Si pilláis al infiltrado, pierde 2 fichas salvo que adivine la palabra. Si se escapa, los demás pierden 1."
+      "Si pilláis al infiltrado, le tocan 2 salvo que adivine la palabra. Si se escapa, le toca 1 a cada uno de los demás. El modo elegido decide qué se juega."
     ],
     "consejo": "Si te toca ser infiltrado, escucha mucho y habla poco: la categoría es tu mejor pista."
   },
@@ -31,7 +31,7 @@
       "Lee la pregunta en voz alta y debatid la respuesta.",
       "Toca una de las 4 opciones y pasa a la siguiente.",
       "Al final verás tus aciertos y la respuesta correcta de cada fallo.",
-      "Si hay jugadores en la cuadra, anota la vuelta en la Copa: Pleno vale 3 fichas, Gran carrera (80 % o más) 2 y la mitad de aciertos 1. Nunca resta."
+      "Según los aciertos, el resultado se queda en Pleno, Gran carrera (80 % o más) o En el podio (la mitad). Aquí no se apuntan fichas."
     ],
     "consejo": "Jugad por equipos y pasad el móvil en cada pregunta."
   },
@@ -43,7 +43,7 @@
       "Elige la dificultad: Fácil con 4 opciones, Mental para pensar y mirar o Difícil escribiendo.",
       "Filtra por continentes si quieres y decide cuántas preguntas: 10, 20 o todas.",
       "Al terminar verás tus fallos y si has batido tu récord.",
-      "Si hay jugadores en la cuadra, anota la vuelta en la Copa: Pleno vale 3 fichas, Gran carrera (80 % o más) 2 y la mitad de aciertos 1. Nunca resta."
+      "Según los aciertos, el resultado se queda en Pleno, Gran carrera (80 % o más) o En el podio (la mitad). Aquí no se apuntan fichas."
     ],
     "consejo": "En el modo Mental, decid la respuesta en voz alta antes de mirarla. Sin trampas."
   },
@@ -65,7 +65,13 @@
       "Elige los niveles: Suave, Picante o Atrevido.",
       "Lee la carta en voz alta.",
       "A la de tres, todos señalan a quien ven más capaz.",
-      "El más señalado pierde una ficha. Márcalo en la app para que cuente en la Copa."
+      "Si juegas con consecuencias, la carta dice lo que se juega, por ejemplo «¡Por 2 retos!». Le toca al más señalado, y siempre vale agua o un reto. La app no apunta nada."
+    ],
+    "pasosLite": [
+      "Elige los niveles: Suave, Picante o Atrevido.",
+      "Lee la carta en voz alta.",
+      "A la de tres, todos señalan a quien ven más capaz.",
+      "Si juegas con consecuencias, la carta dice lo que se juega, por ejemplo «¡Por 2 retos!». Le toca al más señalado. La app no apunta nada."
     ],
     "consejo": "Si alguien protesta, que se defienda en 10 segundos. Luego, a la siguiente."
   },
@@ -76,7 +82,7 @@
       "Elige los niveles: Suave, Picante o Atrevido.",
       "Lee las dos opciones en voz alta.",
       "A la de tres, todos eligen a la vez: uno o dos dedos.",
-      "La minoría pierde una ficha. Márcala en la app para que cuente en la Copa."
+      "Cada uno defiende su elección. Aquí no se apunta nada: gana quien mejor se defienda."
     ],
     "consejo": "Lo mejor viene después: que cada uno explique por qué ha elegido eso."
   },
@@ -86,9 +92,26 @@
     "pasos": [
       "Elige los niveles: Suave, Picante o Atrevido.",
       "Lee la carta en voz alta, empezando por «Yo nunca…».",
-      "Quien lo haya hecho, lo confiesa.",
-      "Cada persona que lo haya hecho pierde una ficha. Márcala en la app."
+      "Quien lo haya hecho, lo confiesa. La app no apunta a nadie.",
+      "Si juegas con consecuencias, la carta dice lo que le toca a quien lo haya hecho. Siempre vale agua o un reto."
+    ],
+    "pasosLite": [
+      "Elige los niveles: Suave, Picante o Atrevido.",
+      "Lee la carta en voz alta, empezando por «Yo nunca…».",
+      "Quien lo haya hecho, lo confiesa. La app no apunta a nadie.",
+      "Si juegas con consecuencias, la carta dice lo que le toca a quien lo haya hecho."
     ],
     "consejo": "Si alguien confiesa algo jugoso, el grupo puede pedir la historia completa."
+  },
+  {
+    "id": "copa",
+    "titulo": "¿Cómo funciona la Copa de la noche?",
+    "pasos": [
+      "Solo cuentan la Carrera de caballos y El Infiltrado: lo que se apuesta y lo que se vota.",
+      "La Copa cuenta en fichas, sea cual sea el modo: cada ronda suma o resta. Manda quien acaba con más.",
+      "Los demás juegos no se apuntan: se juegan por el gusto de jugar.",
+      "Pasadas 12 horas, la Copa os ofrece empezar otra noche. También podéis tocar «Nueva noche» cuando queráis."
+    ],
+    "consejo": "Al terminar una carrera o una votación, toca «Ver Copa» para ver quién manda."
   }
 ]

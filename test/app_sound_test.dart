@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:paddock/core/audio/app_sound.dart';
-import 'package:paddock/core/settings/app_feedback.dart';
+import 'package:habinson/core/audio/app_sound.dart';
+import 'package:habinson/core/settings/app_feedback.dart';
 
 class _FakeBackend implements SoundBackend {
   final played = <AppSound>[];

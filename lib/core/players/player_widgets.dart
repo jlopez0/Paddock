@@ -46,6 +46,9 @@ class PlayerAvatar extends StatelessWidget {
       ),
       child: Text(
         player.initial,
+        // La inicial vive en un círculo de tamaño fijo: con letra grande se limita
+        // el aumento para que no se recorte (el nombre al lado sí escala entero).
+        textScaler: MediaQuery.textScalerOf(context).clamp(maxScaleFactor: 1.15),
         style: TextStyle(
           color: player.color,
           fontWeight: FontWeight.w800,
@@ -89,11 +92,19 @@ class _AddPlayerFieldState extends ConsumerState<AddPlayerField> {
     _focus.requestFocus();
   }
 
-  void _submit() {
+  void _submit({bool fromKeyboard = false}) {
     final name = _controller.text.trim();
     final notifier = ref.read(playersProvider.notifier);
     if (name.isEmpty) {
-      _fail('Escribe un nombre');
+      // "Hecho" con el campo vacío = he terminado de añadir: cierra el teclado.
+      // (Con el botón de añadir sí se avisa de que falta el nombre.)
+      if (fromKeyboard) {
+        _controller.clear();
+        setState(() => _error = null);
+        _focus.unfocus();
+      } else {
+        _fail('Escribe un nombre');
+      }
       return;
     }
     if (notifier.nameTaken(name)) {
@@ -130,7 +141,8 @@ class _AddPlayerFieldState extends ConsumerState<AddPlayerField> {
       onChanged: (_) {
         if (_error != null) setState(() => _error = null);
       },
-      onSubmitted: (_) => _submit(),
+      onSubmitted: (_) => _submit(fromKeyboard: true),
+      onTapOutside: (_) => _focus.unfocus(),
       decoration: InputDecoration(
         hintText: 'Nombre del jugador',
         errorText: _error,

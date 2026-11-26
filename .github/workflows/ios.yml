@@ -19,16 +19,16 @@ jobs:
       - run: flutter pub get
 
       - name: Compilar iOS sin firmar
-        run: flutter build ios --release --no-codesign
+        run: flutter build ios --release --no-codesign --dart-define=SORBOS=false
 
       - name: Empaquetar IPA
         run: |
           mkdir -p Payload
           cp -R build/ios/iphoneos/Runner.app Payload/
-          zip -qr Paddock.ipa Payload
+          zip -qr Habinson.ipa Payload
 
       - uses: actions/upload-artifact@v4
         with:
-          name: Paddock-ipa
-          path: Paddock.ipa
+          name: Habinson-ipa
+          path: Habinson.ipa
           retention-days: 14

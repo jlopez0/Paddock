@@ -43,3 +43,9 @@ ConsequenceLoss resolveLoss(int chips, ConsequenceMode mode) {
       return ConsequenceLoss(mode, c > kRoundCap ? kRoundCap : c);
   }
 }
+
+/// Nota bajo el resultado de un juego que suma a la Copa. La Copa va en fichas (D19): solo
+/// en Fichas se nombra la unidad; en Retos y Sorbos no se habla de fichas fuera de la Copa.
+String cupNoteText(ConsequenceMode mode) => mode == ConsequenceMode.puntos
+    ? 'Fichas anotadas en la Copa de la noche.'
+    : 'Ya cuenta en la Copa de la noche.';

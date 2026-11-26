@@ -180,7 +180,7 @@ class GeoSetupScreen extends ConsumerWidget {
                 Padding(
                   padding: const EdgeInsets.only(bottom: 8),
                   child: Text(
-                    'Tu récord: $best/$questions',
+                    'Tu récord: $best',
                     style: const TextStyle(
                       color: AppColors.textMuted,
                       fontSize: 13,
@@ -202,7 +202,7 @@ class GeoSetupScreen extends ConsumerWidget {
                         ? (quiz.hasError
                               ? 'No se pudo cargar el contenido'
                               : 'Sin preguntas con estos filtros')
-                        : 'Jugar · $questions preguntas',
+                        : 'Jugar',
                     textAlign: TextAlign.center,
                   ),
                 ),

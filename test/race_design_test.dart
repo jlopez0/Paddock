@@ -4,16 +4,16 @@ import 'dart:io';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
-import 'package:paddock/app/app_icons.dart';
-import 'package:paddock/core/session/session_controller.dart';
-import 'package:paddock/core/storage.dart';
-import 'package:paddock/games/horse_race/domain/bets.dart';
-import 'package:paddock/games/horse_race/domain/cards.dart';
-import 'package:paddock/games/horse_race/race_result.dart';
-import 'package:paddock/games/horse_race/ui/race_result_screen.dart';
-import 'package:paddock/games/horse_race/ui/race_setup_screen.dart';
-import 'package:paddock/games/horse_race/ui/race_stats_screen.dart';
-import 'package:paddock/games/horse_race/ui/race_widgets.dart';
+import 'package:habinson/app/app_icons.dart';
+import 'package:habinson/core/session/session_controller.dart';
+import 'package:habinson/core/storage.dart';
+import 'package:habinson/games/horse_race/domain/bets.dart';
+import 'package:habinson/games/horse_race/domain/cards.dart';
+import 'package:habinson/games/horse_race/race_result.dart';
+import 'package:habinson/games/horse_race/ui/race_result_screen.dart';
+import 'package:habinson/games/horse_race/ui/race_setup_screen.dart';
+import 'package:habinson/games/horse_race/ui/race_stats_screen.dart';
+import 'package:habinson/games/horse_race/ui/race_widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Future<ProviderContainer> _container(Map<String, Object> initial) async {
@@ -91,7 +91,7 @@ void main() {
       await tester.tap(find.widgetWithText(FilterChip, 'Ana'));
       await tester.pump(const Duration(milliseconds: 600));
       expect(_chip(2), findsOneWidget);
-      await tester.tap(find.byTooltip('Una ficha más'));
+      await tester.tap(find.byTooltip('Subir apuesta'));
       await tester.pump(const Duration(milliseconds: 600));
       expect(_chip(3), findsOneWidget);
       await tester.tap(find.textContaining('All-in'));
@@ -106,7 +106,7 @@ void main() {
       await tester.pump();
       await tester.tap(find.widgetWithText(FilterChip, 'Ana'));
       await tester.pump();
-      await tester.tap(find.byTooltip('Una ficha más'));
+      await tester.tap(find.byTooltip('Subir apuesta'));
       await tester.pump();
       expect(_chip(3), findsOneWidget);
       expect(_chip(2), findsNothing);

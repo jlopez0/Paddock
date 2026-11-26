@@ -6,16 +6,16 @@ import 'package:flutter_riverpod/misc.dart' show Override;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
-import 'package:paddock/app/theme.dart';
-import 'package:paddock/core/audio/app_sound.dart';
-import 'package:paddock/core/players/players_screen.dart';
-import 'package:paddock/core/settings/app_feedback.dart';
-import 'package:paddock/core/storage.dart';
-import 'package:paddock/games/horse_race/ui/race_setup_screen.dart';
-import 'package:paddock/games/trivia/trivia_data.dart';
-import 'package:paddock/games/trivia/ui/quiz_fx.dart';
-import 'package:paddock/games/trivia/ui/trivia_quiz_screen.dart';
-import 'package:paddock/games/trivia/ui/trivia_result_screen.dart';
+import 'package:habinson/app/theme.dart';
+import 'package:habinson/core/audio/app_sound.dart';
+import 'package:habinson/core/players/players_screen.dart';
+import 'package:habinson/core/settings/app_feedback.dart';
+import 'package:habinson/core/storage.dart';
+import 'package:habinson/games/horse_race/ui/race_setup_screen.dart';
+import 'package:habinson/games/trivia/trivia_data.dart';
+import 'package:habinson/games/trivia/ui/quiz_fx.dart';
+import 'package:habinson/games/trivia/ui/trivia_quiz_screen.dart';
+import 'package:habinson/games/trivia/ui/trivia_result_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// Los sonidos están enganchados donde toca y respetan solo el ajuste de Sonido.
@@ -94,11 +94,11 @@ void main() {
       await tester.pump(const Duration(milliseconds: 300));
       expect(fake.played, isEmpty);
 
-      await tester.tap(find.byTooltip('Una ficha más'));
+      await tester.tap(find.byTooltip('Subir apuesta'));
       await tester.pump(const Duration(milliseconds: 300));
       expect(fake.played, [AppSound.chip]);
 
-      await tester.tap(find.byTooltip('Una ficha menos'));
+      await tester.tap(find.byTooltip('Bajar apuesta'));
       await tester.pump(const Duration(milliseconds: 300));
       expect(fake.played, [AppSound.chip, AppSound.chip]);
 
@@ -112,11 +112,11 @@ void main() {
     });
 
     testWidgets('con el sonido desactivado no suena nada', (tester) async {
-      AppFeedback.soundEnabled = false;
-      await pump(tester, const RaceSetupScreen(), prefs: {'players.v1': players(2)});
+      // La pantalla de preparación lee los ajustes, que fijan AppFeedback: se apaga ahí.
+      await pump(tester, const RaceSetupScreen(), prefs: {'players.v1': players(2), 'settings.sound.v1': false});
       await tester.tap(find.widgetWithText(FilterChip, 'Ana'));
       await tester.pump(const Duration(milliseconds: 300));
-      await tester.tap(find.byTooltip('Una ficha más'));
+      await tester.tap(find.byTooltip('Subir apuesta'));
       await tester.pump(const Duration(milliseconds: 300));
       expect(fake.played, isEmpty);
     });
@@ -125,7 +125,7 @@ void main() {
       await pump(tester, const RaceSetupScreen(), prefs: {'players.v1': players(2)}, reduce: true);
       await tester.tap(find.widgetWithText(FilterChip, 'Ana'));
       await tester.pump();
-      await tester.tap(find.byTooltip('Una ficha más'));
+      await tester.tap(find.byTooltip('Subir apuesta'));
       await tester.pump();
       expect(fake.played, [AppSound.chip]);
     });

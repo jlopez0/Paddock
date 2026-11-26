@@ -2,7 +2,7 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:paddock/games/trivia/trivia_data.dart';
+import 'package:habinson/games/trivia/trivia_data.dart';
 
 void main() {
   final bank = parseTrivia(File(triviaAsset).readAsStringSync());

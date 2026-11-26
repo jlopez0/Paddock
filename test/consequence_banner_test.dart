@@ -1,7 +1,7 @@
 import 'package:material_ui/material_ui.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:paddock/core/consequences/consequence_banner.dart';
-import 'package:paddock/core/consequences/consequences.dart';
+import 'package:habinson/core/consequences/consequence_banner.dart';
+import 'package:habinson/core/consequences/consequences.dart';
 
 Widget _wrap(Widget w) => MaterialApp(home: Scaffold(body: w));
 

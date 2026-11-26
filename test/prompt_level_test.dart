@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:paddock/app/app_icons.dart';
-import 'package:paddock/core/content/prompts.dart';
+import 'package:habinson/app/app_icons.dart';
+import 'package:habinson/core/content/prompts.dart';
 
 void main() {
   test(

@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../core/content/prompts.dart';
 import '../game_module.dart';
+import 'prompt_deck_logic.dart';
 import 'prompt_deck_screens.dart';
 
 enum PromptCardStyle {
@@ -17,21 +18,23 @@ enum PromptCardStyle {
   question,
 }
 
-/// Cómo se reparten fichas en la Copa al pasar cada carta.
+/// Qué consecuencia enseña la carta. Ningún mazo marca personas ni anota en la Copa: la
+/// mesa lo resuelve sola y la app solo recuerda lo que toca en Retos y Sorbos.
 enum PromptPayMode {
-  /// No se registra nada (comportamiento clásico).
+  /// Sin consecuencia (¿Qué preferirías?).
   none,
 
-  /// Se marcan varios jugadores (Yo nunca: quienes lo hayan hecho).
-  multi,
+  /// Consecuencia fija de [kPromptFixedChips] ficha para quien lo haya hecho (Yo nunca).
+  /// En Retos y Sorbos, banner fijo bajo la carta; en Fichas, nada.
+  fixed,
 
-  /// Se marca a quien pierde la votación (¿Quién es más probable?: el más votado;
-  /// ¿Qué preferirías?: la minoría, que puede ser más de uno).
-  single,
+  /// Cada carta anuncia una apuesta (en Retos y Sorbos, "¡Por 2 retos!" o "Por 2 sorbos"; en Fichas no se muestra) y la mesa la resuelve sola
+  /// (¿Quién es más probable?).
+  stake,
 }
 
-/// Fichas que paga cada jugador marcado en una carta.
-const int kPromptPayChips = 1;
+/// Fichas de la consecuencia fija de [PromptPayMode.fixed].
+const int kPromptFixedChips = 1;
 
 /// Juego de "mazo de cartas de texto". Sirve para cualquier juego que consista
 /// en ir pasando cartas leídas de un fichero JSON: basta con crear una instancia
@@ -47,6 +50,7 @@ class PromptDeckModule extends GameModule {
     required this.rule,
     this.prefix,
     this.payMode = PromptPayMode.none,
+    this.rounds = kPromptDefaultRounds,
   });
 
   @override
@@ -67,17 +71,12 @@ class PromptDeckModule extends GameModule {
   /// Prefijo para las cartas de tipo [PromptCardStyle.statement].
   final String? prefix;
 
-  /// Si no es [PromptPayMode.none], bajo la carta aparece la fila "¿Quién paga?".
+  /// Consecuencia que enseña la carta (ver [PromptPayMode]). Los mazos nunca anotan en
+  /// la Copa: `scoresCup` se queda en `false`.
   final PromptPayMode payMode;
 
-  /// Ayuda bajo "¿Quién paga?", según el modo y el estilo de la carta.
-  String get payHint => switch ((payMode, style)) {
-    (PromptPayMode.none, _) => '',
-    (PromptPayMode.multi, _) => 'Apunta a quien lo haya hecho',
-    (PromptPayMode.single, PromptCardStyle.choice) => 'Apunta a la minoría',
-    (PromptPayMode.single, PromptCardStyle.question) => 'Apunta al más votado',
-    (PromptPayMode.single, _) => 'Apunta a quien pague',
-  };
+  /// Cartas por partida: dura siempre lo mismo y no revela cuántas cartas hay guardadas.
+  final int rounds;
 
   @override
   Widget buildEntry(BuildContext context) => PromptDeckSetupScreen(game: this);

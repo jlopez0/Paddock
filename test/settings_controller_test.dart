@@ -1,9 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:paddock/core/consequences/consequences.dart';
-import 'package:paddock/core/settings/app_feedback.dart';
-import 'package:paddock/core/settings/settings_controller.dart';
-import 'package:paddock/core/storage.dart';
+import 'package:habinson/core/consequences/consequences.dart';
+import 'package:habinson/core/settings/app_feedback.dart';
+import 'package:habinson/core/settings/settings_controller.dart';
+import 'package:habinson/core/storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Future<ProviderContainer> _container(Map<String, Object> initial) async {

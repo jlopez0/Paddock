@@ -15,13 +15,10 @@ import '../../core/consequences/consequence_banner.dart';
 import '../../core/consequences/consequences.dart';
 import '../../core/consequences/retos_filter.dart';
 import '../../core/content/prompts.dart';
-import '../../core/players/player.dart';
-import '../../core/players/player_widgets.dart';
-import '../../core/players/players_controller.dart';
-import '../../core/session/session_controller.dart';
 import 'game_colors.dart';
 import 'level_chips.dart';
 import 'bounce_in.dart';
+import 'prompt_deck_logic.dart';
 import 'prompt_deck_module.dart';
 import 'setup_hero.dart';
 
@@ -30,11 +27,6 @@ const promptRetosAsset = 'assets/content/es/retos.json';
 
 /// Prefijo del estilo [PromptCardStyle.question] (el cierre "?" lo pone la tarjeta).
 const kQuestionPrefix = '¿Quién es más probable que';
-
-/// Id de ronda de una carta en la Copa: carta + posición + partida, para que ver la misma
-/// carta otra vez (deshacer, barajar, otra partida de la noche) no choque con `award`.
-String promptRoundId(String cardId, int index, String run) =>
-    '$cardId+$index@$run';
 
 class PromptDeckSetupScreen extends ConsumerStatefulWidget {
   const PromptDeckSetupScreen({super.key, required this.game});
@@ -114,7 +106,7 @@ class _PromptDeckSetupScreenState extends ConsumerState<PromptDeckSetupScreen> {
                   '${game.path}/play?levels=${_levels.map((l) => l.name).join(',')}',
                 ),
           child: Text(
-            count == 0 ? 'Sin nivel no hay mazo' : 'Jugar · $count cartas',
+            count == 0 ? 'Sin nivel no hay mazo' : 'Jugar',
           ),
         ),
       ),
@@ -142,73 +134,39 @@ class _PromptDeckPlayScreenState extends ConsumerState<PromptDeckPlayScreen> {
   int _index = 0;
   bool _forward = true;
 
-  /// Identifica esta partida (y cada barajada) dentro de la noche.
-  final String _run = DateTime.now().microsecondsSinceEpoch.toRadixString(36);
-  int _pass = 0;
+  /// Apuesta anunciada por cada carta (solo en [PromptPayMode.stake]).
+  List<int> _stakes = const [];
 
-  /// Jugadores marcados por posición de carta.
-  final Map<int, Set<String>> _marks = {};
-
-  /// Posiciones cuyas fichas ya están en la Copa (sus chips quedan bloqueados).
-  final Set<int> _awarded = {};
+  /// Cartas ya vistas en esta sesión de pantalla: la partida siguiente no las repite.
+  Set<String> _played = {};
 
   void _shuffle(List<Prompt> all) {
-    _deck = all.where((p) => widget.levels.contains(p.level)).toList()
-      ..shuffle(Random());
+    final random = Random();
+    final draw = drawDeck(
+      all: all,
+      levels: widget.levels,
+      played: _played,
+      rounds: widget.game.rounds,
+      random: random,
+    );
+    _deck = draw.cards;
+    _played = draw.played;
+    _stakes = widget.game.payMode == PromptPayMode.stake
+        ? rollStakes(draw.cards.length, random)
+        : const [];
     _index = 0;
-    _pass++;
-    _marks.clear();
-    _awarded.clear();
   }
 
-  String get _runId => '$_run.$_pass';
-
-  /// Registra en la Copa las fichas de la carta [index] (una sola vez por carta).
-  void _commit(int index) {
-    final deck = _deck;
-    if (deck == null || index < 0 || index >= deck.length) return;
-    if (widget.game.payMode == PromptPayMode.none || _awarded.contains(index)) {
-      return;
-    }
-    final marked = _marks[index];
-    if (marked == null || marked.isEmpty) return;
-    final known = ref.read(playersProvider).map((p) => p.id).toSet();
-    final deltas = {
-      for (final id in marked)
-        if (known.contains(id)) id: -kPromptPayChips,
-    };
-    if (deltas.isEmpty) return;
-    ref
-        .read(sessionProvider.notifier)
-        .award(
-          promptRoundId(deck[index].id, index, _runId),
-          widget.game.id,
-          deltas,
-        );
-    _awarded.add(index);
-  }
-
-  void _toggleMark(String playerId) {
-    if (_awarded.contains(_index)) return;
-    AppFeedback.light();
-    setState(() {
-      final set = _marks.putIfAbsent(_index, () => <String>{});
-      if (!set.remove(playerId)) {
-        set.add(playerId);
-        playSound(AppSound.chipSoft);
-      }
-    });
-  }
+  /// Apuesta de la carta [index], o `null` si el juego no anuncia apuestas.
+  int? _stakeAt(int index) =>
+      index >= 0 && index < _stakes.length ? _stakes[index] : null;
 
   Future<void> _confirmExit() async {
     final leave = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
         title: const Text('¿Salir de la partida?'),
-        content: const Text(
-          'Pierdes el sitio en el mazo. '
-          'Las fichas ya marcadas se quedan en la Copa.',
-        ),
+        content: const Text('Pierdes el sitio en la partida.'),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
@@ -222,7 +180,6 @@ class _PromptDeckPlayScreenState extends ConsumerState<PromptDeckPlayScreen> {
       ),
     );
     if (leave != true || !mounted) return;
-    _commit(_index);
     context.pop();
   }
 
@@ -232,7 +189,6 @@ class _PromptDeckPlayScreenState extends ConsumerState<PromptDeckPlayScreen> {
     if (next < 0 || next > deck.length) return;
     AppFeedback.selection();
     playSound(AppSound.card);
-    _commit(_index);
     setState(() {
       _forward = delta > 0;
       _index = next;
@@ -264,22 +220,14 @@ class _PromptDeckPlayScreenState extends ConsumerState<PromptDeckPlayScreen> {
     if (_deck == null) _shuffle(all);
     final deck = _deck!;
     final finished = _index >= deck.length;
-    final players = game.payMode == PromptPayMode.none
-        ? const <Player>[]
-        : ref.watch(playersProvider);
-    final showPay = players.isNotEmpty && !finished;
     final reduceMotion = MediaQuery.disableAnimationsOf(context);
+    final mode = ref.watch(settingsProvider.select((s) => s.consequenceMode));
 
     return PopScope(
       // Con el mazo a medias, salir (X, atrás o atrás predictivo) pide confirmación.
-      // Las fichas de la carta actual marcadas no se pierden: se registran al salir.
       canPop: finished,
       onPopInvokedWithResult: (didPop, _) {
-        if (didPop) {
-          _commit(_index);
-          return;
-        }
-        _confirmExit();
+        if (!didPop) _confirmExit();
       },
       child: Scaffold(
         body: Container(
@@ -335,7 +283,8 @@ class _PromptDeckPlayScreenState extends ConsumerState<PromptDeckPlayScreen> {
                                   fit: BoxFit.scaleDown,
                                   alignment: Alignment.centerRight,
                                   child: Text(
-                                    '${_index + 1} / ${deck.length}',
+                                    // Solo el número de carta: nunca el total del mazo.
+                                    'Carta ${_index + 1}',
                                     style: const TextStyle(
                                       color: GameColors.mutedText,
                                       fontWeight: FontWeight.w700,
@@ -347,20 +296,8 @@ class _PromptDeckPlayScreenState extends ConsumerState<PromptDeckPlayScreen> {
                     ],
                   ),
                 ),
-                // Aire bajo la cabecera: con el título a dos líneas no toca la barra.
+                // Aire bajo la cabecera.
                 const SizedBox(height: 10),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(4),
-                    child: LinearProgressIndicator(
-                      value: deck.isEmpty ? 0 : min(1, _index / deck.length),
-                      minHeight: 4,
-                      color: game.color,
-                      backgroundColor: AppColors.surfaceHigh,
-                    ),
-                  ),
-                ),
                 Expanded(
                   child: GestureDetector(
                     behavior: HitTestBehavior.opaque,
@@ -404,20 +341,31 @@ class _PromptDeckPlayScreenState extends ConsumerState<PromptDeckPlayScreen> {
                                   onRestart: () =>
                                       setState(() => _shuffle(all)),
                                 )
-                              : _PromptCard(game: game, prompt: deck[_index]),
+                              : _PromptCard(
+                                  game: game,
+                                  prompt: deck[_index],
+                                  stake: _stakeAt(_index),
+                                  mode: mode,
+                                ),
                         ),
                       ),
                     ),
                   ),
                 ),
-                if (showPay)
-                  _PaySection(
-                    game: game,
-                    players: players,
-                    marked: _marks[_index] ?? const {},
-                    locked: _awarded.contains(_index),
+                if (!finished && _stakeAt(_index) != null)
+                  _ConsequenceSection(
+                    bannerKey: const ValueKey('stake-banner'),
+                    who: _ConsequenceSection.stakeWho,
+                    chips: _stakeAt(_index)!,
                     cardIndex: _index,
-                    onToggle: _toggleMark,
+                    retoOnly: true,
+                  ),
+                if (!finished && game.payMode == PromptPayMode.fixed)
+                  _ConsequenceSection(
+                    bannerKey: const ValueKey('fixed-banner'),
+                    who: _ConsequenceSection.fixedWho,
+                    chips: kPromptFixedChips,
+                    cardIndex: _index,
                   ),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(20, 0, 20, 16),
@@ -457,31 +405,41 @@ class _PromptDeckPlayScreenState extends ConsumerState<PromptDeckPlayScreen> {
   }
 }
 
-/// Fila "¿Quién paga?": chips de jugadores y, en Retos/Sorbos, lo que le toca a cada marcado.
-class _PaySection extends ConsumerWidget {
-  const _PaySection({
-    required this.game,
-    required this.players,
-    required this.marked,
-    required this.locked,
+/// Lo que le toca a [who] en Retos y Sorbos, con el tope de 3 y, en Sorbos, la alternativa
+/// de agua o reto siempre visible (todo lo resuelve [ConsequenceBanner]). Sirve al "más
+/// señalado" de una apuesta y a "Quien lo haya hecho" de Yo nunca. En modo Fichas no
+/// muestra nada: no se anota nada en la Copa y la mesa lo resuelve sola.
+class _ConsequenceSection extends ConsumerWidget {
+  const _ConsequenceSection({
+    required this.bannerKey,
+    required this.who,
+    required this.chips,
     required this.cardIndex,
-    required this.onToggle,
+    this.retoOnly = false,
   });
 
-  final PromptDeckModule game;
-  final List<Player> players;
-  final Set<String> marked;
-  final bool locked;
+  /// La cantidad ya la dice el titular de la carta: aquí solo el reto concreto.
+  final bool retoOnly;
+
+  final Key bannerKey;
+  final String who;
+  final int chips;
   final int cardIndex;
-  final ValueChanged<String> onToggle;
+
+  /// Quién paga una apuesta: nadie en concreto, lo decide la mesa al señalar.
+  static const stakeWho = 'El más señalado';
+
+  /// Quién cumple en Yo nunca: nadie marcado, lo dice cada uno.
+  static const fixedWho = 'Quien lo haya hecho';
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final mode = ref.watch(settingsProvider.select((s) => s.consequenceMode));
-    final names = [
-      for (final p in players)
-        if (marked.contains(p.id)) p.name,
-    ];
+    if (mode == ConsequenceMode.puntos) return const SizedBox.shrink();
+    // En Sorbos el titular de la carta ya lo dice todo: nada que añadir.
+    if (retoOnly && mode == ConsequenceMode.sorbos) {
+      return const SizedBox.shrink();
+    }
     final adult = ref.watch(settingsProvider.select((s) => s.adultConfirmed));
     final retosPrompts = mode == ConsequenceMode.retos
         ? ref.watch(promptsProvider(promptRetosAsset)).asData?.value
@@ -497,147 +455,25 @@ class _PaySection extends ConsumerWidget {
             ...retosAll.take((cardIndex * 3) % retosAll.length),
           ];
     final maxHeight = MediaQuery.sizeOf(context).height * 0.3;
-
     return Padding(
       padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
       child: ConstrainedBox(
-        constraints: BoxConstraints(maxHeight: maxHeight),
+        constraints: BoxConstraints(
+          maxHeight: maxHeight,
+          // Hueco reservado: pasar de carta no mueve el resto de la pantalla.
+          minHeight: MediaQuery.textScalerOf(
+            context,
+          ).scale(mode == ConsequenceMode.retos ? 78 : 60).clamp(0, maxHeight),
+        ),
         child: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Flexible(
-                    child: Text(
-                      '¿Quién paga? · $kPromptPayChips ficha',
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w800,
-                        fontSize: 15,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  const ChipToken(kPromptPayChips, size: 22),
-                ],
-              ),
-              Text(
-                locked ? 'Ya anotado en la Copa' : game.payHint,
-                style: const TextStyle(
-                  color: GameColors.mutedText,
-                  fontSize: 13,
-                ),
-              ),
-              const SizedBox(height: 8),
-              Wrap(
-                spacing: 8,
-                runSpacing: 8,
-                children: [
-                  for (final p in players)
-                    FilterChip(
-                      key: ValueKey('pay-${p.id}'),
-                      selected: marked.contains(p.id),
-                      showCheckmark: false,
-                      avatar: _MarkAvatar(
-                        player: p,
-                        marked: marked.contains(p.id),
-                      ),
-                      label: Text(p.name),
-                      selectedColor: game.color.withValues(alpha: 0.3),
-                      side: BorderSide(
-                        color: marked.contains(p.id)
-                            ? game.color
-                            : AppColors.outline,
-                      ),
-                      onSelected: locked ? null : (_) => onToggle(p.id),
-                    ),
-                ],
-              ),
-              const SizedBox(height: 8),
-              // Hueco reservado: marcar o desmarcar no mueve el resto de la pantalla.
-              // Si hay más marcados de los que caben en el hueco, crece con animación.
-              AnimatedSize(
-                duration: const Duration(milliseconds: 180),
-                curve: Curves.easeOutCubic,
-                alignment: Alignment.topCenter,
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(
-                    minHeight: MediaQuery.textScalerOf(context).scale(
-                      switch (mode) {
-                        ConsequenceMode.puntos => 22,
-                        ConsequenceMode.retos => 78,
-                        ConsequenceMode.sorbos => 60,
-                      },
-                    ),
-                  ),
-                  child: Align(
-                    alignment: Alignment.topLeft,
-                    child: names.isEmpty
-                        ? const SizedBox.shrink()
-                        : mode == ConsequenceMode.puntos
-                        ? Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const ChipToken(kPromptPayChips, size: 20),
-                              const SizedBox(width: 8),
-                              Expanded(
-                                child: Text(
-                                  '−$kPromptPayChips en la Copa: ${names.join(', ')}',
-                                  style: const TextStyle(
-                                    color: GameColors.mutedText,
-                                    fontSize: 13,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          )
-                        : ConsequenceBanner(
-                            losses: {for (final n in names) n: kPromptPayChips},
-                            mode: mode,
-                            retos: retos,
-                          ),
-                  ),
-                ),
-              ),
-            ],
+          child: ConsequenceBanner(
+            key: bannerKey,
+            losses: {who: chips},
+            mode: mode,
+            retos: retos,
+            retoOnly: retoOnly,
           ),
         ),
-      ),
-    );
-  }
-}
-
-/// Avatar del chip de jugador: la inicial y, al marcarlo, una ficha que entra
-/// con rebote (la ficha que va a pagar).
-class _MarkAvatar extends StatelessWidget {
-  const _MarkAvatar({required this.player, required this.marked});
-
-  final Player player;
-  final bool marked;
-
-  static const _size = 26.0;
-
-  @override
-  Widget build(BuildContext context) {
-    final reduce = MediaQuery.disableAnimationsOf(context);
-    return SizedBox(
-      width: _size,
-      height: _size,
-      child: AnimatedSwitcher(
-        duration: reduce ? Duration.zero : const Duration(milliseconds: 320),
-        switchInCurve: Curves.elasticOut,
-        switchOutCurve: Curves.easeIn,
-        // Solo escala: el rebote de elasticOut supera 1 y no vale para opacidad.
-        transitionBuilder: (child, a) =>
-            ScaleTransition(scale: a, child: child),
-        child: marked
-            ? const ChipToken(
-                kPromptPayChips,
-                key: ValueKey('ficha'),
-                size: _size,
-              )
-            : PlayerAvatar(player, key: const ValueKey('inicial'), size: _size),
       ),
     );
   }
@@ -646,10 +482,20 @@ class _MarkAvatar extends StatelessWidget {
 /// La carta es un boleto de papel: cuerpo con el nivel y el enunciado, y la
 /// regla en la matriz, bajo la línea de puntos.
 class _PromptCard extends StatelessWidget {
-  const _PromptCard({required this.game, required this.prompt});
+  const _PromptCard({
+    required this.game,
+    required this.prompt,
+    required this.mode,
+    this.stake,
+  });
 
   final PromptDeckModule game;
   final Prompt prompt;
+
+  /// Apuesta de la carta, si el juego las usa. Solo se ve en Retos y Sorbos.
+  final int? stake;
+
+  final ConsequenceMode mode;
 
   @override
   Widget build(BuildContext context) {
@@ -683,6 +529,11 @@ class _PromptCard extends StatelessWidget {
                       child: _LevelPill(level: prompt.level),
                     ),
                     const SizedBox(height: 18),
+                    if (stake != null &&
+                        stakeHeadline(stake!, mode) != null) ...[
+                      _StakeHeadline(stake: stake!, mode: mode, accent: accent),
+                      const SizedBox(height: 12),
+                    ],
                     switch (game.style) {
                       PromptCardStyle.statement => _Statement(
                         prefix: prompt['prefijo'].isEmpty
@@ -712,6 +563,46 @@ class _PromptCard extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+/// "¡Por 2 retos!" o "Por 2 sorbos · o agua o reto" sobre la pregunta. Es la única
+/// fuente de la cantidad (sin icono de ficha: el texto ya habla de retos o sorbos).
+/// Nunca se pinta en modo Fichas.
+class _StakeHeadline extends StatelessWidget {
+  const _StakeHeadline({
+    required this.stake,
+    required this.mode,
+    required this.accent,
+  });
+
+  final int stake;
+  final ConsequenceMode mode;
+  final Color accent;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Flexible(
+          child: Text(
+            stakeHeadline(stake, mode) ?? '',
+            textAlign: TextAlign.center,
+            textScaler: MediaQuery.textScalerOf(
+              context,
+            ).clamp(maxScaleFactor: 1.5),
+            style: TextStyle(
+              fontFamily: AppFonts.display,
+              fontWeight: FontWeight.w400,
+              fontSize: 24,
+              height: 1.2,
+              color: accent,
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
@@ -920,7 +811,7 @@ class _EndCardState extends State<_EndCard> {
                 ),
                 const SizedBox(height: 16),
                 Text(
-                  'Se acabó el mazo',
+                  'Fin de la partida',
                   textAlign: TextAlign.center,
                   textScaler: MediaQuery.textScalerOf(
                     context,
@@ -936,7 +827,7 @@ class _EndCardState extends State<_EndCard> {
                 FilledButton.icon(
                   onPressed: widget.onRestart,
                   icon: AppIcon.shuffle.widget(color: Colors.black),
-                  label: const Text('Barajar de nuevo'),
+                  label: const Text('Otra partida'),
                 ),
               ],
             ),

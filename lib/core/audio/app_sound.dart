@@ -19,8 +19,8 @@ enum AppSound {
   chip('audio/chip.ogg'),
   chipSoft('audio/chip_soft.ogg'),
   card('audio/card.ogg'),
-  correct('audio/correct.ogg'),
-  wrong('audio/wrong.ogg'),
+  correct('audio/correct.wav'),
+  wrong('audio/wrong.wav'),
   tap('audio/tap.ogg'),
   podium('audio/podium.ogg');
 

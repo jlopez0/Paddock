@@ -3,9 +3,9 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:paddock/games/geography/domain/geo_map.dart';
-import 'package:paddock/games/geography/domain/quiz.dart';
-import 'package:paddock/games/geography/domain/text_match.dart';
+import 'package:habinson/games/geography/domain/geo_map.dart';
+import 'package:habinson/games/geography/domain/quiz.dart';
+import 'package:habinson/games/geography/domain/text_match.dart';
 
 GeoMap loadMap(String id) => GeoMap.fromJson(
     jsonDecode(File('assets/content/es/geografia/mapas/$id.json').readAsStringSync()) as Map<String, dynamic>);

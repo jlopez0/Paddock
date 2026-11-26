@@ -5,11 +5,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
-import 'package:paddock/core/content/prompts.dart';
-import 'package:paddock/core/session/session_controller.dart';
-import 'package:paddock/core/storage.dart';
-import 'package:paddock/games/prompt_deck/prompt_deck_module.dart';
-import 'package:paddock/games/prompt_deck/prompt_deck_screens.dart';
+import 'package:habinson/app/app_icons.dart';
+import 'package:habinson/core/content/prompts.dart';
+import 'package:habinson/core/session/session_controller.dart';
+import 'package:habinson/core/storage.dart';
+import 'package:habinson/games/prompt_deck/prompt_deck_module.dart';
+import 'package:habinson/games/prompt_deck/prompt_deck_screens.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 const _asset = 'assets/content/es/test.json';
@@ -28,7 +29,7 @@ List<Prompt> _cards(PromptCardStyle style) => [
 ];
 
 PromptDeckModule _game({
-  PromptPayMode payMode = PromptPayMode.multi,
+  PromptPayMode payMode = PromptPayMode.fixed,
   PromptCardStyle style = PromptCardStyle.statement,
 }) => PromptDeckModule(
   id: 'test-game',
@@ -47,8 +48,10 @@ Future<ProviderContainer> _pump(
   PromptDeckModule game, {
   bool withPlayers = true,
   String? mode,
+  bool adult = false,
 }) async {
   SharedPreferences.setMockInitialValues({
+    if (adult) 'settings.adultConfirmed.v1': true,
     if (withPlayers)
       'players.v1': jsonEncode([
         {'id': 'p1', 'name': 'Ana', 'color': 0},
@@ -106,135 +109,97 @@ Future<void> _next(WidgetTester tester) async {
 }
 
 void main() {
-  test('promptRoundId distingue carta, posición y partida', () {
-    expect(
-      promptRoundId('yn_001', 0, 'a.1'),
-      isNot(promptRoundId('yn_001', 1, 'a.1')),
-    );
-    expect(
-      promptRoundId('yn_001', 0, 'a.1'),
-      isNot(promptRoundId('yn_001', 0, 'a.2')),
-    );
-    expect(promptRoundId('yn_001', 0, 'a.1'), startsWith('yn_001+0'));
+  test('ningún modo de pago de los mazos anota en la Copa', () {
+    for (final mode in PromptPayMode.values) {
+      expect(_game(payMode: mode).scoresCup, isFalse, reason: '$mode');
+    }
   });
 
-  test('payHint depende del modo y del estilo', () {
-    expect(_game(payMode: PromptPayMode.none).payHint, '');
-    expect(_game().payHint, 'Apunta a quien lo haya hecho');
-    expect(
-      _game(
-        payMode: PromptPayMode.single,
-        style: PromptCardStyle.choice,
-      ).payHint,
-      'Apunta a la minoría',
+  group('modo fixed (Yo nunca)', () {
+    testWidgets('no pide marcar a nadie ni habla de pagar', (tester) async {
+      await _pump(tester, _game());
+      expect(find.byType(FilterChip), findsNothing);
+      expect(find.textContaining('¿Quién paga?'), findsNothing);
+      expect(find.textContaining('Apunta'), findsNothing);
+      expect(
+        find.textContaining('en la Copa', findRichText: true),
+        findsNothing,
+      );
+    });
+
+    testWidgets('pasar todas las cartas no toca la Copa aunque haya jugadores', (
+      tester,
+    ) async {
+      final c = await _pump(tester, _game());
+      await _next(tester);
+      await _next(tester);
+      await _next(tester);
+      expect(find.text('Fin de la partida'), findsOneWidget);
+      expect(c.read(sessionProvider).events, isEmpty);
+      expect(c.read(sessionProvider).roundIds, isEmpty);
+    });
+
+    testWidgets('en modo Fichas no hay banner ni texto de consecuencia', (
+      tester,
+    ) async {
+      await _pump(tester, _game());
+      expect(find.byKey(const ValueKey('fixed-banner')), findsNothing);
+      expect(find.text('Quien lo haya hecho'), findsNothing);
+      expect(find.textContaining('−', findRichText: true), findsNothing);
+      expect(find.textContaining('sorbo'), findsNothing);
+      expect(find.textContaining('reto'), findsNothing);
+    });
+
+    testWidgets('modo Retos: banner fijo con 1 reto', (tester) async {
+      await _pump(tester, _game(), mode: 'retos');
+      expect(find.byKey(const ValueKey('fixed-banner')), findsOneWidget);
+      expect(find.text('Quien lo haya hecho'), findsOneWidget);
+      expect(find.text('1 reto'), findsOneWidget);
+      expect(find.text('Reto de prueba'), findsOneWidget);
+    });
+
+    testWidgets(
+      'modo Sorbos: 1 sorbo con la alternativa de agua o reto a la vista',
+      (tester) async {
+        await _pump(tester, _game(), mode: 'sorbos', adult: true);
+        expect(find.byKey(const ValueKey('fixed-banner')), findsOneWidget);
+        expect(find.text('Quien lo haya hecho'), findsOneWidget);
+        expect(find.text('1 sorbo · o agua o reto'), findsOneWidget);
+      },
     );
-    expect(
-      _game(
-        payMode: PromptPayMode.single,
-        style: PromptCardStyle.question,
-      ).payHint,
-      'Apunta al más votado',
-    );
+
+    testWidgets('el banner sigue en la carta siguiente y sin jugadores', (
+      tester,
+    ) async {
+      final c = await _pump(tester, _game(), mode: 'retos', withPlayers: false);
+      expect(find.byKey(const ValueKey('fixed-banner')), findsOneWidget);
+      await _next(tester);
+      expect(find.text('Carta 2'), findsOneWidget);
+      expect(find.byKey(const ValueKey('fixed-banner')), findsOneWidget);
+      expect(c.read(sessionProvider).events, isEmpty);
+    });
+
+    testWidgets('al final de la partida el banner desaparece', (tester) async {
+      await _pump(tester, _game(), mode: 'sorbos', adult: true);
+      await _next(tester);
+      await _next(tester);
+      await _next(tester);
+      expect(find.text('Fin de la partida'), findsOneWidget);
+      expect(find.byKey(const ValueKey('fixed-banner')), findsNothing);
+    });
   });
 
-  testWidgets('marcar a 2 jugadores resta 1 a cada uno al pasar de carta', (
-    tester,
-  ) async {
-    final c = await _pump(tester, _game());
-    expect(find.text('¿Quién paga? · 1 ficha'), findsOneWidget);
-    expect(find.text('Apunta a quien lo haya hecho'), findsOneWidget);
-
-    await tester.tap(find.byKey(const ValueKey('pay-p1')));
-    await tester.tap(find.byKey(const ValueKey('pay-p2')));
-    await tester.pump();
-    expect(
-      c.read(sessionProvider).events,
-      isEmpty,
-      reason: 'no se registra hasta pasar de carta',
-    );
-
-    await _next(tester);
-    final events = c.read(sessionProvider).events;
-    expect(events.length, 2);
-    expect({for (final e in events) e.playerId: e.delta}, {'p1': -1, 'p2': -1});
-    expect(events.every((e) => e.gameId == 'test-game'), isTrue);
-    expect(events.first.roundId, contains('+0@'));
-  });
-
-  testWidgets('deshacer y volver a avanzar no duplica y bloquea los chips', (
-    tester,
-  ) async {
-    final c = await _pump(tester, _game());
-    await tester.tap(find.byKey(const ValueKey('pay-p1')));
-    await tester.pump();
-    await _next(tester);
-    expect(c.read(sessionProvider).events.length, 1);
-
-    await tester.tap(find.byTooltip('Anterior'));
-    await tester.pumpAndSettle();
-    expect(find.text('Ya anotado en la Copa'), findsOneWidget);
-    // Tocar un chip bloqueado no cambia nada.
-    await tester.tap(find.byKey(const ValueKey('pay-p2')));
-    await tester.pump();
-
-    await _next(tester);
-    final events = c.read(sessionProvider).events;
-    expect(events.length, 1);
-    expect(events.single.playerId, 'p1');
-    expect(c.read(sessionProvider).roundIds.length, 1);
-  });
-
-  testWidgets('pasar sin marcar a nadie no registra nada', (tester) async {
-    final c = await _pump(tester, _game());
-    await _next(tester);
-    await _next(tester);
-    expect(c.read(sessionProvider).events, isEmpty);
-  });
-
-  testWidgets('sin jugadores no hay fila y el juego sigue funcionando', (
-    tester,
-  ) async {
-    final c = await _pump(tester, _game(), withPlayers: false);
-    expect(find.textContaining('¿Quién paga?'), findsNothing);
+  testWidgets('payMode none no muestra banner ni jugadores', (tester) async {
+    await _pump(tester, _game(payMode: PromptPayMode.none), mode: 'retos');
     expect(find.byType(FilterChip), findsNothing);
-    expect(find.text('1 / 3'), findsOneWidget);
-    await _next(tester);
-    expect(find.text('2 / 3'), findsOneWidget);
-    expect(c.read(sessionProvider).events, isEmpty);
-  });
-
-  testWidgets('payMode none no muestra la fila aunque haya jugadores', (
-    tester,
-  ) async {
-    await _pump(tester, _game(payMode: PromptPayMode.none));
-    expect(find.textContaining('¿Quién paga?'), findsNothing);
-    expect(find.byType(FilterChip), findsNothing);
-  });
-
-  testWidgets('modo puntos muestra el resumen en fichas, sin "bebe"', (
-    tester,
-  ) async {
-    await _pump(tester, _game());
-    await tester.tap(find.byKey(const ValueKey('pay-p3')));
-    await tester.pump();
-    expect(find.text('−1 en la Copa: Eva'), findsOneWidget);
-    expect(find.textContaining('bebe', findRichText: true), findsNothing);
-  });
-
-  testWidgets('modo retos usa ConsequenceBanner con el mazo de retos', (
-    tester,
-  ) async {
-    await _pump(tester, _game(), mode: 'retos');
-    await tester.tap(find.byKey(const ValueKey('pay-p1')));
-    await tester.pumpAndSettle();
-    expect(find.text('1 reto'), findsOneWidget);
-    expect(find.text('Reto de prueba'), findsOneWidget);
+    expect(find.byKey(const ValueKey('fixed-banner')), findsNothing);
+    expect(find.byKey(const ValueKey('stake-banner')), findsNothing);
   });
 
   testWidgets('estilo question: prefijo fijo y cierre con "?"', (tester) async {
     await _pump(
       tester,
-      _game(payMode: PromptPayMode.single, style: PromptCardStyle.question),
+      _game(payMode: PromptPayMode.stake, style: PromptCardStyle.question),
     );
     final rich = tester
         .widgetList<RichText>(find.byType(RichText))
@@ -246,48 +211,142 @@ void main() {
       isTrue,
       reason: rich.join(' | '),
     );
-    expect(find.text('Apunta al más votado'), findsOneWidget);
   });
 
-  testWidgets('cerrar la partida registra las fichas de la carta actual', (
+  group('modo stake (¿Quién es más probable?)', () {
+    PromptDeckModule stakeGame() =>
+        _game(payMode: PromptPayMode.stake, style: PromptCardStyle.question);
+
+    testWidgets('modo Fichas: sin texto de apuesta y sin selección de jugadores', (
+      tester,
+    ) async {
+      await _pump(tester, stakeGame());
+      expect(find.textContaining('Por '), findsNothing);
+      expect(find.textContaining('¡Por'), findsNothing);
+      expect(find.textContaining('ficha'), findsNothing);
+      expect(find.textContaining('apuesta'), findsNothing);
+      expect(find.textContaining('¿Quién paga?'), findsNothing);
+      expect(find.byType(FilterChip), findsNothing);
+      expect(find.textContaining('Apunta'), findsNothing);
+    });
+
+    testWidgets('pasar todas las cartas no toca la Copa', (tester) async {
+      final c = await _pump(tester, stakeGame());
+      await _next(tester);
+      await _next(tester);
+      await _next(tester);
+      expect(find.text('Fin de la partida'), findsOneWidget);
+      expect(c.read(sessionProvider).events, isEmpty);
+    });
+
+    testWidgets('en modo puntos no hay banner: solo el titular', (tester) async {
+      await _pump(tester, stakeGame());
+      expect(find.byKey(const ValueKey('stake-banner')), findsNothing);
+      expect(find.textContaining('−', findRichText: true), findsNothing);
+    });
+
+    testWidgets('modo Retos: titular "¡Por N retos!" sin ficha ni cantidad repetida', (
+      tester,
+    ) async {
+      await _pump(tester, stakeGame(), mode: 'retos');
+      expect(
+        find.textContaining(RegExp(r'^¡Por [123] retos?!$')),
+        findsOneWidget,
+      );
+      expect(find.textContaining('ficha'), findsNothing);
+      expect(find.byType(ChipToken), findsNothing);
+      expect(find.textContaining(RegExp(r'^[123] retos?$')), findsNothing);
+    });
+
+    testWidgets('modo Sorbos: una sola vez la apuesta, con "o agua o reto" y sin ficha', (
+      tester,
+    ) async {
+      await _pump(tester, stakeGame(), mode: 'sorbos', adult: true);
+      expect(
+        find.textContaining(RegExp(r'^Por [123] sorbos? · o agua o reto$')),
+        findsOneWidget,
+      );
+      expect(find.textContaining('o agua o reto'), findsOneWidget);
+      expect(find.textContaining('¡Por'), findsNothing);
+      expect(find.textContaining('ficha'), findsNothing);
+      expect(find.byType(ChipToken), findsNothing);
+      expect(find.byKey(const ValueKey('stake-banner')), findsNothing);
+      expect(find.text('El más señalado'), findsNothing);
+    });
+
+    testWidgets('modo Sorbos: "o agua o reto" sigue visible en todas las cartas', (
+      tester,
+    ) async {
+      await _pump(tester, stakeGame(), mode: 'sorbos', adult: true);
+      for (var i = 0; i < 3; i++) {
+        expect(find.textContaining('o agua o reto'), findsOneWidget);
+        await _next(tester);
+      }
+    });
+
+    testWidgets('modo retos: el banner solo aporta el reto concreto', (
+      tester,
+    ) async {
+      await _pump(tester, stakeGame(), mode: 'retos');
+      expect(find.byKey(const ValueKey('stake-banner')), findsOneWidget);
+      expect(find.text('El más señalado'), findsOneWidget);
+      expect(find.textContaining(RegExp(r'^[123] retos?$')), findsNothing);
+      expect(find.text('Reto de prueba'), findsOneWidget);
+    });
+
+    testWidgets('sin jugadores el juego funciona igual', (tester) async {
+      final c = await _pump(
+        tester,
+        stakeGame(),
+        withPlayers: false,
+        mode: 'retos',
+      );
+      expect(find.textContaining('¡Por '), findsOneWidget);
+      await _next(tester);
+      expect(find.text('Carta 2'), findsOneWidget);
+      expect(c.read(sessionProvider).events, isEmpty);
+    });
+
+    testWidgets('salir no menciona la Copa', (tester) async {
+      await _pump(tester, stakeGame());
+      await tester.tap(find.byTooltip('Salir'));
+      await tester.pumpAndSettle();
+      expect(find.text('Pierdes el sitio en la partida.'), findsOneWidget);
+    });
+  });
+
+  testWidgets('al final se ofrece otra partida con cartas', (tester) async {
+    await _pump(tester, _game(payMode: PromptPayMode.none));
+    await _next(tester);
+    await _next(tester);
+    await _next(tester);
+    expect(find.text('Fin de la partida'), findsOneWidget);
+    expect(find.text('Otra partida'), findsOneWidget);
+    await tester.tap(find.text('Otra partida'));
+    await tester.pumpAndSettle();
+    expect(find.text('Carta 1'), findsOneWidget);
+  });
+
+  testWidgets('salir pide confirmación, no menciona la Copa y no anota nada', (
     tester,
   ) async {
     final c = await _pump(tester, _game());
-    await tester.tap(find.byKey(const ValueKey('pay-p2')));
-    await tester.pump();
     await tester.tap(find.byTooltip('Salir'));
     await tester.pumpAndSettle();
-    // Pide confirmación: "Seguir" se queda y no registra nada todavía.
     expect(find.text('¿Salir de la partida?'), findsOneWidget);
+    expect(find.text('Pierdes el sitio en la partida.'), findsOneWidget);
+    expect(find.textContaining('Copa'), findsNothing);
     await tester.tap(find.text('Seguir'));
     await tester.pumpAndSettle();
     expect(find.text('inicio'), findsNothing);
-    expect(c.read(sessionProvider).events, isEmpty);
 
-    // Atrás del sistema (también el predictivo): mismo diálogo; "Salir" conserva las fichas.
+    // Atrás del sistema (también el predictivo): mismo diálogo.
     await tester.binding.handlePopRoute();
     await tester.pumpAndSettle();
     expect(find.text('¿Salir de la partida?'), findsOneWidget);
     await tester.tap(find.text('Salir'));
     await tester.pumpAndSettle();
-    expect(c.read(sessionProvider).events.map((e) => e.playerId), ['p2']);
     expect(find.text('inicio'), findsOneWidget);
+    expect(c.read(sessionProvider).events, isEmpty);
   });
-
-  for (final mode in [null, 'retos', 'sorbos']) {
-    testWidgets('marcar a alguien no mueve la carta (modo $mode)', (
-      tester,
-    ) async {
-      await _pump(tester, _game(), mode: mode);
-      final before =
-          tester.getSize(find.text('regla').first).height +
-          tester.getTopLeft(find.text('regla').first).dy;
-      await tester.tap(find.byKey(const ValueKey('pay-p3')));
-      await tester.pumpAndSettle();
-      final after =
-          tester.getSize(find.text('regla').first).height +
-          tester.getTopLeft(find.text('regla').first).dy;
-      expect(after, before);
-    });
-  }
 }

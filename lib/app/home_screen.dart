@@ -3,16 +3,15 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../core/audio/app_sound.dart';
+import '../core/consequences/consequence_mode_selector.dart';
 import '../core/players/player.dart';
 import '../core/players/player_widgets.dart';
 import '../core/players/players_controller.dart';
-import '../core/session/session_controller.dart';
 import '../core/settings/app_feedback.dart';
 import '../games/game_module.dart';
 import '../games/registry.dart';
 import 'app_icons.dart';
 import 'app_info.dart';
-import 'cup_screen.dart';
 import 'mascot.dart';
 import 'theme.dart';
 
@@ -56,7 +55,7 @@ class HomeScreen extends ConsumerWidget {
                             ),
                           ),
                           const Text(
-                            'Se abre el paddock',
+                            'Se abre la noche',
                             style: TextStyle(
                               color: AppColors.textMuted,
                               fontWeight: FontWeight.w700,
@@ -65,6 +64,12 @@ class HomeScreen extends ConsumerWidget {
                           ),
                         ],
                       ),
+                    ),
+                    // Entrada discreta a la Copa: sin insignias ni marcador en la home.
+                    IconButton(
+                      tooltip: 'Copa de la noche',
+                      icon: AppIcon.trophy.widget(),
+                      onPressed: () => context.push('/copa'),
                     ),
                     IconButton(
                       tooltip: 'Ajustes',
@@ -86,7 +91,13 @@ class HomeScreen extends ConsumerWidget {
             ),
             const SliverPadding(
               padding: EdgeInsets.fromLTRB(20, 4, 20, 0),
-              sliver: SliverToBoxAdapter(child: _CupSlot()),
+              sliver: SliverToBoxAdapter(
+                // Sorbos solo sale aquí si ya se confirmó la edad (+18).
+                child: ConsequenceModeSelector(
+                  alwaysOfferSorbos: false,
+                  compact: true,
+                ),
+              ),
             ),
             SliverPadding(
               padding: const EdgeInsets.fromLTRB(20, 12, 20, 32),
@@ -144,6 +155,9 @@ ShapeBorder _brassShape([double radius = 20]) => RoundedRectangleBorder(
   side: BorderSide(color: AppColors.brass.withValues(alpha: 0.75)),
 );
 
+/// Aire entre el texto de la cuadra y sus avatares.
+const double _avatarGap = 8;
+
 /// La cuadra: el grupo de jugadores guardado.
 class _StableCard extends StatelessWidget {
   const _StableCard({required this.players});
@@ -166,50 +180,64 @@ class _StableCard extends StatelessWidget {
           constraints: const BoxConstraints(minHeight: 64),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-            child: Row(
-              children: [
-                if (empty)
-                  const Jockey(size: 40)
-                else
-                  AppIcon.horse.widget(size: 30),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: empty
-                      ? const Text(
-                          'Forma la cuadra',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 16,
-                          ),
-                        )
-                      : Text(
-                          playersLabel(players.length),
-                          style: const TextStyle(fontWeight: FontWeight.w700),
-                        ),
-                ),
-                for (final p in players.take(5))
-                  Padding(
-                    padding: const EdgeInsets.only(left: 4),
-                    child: PlayerAvatar(p, size: 28),
-                  ),
-                AppIcon.chevronRight.widget(color: AppColors.textMuted),
-              ],
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                const labelStyle = TextStyle(fontWeight: FontWeight.w700);
+                // Avatares solo los que caben sin apretar el texto: con letra grande o
+                // pantalla estrecha salen menos (o ninguno) y el texto no se parte.
+                var avatars = 0;
+                if (!empty) {
+                  final label = TextPainter(
+                    text: TextSpan(
+                      text: playersLabel(players.length),
+                      style: DefaultTextStyle.of(
+                        context,
+                      ).style.merge(labelStyle),
+                    ),
+                    textDirection: TextDirection.ltr,
+                    textScaler: MediaQuery.textScalerOf(context),
+                  )..layout();
+                  const fixed = 30 + 12 + 24 + _avatarGap; // icono, aire, flecha y aire
+                  final free = constraints.maxWidth - fixed - label.width;
+                  avatars = (free / (28 + 4)).floor().clamp(0, 5);
+                  label.dispose();
+                }
+                return Row(
+                  children: [
+                    if (empty)
+                      const Jockey(size: 40)
+                    else
+                      AppIcon.horse.widget(size: 30),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: empty
+                          ? const Text(
+                              'Forma la cuadra',
+                              style: TextStyle(
+                                fontWeight: FontWeight.w700,
+                                fontSize: 16,
+                              ),
+                            )
+                          : Text(
+                              playersLabel(players.length),
+                              style: labelStyle,
+                            ),
+                    ),
+                    if (avatars > 0) const SizedBox(width: _avatarGap),
+                    for (final p in players.take(avatars))
+                      Padding(
+                        padding: const EdgeInsets.only(left: 4),
+                        child: PlayerAvatar(p, size: 28),
+                      ),
+                    AppIcon.chevronRight.widget(color: AppColors.textMuted),
+                  ],
+                );
+              },
             ),
           ),
         ),
       ),
     );
-  }
-}
-
-/// Separación + tarjeta de la Copa; no ocupa nada si no hay puntuaciones.
-class _CupSlot extends ConsumerWidget {
-  const _CupSlot();
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    if (ref.watch(sessionProvider).isEmpty) return const SizedBox.shrink();
-    return const Padding(padding: EdgeInsets.only(top: 8), child: CupCard());
   }
 }
 

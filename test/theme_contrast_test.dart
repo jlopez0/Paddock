@@ -2,9 +2,9 @@ import 'dart:math' as math;
 
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:paddock/app/theme.dart';
-import 'package:paddock/games/infiltrado/ui/infiltrado_widgets.dart';
-import 'package:paddock/games/prompt_deck/game_colors.dart';
+import 'package:habinson/app/theme.dart';
+import 'package:habinson/games/infiltrado/ui/infiltrado_widgets.dart';
+import 'package:habinson/games/prompt_deck/game_colors.dart';
 
 double _lum(Color c) {
   double f(double v) =>

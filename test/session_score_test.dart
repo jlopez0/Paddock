@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:paddock/core/session/session_controller.dart';
-import 'package:paddock/core/storage.dart';
+import 'package:habinson/core/session/session_controller.dart';
+import 'package:habinson/core/storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 var _now = DateTime(2026, 11, 24, 22);
@@ -50,6 +50,17 @@ void main() {
     expect(n.award('r1', 'carrera', {'ana': 1}), isTrue);
   });
 
+  test('con recordZeros, quien participó y quedó a cero también entra en la clasificación', () async {
+    final c = await _container();
+    final n = c.read(sessionProvider.notifier);
+    expect(n.award('r1', 'carrera', {'ana': 0, 'luis': -10}, recordZeros: true), isTrue);
+    final s = c.read(sessionProvider).standings;
+    expect(s.map((e) => (e.playerId, e.total, e.rank)), [('ana', 0, 1), ('luis', -10, 2)]);
+    // Sin la opción, el cero sigue sin registrarse (comportamiento de siempre).
+    expect(n.award('r2', 'carrera', {'eva': 0, 'pepe': 1}), isTrue);
+    expect(c.read(sessionProvider).standings.map((e) => e.playerId), isNot(contains('eva')));
+  });
+
   test('deshacer quita solo la última ronda', () async {
     final c = await _container();
     final n = c.read(sessionProvider.notifier);
@@ -63,7 +74,7 @@ void main() {
     expect(n.award('r2', 'carrera', {'ana': 1}), isTrue);
   });
 
-  test('estadísticas por juego y quien más ha perdido', () async {
+  test('estadísticas por juego', () async {
     final c = await _container();
     final n = c.read(sessionProvider.notifier);
     n.award('r1', 'carrera', {'ana': 3, 'luis': -2});
@@ -74,18 +85,6 @@ void main() {
     expect(stats.map((g) => g.gameId), ['carrera', 'trivia']);
     expect(stats.first.rounds, 2);
     expect(stats.first.standings.map((e) => e.playerId), ['ana', 'luis']);
-    expect(s.biggestLosers, ['eva']);
-    c.read(sessionProvider.notifier).undoLastRound();
-    expect(c.read(sessionProvider).biggestLosers, ['luis']);
-  });
-
-  test('biggestLosers vacío si nadie ha perdido; varios si empatan', () async {
-    final c = await _container();
-    final n = c.read(sessionProvider.notifier);
-    n.award('r1', 'carrera', {'ana': 3});
-    expect(c.read(sessionProvider).biggestLosers, isEmpty);
-    n.award('r2', 'carrera', {'ana': -2, 'luis': -2});
-    expect(c.read(sessionProvider).biggestLosers.toSet(), {'ana', 'luis'});
   });
 
   test('guarda y recupera entre instancias', () async {

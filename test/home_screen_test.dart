@@ -1,10 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
-import 'package:paddock/app/home_screen.dart';
-import 'package:paddock/app/mascot.dart';
-import 'package:paddock/core/storage.dart';
-import 'package:paddock/games/registry.dart';
+import 'package:habinson/app/home_screen.dart';
+import 'package:habinson/app/mascot.dart';
+import 'package:habinson/core/storage.dart';
+import 'package:habinson/games/registry.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
@@ -22,7 +22,7 @@ void main() {
     ));
     await tester.pumpAndSettle();
 
-    expect(find.text('Se abre el paddock'), findsOneWidget);
+    expect(find.text('Se abre la noche'), findsOneWidget);
     expect(find.text('Forma la cuadra'), findsOneWidget);
     expect(find.byType(Jockey), findsNWidgets(2)); // cabecera + cuadra vacía
     for (final g in gameModules) {
@@ -44,6 +44,6 @@ void main() {
       ),
     ));
     await tester.pump();
-    expect(find.text('Se abre el paddock'), findsOneWidget);
+    expect(find.text('Se abre la noche'), findsOneWidget);
   });
 }

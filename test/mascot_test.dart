@@ -4,7 +4,7 @@ import 'dart:ui' as ui;
 import 'package:flutter/widgets.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:paddock/app/mascot.dart';
+import 'package:habinson/app/mascot.dart';
 
 const _outDir =
     'C:/Users/javie/AppData/Local/Temp/claude/77e34b3e76a3fc0a/87635144-aee5-44fa-b15f-2fb433bc3c86/scratchpad/mascot';

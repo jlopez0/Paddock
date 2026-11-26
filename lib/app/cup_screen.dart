@@ -3,11 +3,11 @@ import 'dart:math' as math;
 
 import 'package:confetti/confetti.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../core/audio/app_sound.dart';
+import '../core/help/how_to_play.dart';
 import '../core/players/player.dart';
 import '../core/players/player_widgets.dart';
 import '../core/players/players_controller.dart';
@@ -37,18 +37,26 @@ String _signed(int n) => n > 0 ? '+$n' : '$n';
 String _chips(int n) =>
     '${_signed(n)} ${n == 1 || n == -1 ? 'ficha' : 'fichas'}';
 
-/// Rojo si es negativo, verde si es positivo, neutro si es cero.
-Color _balanceColor(int n) => n < 0
-    ? AppColors.danger
-    : n > 0
-    ? AppColors.success
-    : AppColors.textMuted;
+/// Verde si es positivo; neutro en cero y en negativo (la Copa no marca pérdidas en rojo).
+Color _balanceColor(int n) => n > 0 ? AppColors.success : AppColors.textMuted;
 
 String _date(DateTime d) =>
     '${d.day.toString().padLeft(2, '0')}/${d.month.toString().padLeft(2, '0')}/${d.year}';
 
+/// Solo se celebra (trofeo, medallas, confeti, "Va en cabeza") si quien manda tiene
+/// fichas a favor. A cero o en negativo, la Copa constata y no corona a nadie.
+bool _celebrates(RankGroup leaders) => leaders.total > 0;
+
+String _noPositiveTitle(bool finished) =>
+    finished ? 'Nadie ha acabado en positivo' : 'Nadie va en positivo';
+
 const _howItWorks =
-    'Cada ronda suma las fichas ganadas y resta las perdidas. Manda quien más ha ganado o menos ha perdido.';
+    'Aquí cuentan las apuestas y los votos. Manda quien acaba con más fichas.';
+
+/// Juegos que apuntan a la Copa, generado desde el registro (nada fijo en el texto).
+String get _countingLine =>
+    'Cuentan: ${joinNames([for (final g in gameModules)
+      if (g.scoresCup) g.title])}';
 
 const _removedPlayer = 'Jugador retirado';
 
@@ -57,42 +65,23 @@ const _removedPlayer = 'Jugador retirado';
 String cupShareText(
   Session session, {
   required String Function(String playerId) nameOf,
-  required String Function(String gameId) titleOf,
   bool finished = false,
 }) {
   final b = StringBuffer(
     'Copa de la noche · $kAppName (${_date(session.startedAt)})\n',
   );
   final groups = groupStandings(session.standings);
-  for (final g in groups) {
+  // Solo el podio (hasta 3 puestos), sin cifras: no salen saldos negativos ni la cola.
+  for (final g in groups.where((g) => g.rank <= 3)) {
     final names = joinNames(g.playerIds.map(nameOf).toList());
-    b.writeln(
-      '${ordinal(g.rank)} $names${g.isTie ? ' (empate)' : ''}: ${_chips(g.total)}',
-    );
+    b.writeln('${ordinal(g.rank)} $names${g.isTie ? ' (empate)' : ''}');
   }
   if (groups.isNotEmpty) {
-    final leaders = joinNames(groups.first.playerIds.map(nameOf).toList());
-    b.writeln('\n${finished ? 'Ganador' : 'Va en cabeza'}: $leaders');
-  }
-  final losers = session.biggestLosers;
-  if (losers.isNotEmpty) {
-    b.writeln(
-      'El que más ha pagado: ${joinNames(losers.map(nameOf).toList())}',
-    );
-  }
-  final games = session.statsByGame;
-  if (games.isNotEmpty) {
-    b.writeln('\nPor juego:');
-    for (final g in games) {
-      final lead = joinNames(
-        g.standings
-            .where((s) => s.rank == 1)
-            .map((s) => nameOf(s.playerId))
-            .toList(),
-      );
-      b.writeln(
-        '- ${titleOf(g.gameId)} (${g.rounds} ${g.rounds == 1 ? 'ronda' : 'rondas'}): $lead',
-      );
+    if (_celebrates(groups.first)) {
+      final leaders = joinNames(groups.first.playerIds.map(nameOf).toList());
+      b.writeln('\n${finished ? 'Ganador' : 'Va en cabeza'}: $leaders');
+    } else {
+      b.writeln('\n${_noPositiveTitle(finished)}');
     }
   }
   if (kShareLink.isNotEmpty) b.writeln('\n$kShareLink');
@@ -124,119 +113,6 @@ Color _medalColor(int rank) => switch (rank) {
   _ => AppColors.medalBronze,
 };
 
-/// Medalla para los tres primeros puestos y número en Alfa Slab para el resto.
-class _Place extends StatelessWidget {
-  const _Place(this.rank, {this.size = 28});
-
-  final int rank;
-  final double size;
-
-  @override
-  Widget build(BuildContext context) {
-    if (rank <= 3) return MedalIcon(rank, size: size);
-    return SizedBox(
-      width: size,
-      height: size,
-      child: Center(
-        child: Text(
-          '$rank.',
-          textScaler: TextScaler.noScaling,
-          style: TextStyle(
-            fontFamily: AppFonts.display,
-            fontSize: size * 0.55,
-            color: AppColors.textMuted,
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-/// Tarjeta de la home con el top 3 y "Ver Copa". Se oculta si no hay puntuaciones.
-class CupCard extends ConsumerWidget {
-  const CupCard({super.key});
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final session = ref.watch(sessionProvider);
-    if (session.isEmpty) return const SizedBox.shrink();
-    final players = ref.watch(playersProvider);
-    final stale = ref.read(sessionProvider.notifier).isStale;
-    final top = session.standings.take(3).toList();
-    return Card(
-      child: InkWell(
-        borderRadius: BorderRadius.circular(20),
-        onTap: () => context.push('/copa'),
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  AppIcon.trophy.widget(size: 26),
-                  const SizedBox(width: 10),
-                  const Expanded(
-                    child: FittedBox(
-                      fit: BoxFit.scaleDown,
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        'Copa de la noche',
-                        maxLines: 1,
-                        style: TextStyle(
-                          fontWeight: FontWeight.w800,
-                          fontSize: 16,
-                        ),
-                      ),
-                    ),
-                  ),
-                  TextButton(
-                    onPressed: () => context.push('/copa'),
-                    child: const Text('Ver Copa'),
-                  ),
-                ],
-              ),
-              if (stale)
-                const Padding(
-                  padding: EdgeInsets.only(bottom: 6),
-                  child: Text(
-                    'Lleva más de 12 horas abierta. Puedes empezar otra noche desde la Copa.',
-                    style: TextStyle(color: AppColors.textMuted, fontSize: 13),
-                  ),
-                ),
-              for (final s in top)
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 3),
-                  child: Row(
-                    children: [
-                      SizedBox(width: 34, child: _Place(s.rank, size: 26)),
-                      PlayerAvatar(_playerOf(players, s.playerId), size: 26),
-                      const SizedBox(width: 10),
-                      Expanded(
-                        child: Text(
-                          _playerOf(players, s.playerId).name,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                      Text(
-                        _chips(s.total),
-                        style: TextStyle(
-                          fontWeight: FontWeight.w700,
-                          color: _balanceColor(s.total),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
 class CupScreen extends ConsumerWidget {
   const CupScreen({super.key});
 
@@ -247,7 +123,6 @@ class CupScreen extends ConsumerWidget {
     final text = cupShareText(
       session,
       nameOf: _nameResolver(players),
-      titleOf: _titleOf,
       finished: finished,
     );
     try {
@@ -291,8 +166,9 @@ class CupScreen extends ConsumerWidget {
     final players = ref.watch(playersProvider);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Copa de la noche'),
+        title: const AppTitle('Copa de la noche'),
         actions: [
+          const HowToPlayButton('copa'),
           if (!session.isEmpty)
             IconButton(
               tooltip: 'Compartir la Copa',
@@ -320,16 +196,16 @@ class _EmptyCup extends StatelessWidget {
   const _EmptyCup();
 
   @override
-  Widget build(BuildContext context) => const Center(
+  Widget build(BuildContext context) => Center(
     child: SingleChildScrollView(
-      padding: EdgeInsets.all(32),
+      padding: const EdgeInsets.all(32),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Jockey(size: 112),
-          SizedBox(height: 12),
-          Text(
-            'Aún no ha corrido nadie',
+          const Jockey(size: 112),
+          const SizedBox(height: 12),
+          const Text(
+            'Aún no hay rondas que cuenten',
             textAlign: TextAlign.center,
             style: TextStyle(
               fontFamily: AppFonts.display,
@@ -337,11 +213,12 @@ class _EmptyCup extends StatelessWidget {
               color: AppColors.gold,
             ),
           ),
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
+          // Los juegos que suman salen del registro: nada fijo en el texto.
           Text(
-            'Jugad unas rondas y aquí saldrá quién manda esta noche.',
+            'Jugad a ${joinNames([for (final g in gameModules) if (g.scoresCup) g.title])} y aquí saldrá quién manda.',
             textAlign: TextAlign.center,
-            style: TextStyle(color: AppColors.textMuted),
+            style: const TextStyle(color: AppColors.textMuted),
           ),
         ],
       ),
@@ -394,14 +271,6 @@ class _CupBodyState extends State<_CupBody> {
     super.dispose();
   }
 
-  /// Etiqueta bajo el nombre en la clasificación (empate, líder o ganador).
-  String? _rowTag(Standing s, {required bool tied}) {
-    if (tied) return s.rank == 1 ? 'Empate en cabeza' : 'Empate';
-    if (s.rank != 1) return null;
-    if (s.total < 0) return _lessLost;
-    return widget.finished ? 'Ganador' : 'Líder';
-  }
-
   @override
   Widget build(BuildContext context) {
     final session = widget.session;
@@ -414,54 +283,44 @@ class _CupBodyState extends State<_CupBody> {
         if (g.isTie) g.rank,
     };
     final nameOf = _nameResolver(players);
-    final losers = session.biggestLosers;
     return ListView(
       padding: const EdgeInsets.fromLTRB(20, 8, 20, 32),
       children: [
+        const _SectionTitle('Podio'),
         _PodiumPanel(
           leaders: groups.first,
           nameOf: nameOf,
           finished: finished,
-          standings: standings.take(3).toList(),
+          // Los tres primeros puestos, con todos los que empatan en ellos: un empate
+          // en el 3.º no deja a nadie fuera sin decirlo. La cola sigue sin salir.
+          standings: standings.where((s) => s.rank <= 3).toList(),
           tiedRanks: tiedRanks,
           players: players,
           onWinnerLanded: _celebrate,
           confetti: _confetti,
           confettiOn: _confettiOn && !MediaQuery.disableAnimationsOf(context),
         ),
-        const SizedBox(height: 20),
-        const _SectionTitle('Clasificación'),
-        const Padding(
-          padding: EdgeInsets.only(left: 4, right: 4, bottom: 8),
-          child: Text(
-            _howItWorks,
-            style: TextStyle(color: AppColors.textMuted, fontSize: 13),
-          ),
-        ),
-        Card(
+        const SizedBox(height: 12),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 4),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              for (final s in standings)
-                _StandingRow(
-                  standing: s,
-                  player: _playerOf(players, s.playerId),
-                  tied: tiedRanks.contains(s.rank),
-                  tag: _rowTag(s, tied: tiedRanks.contains(s.rank)),
-                  finished: finished,
+              const Text(
+                _howItWorks,
+                style: TextStyle(color: AppColors.textMuted, fontSize: 13),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                _countingLine,
+                style: const TextStyle(
+                  color: AppColors.textMuted,
+                  fontSize: 13,
                 ),
+              ),
             ],
           ),
         ),
-        if (losers.isNotEmpty) ...[
-          const SizedBox(height: 20),
-          const _SectionTitle('El que más ha pagado'),
-          Card(
-            child: ListTile(
-              leading: AppIcon.trendDown.widget(size: 28),
-              title: Text(joinNames(losers.map(nameOf).toList())),
-            ),
-          ),
-        ],
         const SizedBox(height: 20),
         const _SectionTitle('Por juego'),
         Card(
@@ -472,7 +331,7 @@ class _CupBodyState extends State<_CupBody> {
                   title: Text(_titleOf(g.gameId)),
                   subtitle: Text(
                     '${g.rounds} ${g.rounds == 1 ? 'ronda' : 'rondas'} · '
-                    'Líder: ${joinNames(g.standings.where((s) => s.rank == 1).map((s) => nameOf(s.playerId)).toList())}',
+                    '${_gameLeaderText(g, nameOf)}',
                   ),
                 ),
             ],
@@ -498,71 +357,11 @@ class _CupBodyState extends State<_CupBody> {
   }
 }
 
-/// Ayuda cuando quien manda tiene saldo negativo: "Líder" sonaría absurdo.
-const _lessLost = 'Menos fichas perdidas';
-
-class _StandingRow extends StatelessWidget {
-  const _StandingRow({
-    required this.standing,
-    required this.player,
-    required this.tied,
-    required this.tag,
-    required this.finished,
-  });
-
-  final Standing standing;
-  final Player player;
-  final bool tied;
-  final String? tag;
-  final bool finished;
-
-  @override
-  Widget build(BuildContext context) {
-    final s = standing;
-    final role = tied
-        ? ', empate'
-        : s.rank == 1
-        ? ', ${finished ? 'ganador' : 'líder'}'
-        : '';
-    return Semantics(
-      container: true,
-      label: 'Puesto ${s.rank}: ${player.name}, ${_chips(s.total)}$role',
-      child: ExcludeSemantics(
-        child: ListTile(
-          leading: SizedBox(
-            width: 68,
-            child: Row(
-              children: [
-                SizedBox(width: 34, child: _Place(s.rank)),
-                PlayerAvatar(player, size: 26),
-              ],
-            ),
-          ),
-          title: Text(
-            player.name,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-          ),
-          subtitle: tag == null
-              ? null
-              : Text(
-                  tag!,
-                  style: TextStyle(
-                    color: tied ? AppColors.textMuted : AppColors.gold,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-          trailing: Text(
-            _chips(s.total),
-            style: TextStyle(
-              fontWeight: FontWeight.w800,
-              color: _balanceColor(s.total),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
+/// "Líder: Ana" si quien manda en ese juego tiene fichas a favor; si no, no se corona a nadie.
+String _gameLeaderText(GameStats g, String Function(String) nameOf) {
+  final top = g.standings.where((s) => s.rank == 1).toList();
+  if (top.isEmpty || top.first.total <= 0) return 'Nadie en positivo';
+  return 'Líder: ${joinNames([for (final s in top) nameOf(s.playerId)])}';
 }
 
 class _SectionTitle extends StatelessWidget {
@@ -614,6 +413,7 @@ class _PodiumPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final celebrate = _celebrates(leaders);
     return ClipRRect(
       borderRadius: BorderRadius.circular(24),
       child: DecoratedBox(
@@ -624,7 +424,7 @@ class _PodiumPanel extends StatelessWidget {
         ),
         child: Stack(
           children: [
-            if (confettiOn)
+            if (confettiOn && celebrate)
               Positioned.fill(
                 child: ExcludeSemantics(
                   child: IgnorePointer(
@@ -639,15 +439,18 @@ class _PodiumPanel extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(12, 16, 12, 16),
               child: Column(
                 children: [
-                  const Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Jockey(pose: JockeyPose.celebra, size: 68),
-                      SizedBox(width: 6),
-                      TrophyIllustration(size: 112),
-                    ],
-                  ),
+                  if (celebrate)
+                    const Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Jockey(pose: JockeyPose.celebra, size: 68),
+                        SizedBox(width: 6),
+                        TrophyIllustration(size: 112),
+                      ],
+                    )
+                  else
+                    const Jockey(size: 80),
                   const SizedBox(height: 8),
                   _LeaderBanner(
                     names: leaders.playerIds.map(nameOf).toList(),
@@ -659,6 +462,7 @@ class _PodiumPanel extends StatelessWidget {
                     standings: standings,
                     tiedRanks: tiedRanks,
                     players: players,
+                    celebrate: celebrate,
                     onWinnerLanded: onWinnerLanded,
                   ),
                 ],
@@ -704,7 +508,8 @@ class _PodiumConfetti extends StatelessWidget {
   );
 }
 
-/// Quién manda. Con empate: "Empate a -2 fichas" y los nombres debajo.
+/// Quién manda. Con empate en positivo: "Empate a +3 fichas" y los nombres debajo.
+/// Sin nadie en positivo no se celebra: "Nadie va en positivo" y quién ha perdido menos.
 class _LeaderBanner extends StatelessWidget {
   const _LeaderBanner({
     required this.names,
@@ -720,14 +525,24 @@ class _LeaderBanner extends StatelessWidget {
   Widget build(BuildContext context) {
     if (names.isEmpty) return const SizedBox.shrink();
     final tie = names.length > 1;
-    final title = tie
+    final positive = total > 0;
+    final title = !positive
+        ? _noPositiveTitle(finished)
+        : tie
         ? 'Empate a ${_chips(total)}'
         : '${finished ? 'Ganador' : 'Va en cabeza'}: ${names.first}';
-    final detail = tie ? joinNames(names) : null;
-    final help = total < 0 ? _lessLost : null;
+    final detail = !positive
+        ? (total == 0
+              ? 'Sin perder nada: ${joinNames(names)}'
+              : names.length == 1
+              ? 'Quien menos ha perdido: ${names.first}'
+              : 'Quienes menos han perdido: ${joinNames(names)}')
+        : tie
+        ? joinNames(names)
+        : null;
     return Semantics(
       container: true,
-      label: [title, ?detail, ?help].join('. '),
+      label: [title, ?detail].join('. '),
       child: ExcludeSemantics(
         child: Column(
           children: [
@@ -757,18 +572,6 @@ class _LeaderBanner extends StatelessWidget {
                   ),
                 ),
               ),
-            if (help != null)
-              Padding(
-                padding: const EdgeInsets.only(top: 4),
-                child: Text(
-                  help,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    fontSize: 13,
-                    color: AppColors.medalSilver,
-                  ),
-                ),
-              ),
           ],
         ),
       ),
@@ -785,12 +588,16 @@ class _Podium extends StatefulWidget {
     required this.standings,
     required this.tiedRanks,
     required this.players,
+    required this.celebrate,
     required this.onWinnerLanded,
   });
 
   final List<Standing> standings;
   final Set<int> tiedRanks;
   final List<Player> players;
+
+  /// `false` si nadie tiene fichas a favor: sin medallas que caen, sin háptico ni sonido.
+  final bool celebrate;
   final VoidCallback onWinnerLanded;
 
   @override
@@ -801,7 +608,8 @@ class _PodiumState extends State<_Podium> with SingleTickerProviderStateMixin {
   // Línea de tiempo (fracción de la duración total).
   static const _barsEnd = 0.35;
   static const _medalStart = 0.3;
-  static const _medalGap = 0.2;
+  // Separación entre medallas: 0,2 con tres puestos; menos si hay empates y salen más.
+  double get _medalGap => _n > 3 ? 0.4 / (_n - 1) : 0.2;
   static const _medalDur = 0.3;
   // La primera vez que toca el suelo una curva `bounceOut`.
   static const _impact = 0.364;
@@ -823,7 +631,7 @@ class _PodiumState extends State<_Podium> with SingleTickerProviderStateMixin {
       ((t - (_medalStart + order * _medalGap)) / _medalDur).clamp(0.0, 1.0);
 
   void _tick() {
-    if (!_animated) return;
+    if (!_animated || !widget.celebrate) return;
     final t = _c.value;
     while (_landed < _n && _localT(_landed, t) >= _impact) {
       final isWinner = _landed == _n - 1;
@@ -845,7 +653,7 @@ class _PodiumState extends State<_Podium> with SingleTickerProviderStateMixin {
     if (MediaQuery.disableAnimationsOf(context)) {
       _c.value = 1;
       // El sonido no es una animación: sigue el ajuste de Sonido.
-      if (_n > 0) playSound(AppSound.podium);
+      if (_n > 0 && widget.celebrate) playSound(AppSound.podium);
     } else {
       _animated = true;
       _c.forward();
@@ -862,10 +670,12 @@ class _PodiumState extends State<_Podium> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
     final standings = widget.standings;
     // Orden visual: el 2.º a la izquierda, el 1.º en el centro, el 3.º a la derecha.
+    // Con empates puede haber más de tres: entonces, en orden de puesto.
     final order = switch (standings.length) {
       1 => [0],
       2 => [1, 0],
-      _ => [1, 0, 2],
+      3 => [1, 0, 2],
+      _ => [for (var i = 0; i < standings.length; i++) i],
     };
     return AnimatedBuilder(
       animation: _c,
@@ -884,6 +694,7 @@ class _PodiumState extends State<_Podium> with SingleTickerProviderStateMixin {
                   tied: widget.tiedRanks.contains(standings[i].rank),
                   players: widget.players,
                   grow: grow,
+                  celebrate: widget.celebrate,
                   medalT: _localT(_order(i), t),
                 ),
               ),
@@ -903,6 +714,7 @@ class _PodiumColumn extends StatelessWidget {
     required this.tied,
     required this.players,
     required this.grow,
+    required this.celebrate,
     required this.medalT,
   });
 
@@ -910,6 +722,9 @@ class _PodiumColumn extends StatelessWidget {
   final bool tied;
   final List<Player> players;
   final double grow;
+
+  /// Con `false` no hay medalla: el puesto se dice con texto ("1.º").
+  final bool celebrate;
 
   /// Progreso (0 a 1) de la caída de la medalla.
   final double medalT;
@@ -962,13 +777,29 @@ class _PodiumColumn extends StatelessWidget {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Transform.translate(
-                      offset: Offset(0, -drop),
-                      child: Opacity(
-                        opacity: (medalT * 8).clamp(0.0, 1.0),
-                        child: MedalIcon(standing.rank, size: 34),
+                    if (celebrate)
+                      Transform.translate(
+                        offset: Offset(0, -drop),
+                        child: Opacity(
+                          opacity: (medalT * 8).clamp(0.0, 1.0),
+                          child: MedalIcon(standing.rank, size: 34),
+                        ),
+                      )
+                    else
+                      SizedBox(
+                        height: 34,
+                        child: FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Text(
+                            ordinal(standing.rank),
+                            style: TextStyle(
+                              fontFamily: AppFonts.display,
+                              fontSize: 22,
+                              color: color,
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
                     const SizedBox(height: 4),
                     Opacity(
                       opacity: grow.clamp(0.0, 1.0),

@@ -21,6 +21,9 @@ class InfiltradoModule extends GameModule {
   Color get color => const Color(0xFF8E6BE0);
 
   @override
+  bool get scoresCup => true;
+
+  @override
   Widget buildEntry(BuildContext context) => const InfiltradoSetupScreen();
 
   @override

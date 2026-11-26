@@ -27,10 +27,11 @@ Descargados de kenney.nl el 2026-11-25. Detalle en `assets/audio/LICENSE-Kenney-
 | `chip.ogg` | Casino Audio 1.1 (https://kenney.nl/assets/casino-audio) | chips-stack-1 |
 | `chip_soft.ogg` | Casino Audio 1.1 | chip-lay-1 |
 | `card.ogg` | Casino Audio 1.1 | card-slide-1 |
-| `correct.ogg` | Music Jingles (https://kenney.nl/assets/music-jingles) | jingles_HIT00 |
-| `wrong.ogg` | Music Jingles | jingles_HIT13 |
-| `podium.ogg` | Music Jingles | jingles_HIT15 |
+| `podium.ogg` | Music Jingles (https://kenney.nl/assets/music-jingles) | jingles_HIT15 |
 | `tap.ogg` | UI Audio (https://kenney.nl/assets/ui-audio) | click1 |
+
+### Sonidos de acierto y fallo (obra propia, generados por código)
+`correct.wav` (arpegio de Do mayor, Do5-Mi5-Sol5-Do6, timbre de campanilla suave con eco ligero) y `wrong.wav` (dos notas descendentes y apagadas, Sol4-Mi4) los genera `tools/audio/gen_aciertos.mjs` por síntesis aditiva (ondas senoidales y envolventes calculadas, sin muestras ni código de terceros). Obra propia de Habinson, sin licencia de terceros; sustituyen a los jingles de Kenney usados antes (2026-11-26). Los usan Trivia y Geografía.
 
 `guillermo_tell.ogg` es aparte: Obertura de Guillermo Tell (Rossini), grabación de la Banda de la Marina de EE. UU. ("Grand Scenes", 2000), obra del gobierno de EE. UU. en dominio público, vía Wikimedia Commons. **NO VERIFICADO:** la URL exacta del archivo en Commons no consta en el repositorio.
 
@@ -65,8 +66,8 @@ Según la página de "Baraja española.svg" (consultada el 2026-11-25), incluye:
 - Publicación (R2): `docs/creditos.html` con autoría, fuente, licencia, enlaces, cambios y esta lista. Las imágenes se sirven desde `docs/cartas/`, que debe ser una copia exacta de `assets/cards/` (si cambian las cartas, volver a copiarlas).
 
 ### Cartas de obra propia (sin atribución)
-Las siguientes cartas son dibujos propios de Paddock, creados por código, sin copiar ni calcar nada de terceros. Sustituyen a las originales de Commons, que llevaban la cabeza de GNU (Free Art License, posible marca) en todas las monedas y un caballo atribuido a GnuBond (Aisleriot, posible GPL):
-- `oros_1` a `oros_9`: monedas con rosetón de 8 puntas; as con laurel y cinta "PADDOCK".
+Las siguientes cartas son dibujos propios de Habinson, creados por código, sin copiar ni calcar nada de terceros. Sustituyen a las originales de Commons, que llevaban la cabeza de GNU (Free Art License, posible marca) en todas las monedas y un caballo atribuido a GnuBond (Aisleriot, posible GPL):
+- `oros_1` a `oros_9`: monedas con rosetón de 8 puntas; as con laurel y cinta "HABINSON".
 - `oros_10` y `oros_12`: la figura (sota y rey) sigue siendo de la baraja de Commons (CC BY-SA 3.0); solo la moneda de la esquina es propia.
 - `oros_11`, `copas_11`, `espadas_11`, `bastos_11`: caballo con jinete propios (el caballo de la Carrera, `horseAsset`). Marco, esquinas redondeadas y números de esquina se conservan de las cartas anteriores.
 - Regeneración: `powershell -ExecutionPolicy Bypass -File tools\gen_cartas_propias.ps1` (escribe `assets/cards/` y `docs/cartas/`; con `-Salida <carpeta>` solo prueba). Es idempotente.

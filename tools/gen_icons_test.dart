@@ -1,4 +1,4 @@
-// Genera los PNG del icono y el splash de Paddock.
+// Genera los PNG del icono y el splash de Habinson.
 // Uso: flutter test tools/gen_icons_test.dart
 import 'dart:io';
 import 'dart:ui' as ui;

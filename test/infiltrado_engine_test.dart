@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:paddock/games/infiltrado/domain/infiltrado_engine.dart';
+import 'package:habinson/games/infiltrado/domain/infiltrado_engine.dart';
 
 void main() {
   const four = ['ana', 'beto', 'carla', 'dani'];

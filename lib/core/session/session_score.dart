@@ -100,14 +100,19 @@ class Session {
 
   /// Devuelve la sesión con la ronda añadida. Si el `roundId` ya existe, o no hay
   /// variaciones distintas de cero, devuelve la misma sesión (idempotente).
+  /// Con [recordZeros], quien participó y quedó a cero también se registra
+  /// (así no desaparece de la clasificación).
   Session withRound({
     required String roundId,
     required String gameId,
     required Map<String, int> deltas,
     required DateTime at,
+    bool recordZeros = false,
   }) {
     if (hasRound(roundId)) return this;
-    final entries = deltas.entries.where((e) => e.value != 0).toList();
+    final entries = deltas.entries
+        .where((e) => recordZeros || e.value != 0)
+        .toList();
     if (entries.isEmpty) return this;
     return Session(
       id: id,
@@ -155,21 +160,6 @@ class Session {
           rounds: entry.value.map((e) => e.roundId).toSet().length,
           standings: _rank(entry.value),
         ),
-    ];
-  }
-
-  /// Jugadores que más fichas han perdido (suma de variaciones negativas).
-  /// Varios si empatan; vacío si nadie ha perdido.
-  List<String> get biggestLosers {
-    final lost = <String, int>{};
-    for (final e in events) {
-      if (e.delta < 0) lost[e.playerId] = (lost[e.playerId] ?? 0) + e.delta;
-    }
-    if (lost.isEmpty) return const [];
-    final worst = lost.values.reduce((a, b) => a < b ? a : b);
-    return [
-      for (final entry in lost.entries)
-        if (entry.value == worst) entry.key,
     ];
   }
 

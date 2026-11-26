@@ -183,13 +183,13 @@ class RaceStatsScreen extends ConsumerWidget {
                                 ),
                               ),
                               _Metric(
-                                label: 'fichas perdidas',
+                                label: 'en contra',
                                 value: r.stats.chipsLost,
                                 color: AppColors.danger,
                               ),
                               const SizedBox(width: 12),
                               _Metric(
-                                label: 'fichas ganadas',
+                                label: 'a favor',
                                 value: r.stats.chipsWon,
                                 color: AppColors.success,
                               ),

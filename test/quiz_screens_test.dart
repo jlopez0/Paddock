@@ -9,24 +9,24 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
-import 'package:paddock/app/app_icons.dart';
-import 'package:paddock/app/mascot.dart';
-import 'package:paddock/app/theme.dart';
-import 'package:paddock/core/storage.dart';
-import 'package:paddock/games/geography/domain/country.dart';
-import 'package:paddock/games/geography/domain/geo_map.dart';
-import 'package:paddock/games/geography/domain/quiz.dart';
-import 'package:paddock/games/geography/geo_data.dart';
-import 'package:paddock/games/geography/geo_store.dart';
-import 'package:paddock/games/geography/ui/geo_quiz_screen.dart';
-import 'package:paddock/games/geography/ui/geo_result_screen.dart';
-import 'package:paddock/games/geography/ui/geo_setup_screen.dart';
-import 'package:paddock/games/geography/ui/geo_widgets.dart';
-import 'package:paddock/games/trivia/trivia_data.dart';
-import 'package:paddock/games/trivia/ui/quiz_fx.dart';
-import 'package:paddock/games/trivia/ui/trivia_quiz_screen.dart';
-import 'package:paddock/games/trivia/ui/trivia_result_screen.dart';
-import 'package:paddock/games/trivia/ui/trivia_setup_screen.dart';
+import 'package:habinson/app/app_icons.dart';
+import 'package:habinson/app/mascot.dart';
+import 'package:habinson/app/theme.dart';
+import 'package:habinson/core/storage.dart';
+import 'package:habinson/games/geography/domain/country.dart';
+import 'package:habinson/games/geography/domain/geo_map.dart';
+import 'package:habinson/games/geography/domain/quiz.dart';
+import 'package:habinson/games/geography/geo_data.dart';
+import 'package:habinson/games/geography/geo_store.dart';
+import 'package:habinson/games/geography/ui/geo_quiz_screen.dart';
+import 'package:habinson/games/geography/ui/geo_result_screen.dart';
+import 'package:habinson/games/geography/ui/geo_setup_screen.dart';
+import 'package:habinson/games/geography/ui/geo_widgets.dart';
+import 'package:habinson/games/trivia/trivia_data.dart';
+import 'package:habinson/games/trivia/ui/quiz_fx.dart';
+import 'package:habinson/games/trivia/ui/trivia_quiz_screen.dart';
+import 'package:habinson/games/trivia/ui/trivia_result_screen.dart';
+import 'package:habinson/games/trivia/ui/trivia_setup_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// Pantallas de Trivia y Geografía: escala de resultado, estados vacíos y que
@@ -306,7 +306,9 @@ void main() {
           noAnimations: noAnim,
         );
         await settle(tester);
-        expect(find.text('1 / 3'), findsOneWidget);
+        expect(find.text('Pregunta 1'), findsOneWidget);
+        expect(find.text('1 / 3'), findsNothing);
+        expect(find.byType(LinearProgressIndicator), findsNothing);
         // Las opciones llevan letra y estado para lectores de pantalla.
         expect(find.bySemanticsLabel(RegExp(r'^A\. ')), findsOneWidget);
 
@@ -369,7 +371,9 @@ void main() {
                 noAnimations: noAnim,
               );
               await settle(tester);
-              expect(find.text('1 / 3'), findsOneWidget);
+              expect(find.text('Pregunta 1'), findsOneWidget);
+              expect(find.text('1 / 3'), findsNothing);
+              expect(find.byType(LinearProgressIndicator), findsNothing);
               switch (mode) {
                 case AnswerMode.options:
                   expect(find.byType(QuizOptionTile), findsNWidgets(4));

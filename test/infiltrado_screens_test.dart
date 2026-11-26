@@ -5,14 +5,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
-import 'package:paddock/app/theme.dart';
-import 'package:paddock/core/content/prompts.dart';
-import 'package:paddock/core/players/players_controller.dart';
-import 'package:paddock/core/session/session_controller.dart';
-import 'package:paddock/core/storage.dart';
-import 'package:paddock/games/infiltrado/domain/infiltrado_engine.dart';
-import 'package:paddock/games/infiltrado/infiltrado_module.dart';
-import 'package:paddock/games/infiltrado/infiltrado_store.dart';
+import 'package:habinson/app/theme.dart';
+import 'package:habinson/core/content/prompts.dart';
+import 'package:habinson/core/players/players_controller.dart';
+import 'package:habinson/core/session/session_controller.dart';
+import 'package:habinson/core/storage.dart';
+import 'package:habinson/games/infiltrado/domain/infiltrado_engine.dart';
+import 'package:habinson/games/infiltrado/infiltrado_module.dart';
+import 'package:habinson/games/infiltrado/infiltrado_store.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final _now = DateTime(2026, 11, 24, 22);
@@ -37,12 +37,13 @@ Future<_Env> _pump(
   Size size = const Size(400, 900),
   double textScale = 1,
   bool disableAnimations = false,
+  Map<String, Object> prefsInit = const {},
 }) async {
   tester.view.physicalSize = size;
   tester.view.devicePixelRatio = 1;
   addTearDown(tester.view.reset);
 
-  SharedPreferences.setMockInitialValues({});
+  SharedPreferences.setMockInitialValues(prefsInit);
   final prefs = await SharedPreferences.getInstance();
   final c = ProviderContainer(
     overrides: [
@@ -201,6 +202,16 @@ void main() {
       expect(find.text('Repartir roles'), findsOneWidget);
     });
 
+    testWidgets('el texto de la configuración cambia en Sorbos: le tocan sorbos, siempre o agua o reto', (tester) async {
+      await _pump(
+        tester,
+        prefsInit: {'settings.consequenceMode.v1': 'sorbos', 'settings.adultConfirmed.v1': true},
+      );
+      expect(find.textContaining('le tocan 2 sorbos'), findsOneWidget);
+      expect(find.textContaining('o agua o reto'), findsOneWidget);
+      expect(find.textContaining('paga 2 fichas'), findsNothing);
+    });
+
     testWidgets('con 4 jugadores solo se permite 1 infiltrado', (tester) async {
       await _pump(tester);
       expect(find.text('Con 2 infiltrados hacen falta 5 jugadores o más.'), findsOneWidget);
@@ -241,6 +252,79 @@ void main() {
       expect(events.single.gameId, 'infiltrado');
       // La palabra usada no vuelve a salir en la siguiente ronda.
       expect(env.c.read(infiltradoUsedProvider), hasLength(1));
+    });
+
+    testWidgets('tras Nueva noche el resultado ya no dice que las fichas están en la Copa', (tester) async {
+      final env = await _pump(tester);
+      await _tapText(tester, 'Repartir roles');
+      final game = env.game;
+      final impostor = game.deal.impostors.single;
+      await _reveal(tester, env);
+      final other = game.deal.civils.first;
+      await _vote(tester, env, {
+        for (final id in game.deal.players) id: id == impostor ? other : impostor,
+      });
+      await tester.enterText(find.byType(TextField), 'palabra equivocada');
+      await _tapText(tester, 'Comprobar');
+      expect(find.text('−2 en la Copa'), findsOneWidget);
+      await tester.scrollUntilVisible(
+        find.text('Fichas anotadas en la Copa de la noche.'),
+        200,
+        scrollable: find.byType(Scrollable).first,
+      );
+      expect(find.text('Fichas anotadas en la Copa de la noche.'), findsOneWidget);
+
+      // Se empieza una noche nueva (desde la Copa) y se vuelve atrás: la Copa ya no tiene la ronda.
+      env.c.read(sessionProvider.notifier).newNight();
+      await tester.pumpAndSettle();
+      expect(find.textContaining('en la Copa'), findsNothing);
+      expect(find.text('Fichas anotadas en la Copa de la noche.'), findsNothing);
+      expect(find.text('−2 fichas'), findsOneWidget); // la pérdida se sigue viendo, sin decir que está en la Copa
+    });
+
+    testWidgets('el texto de reglas sigue el modo: "paga 2 fichas" solo en Fichas', (tester) async {
+      final cases = {
+        'puntos': ('si lo pilláis, paga 2 fichas; si se escapa, los demás pagan 1 cada uno.', true),
+        'retos': ('si lo pilláis, le tocan 2 retos; si se escapa, 1 reto a cada uno de los demás.', false),
+        'sorbos': ('si lo pilláis, le tocan 2 sorbos; si se escapa, 1 a cada uno de los demás. Siempre o agua o reto.', false),
+      };
+      for (final e in cases.entries) {
+        await _pump(
+          tester,
+          prefsInit: {'settings.consequenceMode.v1': e.key, 'settings.adultConfirmed.v1': true},
+        );
+        expect(find.textContaining(e.value.$1), findsOneWidget, reason: e.key);
+        if (!e.value.$2) {
+          expect(find.textContaining('ficha'), findsNothing, reason: e.key);
+          expect(find.textContaining('pagan'), findsNothing, reason: e.key);
+          expect(find.textContaining('paga '), findsNothing, reason: e.key);
+        }
+      }
+    });
+
+    testWidgets('en Retos la nota del resultado no habla de fichas: "Ya cuenta en la Copa de la noche."', (tester) async {
+      final env = await _pump(
+        tester,
+        prefsInit: {'settings.consequenceMode.v1': 'retos', 'settings.adultConfirmed.v1': true},
+      );
+      await _tapText(tester, 'Repartir roles');
+      final game = env.game;
+      final impostor = game.deal.impostors.single;
+      await _reveal(tester, env);
+      final other = game.deal.civils.first;
+      await _vote(tester, env, {
+        for (final id in game.deal.players) id: id == impostor ? other : impostor,
+      });
+      await tester.enterText(find.byType(TextField), 'palabra equivocada');
+      await _tapText(tester, 'Comprobar');
+      await tester.scrollUntilVisible(
+        find.text('Ya cuenta en la Copa de la noche.'),
+        200,
+        scrollable: find.byType(Scrollable).first,
+      );
+      expect(find.text('Ya cuenta en la Copa de la noche.'), findsOneWidget);
+      expect(find.text('Fichas anotadas en la Copa de la noche.'), findsNothing);
+      expect(find.text('2 retos'), findsOneWidget);
     });
 
     testWidgets('si el infiltrado acierta la palabra gana y los demás pierden 1', (tester) async {
@@ -295,6 +379,19 @@ void main() {
       expect(find.text('Pasa el móvil a'), findsOneWidget);
       expect(env.game.roundId, isNot(game.roundId));
       expect(env.game.deal.word, isNot(game.deal.word));
+    });
+
+    testWidgets('el resultado ofrece Ver Copa y lleva a la Copa', (tester) async {
+      final env = await _pump(tester);
+      await _tapText(tester, 'Repartir roles');
+      final game = env.game;
+      await _reveal(tester, env);
+      final civils = game.deal.civils.toList();
+      await _vote(tester, env, {
+        for (final id in game.deal.players) id: id == civils.first ? civils.last : civils.first,
+      });
+      await _tapText(tester, 'Ver Copa');
+      expect(find.text('COPA'), findsOneWidget);
     });
 
     testWidgets('empate: segunda votación solo entre los empatados', (tester) async {

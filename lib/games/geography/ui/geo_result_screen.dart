@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 
 import '../../../app/app_icons.dart';
 import '../../../app/theme.dart';
-import '../../trivia/ui/quiz_cup_section.dart';
 import '../../trivia/ui/quiz_fx.dart';
 import '../domain/geo_map.dart';
 import '../domain/quiz.dart';
@@ -64,13 +63,6 @@ class GeoResultScreen extends ConsumerWidget {
                         fontWeight: FontWeight.w700,
                       ),
                     ),
-            ),
-            QuizCupSection(
-              roundId: r.roundId,
-              gameId: 'geografia',
-              correct: r.correct,
-              total: r.total,
-              color: geoColor,
             ),
             if (r.mistakes.isNotEmpty) ...[
               const SizedBox(height: 28),

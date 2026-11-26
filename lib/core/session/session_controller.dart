@@ -29,12 +29,19 @@ class SessionScoreController extends Notifier<Session> {
 
   /// Registra una ronda: `deltas` es jugador -> fichas (positivas o negativas).
   /// No hace nada si `roundId` ya está registrado. Devuelve `true` si se registró.
-  bool award(String roundId, String gameId, Map<String, int> deltas) {
+  /// Con [recordZeros], los jugadores que quedan a cero también se anotan.
+  bool award(
+    String roundId,
+    String gameId,
+    Map<String, int> deltas, {
+    bool recordZeros = false,
+  }) {
     final next = state.withRound(
       roundId: roundId,
       gameId: gameId,
       deltas: deltas,
       at: _now(),
+      recordZeros: recordZeros,
     );
     if (identical(next, state)) return false;
     _save(next);

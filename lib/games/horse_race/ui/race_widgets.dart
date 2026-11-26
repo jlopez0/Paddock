@@ -97,8 +97,18 @@ class RaceStamp extends StatelessWidget {
     : text = 'COBRA',
       color = _stampGreen;
 
+  /// En Retos y Sorbos quien acierta no cobra nada: el sello dice que acierta.
+  const RaceStamp.acierta({super.key, this.delayMs = 0})
+    : text = 'ACIERTA',
+      color = _stampGreen;
+
   const RaceStamp.paga({super.key, this.delayMs = 0})
     : text = 'PAGA',
+      color = AppColors.burgundy;
+
+  /// En Retos y Sorbos "PAGA" suena a coste o a consumo: el sello dice a quién le toca.
+  const RaceStamp.leToca({super.key, this.delayMs = 0})
+    : text = 'LE TOCA',
       color = AppColors.burgundy;
 
   final String text;

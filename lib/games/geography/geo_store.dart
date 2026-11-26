@@ -151,7 +151,7 @@ class QuizResult {
     required this.best,
   });
 
-  /// Identifica esta vuelta en la Copa (una vuelta solo se anota una vez).
+  /// Identifica esta vuelta (Trivia y Geografía no suman a la Copa).
   final String roundId;
   final GeoSetup setup;
   final int total;

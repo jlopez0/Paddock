@@ -12,10 +12,24 @@ import '../../../core/players/player.dart';
 import '../../../core/players/player_widgets.dart';
 import '../../../core/players/players_controller.dart';
 import '../../../core/audio/app_sound.dart';
+import '../../../core/consequences/consequences.dart';
 import '../../../core/settings/app_feedback.dart';
+import '../../../core/settings/settings_controller.dart';
 import '../domain/infiltrado_engine.dart';
 import '../infiltrado_store.dart';
 import 'infiltrado_widgets.dart';
+
+/// Cola de la frase de reglas según el modo. "Pagan" y "ficha" solo en Fichas (D19).
+String _consequenceTail(ConsequenceMode mode) {
+  switch (mode) {
+    case ConsequenceMode.puntos:
+      return 'si lo pilláis, paga 2 fichas; si se escapa, los demás pagan 1 cada uno.';
+    case ConsequenceMode.retos:
+      return 'si lo pilláis, le tocan 2 retos; si se escapa, 1 reto a cada uno de los demás.';
+    case ConsequenceMode.sorbos:
+      return 'si lo pilláis, le tocan 2 sorbos; si se escapa, 1 a cada uno de los demás. Siempre o agua o reto.';
+  }
+}
 
 class InfiltradoSetupScreen extends ConsumerStatefulWidget {
   const InfiltradoSetupScreen({super.key});
@@ -79,6 +93,7 @@ class _InfiltradoSetupScreenState extends ConsumerState<InfiltradoSetupScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final mode = ref.watch(settingsProvider.select((s) => s.consequenceMode));
     final players = ref.watch(playersProvider);
     final setup = ref.watch(infiltradoSetupProvider);
     final used = ref.watch(infiltradoUsedProvider);
@@ -125,6 +140,7 @@ class _InfiltradoSetupScreenState extends ConsumerState<InfiltradoSetupScreen> {
       ),
       body: SafeArea(
         child: ListView(
+          keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
           padding: const EdgeInsets.fromLTRB(20, 4, 20, 24),
           children: [
             Card(
@@ -135,11 +151,10 @@ class _InfiltradoSetupScreenState extends ConsumerState<InfiltradoSetupScreen> {
                   children: [
                     AppIcon.detective.widget(size: 36),
                     const SizedBox(width: 12),
-                    const Expanded(
+                    Expanded(
                       child: Text(
                         'Todos reciben la misma palabra salvo el infiltrado, que solo sabe la '
-                        'categoría. Debatid y votad: si lo pilláis, paga 2 fichas; si se escapa, '
-                        'los demás pagan 1 cada uno.',
+                        'categoría. Debatid y votad: ${_consequenceTail(mode)}',
                       ),
                     ),
                   ],
@@ -216,17 +231,13 @@ class _InfiltradoSetupScreenState extends ConsumerState<InfiltradoSetupScreen> {
               color: infiltradoColor,
               onToggle: _toggleLevel,
             ),
-            if (available != null)
-              Padding(
-                padding: const EdgeInsets.only(top: 8),
+            // Nunca se muestra cuántas palabras quedan: solo el aviso de que se agotaron.
+            if (exhausted)
+              const Padding(
+                padding: EdgeInsets.only(top: 8),
                 child: Text(
-                  exhausted
-                      ? 'No quedan palabras con estos niveles.'
-                      : '${available.length} palabras en el mazo',
-                  style: const TextStyle(
-                    color: GameColors.mutedText,
-                    fontSize: 13,
-                  ),
+                  'No quedan palabras con estos niveles.',
+                  style: TextStyle(color: GameColors.mutedText, fontSize: 13),
                 ),
               ),
             if (exhausted) ...[

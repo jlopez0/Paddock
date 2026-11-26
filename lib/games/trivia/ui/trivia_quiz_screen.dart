@@ -158,22 +158,16 @@ class _TriviaQuizScreenState extends ConsumerState<TriviaQuizScreen> {
                       onPressed: _exit,
                       icon: AppIcon.close.widget(),
                     ),
+                    // Solo el número de pregunta: nunca el total ni una barra de progreso.
                     Expanded(
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(6),
-                        child: LinearProgressIndicator(
-                          value: (_index + (_answered ? 1 : 0)) / total,
-                          minHeight: 8,
-                          color: triviaColor,
-                          backgroundColor: AppColors.surfaceHigh,
-                        ),
+                      child: Text(
+                        'Pregunta ${_index + 1}',
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(fontWeight: FontWeight.w800),
                       ),
                     ),
-                    const SizedBox(width: 12),
-                    Text(
-                      '${_index + 1} / $total',
-                      style: const TextStyle(fontWeight: FontWeight.w800),
-                    ),
+                    // Mismo ancho que el botón de salir para que el texto quede centrado.
+                    const SizedBox(width: 48),
                   ],
                 ),
                 const SizedBox(height: 12),

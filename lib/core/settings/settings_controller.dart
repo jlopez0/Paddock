@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../consequences/consequences.dart';
+import '../consequences/sorbos_flag.dart';
 import '../storage.dart';
 import 'app_feedback.dart';
 
@@ -50,8 +51,11 @@ class SettingsController extends Notifier<AppSettings> {
     for (final m in ConsequenceMode.values) {
       if (m.name == stored) mode = m;
     }
-    // Sorbos sin confirmación de edad nunca es válido, aunque el valor guardado lo diga.
-    if (mode == ConsequenceMode.sorbos && !adult) mode = ConsequenceMode.puntos;
+    // Sorbos sin confirmación de edad (o en una compilación sin Sorbos) nunca es válido,
+    // aunque el valor guardado lo diga. La preferencia guardada no se toca.
+    if (mode == ConsequenceMode.sorbos && (!adult || !_sorbosEnabled)) {
+      mode = ConsequenceMode.puntos;
+    }
     final s = AppSettings(
       sound: _readBool(prefs.get(_soundKey), true),
       vibration: _readBool(prefs.get(_vibrationKey), true),
@@ -77,9 +81,15 @@ class SettingsController extends Notifier<AppSettings> {
     _sync(state);
   }
 
-  /// No hace nada si se pide `sorbos` sin haber confirmado la edad (`adultConfirmed`).
+  bool get _sorbosEnabled => ref.read(sorbosEnabledProvider);
+
+  /// No hace nada si se pide `sorbos` sin haber confirmado la edad (`adultConfirmed`)
+  /// o en una compilación sin Sorbos.
   void setConsequenceMode(ConsequenceMode mode) {
-    if (mode == ConsequenceMode.sorbos && !state.adultConfirmed) return;
+    if (mode == ConsequenceMode.sorbos &&
+        (!state.adultConfirmed || !_sorbosEnabled)) {
+      return;
+    }
     ref.read(sharedPreferencesProvider).setString(_modeKey, mode.name);
     state = state.copyWith(consequenceMode: mode);
   }

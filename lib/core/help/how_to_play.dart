@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
 
 import '../../app/app_icons.dart';
+import '../consequences/sorbos_flag.dart';
 
 const howToPlayAsset = 'assets/content/es/ayuda.json';
 
@@ -22,7 +23,8 @@ class HowToPlay {
 }
 
 /// Parsea el JSON de ayuda; tolerante: entradas rotas se descartan, JSON roto -> {}.
-Map<String, HowToPlay> parseHowToPlay(String raw) {
+/// Con [sorbosEnabled] false (compilación sin Sorbos) se usa `pasosLite` si la entrada lo trae.
+Map<String, HowToPlay> parseHowToPlay(String raw, {bool sorbosEnabled = true}) {
   try {
     final data = jsonDecode(raw);
     if (data is! List) return const {};
@@ -32,8 +34,11 @@ Map<String, HowToPlay> parseHowToPlay(String raw) {
       final id = e['id'];
       final titulo = e['titulo'];
       if (id is! String || titulo is! String) continue;
+      final rawPasos = !sorbosEnabled && e['pasosLite'] is List
+          ? e['pasosLite'] as List
+          : (e['pasos'] is List ? e['pasos'] as List : const []);
       final pasos = [
-        for (final p in (e['pasos'] is List ? e['pasos'] as List : const []))
+        for (final p in rawPasos)
           if (p is String) p,
       ];
       final consejo = e['consejo'];
@@ -51,8 +56,12 @@ Map<String, HowToPlay> parseHowToPlay(String raw) {
 }
 
 final howToPlayProvider = FutureProvider<Map<String, HowToPlay>>((ref) async {
+  final sorbosEnabled = ref.watch(sorbosEnabledProvider);
   try {
-    return parseHowToPlay(await rootBundle.loadString(howToPlayAsset));
+    return parseHowToPlay(
+      await rootBundle.loadString(howToPlayAsset),
+      sorbosEnabled: sorbosEnabled,
+    );
   } catch (_) {
     return const {};
   }

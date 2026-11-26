@@ -17,7 +17,7 @@ if (hasReleaseKey) {
 
 android {
     // El namespace es interno (paquete Kotlin); el ID público es applicationId.
-    namespace = "com.paddock.paddock"
+    namespace = "com.habinson.habinson"
     compileSdk = 36
     ndkVersion = flutter.ndkVersion
 
@@ -28,7 +28,7 @@ android {
 
     defaultConfig {
         // ID definitivo en Google Play: NO se puede cambiar después de publicar.
-        applicationId = "es.jlopez0.paddock"
+        applicationId = "es.jlopez0.habinson"
         minSdk = flutter.minSdkVersion
         // Google Play exige API 36 para apps nuevas desde el 31/08/2026.
         targetSdk = 36

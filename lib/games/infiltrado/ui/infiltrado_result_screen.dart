@@ -7,10 +7,12 @@ import '../../../app/mascot.dart';
 import '../../../app/theme.dart';
 import '../../prompt_deck/game_colors.dart';
 import '../../../core/consequences/consequence_banner.dart';
+import '../../../core/consequences/consequences.dart';
 import '../../../core/consequences/retos_filter.dart';
 import '../../../core/content/prompts.dart';
 import '../../../core/players/player.dart';
 import '../../../core/players/players_controller.dart';
+import '../../../core/session/session_controller.dart';
 import '../../../core/settings/app_feedback.dart';
 import '../../../core/settings/settings_controller.dart';
 import '../domain/infiltrado_engine.dart';
@@ -156,6 +158,7 @@ class _LastChance extends StatelessWidget {
         textInputAction: TextInputAction.done,
         textCapitalization: TextCapitalization.sentences,
         onSubmitted: (_) => onCheck(),
+        onTapOutside: (_) => FocusManager.instance.primaryFocus?.unfocus(),
         decoration: const InputDecoration(hintText: 'La palabra era…'),
       ),
     ],
@@ -206,6 +209,10 @@ class _Outcome extends ConsumerWidget {
     final retos = retosPrompts == null
         ? null
         : filterRetos(retosPrompts, adultConfirmed: adult);
+    // Si la Copa ya no tiene esta ronda (Nueva noche), el resultado no dice que está anotada.
+    final inCup = ref.watch(
+      sessionProvider.select((s) => s.hasRound(game.roundId)),
+    );
     final losses = <String, int>{
       for (final e in outcome.deltas.entries)
         if (e.value < 0) nameOf(e.key): -e.value,
@@ -320,14 +327,24 @@ class _Outcome extends ConsumerWidget {
               ],
               if (losses.isNotEmpty) ...[
                 const SizedBox(height: 12),
-                ConsequenceBanner(losses: losses, mode: mode, retos: retos),
+                ConsequenceBanner(
+                  losses: losses,
+                  mode: mode,
+                  retos: retos,
+                  inCup: inCup,
+                ),
               ],
-              const SizedBox(height: 8),
-              const Text(
-                'Fichas anotadas en la Copa de la noche.',
-                textAlign: TextAlign.center,
-                style: TextStyle(color: GameColors.mutedText, fontSize: 13),
-              ),
+              if (inCup) ...[
+                const SizedBox(height: 8),
+                Text(
+                  cupNoteText(mode),
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    color: GameColors.mutedText,
+                    fontSize: 13,
+                  ),
+                ),
+              ],
             ],
           ),
         ),
@@ -339,7 +356,7 @@ class _Outcome extends ConsumerWidget {
             Expanded(
               child: OutlinedButton(
                 onPressed: () => context.push('/copa'),
-                child: const Text('Ver la Copa'),
+                child: const Text('Ver Copa'),
               ),
             ),
             const SizedBox(width: 8),

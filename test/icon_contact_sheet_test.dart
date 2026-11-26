@@ -5,8 +5,8 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
-import 'package:paddock/app/app_icons.dart';
-import 'package:paddock/app/theme.dart';
+import 'package:habinson/app/app_icons.dart';
+import 'package:habinson/app/theme.dart';
 
 /// Hoja de contacto de todos los iconos (revision visual). Escribe un PNG en
 /// el directorio indicado por PADDOCK_ICON_SHEET_DIR, si existe la variable.

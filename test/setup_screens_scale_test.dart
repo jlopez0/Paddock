@@ -2,13 +2,13 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
-import 'package:paddock/app/app_icons.dart';
-import 'package:paddock/core/content/prompts.dart';
-import 'package:paddock/core/storage.dart';
-import 'package:paddock/games/abecedario/ui/abecedario_setup_screen.dart';
-import 'package:paddock/games/prompt_deck/prompt_deck_module.dart';
-import 'package:paddock/games/prompt_deck/prompt_deck_screens.dart';
-import 'package:paddock/games/registry.dart';
+import 'package:habinson/app/app_icons.dart';
+import 'package:habinson/core/content/prompts.dart';
+import 'package:habinson/core/storage.dart';
+import 'package:habinson/games/abecedario/ui/abecedario_setup_screen.dart';
+import 'package:habinson/games/prompt_deck/prompt_deck_module.dart';
+import 'package:habinson/games/prompt_deck/prompt_deck_screens.dart';
+import 'package:habinson/games/registry.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Future<void> _pump(WidgetTester tester, Widget screen, double scale) async {

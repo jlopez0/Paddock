@@ -1,10 +1,12 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../core/consequences/sorbos_flag.dart';
 import 'licenses_screen.dart';
 import 'theme.dart';
 
-class CreditsScreen extends StatelessWidget {
+class CreditsScreen extends ConsumerWidget {
   const CreditsScreen({super.key});
 
   static const _ccBySa4 = 'https://creativecommons.org/licenses/by-sa/4.0/';
@@ -53,7 +55,8 @@ class CreditsScreen extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final sorbos = ref.watch(sorbosEnabledProvider);
     const muted = TextStyle(color: AppColors.textMuted, height: 1.5);
     return Scaffold(
       appBar: AppBar(title: const Text('Créditos')),
@@ -155,8 +158,9 @@ class CreditsScreen extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Text(
-              'Sonidos de mesa (fichas, cartas, aciertos y podio): Kenney (kenney.nl), '
-              'licencia CC0 1.0. Atribución voluntaria.',
+              'Sonidos de mesa (fichas, cartas y podio): Kenney (kenney.nl), '
+              'licencia CC0 1.0. Atribución voluntaria. Los sonidos de acierto y fallo '
+              'son obra propia, generados por código.',
               style: muted,
             ),
             Align(
@@ -204,8 +208,11 @@ class CreditsScreen extends StatelessWidget {
             ),
             SizedBox(height: 8),
             Text(
-              'Solo para mayores de edad. Nadie está obligado a beber: '
-              'cualquier trago se puede cambiar por un reto o un vaso de agua.',
+              sorbos
+                  ? 'Solo para mayores de edad. Nadie está obligado a beber: '
+                        'cualquier trago se puede cambiar por un reto o un vaso de agua.'
+                  : 'Solo para mayores de edad. Nadie está obligado a nada: '
+                        'cualquier reto se puede cambiar o saltar.',
               style: muted,
             ),
             const SizedBox(height: 24),

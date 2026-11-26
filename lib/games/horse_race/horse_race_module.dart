@@ -15,9 +15,12 @@ class HorseRaceModule extends GameModule {
   @override
   String get title => 'Carrera de caballos';
   @override
-  String get subtitle => 'Elige palo, suelta fichas y que corra tu caballo';
+  String get subtitle => 'Elige palo, apuesta y que corra tu caballo';
   @override
   Color get color => const Color(0xFFE8B84A);
+
+  @override
+  bool get scoresCup => true;
 
   @override
   Widget buildEntry(BuildContext context) => const RaceSetupScreen();

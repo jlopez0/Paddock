@@ -9,10 +9,13 @@ import '../../../app/app_icons.dart';
 import '../../../app/theme.dart';
 import '../../../core/players/player.dart';
 import '../../../core/players/player_widgets.dart';
+import '../../../core/consequences/consequences.dart';
 import '../../../core/players/players_controller.dart';
+import '../../../core/settings/settings_controller.dart';
 import '../domain/bets.dart';
 import '../domain/cards.dart';
 import '../race_store.dart';
+import '../race_texts.dart';
 import 'race_widgets.dart';
 
 class _Draft {
@@ -79,6 +82,8 @@ class _RaceSetupScreenState extends ConsumerState<RaceSetupScreen> {
   Widget build(BuildContext context) {
     final players = ref.watch(playersProvider);
     final settings = ref.watch(raceSetupProvider).settings;
+    final mode = ref.watch(settingsProvider.select((s) => s.consequenceMode));
+    final capNote = stakeCapNote(mode);
     final byId = {for (final p in players) p.id: p};
     _drafts.removeWhere((id, _) => !byId.containsKey(id));
     final missingSuit = _drafts.entries
@@ -98,6 +103,7 @@ class _RaceSetupScreenState extends ConsumerState<RaceSetupScreen> {
         ],
       ),
       body: ListView(
+        keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
         padding: const EdgeInsets.fromLTRB(20, 4, 20, 120),
         children: [
           const _SectionTitle('¿Quién apuesta?'),
@@ -132,12 +138,24 @@ class _RaceSetupScreenState extends ConsumerState<RaceSetupScreen> {
           ),
           if (_drafts.isNotEmpty) ...[
             const _SectionTitle('Boletos'),
+            if (capNote != null)
+              Padding(
+                padding: const EdgeInsets.only(bottom: 10),
+                child: Text(
+                  capNote,
+                  style: const TextStyle(
+                    color: AppColors.textMuted,
+                    fontSize: 13,
+                  ),
+                ),
+              ),
             for (final e in _drafts.entries)
               Padding(
                 padding: const EdgeInsets.only(bottom: 10),
                 child: _BetCard(
                   player: byId[e.key]!,
                   draft: e.value,
+                  mode: mode,
                   onChanged: () => setState(() {}),
                 ),
               ),
@@ -169,6 +187,7 @@ class _RaceSetupScreenState extends ConsumerState<RaceSetupScreen> {
                 ),
                 SwitchListTile(
                   title: const Text('Acertar gana el doble'),
+                  subtitle: const Text('Quien acierta suma el doble en la Copa'),
                   value: settings.doubleForWinners,
                   onChanged: (v) => ref
                       .read(raceSetupProvider.notifier)
@@ -246,11 +265,13 @@ class _BetCard extends StatelessWidget {
   const _BetCard({
     required this.player,
     required this.draft,
+    required this.mode,
     required this.onChanged,
   });
 
   final Player player;
   final _Draft draft;
+  final ConsequenceMode mode;
   final VoidCallback onChanged;
 
   @override
@@ -275,12 +296,19 @@ class _BetCard extends StatelessWidget {
                 ),
                 _Stepper(
                   value: draft.chips,
-                  enabled: !draft.allIn,
+                  mode: mode,
                   allIn: draft.allIn,
                   onChanged: (v) {
                     AppFeedback.selection();
                     playSound(AppSound.chip);
                     draft.chips = v;
+                    onChanged();
+                  },
+                  // Subir de 9 salta al All-in; bajar desde el All-in vuelve a 9.
+                  onAllInChanged: (a) {
+                    AppFeedback.selection();
+                    playSound(AppSound.chip);
+                    draft.allIn = a;
                     onChanged();
                   },
                 ),
@@ -289,6 +317,7 @@ class _BetCard extends StatelessWidget {
             const SizedBox(height: 10),
             _AllInButton(
               selected: draft.allIn,
+              mode: mode,
               onTap: () {
                 AppFeedback.selection();
                 if (!draft.allIn) playSound(AppSound.chip);
@@ -368,12 +397,18 @@ class _SuitButton extends StatelessWidget {
                 child: Image.asset(PlayingCard.horseAsset(suit), height: 54),
               ),
               const SizedBox(height: 4),
-              Text(
-                suit.label,
-                style: TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w700,
-                  color: selected ? suit.color : AppColors.textMuted,
+              // Una sola línea: con letra grande se reduce lo justo en vez de partir "Espadas".
+              FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Text(
+                  suit.label,
+                  maxLines: 1,
+                  softWrap: false,
+                  style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w700,
+                    color: selected ? suit.color : AppColors.textMuted,
+                  ),
                 ),
               ),
             ],
@@ -388,20 +423,20 @@ class _Stepper extends StatelessWidget {
   const _Stepper({
     required this.value,
     required this.onChanged,
-    this.enabled = true,
+    required this.mode,
+    required this.onAllInChanged,
     this.allIn = false,
   });
 
   final int value;
-  final bool enabled;
+  final ConsequenceMode mode;
   final bool allIn;
   final ValueChanged<int> onChanged;
+  final ValueChanged<bool> onAllInChanged;
 
   @override
   Widget build(BuildContext context) {
-    final label = allIn
-        ? 'All-in, $kAllInChips fichas'
-        : (value == 1 ? '1 ficha' : '$value fichas');
+    final label = allIn ? allInA11yText(mode) : stakeA11yText(mode, value);
     return Container(
       decoration: BoxDecoration(
         color: AppColors.surfaceHigh,
@@ -412,8 +447,10 @@ class _Stepper extends StatelessWidget {
         children: [
           IconButton(
             visualDensity: VisualDensity.compact,
-            tooltip: 'Una ficha menos',
-            onPressed: enabled && value > Bet.minChips
+            tooltip: 'Bajar apuesta',
+            onPressed: allIn
+                ? () => onAllInChanged(false)
+                : value > Bet.minChips
                 ? () => onChanged(value - 1)
                 : null,
             icon: AppIcon.remove.widget(),
@@ -428,11 +465,11 @@ class _Stepper extends StatelessWidget {
                 children: [
                   ChipDrop(value: value, allIn: allIn, size: 40),
                   const SizedBox(height: 2),
-                  const FittedBox(
+                  FittedBox(
                     fit: BoxFit.scaleDown,
                     child: Text(
-                      'fichas',
-                      style: TextStyle(
+                      stakeCaption(mode),
+                      style: const TextStyle(
                         fontSize: 10,
                         color: AppColors.textMuted,
                       ),
@@ -444,10 +481,12 @@ class _Stepper extends StatelessWidget {
           ),
           IconButton(
             visualDensity: VisualDensity.compact,
-            tooltip: 'Una ficha más',
-            onPressed: enabled && value < Bet.maxChips
+            tooltip: 'Subir apuesta',
+            onPressed: allIn
+                ? null
+                : value < Bet.maxChips
                 ? () => onChanged(value + 1)
-                : null,
+                : () => onAllInChanged(true),
             icon: AppIcon.add.widget(),
           ),
         ],
@@ -457,9 +496,14 @@ class _Stepper extends StatelessWidget {
 }
 
 class _AllInButton extends StatelessWidget {
-  const _AllInButton({required this.selected, required this.onTap});
+  const _AllInButton({
+    required this.selected,
+    required this.mode,
+    required this.onTap,
+  });
 
   final bool selected;
+  final ConsequenceMode mode;
   final VoidCallback onTap;
 
   @override
@@ -468,7 +512,7 @@ class _AllInButton extends StatelessWidget {
       button: true,
       selected: selected,
       excludeSemantics: true,
-      label: 'All-in, $kAllInChips fichas',
+      label: allInA11yText(mode),
       onTap: onTap,
       child: GestureDetector(
         onTap: onTap,
@@ -497,7 +541,7 @@ class _AllInButton extends StatelessWidget {
               const SizedBox(width: 10),
               Flexible(
                 child: Text(
-                  'All-in  ·  $kAllInChips fichas',
+                  allInButtonText(mode),
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontWeight: FontWeight.w800,

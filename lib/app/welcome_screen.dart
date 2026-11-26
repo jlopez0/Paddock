@@ -2,6 +2,7 @@ import 'package:material_ui/material_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../core/consequences/sorbos_flag.dart';
 import '../core/settings/onboarding_controller.dart';
 import 'app_info.dart';
 import 'mascot.dart';
@@ -98,7 +99,9 @@ class WelcomeScreen extends ConsumerWidget {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    'Nadie está obligado a beber',
+                    ref.watch(sorbosEnabledProvider)
+                        ? 'Nadie está obligado a beber'
+                        : 'Nadie está obligado a nada',
                     textAlign: TextAlign.center,
                     style: text.titleMedium?.copyWith(
                       color: AppColors.textMuted,

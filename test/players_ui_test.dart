@@ -1,9 +1,9 @@
 import 'package:material_ui/material_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:paddock/core/players/players_controller.dart';
-import 'package:paddock/core/players/players_screen.dart';
-import 'package:paddock/core/storage.dart';
+import 'package:habinson/core/players/players_controller.dart';
+import 'package:habinson/core/players/players_screen.dart';
+import 'package:habinson/core/storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
@@ -47,6 +47,44 @@ void main() {
     await tester.tap(find.text('Deshacer'));
     await tester.pump();
     expect(container.read(playersProvider).single.name, 'Ana');
+  });
+
+  testWidgets('"Hecho" del teclado añade y, con el campo vacío, cierra el teclado', (
+    tester,
+  ) async {
+    SharedPreferences.setMockInitialValues({});
+    final prefs = await SharedPreferences.getInstance();
+    final container = ProviderContainer(
+      overrides: [sharedPreferencesProvider.overrideWithValue(prefs)],
+    );
+    addTearDown(container.dispose);
+    await tester.pumpWidget(
+      UncontrolledProviderScope(
+        container: container,
+        child: const MaterialApp(home: PlayersScreen()),
+      ),
+    );
+
+    bool focused() =>
+        tester.widget<TextField>(find.byType(TextField)).focusNode!.hasFocus;
+
+    await tester.tap(find.byType(TextField));
+    await tester.pump();
+    expect(focused(), isTrue);
+
+    // Con nombre: añade y mantiene el teclado para seguir apuntando.
+    await tester.enterText(find.byType(TextField), 'Ana');
+    await tester.testTextInput.receiveAction(TextInputAction.done);
+    await tester.pump();
+    expect(container.read(playersProvider).length, 1);
+    expect(focused(), isTrue);
+
+    // Vacío: termina de añadir, sin error y sin teclado.
+    await tester.testTextInput.receiveAction(TextInputAction.done);
+    await tester.pump();
+    expect(focused(), isFalse);
+    expect(find.text('Escribe un nombre'), findsNothing);
+    expect(container.read(playersProvider).length, 1);
   });
 
   testWidgets('el contador del nombre cuenta letras, no jugadores', (

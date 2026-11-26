@@ -6,7 +6,7 @@ Recuento a mano: 59 + 145 + 75 + 66 + 52 + 54 caracteres por línea, más 5 salt
 
 ```
 <es-ES>
-Primera versión de prueba de Paddock. Gracias por probarla.
+Primera versión de prueba de Habinson. Gracias por probarla.
 - Ocho juegos de grupo: Carrera de caballos, El Infiltrado, Trivia, Geografía, Abecedario, ¿Quién es más probable?, ¿Qué preferirías? y Yo nunca.
 - Copa de la noche: marcador común, podio final y resultado para compartir.
 - Niveles de contenido: Suave y Picante, más un modo opcional +18.

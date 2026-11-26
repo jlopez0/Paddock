@@ -1,9 +1,9 @@
-# App Review notes (App Store Connect · "Notes") · Paddock 1.0
+# App Review notes (App Store Connect · "Notes") · Habinson 1.0
 
 Paste the block below into App Store Connect > App Review Information > Notes. Keep it under 4,000 characters.
 
 ```
-Paddock is a collection of party games for groups who play together on a single iPhone: Horse Race (card race with chip bets), The Infiltrator (social deduction), Trivia, Geography, Alphabet (one word per letter), Who's Most Likely To, Would You Rather and Never Have I Ever. Results from several games feed a shared, on-device scoreboard for the night ("Copa de la noche"). The app UI and content are in Spanish.
+Habinson is a collection of party games for groups who play together on a single iPhone: Horse Race (card race with chip bets), The Infiltrator (social deduction), Trivia, Geography, Alphabet (one word per letter), Who's Most Likely To, Would You Rather and Never Have I Ever. Results from several games feed a shared, on-device scoreboard for the night ("Copa de la noche"). The app UI and content are in Spanish.
 
 No account, no login
 - No sign-up and no demo account needed. All features are available from the first launch.
@@ -37,10 +37,9 @@ Attribution
 - Some Trivia questions come from Open Trivia DB (opentdb.com), CC BY-SA 4.0, translated and adapted to Spanish. Credited in Settings > Créditos.
 
 Contact
-- [CORREO_DE_CONTACTO]
+- habinthegreat@gmail.com
 ```
 
 ## Before submitting
 
-- Replace `CORREO_DE_CONTACTO` (same placeholder as in `docs/privacidad.html`).
 - If Apple raises guideline 4.3(b) ("drinking games"), reply pointing to the default Points mode, the scoreboard in chips and the Sips mode being optional, 18+ and capped.

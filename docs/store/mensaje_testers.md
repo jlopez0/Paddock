@@ -1,4 +1,4 @@
-# Mensaje para testers y cuestionario de acceso a producción · Paddock v1.0
+# Mensaje para testers y cuestionario de acceso a producción · Habinson v1.0
 
 Borradores. No se envía nada desde aquí. Los huecos van entre corchetes: `[ASÍ]`.
 
@@ -9,12 +9,12 @@ Requisito (cuenta personal): al menos 12 testers con opt-in durante 14 días seg
 ## 1. Mensaje para reclutar testers (WhatsApp, Telegram o correo)
 
 ```
-¡Hola! Estoy a punto de sacar Paddock, una app de juegos para jugar en grupo con un solo móvil (trivia, El Infiltrado, carreras, retos…). Antes de publicarla, Google me pide que la prueben al menos 12 personas durante 14 días. ¿Me echas una mano?
+¡Hola! Estoy a punto de sacar Habinson, una app de juegos para jugar en grupo con un solo móvil (trivia, El Infiltrado, carreras, retos…). Antes de publicarla, Google me pide que la prueben al menos 12 personas durante 14 días. ¿Me echas una mano?
 
 Qué necesito:
 1. Tu correo de Gmail (el que usas en Google Play). Solo lo uso para darte acceso a la prueba.
 2. Cuando te avise, entra en este enlace y pulsa "Hacerse tester": [ENLACE_OPT_IN]
-3. Instala Paddock desde Google Play con ese mismo correo.
+3. Instala Habinson desde Google Play con ese mismo correo.
 4. No la desinstales durante 14 días. No hace falta jugar a diario, pero abrirla de vez en cuando ayuda.
 
 Si algo falla, no se entiende o te sobra, cuéntamelo por aquí o desde la ficha de la app en Google Play (hay un apartado para enviar comentarios privados). Vale todo: capturas, audios o "esto no me gusta".
@@ -27,7 +27,7 @@ Ojo: la app es para mayores de 18. Solo Android de momento.
 ### Recordatorio a mitad de prueba (día 7)
 
 ```
-¡Hola! Vamos por la mitad de la prueba de Paddock. Gracias por aguantar. Recuerda no desinstalarla hasta el [FECHA_FIN]. Si has jugado con más gente, ¿qué tal? ¿Algún juego que no se entendiera o que sobrara?
+¡Hola! Vamos por la mitad de la prueba de Habinson. Gracias por aguantar. Recuerda no desinstalarla hasta el [FECHA_FIN]. Si has jugado con más gente, ¿qué tal? ¿Algún juego que no se entendiera o que sobrara?
 ```
 
 ### Cierre (día 14 o después)

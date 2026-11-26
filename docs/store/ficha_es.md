@@ -1,10 +1,10 @@
-# Ficha de tienda (es-ES) · Paddock v1.0
+# Ficha de tienda (es-ES) · Habinson v1.0
 
 Fuentes: `docs/PLAN_PUBLICACION.md` (Fase 6), `docs/CONTENIDO.md`, `docs/decisions.md`, `docs/privacidad.html` y los textos de la app (`lib/`). No describe nada que la app no haga.
 
 ## Título
 
-`Paddock: Juegos de fiesta` · 25/30 caracteres (vale para Google Play y App Store).
+`Habinson: Juegos de fiesta` · 26/30 caracteres (vale para Google Play y App Store).
 
 ## Subtítulo / descripción breve
 
@@ -17,17 +17,17 @@ Fuentes: `docs/PLAN_PUBLICACION.md` (Fase 6), `docs/CONTENIDO.md`, `docs/decisio
 Unos 2.100 caracteres con saltos de línea (límite: 4.000). Recuento a mano, línea a línea; margen de sobra.
 
 Revisión del 25/11/2026:
-- La Copa ya no dice que "cada partida" suma: solo Carrera, El Infiltrado, los juegos de cartas, Trivia y Geografía (esta última pareja, desde la Fase 3.11; el Abecedario no puntúa).
+- Revisión del 26/11/2026 (D14, opción C): la Copa solo recoge Carrera de caballos y El Infiltrado. Trivia, Geografía, Yo nunca y los mazos no suman. Se quita "Confiesa… o paga" y el modo "Puntos" pasa a llamarse "Fichas".
 - Fuera "el mejor caballo" y "¿Te la juegas con un All-in?": evita superlativos y rebaja el tono de apuesta (COMPLIANCE R3). Se aclara que las fichas no tienen valor ni se compran.
 - Títulos de sección en minúscula: Google desaconseja las mayúsculas sostenidas en los metadatos.
 - Open Trivia DB se cita solo por la atribución que exige su licencia (CC BY-SA 4.0), no como reclamo.
 - Los niveles se presentan como Suave y Picante más un modo opcional +18 genérico, sin nombrarlo ni describirlo (COMPLIANCE #7). El modo de consecuencias para mayores de edad no nombra la bebida: solo tope y alternativa (COMPLIANCE #6). La declaración completa está en `docs/store/cuestionarios.md`.
 
 ```
-Paddock reúne ocho juegos para jugar en grupo con un solo móvil. Apuntáis los nombres, elegís juego y a jugar. Sin cuentas, sin anuncios y sin conexión.
+Habinson reúne ocho juegos para jugar en grupo con un solo móvil. Apuntáis los nombres, elegís juego y a jugar. Sin cuentas, sin anuncios y sin conexión.
 
 La Copa de la noche
-Carrera de caballos, El Infiltrado, los juegos de cartas, Trivia y Geografía suman o restan fichas en un marcador común. Las fichas son solo puntos: no tienen valor ni se compran. La clasificación aparece en la pantalla de inicio y, al final, hay podio con estadísticas por juego. Comparte el resultado con un toque y empieza una noche nueva cuando quieras.
+Carrera de caballos y El Infiltrado suman o restan fichas en un marcador común. Las fichas no tienen valor ni se compran. La clasificación se abre desde la pantalla de inicio y, al final, hay podio con estadísticas por juego. Comparte el resultado con un toque y empieza una noche nueva cuando quieras.
 
 Los juegos
 - Carrera de caballos: elige un palo de la baraja, juega de 1 a 5 fichas y sigue la carrera hasta la meta.
@@ -35,9 +35,9 @@ Los juegos
 - Trivia: cultura general con cuatro opciones por pregunta.
 - Geografía: banderas, capitales, siluetas y mapas.
 - Abecedario: una palabra por cada letra, de la A a la Z.
-- ¿Quién es más probable?: a la de tres, todos señalan.
-- ¿Qué preferirías?: dos opciones, ninguna buena. La minoría paga.
-- Yo nunca: confiesa… o paga.
+- ¿Quién es más probable?: a la de tres, todos señalan. La carta dice lo que se juega.
+- ¿Qué preferirías?: dos opciones, ninguna buena.
+- Yo nunca: quien lo haya hecho, lo confiesa.
 
 Tú eliges el tono
 Las cartas y las palabras del Infiltrado se adaptan al grupo:
@@ -47,17 +47,17 @@ Las cartas y las palabras del Infiltrado se adaptan al grupo:
 
 Consecuencias a tu manera
 Perder fichas significa lo que decidáis en Ajustes:
-- Puntos (por defecto): se restan de la Copa.
+- Fichas (por defecto): se restan de la Copa.
 - Retos: un reto por cada ficha perdida, con un máximo de 3 por ronda.
-- Un modo opcional para mayores de edad, desactivado de serie, con tope por ronda y la alternativa de agua o reto siempre a la vista. Nadie está obligado a nada.
+- Consecuencias opcionales +18, desactivadas de serie, con tope por ronda y la alternativa de agua o reto siempre a la vista. Nadie está obligado a nada.
 
 Pensada para la mesa
 - Un solo móvil para todo el grupo.
 - Funciona sin internet.
 - Sin registro, sin anuncios y sin compras.
-- Paddock no recoge datos: nombres, ajustes y marcador se guardan en tu móvil.
+- Habinson no recoge datos: nombres, ajustes y marcador se guardan en tu móvil.
 
-Paddock está pensada para mayores de 18 años. Juega con responsabilidad.
+Habinson está pensada para mayores de 18 años. Juega con responsabilidad.
 
 Algunas preguntas de Trivia proceden de Open Trivia DB (opentdb.com), CC BY-SA 4.0, traducidas y adaptadas al español.
 ```
@@ -77,15 +77,16 @@ Prueba cerrada: ver `docs/store/notas_version_1_0.md`. Mensaje para testers y cu
 Para producción (texto anterior, se mantiene):
 
 ```
-Primera versión de Paddock:
+Primera versión de Habinson:
 - Ocho juegos de grupo: Carrera de caballos, El Infiltrado, Trivia, Geografía, Abecedario, ¿Quién es más probable?, ¿Qué preferirías? y Yo nunca.
 - Copa de la noche: marcador común, podio final y resultado para compartir.
 - Niveles de contenido: Suave y Picante, más un modo opcional +18.
-- Consecuencias a elegir: Puntos o Retos.
+- Consecuencias a elegir: Fichas o Retos.
 ```
 
 ## Pendiente de decidir
 
-- La app llama al marcador **"Copa de la noche"** (`lib/app/cup_screen.dart`). Si se prefiere "Copa Paddock", hay que cambiarlo también en la app para que ficha y producto coincidan.
-- Suman a la Copa Carrera, El Infiltrado, los tres juegos de cartas, Trivia y Geografía (estos dos solo suman, nunca restan). El Abecedario no puntúa. Por eso la descripción no dice que "todos" los juegos cuentan.
+- La app llama al marcador **"Copa de la noche"** (`lib/app/cup_screen.dart`). Si se prefiere otro nombre (p. ej. "Copa Habinson"), hay que cambiarlo también en la app para que ficha y producto coincidan.
+- Suman a la Copa solo Carrera de caballos y El Infiltrado (D14, opción C). Trivia, Geografía, Yo nunca, ¿Quién es más probable?, ¿Qué preferirías? y el Abecedario no suman. Por eso la descripción no dice que "todos" los juegos cuentan.
 - Capturas (Fase 6): sin cartas del modo +18 ni consecuencias del modo opcional para mayores de edad (COMPLIANCE #6 y #7).
+- **Captura `docs/store/capturas/01_home.png` pendiente de rehacer (tarea manual de Javier, emulador):** modo Fichas, sin Sorbos visible y home con el nuevo orden (D14, fase 4). La versión actual es anterior a D14.

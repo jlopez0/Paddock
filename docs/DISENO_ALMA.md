@@ -1,4 +1,4 @@
-# Paddock: diseño con alma
+# Habinson: diseño con alma
 
 Fecha: 2026-11-24. Solo investigación; no se ha tocado código ni assets.
 Las licencias marcadas "verificada" se leyeron en la página oficial del recurso durante esta investigación. Lo que no se pudo verificar se dice expresamente.
@@ -192,7 +192,7 @@ En el resultado perfecto se quita el 🧠 del texto.
 
 | # | Idea | Coste |
 |---|---|---|
-| 1 | **Voz propia (microcopy de casa de apuestas):** "Haced vuestras apuestas", "Boleto", "Cuadra", "Se abre el paddock", "Fotocheck", "Pagan los de la minoría". Empezar por botones principales, resultados y vacíos. Delegar en `redactor-es` | Bajo: ~1 día, solo textos |
+| 1 | **Voz propia (microcopy de casa de apuestas):** "Haced vuestras apuestas", "Boleto", "Cuadra", "Se abre la noche", "Fotocheck", "Pagan los de la minoría". Empezar por botones principales, resultados y vacíos. Delegar en `redactor-es` | Bajo: ~1 día, solo textos |
 | 2 | **Ficha y boleto dibujados con código** (`CustomPainter`): ficha de apuesta con aro punteado, boleto con muescas para el resultado de la carrera y el "puesto" del podio. Aparecen en todas las pantallas de apuestas | Bajo-medio: 1-2 días |
 | 3 | **Podio de la Copa animado:** medallas que caen una a una, confeti (`confetti` o propio) y háptico. Es el momento que se comparte, así que merece el esfuerzo | Medio: 1-2 días |
 | 4 | **Sonido de mesa:** ficha al apostar, carta al girar, fanfarria corta en el podio (Kenney Casino Audio + Music Jingles, CC0). Respetar el ajuste de volumen que ya existe (`Icons.volume_up_rounded`). Máximo 6-8 .ogg | Bajo: medio día |

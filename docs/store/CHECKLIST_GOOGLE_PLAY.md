@@ -1,4 +1,4 @@
-# Checklist Google Play – Paddock (es.jlopez0.paddock)
+# Checklist Google Play – Habinson (es.jlopez0.habinson)
 
 Orden de pasos para Javier. Respuestas según el código real (sin red propia, sin cuentas, sin anuncios; datos solo en `shared_preferences` local; `share_plus` y `url_launcher` solo abren diálogos/navegador del sistema).
 
@@ -7,20 +7,20 @@ Orden de pasos para Javier. Respuestas según el código real (sin red propia, s
 - [ ] Guardar copia del keystore + contraseñas en gestor de contraseñas (si se pierde, solo se recupera vía soporte de Google).
 - [x] `flutter build appbundle --release --no-tree-shake-icons` compila (2026-11-25, 63,0 MB, firmado con debug por falta de `key.properties`). Repetir tras crear la clave.
 - [ ] Confirmar que el AAB sale firmado con la clave de subida (no la debug).
-- [ ] Confirmar que https://jlopez0.github.io/Paddock/privacidad.html y `soporte.html` cargan (GitHub Pages activo, carpeta `/docs`).
+- [ ] Confirmar que https://jlopez0.github.io/Habinson/privacidad.html y `soporte.html` cargan (GitHub Pages activo, carpeta `/docs`).
 
 ## 1. Cuenta de desarrollador (requiere Javier: pago y verificación)
 - [ ] Cuenta de Play Console (pago único 25 USD, verificación de identidad).
 - [ ] Anotar tipo: **personal** (creada tras 13/11/2023) => exige prueba cerrada con >=12 testers durante 14 días continuos antes de pedir producción. **Organización** => no aplica.
 
 ## 2. Crear la app
-- [ ] Nombre: Paddock. Idioma predeterminado: español (España).
+- [ ] Nombre: Habinson. Idioma predeterminado: español (España).
 - [ ] Tipo: **Juego** (categoría Fiesta/Trivia o similar). Gratuita.
 - [ ] Aceptar declaraciones (políticas del programa, leyes de exportación de EE. UU.).
 - [ ] Activar Play App Signing (por defecto) y subir con la clave de subida.
 
 ## 3. Contenido de la app (Política > Contenido de la app)
-- [ ] **Política de privacidad**: `https://jlopez0.github.io/Paddock/privacidad.html`
+- [ ] **Política de privacidad**: `https://jlopez0.github.io/Habinson/privacidad.html`
 - [ ] **Anuncios**: marcar **No contiene anuncios**.
 - [ ] **Acceso a la app**: todo accesible sin login; marcar "Toda la funcionalidad está disponible sin restricciones". (La pantalla de bienvenida +18 no es un acceso con credenciales.)
 - [ ] **Público objetivo y contenido**: solo **18 años o más**. Ni "menores" ni mixto. Al no incluir menores, no aplica Familias.
@@ -65,11 +65,11 @@ Orden de pasos para Javier. Respuestas según el código real (sin red propia, s
 - [ ] Despliegue escalonado opcional; revisar Pre-launch report y Android vitals.
 
 ## Verificación técnica (estado al 2026-11-24)
-- applicationId `es.jlopez0.paddock` (namespace interno `com.paddock.paddock`, distinto a propósito).
+- applicationId `es.jlopez0.habinson` (namespace interno `com.habinson.habinson`, distinto a propósito).
 - compileSdk 36 y targetSdk 36 OK.
 - Versión `1.0.0+1`.
 - `android:enableOnBackInvokedCallback="true"` presente.
-- Manifest fusionado del release (2026-11-25, `build/app/intermediates/merged_manifests/release`): sin `INTERNET`, sin AD_ID, sin permisos de audioplayers/share_plus/url_launcher. Único `uses-permission`: `es.jlopez0.paddock.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION` (permiso propio de AndroidX, firma local, no se declara en Play). `queries`: solo PROCESS_TEXT de Flutter. minSdk 24, targetSdk 36, `enableOnBackInvokedCallback="true"`.
+- Manifest fusionado del release (2026-11-25, `build/app/intermediates/merged_manifests/release`): sin `INTERNET`, sin AD_ID, sin permisos de audioplayers/share_plus/url_launcher. Único `uses-permission`: `es.jlopez0.habinson.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION` (permiso propio de AndroidX, firma local, no se declara en Play). `queries`: solo PROCESS_TEXT de Flutter. minSdk 24, targetSdk 36, `enableOnBackInvokedCallback="true"`.
 - `key.properties`, `*.jks`, `*.keystore` ignorados por git.
 - Aviso: sin `key.properties` el build usa la clave debug y Play rechazará ese AAB.
 - Aviso de build: Flutter avisa de que `audioplayers_android` aplica Kotlin Gradle Plugin (futuras versiones de Flutter exigirán Built-in Kotlin). No bloquea hoy; vigilar actualización del plugin.

@@ -1,4 +1,4 @@
-# Paddock: microcopy con voz propia
+# Habinson: microcopy con voz propia
 
 Fecha: 2026-11-24. Rama `diseno-alma`. Origen: `docs/DISENO_ALMA.md`, sección (e), idea 1.
 Solo propuesta: no se ha tocado `lib/`. Lo que no aparece en las tablas se queda como está.
@@ -18,18 +18,18 @@ Columna "Test": si pone un archivo, ese test busca el texto literal y hay que ac
 
 | Archivo:línea | Texto actual | Texto nuevo | Motivo | Test |
 |---|---|---|---|---|
-| `app/home_screen.dart:35` | Juegos para la previa | Se abre el paddock | Lema de la casa; además "previa" remite a beber | |
+| `app/home_screen.dart:35` | Juegos para la previa | Se abre la noche | Lema de la casa; además "previa" remite a beber | |
 | `app/home_screen.dart:63` | Añade jugadores | Forma la cuadra | Cuadra = grupo de jugadores (glosario) | |
 | `games/horse_race/horse_race_module.dart:18` | Apuesta por un palo y que gane el mejor caballo | Elige palo, suelta fichas y que corra tu caballo | Introduce "fichas" desde el menú | |
 | `games/infiltrado/infiltrado_module.dart:19` | Todos saben la palabra menos uno | Todos saben la palabra. Uno, no | Más seco, mismo dato | |
 | `games/trivia/trivia_module.dart:18` | Cultura general en 4 opciones | Cuatro opciones, una buena | Rima con "Dos opciones, ninguna buena" | |
 | `games/abecedario/abecedario_module.dart:17` | Adivina la palabra de cada letra | Una palabra por letra, de la A a la Z | Más concreto (+16 %) | |
 | `games/registry.dart:21` | Señala al más probable | Señalad sin piedad | Cómplice, plural de grupo | |
-| `games/registry.dart:26` | A la de tres, todos señalan. El más señalado pierde una ficha | A la de tres, todos señalan. El más señalado paga una ficha | "Pagar" es el verbo de la casa | |
-| `games/registry.dart:37` | A la de tres, todos eligen. La minoría pierde una ficha | A la de tres, todos eligen. Pagan los de la minoría: una ficha | Frase de la casa (+11 %) | |
-| `games/registry.dart:49` | Quien lo haya hecho, pierde una ficha | Quien lo haya hecho, paga una ficha | Coherencia con "pagar" | |
+| `games/registry.dart:26` | A la de tres, todos señalan. El más señalado pierde una ficha | A la de tres, todos señalan. Al más señalado le toca lo que diga la carta (2026-11-26, opción C) | Neutro en los tres modos: en Sorbos no se dice "paga" | |
+| `games/registry.dart:37` | A la de tres, todos eligen. La minoría pierde una ficha | A la de tres, todos eligen. Defended vuestra elección (2026-11-26: ya no paga nadie) | Frase de la casa (+11 %) | |
+| `games/registry.dart:49` | Quien lo haya hecho, pierde una ficha | Quien lo haya hecho, que lo confiese (2026-11-26, opción C) | Yo nunca ya no resta ni paga fichas | |
 
-Se mantienen: títulos de juego, "Dos opciones, ninguna buena", "Confiesa… o paga", "Banderas, capitales, siluetas y mapas", tooltip "Ajustes".
+Se mantienen: títulos de juego, "Dos opciones, ninguna buena", ("Confiesa… o paga" pasa a "Aquí se confiesa todo"), "Banderas, capitales, siluetas y mapas", tooltip "Ajustes".
 
 ## Trivia y Geografía
 
@@ -96,10 +96,10 @@ Se mantienen: "Carrera de caballos", "¿Quién apuesta?", "¡A correr!", "Revanc
 
 | Archivo:línea | Texto actual | Texto nuevo | Motivo | Test |
 |---|---|---|---|---|
-| `games/prompt_deck/prompt_deck_screens.dart:112` | Empezar · $count cartas | Jugar · $count cartas | Mismo patrón que "Jugar · N preguntas" y "Jugar · 27 letras" | |
+| `games/prompt_deck/prompt_deck_screens.dart:112` | Empezar · $count cartas | Jugar (sin número de cartas, 2026-11-26) | No revelar cuántas cartas hay guardadas | |
 | `prompt_deck_screens.dart:201-202` | Se pierde el punto por el que ibas en el mazo. Las fichas que ya has marcado se quedan en la Copa. | Pierdes el sitio en el mazo. Las fichas ya marcadas se quedan en la Copa. | Más corto, mismo aviso | |
 | `prompt_deck_screens.dart:463` | Ya registrado en la Copa | Ya anotado en la Copa | Mismo verbo que el Infiltrado ("Fichas anotadas") | `prompt_deck_pay_test.dart` |
-| `prompt_deck_screens.dart:726` | ¡Se acabaron las cartas! | Se acabó el mazo | Sin exclamación; voz de mesa | |
+| `prompt_deck_screens.dart:726` | ¡Se acabaron las cartas! | Fin de la partida (botón "Otra partida") | Sin exclamación; voz de mesa | |
 | `prompt_deck/level_chips.dart:89` | Puedes combinar varios niveles. | Se pueden mezclar niveles. | Más corto | |
 | `games/abecedario/ui/abecedario_play_screen.dart:543` | ¡Abecedario completo! | Llegasteis a la Z | Resultado con carácter, sin exclamación | |
 | `abecedario_play_screen.dart:563` | Otra vez | Otra vuelta | Igual que Trivia y Geografía | |
@@ -119,6 +119,8 @@ Se mantienen: diálogo +18 del nivel Atrevido (`level_chips.dart:24-36`, signifi
 | `cup_screen.dart:223` y `:371` | Compartir resultado | Compartir la Copa | Dice qué se comparte | |
 | `cup_screen.dart:256` | Todavía no hay puntuaciones | Aún no ha corrido nadie | Vacío con gracia | `cup_screen_test.dart` |
 | `cup_screen.dart:260` | Juega unas rondas y aquí aparecerá la clasificación de la noche. | Jugad unas rondas y aquí saldrá quién manda esta noche. | Plural de grupo, más corto | |
+| `cup_screen.dart` (2026-11-26) | Aún no ha corrido nadie | Aún no hay rondas que cuenten | "Corrido" solo vale para la Carrera; la lista de juegos sale del registro | `cup_screen_test.dart` || `cup_screen.dart` (2026-11-26) | Va en cabeza / Empate a -2 fichas con líder a cero o en negativo | Nadie va en positivo (cerrada la noche: Nadie ha acabado en positivo) · Los que menos han perdido: … | La Copa constata y no celebra pérdidas (D17); "Líder: …" de "Por juego" pasa a "Nadie en positivo" | `cup_screen_test.dart` |
+| `cup_screen.dart` (2026-11-26) | Va en cabeza / Empate a -2 fichas, con el líder a cero o en negativo | Nadie va en positivo (cerrada la noche: Nadie ha acabado en positivo) · Los que menos han perdido: … | La Copa constata y no celebra pérdidas (D17); el "Líder: …" de "Por juego" pasa a "Nadie en positivo" | `cup_screen_test.dart` |
 
 Se mantienen: "Copa de la noche", "Ver Copa", "Clasificación", "Por juego", "Líder", "Ganador", "Nueva noche", "¿Empezar una noche nueva?", "Cancelar", el texto que se comparte (salvo "Va ganando" y "El que más ha perdido", que deben coincidir con la pantalla) y **toda la pantalla de Créditos** (`app/credits_screen.dart`): atribuciones, licencias y "Juega con responsabilidad" no se tocan.
 
@@ -157,25 +159,27 @@ Solo cambia la entrada `carrera` (mismo esquema y mismos ids):
 
 | Término | Uso | No usar |
 |---|---|---|
-| **Ficha / fichas** | Unidad de todo lo que se gana o se pierde. "1 ficha", "3 fichas" | puntos (salvo el modo "Puntos" de Ajustes), créditos, monedas |
+| **Ficha / fichas** | Unidad de todo lo que se gana o se pierde. "1 ficha", "3 fichas". Es también la etiqueta del modo (antes "Puntos") | puntos (la etiqueta ya no se muestra como "Puntos"), créditos, monedas |
 | **All-in** | Apuesta máxima. Vale **10 fichas** en la Copa. Plural invariable: "2 All-in" | "×2", all in, allin |
-| **Pagar / pagan** | Perder fichas. "El más señalado paga una ficha", "Pagan los de la minoría" | "bebe", "le toca beber" (fuera del modo Sorbos) |
-| **Cobrar / cobran** | Ganar fichas en la Carrera. "Ana cobra 3 fichas" | "reparte" cuando no hay All-in |
+| **Pagar / pagan** | Perder fichas, solo en modo Fichas (Carrera, Infiltrado). En las cartas es neutro: "Al más señalado le toca lo que diga la carta" (D19) | "bebe", "le toca beber" (fuera del modo Sorbos); "Pagan" en Retos y Sorbos |
+| **Les toca / le toca** | En Retos y Sorbos, sustituye a "Pagan". "Les toca: Ana (2 retos)"; "Les toca: Ana (2 sorbos · o agua o reto)" (D19) | "Pagan", "¿Quién paga?" en Retos y Sorbos |
+| **Cuentan** | Lo que suma a la Copa. Texto vigente: `docs/research/textos_copa_c.md`. Solo dentro de la Copa: "Cuentan: Carrera de caballos y El Infiltrado" | "suman" o "Suman a la Copa" en la home; "Sin marcador" |
+| **Cobrar / cobran** | Ganar fichas en la Carrera, solo en modo Fichas. "Ana cobra 3 fichas". En Retos y Sorbos: "Aciertan" / "Ana acierta" / sello "ACIERTA" | "reparte" cuando no hay All-in; "Cobran" en Retos y Sorbos |
 | **Repartir** | Solo para All-in y para roles del Infiltrado. "Reparte 2 All-in" | Para ganancias normales |
-| **Anotar** | Registrar fichas en la Copa. "Ya anotado en la Copa" | registrar, guardar |
+| **Anotar** | Registrar fichas en la Copa. En Fichas: "Fichas anotadas en la Copa de la noche."; en Retos y Sorbos: "Ya cuenta en la Copa de la noche." | registrar, guardar |
 | **Copa de la noche** | Clasificación de toda la sesión. Siempre con mayúscula en "Copa" | ranking, marcador |
 | **Nueva noche** | Reiniciar la Copa | reset, reiniciar |
 | **Cuadra** | El grupo de jugadores guardado. "Forma la cuadra", "La cuadra" | equipo, plantilla |
 | **Boleto** | La apuesta de un jugador en la Carrera (palo + fichas) | ticket |
-| **Paddock** | La app y su arranque. "Se abre el paddock" | |
+| **Habinson** | La app y su arranque. "Se abre la noche" | |
 | **Haced vuestras apuestas** | Invitación a apostar antes de la carrera | "¡Apostad ya!" |
 | **En el podio / Pleno / Gran carrera** | Escala de resultado en los juegos de preguntas: perfecto = Pleno; 80 % = Gran carrera; 50 % = En el podio; menos = Hoy no era tu carrera | "¡Genial!", "¡Perfecto!" |
 | **Retirado / se retira** | Jugador borrado | eliminado (además es masculino) |
 | **Otra vuelta** | Repetir en Trivia, Geografía y Abecedario. Carrera usa "Revancha"; Infiltrado, "Otra ronda" | Otra vez, Otra partida |
-| **Jugar · N preguntas / cartas / letras** | Botón de inicio con recuento. Separador " · " | Empezar · |
-| **1 / 10** | Progreso en preguntas, con espacios alrededor de la barra | 1/10, 1 de 10 (salvo "Jugador 1 de 4" y "Voto 1 de 4", que se leen en voz alta) |
+| **Jugar** | Botón de inicio, sin recuento (no se revela el tamaño del mazo). Antes "Jugar · N preguntas" | Empezar, Jugar · N preguntas |
+| **Pregunta N / Carta N** | Cabecera de progreso, sin total. Nunca "n / total" (salvo "Jugador 1 de 4" y "Voto 1 de 4", que cuentan jugadores) | 1/10, 1 de 10, barra de progreso |
 | **Suave / Picante / Atrevido** | Niveles de los mazos y del Infiltrado | |
-| **Puntos / Retos / Sorbos** | Modos de consecuencias. "Sorbos" es el único sitio donde se habla de beber, siempre con "o agua o reto" | |
+| **Fichas / Retos / Sorbos** | Modos de consecuencias (antes "Puntos" en la etiqueta; el enum interno sigue llamándose `puntos`). "Sorbos" es el único sitio donde se habla de beber, siempre con "o agua o reto" y solo +18 | "Puntos" como etiqueta |
 | **Ni idea** | Rendirse en una pregunta | No lo sé |
 | **Seguir / Salir** | Botones del diálogo "¿Salir de la partida?" en todos los juegos | |
 
@@ -184,3 +188,47 @@ Reglas de estilo para cualquier texto nuevo:
 - Nada de emoji dentro de cadenas de interfaz. Excepción: el texto que se comparte fuera de la app.
 - Sin punto final en botones, chips ni títulos. Con punto en frases completas de ayuda o aviso.
 - Avisos +18, privacidad, créditos y ayuda: se puede pulir el tono, nunca quitar información.
+
+## Cambios 2026-11-26 (sin totales y apuesta por carta)
+
+| Dónde | Antes | Ahora | Motivo |
+|---|---|---|---|
+| Cartas (cabecera) | `1 / 15` y barra de progreso | `Carta 1` | No revelar cuántas cartas hay guardadas |
+| Trivia y Geografía (cabecera) | `1 / 10` y barra | `Pregunta 1` | Igual |
+| Setup de Trivia y Geografía | `Jugar · N preguntas` | `Jugar` | Con "Todas" el número era el tamaño del banco |
+| Setup de Geografía | `Tu récord: 8/10` | `Tu récord: 8` | Igual |
+| Setup del Infiltrado | `N palabras en el mazo` | (solo sale el aviso "No quedan palabras con estos niveles.") | Igual |
+| ¿Quién es más probable? (carta) | `¿Quién paga?` y chips | En Fichas, nada; en Retos `¡Por 2 retos!`; en Sorbos `Por 2 sorbos · o agua o reto` (1 a 3) | La Copa deja de restar por ser señalado |
+| ¿Quién es más probable? (Retos/Sorbos) | banner por jugador marcado | banner "El más señalado" con tope de 3; en Sorbos, "o agua o reto" visible | Se mantiene el tope y la alternativa |
+| Final de partida de cartas | `Se acabó el mazo` / `Barajar de nuevo` | `Fin de la partida` / `Otra partida` | Partida de duración fija |
+
+## Vocabulario por modo (2026-11-26, D19)
+
+Dos capas: la consecuencia va en la unidad del modo (`reto(s)` o `sorbo(s) · o agua o reto`); la Copa sigue en fichas. Fuera de la Copa, "ficha" solo en modo Fichas. Textos origen: `docs/research/textos_vocabulario.md`.
+
+| Dónde | Fichas | Retos | Sorbos |
+|---|---|---|---|
+| Botón tras la carrera | ¿Quién paga? | ¿A quién le toca? | ¿A quién le toca? |
+| Cabecera de quien acierta / sello | Cobran / COBRA | Aciertan / ACIERTA | Aciertan / ACIERTA |
+| Título del boleto ganador | Ana cobra 3 fichas | Ana acierta | Ana acierta |
+| Motivo | Apostó 3 fichas a Oros | Apostó a Oros | Apostó a Oros |
+| Cabecera de quien falla / sello | Pagan / PAGA | Les toca / LE TOCA | Les toca / LE TOCA |
+| Nadie acierta | Nadie acertó. Pagan todos. | Nadie acertó. Les toca a todos. | Nadie acertó. Les toca a todos · o agua o reto. |
+| Reparto del All-in | Reparte 2 All-in a 2 personas distintas | Reparte 2 All-in · hasta 3 retos cada uno | Reparte 2 All-in · hasta 3 sorbos cada uno · o agua o reto |
+| Línea por boleto `−N en la Copa` y `cada All-in vale 10 fichas` | (nada / sí) | quitadas | quitadas |
+| Nota sobre `Ver Copa` (Carrera e Infiltrado) | Fichas anotadas en la Copa de la noche. | Ya cuenta en la Copa de la noche. | Ya cuenta en la Copa de la noche. |
+| Selector de apuesta: rótulo, tooltips, etiqueta | fichas · Bajar apuesta / Subir apuesta · 2 fichas | apuesta · Bajar apuesta / Subir apuesta · Apuesta de 2 | apuesta · Bajar apuesta / Subir apuesta · Apuesta de 2 |
+| Nota bajo `Boletos` | (nada) | Hasta 3 por ronda | Hasta 3 por ronda · o agua o reto |
+| Botón All-in | All-in  ·  10 fichas | All-in  ·  3 retos | All-in  ·  3 sorbos |
+| Infiltrado (reglas) | si lo pilláis, paga 2 fichas; si se escapa, los demás pagan 1 cada uno. | si lo pilláis, le tocan 2 retos; si se escapa, 1 reto a cada uno de los demás. | si lo pilláis, le tocan 2 sorbos; si se escapa, 1 a cada uno de los demás. Siempre o agua o reto. |
+
+Iguales en los tres modos: `Acertar gana el doble` (con subtítulo "Quien acierta suma el doble en la Copa"), `Elige palo, apuesta y que corra tu caballo` (home), estadísticas `en contra` / `a favor`, etiqueta accesible `Apuesta de N` de la ficha dibujada.
+
+Copa (en fichas en los tres modos): líder con 0 → `Sin perder nada: Ana y Luis`; en negativo, una persona → `Quien menos ha perdido: Ana`; empate → `Quienes menos han perdido: Ana, Luis y Eva`. Sustituye a "Los que menos han perdido".
+
+Ayuda (`ayuda.json`, sin "sorbo" ni "ficha" en Carrera e Infiltrado): "Haz tu apuesta o ve a por todas con el All-in."; "Si aciertas, sumas en la Copa; si fallas, te toca lo que apostaste. El modo elegido decide qué se juega."; Copa: "La Copa cuenta en fichas, sea cual sea el modo…". Carta `qp043`: "Perder tres fichas" pasa a "Confesar a quién de aquí besarías".
+
+Pendiente de Javier: rango de la apuesta (hoy 1 a 5, con tope 3 al pagar; en Retos y Sorbos el número va sin unidad y la nota dice el tope) y All-in (10). Pendiente de diseño: la ficha dibujada del All-in pinta "10" junto a "3 sorbos".
+
+## Cambio de nombre (2026-11-26, D16)
+- La app se llama **Habinson**. El lema de la home pasa de "Se abre el paddock" a **"Se abre la noche"** (`lib/app/home_screen.dart`), porque "paddock" ya no es el nombre de la casa.

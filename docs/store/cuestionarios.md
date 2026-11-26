@@ -1,4 +1,4 @@
-# Cuestionarios de clasificación por edad · Paddock v1.0
+# Cuestionarios de clasificación por edad · Habinson v1.0
 
 Objetivo: **Apple 18+** y **PEGI 16–18** en Google Play (IARC).
 Base: `docs/CONTENIDO.md` (sección "Ficha de tienda y clasificación por edades"), `docs/decisions.md` (D2, D4, D5, D11), `docs/privacidad.html` y el código de `lib/`.
@@ -47,7 +47,7 @@ Base: `docs/CONTENIDO.md` (sección "Ficha de tienda y clasificación por edades
 - **Seguridad de los datos:** no se recogen ni se comparten datos. Los datos se quedan en el dispositivo. No hay cifrado en tránsito porque no hay envío.
 - **Anuncios:** no contiene anuncios.
 - **Acceso a la app:** todas las funciones están disponibles sin restricciones (no hay cuenta).
-- **Política de privacidad:** `https://jlopez0.github.io/Paddock/privacidad.html` (antes, poner el correo y activar Pages).
+- **Política de privacidad:** `https://jlopez0.github.io/Habinson/privacidad.html` (antes, poner el correo y activar Pages).
 
 ---
 

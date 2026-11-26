@@ -1,6 +1,7 @@
 import 'package:material_ui/material_ui.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../core/consequences/consequences.dart';
 import '../game_module.dart';
 import 'ui/race_result_screen.dart';
 import 'ui/race_screen.dart';
@@ -21,6 +22,11 @@ class HorseRaceModule extends GameModule {
 
   @override
   bool get scoresCup => true;
+
+  /// En Retos no hay Carrera (D21): la apuesta de 1 a 5 fichas no encaja con "un solo reto
+  /// por evento" y cada carrera sumaría reglas propias solo para ese modo.
+  @override
+  bool availableIn(ConsequenceMode mode) => mode != ConsequenceMode.retos;
 
   @override
   Widget buildEntry(BuildContext context) => const RaceSetupScreen();

@@ -8,6 +8,7 @@ import '../core/players/player.dart';
 import '../core/players/player_widgets.dart';
 import '../core/players/players_controller.dart';
 import '../core/settings/app_feedback.dart';
+import '../core/settings/settings_controller.dart';
 import '../games/game_module.dart';
 import '../games/registry.dart';
 import 'app_icons.dart';
@@ -21,6 +22,10 @@ class HomeScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final players = ref.watch(playersProvider);
+    // Con Retos la Carrera no se ofrece (D21): el resto conserva su orden.
+    final games = gamesFor(
+      ref.watch(settingsProvider.select((s) => s.consequenceMode)),
+    );
     return Scaffold(
       body: SafeArea(
         child: CustomScrollView(
@@ -104,11 +109,11 @@ class HomeScreen extends ConsumerWidget {
               sliver: SliverToBoxAdapter(
                 child: Column(
                   children: [
-                    for (var i = 0; i < gameModules.length; i++) ...[
+                    for (var i = 0; i < games.length; i++) ...[
                       if (i > 0) const SizedBox(height: 14),
                       _Entrance(
                         index: i + 1,
-                        child: _GameTile(gameModules[i], number: i + 1),
+                        child: _GameTile(games[i], number: i + 1),
                       ),
                     ],
                   ],

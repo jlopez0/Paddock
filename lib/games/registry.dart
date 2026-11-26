@@ -1,5 +1,6 @@
 import 'package:material_ui/material_ui.dart';
 
+import '../core/consequences/consequences.dart';
 import 'game_module.dart';
 import 'geography/geography_module.dart';
 import 'horse_race/horse_race_module.dart';
@@ -47,4 +48,11 @@ const List<GameModule> gameModules = [
   AbecedarioModule(),
   TriviaModule(),
   GeographyModule(),
+];
+
+/// Juegos que se ofrecen con el modo de consecuencias [mode], en el mismo orden. Con Retos
+/// la Carrera no está (D21); en Fichas y Sorbos es la lista completa.
+List<GameModule> gamesFor(ConsequenceMode mode) => [
+  for (final g in gameModules)
+    if (g.availableIn(mode)) g,
 ];

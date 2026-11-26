@@ -297,12 +297,18 @@ void main() {
   group('textos de juego en Fichas y Retos (los únicos modos sin Sorbos)', () {
     test('no mencionan sorbos ni agua', () {
       for (final m in [ConsequenceMode.puntos, ConsequenceMode.retos]) {
+        // Los textos de la Carrera solo valen en Fichas: en Retos no se ofrece (D21).
+        final race = m == ConsequenceMode.puntos
+            ? [
+                allInShareText(m, 2),
+                losersTitle(m),
+                losersLine(m, {'Ana': 2, 'Luis': 5}),
+                nobodyWonText(m),
+                whoPaysLabel(m),
+              ]
+            : const <String>[];
         final texts = [
-          allInShareText(m, 2),
-          losersTitle(m),
-          losersLine(m, {'Ana': 2, 'Luis': 5}),
-          nobodyWonText(m),
-          whoPaysLabel(m),
+          ...race,
           stakeHeadline(2, m) ?? '',
           ConsequenceBanner.amountText(resolveLoss(3, m)),
         ].join(' | ').toLowerCase();

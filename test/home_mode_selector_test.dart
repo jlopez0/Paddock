@@ -41,6 +41,8 @@ Future<ProviderContainer> _pump(
 }
 
 void main() {
+  carreraEnRetosTests();
+
   testWidgets('home: Fichas y Retos siempre; Sorbos no sale sin adultConfirmed', (
     tester,
   ) async {
@@ -126,4 +128,67 @@ void main() {
       expect(find.text('Fichas'), findsOneWidget);
     });
   }
+}
+
+void carreraEnRetosTests() {
+  const sinCarrera = [
+    '¿Quién es más probable?',
+    'Yo nunca',
+    'El Infiltrado',
+    '¿Qué preferirías?',
+    'Abecedario',
+    'Trivia',
+    'Geografía',
+  ];
+
+  testWidgets('home: en Retos no hay cartel de la Carrera y el resto conserva su orden', (
+    tester,
+  ) async {
+    await _pump(tester, prefsValues: {'settings.consequenceMode.v1': 'retos'});
+    expect(find.text('Carrera de caballos'), findsNothing);
+    final ys = [for (final t in sinCarrera) tester.getTopLeft(find.text(t)).dy];
+    expect(ys, [...ys]..sort());
+    expect([for (final g in gamesFor(ConsequenceMode.retos)) g.title], sinCarrera);
+    // Los carteles se numeran desde 1, sin hueco.
+    expect(find.text('1'), findsOneWidget);
+    expect(find.text('7'), findsOneWidget);
+    expect(find.text('8'), findsNothing);
+  });
+
+  testWidgets('home: cambiar de modo muestra y oculta la Carrera, que sigue la primera', (
+    tester,
+  ) async {
+    await _pump(tester);
+    expect(find.text('Carrera de caballos'), findsOneWidget);
+    await tester.tap(find.text('Retos'));
+    await tester.pumpAndSettle();
+    expect(find.text('Carrera de caballos'), findsNothing);
+    await tester.tap(find.text('Fichas'));
+    await tester.pumpAndSettle();
+    final y = tester.getTopLeft(find.text('Carrera de caballos')).dy;
+    expect(y, lessThan(tester.getTopLeft(find.text('¿Quién es más probable?')).dy));
+  });
+
+  testWidgets('home: en Sorbos la Carrera sigue siendo la primera', (tester) async {
+    await _pump(
+      tester,
+      prefsValues: {
+        'settings.adultConfirmed.v1': true,
+        'settings.consequenceMode.v1': 'sorbos',
+      },
+    );
+    expect(gamesFor(ConsequenceMode.sorbos).first.id, 'carrera');
+    expect(find.text('Carrera de caballos'), findsOneWidget);
+  });
+
+  testWidgets('home: en Retos sin desbordes con letra 2.0 en 320x568', (tester) async {
+    await _pump(
+      tester,
+      prefsValues: {'settings.consequenceMode.v1': 'retos'},
+      size: const Size(320, 568),
+      textScale: 2.0,
+    );
+    expect(tester.takeException(), isNull);
+    expect(find.text('Carrera de caballos'), findsNothing);
+  });
 }

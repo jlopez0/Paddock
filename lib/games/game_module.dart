@@ -2,6 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 
 import '../app/app_icons.dart';
+import '../core/consequences/consequences.dart';
 
 /// Contrato de un juego. Para añadir un juego nuevo:
 /// 1. Crea su carpeta en `lib/games/<juego>/` con una clase que implemente esto.
@@ -23,6 +24,10 @@ abstract class GameModule {
   /// no: solo suman los juegos en los que la app sabe quién gana o pierde por persona
   /// (hoy Carrera e Infiltrado). Lo vigila `test/cup_guard_test.dart`.
   bool get scoresCup => false;
+
+  /// `false` si el juego no se ofrece con el modo de consecuencias [mode] (hoy solo la
+  /// Carrera en Retos, D21). El menú lo oculta y su ruta redirige a `/`.
+  bool availableIn(ConsequenceMode mode) => true;
 
   String get path => '/game/$id';
 

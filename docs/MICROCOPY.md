@@ -103,6 +103,8 @@ Se mantienen: "Carrera de caballos", "¿Quién apuesta?", "¡A correr!", "Revanc
 | `prompt_deck/level_chips.dart:89` | Puedes combinar varios niveles. | Se pueden mezclar niveles. | Más corto | |
 | `games/abecedario/ui/abecedario_play_screen.dart:543` | ¡Abecedario completo! | Llegasteis a la Z | Resultado con carácter, sin exclamación | |
 | `abecedario_play_screen.dart:563` | Otra vez | Otra vuelta | Igual que Trivia y Geografía | |
+| `abecedario_play_screen.dart` (botones) | (nuevo) | Tooltips `Acierto` y `Fallo` (solo icono, sin texto visible) | Registro solo para repasar, sin fichas (D21) | `abecedario_test.dart` |
+| `abecedario_play_screen.dart` (fin) | (nuevo) | Recuadros `Aciertos` / `Fallos` / `Sin marcar`; secciones `Para repasar` y `Todas las letras`; `Sin fallos: nada que repasar.`; sin marcas: `No anotasteis aciertos ni fallos. En la próxima vuelta marcadlos al desvelar cada respuesta y aquí tendréis qué repasar.` | Resumen para aprender (D21) | `abecedario_test.dart` |
 
 Se mantienen: diálogo +18 del nivel Atrevido (`level_chips.dart:24-36`, significado legal), "Suave / Picante / Atrevido", "NIVEL", "Elige al menos un nivel", "¿Quién paga? · 1 ficha", las cuatro pistas "Marca a…", "−1 en la Copa: …", "Toca o desliza para la siguiente", "Barajar otra vez", "— o —", "Jugar · 27 letras", "Desvelar ya", "Siguiente", "Terminar" y los textos de ajustes de Abecedario.
 
@@ -238,10 +240,10 @@ En Retos nunca se escribe "N retos". Cada evento con consecuencia muestra UN ret
 
 | Dónde | Texto en Retos |
 |---|---|
-| Cantidad en banner / boleto | `Un reto` (en `losersLine`: `Les toca: Ana (un reto)`) |
+| Cantidad en el banner | `Un reto` |
 | Titular de carta de apuesta (¿Quién es más probable?) | `¡Por un reto!` |
 | Yo nunca ("Quien lo haya hecho") | `Un reto` + el reto de nivel según la intensidad aleatoria 1 a 3 de la carta (sin titular en la carta) |
 | Selector de modo (home y Ajustes) | `Lo que pierdes se cumple con un reto. Más fuerte cuanto más pierdes.` |
-| Carrera: nota bajo `Boletos` | `Un reto: más fuerte cuanto más apuestas` |
-| Carrera: All-in (botón / accesible / reparto) | `All-in  ·  reto máximo` / `All-in, un reto de nivel máximo` / `Reparte 2 All-in · un reto a cada uno` |
+| Carrera | No se ofrece en Retos (D21): ya no hay nota bajo `Boletos` ni All-in de reto |
+| Copa (sin Carrera) | `Cuentan: El Infiltrado` · `Aquí cuentan los votos. Manda quien acaba con más fichas.` · vacío: `Jugad a El Infiltrado y aquí saldrá quién manda.` |
 | Infiltrado (reglas) | `si lo pilláis, le toca un reto picante; si se escapa, un reto suave a cada uno de los demás.` |

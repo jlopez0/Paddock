@@ -54,7 +54,9 @@
       "Hay una palabra por letra, de la A a la Z con la Ñ: 27 en total.",
       "Lee la definición en voz alta. La palabra empieza por esa letra o la contiene.",
       "Pensad mientras corre el tiempo. Cuando se acaba, se desvela la palabra.",
-      "Elige si se pasa solo a la siguiente letra o con un botón."
+      "Al desvelarla, toca Acierto o Fallo para anotarlo. No suma fichas: es solo para repasar.",
+      "Elige si se pasa solo a la siguiente letra o con un botón.",
+      "Al final verás los aciertos, los fallos y las palabras falladas con su respuesta."
     ],
     "consejo": "Competid por letras: quien la diga primero se la apunta."
   },
@@ -107,7 +109,7 @@
     "id": "copa",
     "titulo": "¿Cómo funciona la Copa de la noche?",
     "pasos": [
-      "Solo cuentan la Carrera de caballos y El Infiltrado: lo que se apuesta y lo que se vota.",
+      "Solo cuentan la Carrera de caballos y El Infiltrado: lo que se apuesta y lo que se vota. En modo Retos no hay Carrera.",
       "La Copa cuenta en fichas, sea cual sea el modo: cada ronda suma o resta. Manda quien acaba con más.",
       "Los demás juegos no se apuntan: se juegan por el gusto de jugar.",
       "Pasadas 12 horas, la Copa os ofrece empezar otra noche. También podéis tocar «Nueva noche» cuando queráis."

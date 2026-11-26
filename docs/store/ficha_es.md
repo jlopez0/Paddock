@@ -34,7 +34,7 @@ Los juegos
 - El Infiltrado: todos conocen la palabra menos uno, que solo sabe la categoría. Habla, sospecha y vota. Desde 3 jugadores, pasando el móvil.
 - Trivia: cultura general con cuatro opciones por pregunta.
 - Geografía: banderas, capitales, siluetas y mapas.
-- Abecedario: una palabra por cada letra, de la A a la Z.
+- Abecedario: una palabra por cada letra, de la A a la Z. Anota aciertos y fallos y repasa al final las palabras falladas.
 - ¿Quién es más probable?: a la de tres, todos señalan. La carta dice lo que se juega.
 - ¿Qué preferirías?: dos opciones, ninguna buena.
 - Yo nunca: quien lo haya hecho, lo confiesa.
@@ -48,7 +48,7 @@ Las cartas y las palabras del Infiltrado se adaptan al grupo:
 Consecuencias a tu manera
 Perder fichas significa lo que decidáis en Ajustes:
 - Fichas (por defecto): se restan de la Copa.
-- Retos: un reto por evento, más fuerte cuanto más se pierde.
+- Retos: un reto por evento, más fuerte cuanto más se pierde. La Carrera de caballos no se juega en este modo.
 - Consecuencias opcionales +18, desactivadas de serie, con tope por ronda y la alternativa de agua o reto siempre a la vista. Nadie está obligado a nada.
 
 Pensada para la mesa
@@ -81,7 +81,7 @@ Primera versión de Habinson:
 - Ocho juegos de grupo: Carrera de caballos, El Infiltrado, Trivia, Geografía, Abecedario, ¿Quién es más probable?, ¿Qué preferirías? y Yo nunca.
 - Copa de la noche: marcador común, podio final y resultado para compartir.
 - Niveles de contenido: Suave y Picante, más un modo opcional +18.
-- Consecuencias a elegir: Fichas o Retos.
+- Consecuencias a elegir: Fichas o Retos (en Retos no hay Carrera de caballos).
 ```
 
 ## Pendiente de decidir

@@ -12,6 +12,7 @@ import '../../../app/mascot.dart';
 import '../../../app/theme.dart';
 import '../../prompt_deck/bounce_in.dart';
 import '../abecedario_data.dart';
+import '../abecedario_review.dart';
 
 enum _Phase { thinking, revealed }
 
@@ -28,6 +29,7 @@ class _AbecedarioPlayScreenState extends ConsumerState<AbecedarioPlayScreen> {
 
   late final AbecedarioSetup _setup = ref.read(abecedarioSetupProvider);
   List<AbecedarioEntry>? _entries;
+  AbecedarioReview _review = const AbecedarioReview([]);
   int _index = 0;
   bool _finished = false;
   bool _paused = false;
@@ -46,9 +48,10 @@ class _AbecedarioPlayScreenState extends ConsumerState<AbecedarioPlayScreen> {
   }
 
   void _begin(List<AbecedarioEntry> bank) {
-    setState(
-      () => _entries = generateAbecedario(bank, Random(), level: _setup.level),
-    );
+    setState(() {
+      _entries = generateAbecedario(bank, Random(), level: _setup.level);
+      _review = AbecedarioReview(_entries!);
+    });
     _startTimer();
   }
 
@@ -97,6 +100,19 @@ class _AbecedarioPlayScreenState extends ConsumerState<AbecedarioPlayScreen> {
     });
   }
 
+  /// Anota acierto o fallo de la letra actual (solo registro: sin fichas ni consecuencia).
+  /// Pulsar la misma marca otra vez la quita.
+  void _mark(AbecedarioMark mark) {
+    final adding = _review.markOf(_index) != mark;
+    AppFeedback.selection();
+    if (adding) {
+      playSound(
+        mark == AbecedarioMark.hit ? AppSound.correct : AppSound.wrong,
+      );
+    }
+    setState(() => _review = _review.mark(_index, mark));
+  }
+
   void _restart() {
     setState(() {
       _entries = generateAbecedario(
@@ -104,6 +120,7 @@ class _AbecedarioPlayScreenState extends ConsumerState<AbecedarioPlayScreen> {
         Random(),
         level: _setup.level,
       );
+      _review = AbecedarioReview(_entries!);
       _index = 0;
       _finished = false;
       _phase = _Phase.thinking;
@@ -190,7 +207,7 @@ class _AbecedarioPlayScreenState extends ConsumerState<AbecedarioPlayScreen> {
                 ),
                 Expanded(
                   child: _finished
-                      ? _Finished(onAgain: _restart)
+                      ? _Finished(review: _review, onAgain: _restart)
                       : _buildRound(),
                 ),
               ],
@@ -346,19 +363,50 @@ class _AbecedarioPlayScreenState extends ConsumerState<AbecedarioPlayScreen> {
           width: double.infinity,
           height: 56,
           child: revealed
-              ? FilledButton(
-                  style: FilledButton.styleFrom(
-                    backgroundColor: abecedarioColor,
-                    foregroundColor: Colors.black,
-                  ),
-                  onPressed: _next,
-                  child: Text(
-                    _index + 1 >= _entries!.length ? 'Terminar' : 'Siguiente',
-                    style: const TextStyle(
-                      fontSize: 17,
-                      fontWeight: FontWeight.w800,
+              ? Row(
+                  children: [
+                    _MarkButton(
+                      key: const ValueKey('mark-miss'),
+                      tooltip: 'Fallo',
+                      icon: AppIcon.cancel,
+                      color: AppColors.danger,
+                      selected: _review.markOf(_index) == AbecedarioMark.miss,
+                      onPressed: () => _mark(AbecedarioMark.miss),
                     ),
-                  ),
+                    const SizedBox(width: 8),
+                    _MarkButton(
+                      key: const ValueKey('mark-hit'),
+                      tooltip: 'Acierto',
+                      icon: AppIcon.check,
+                      color: AppColors.success,
+                      selected: _review.markOf(_index) == AbecedarioMark.hit,
+                      onPressed: () => _mark(AbecedarioMark.hit),
+                    ),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: FilledButton(
+                        style: FilledButton.styleFrom(
+                          backgroundColor: abecedarioColor,
+                          foregroundColor: Colors.black,
+                          minimumSize: const Size.fromHeight(56),
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                        ),
+                        onPressed: _next,
+                        child: FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Text(
+                            _index + 1 >= _entries!.length
+                                ? 'Terminar'
+                                : 'Siguiente',
+                            style: const TextStyle(
+                              fontSize: 17,
+                              fontWeight: FontWeight.w800,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 )
               : OutlinedButton(
                   style: OutlinedButton.styleFrom(
@@ -373,6 +421,51 @@ class _AbecedarioPlayScreenState extends ConsumerState<AbecedarioPlayScreen> {
                 ),
         ),
       ],
+    );
+  }
+}
+
+/// Botón cuadrado de solo icono para anotar acierto o fallo. Vacío con aro de color; al
+/// anotarse se rellena. Su tooltip es también su etiqueta de accesibilidad.
+class _MarkButton extends StatelessWidget {
+  const _MarkButton({
+    super.key,
+    required this.tooltip,
+    required this.icon,
+    required this.color,
+    required this.selected,
+    required this.onPressed,
+  });
+
+  final String tooltip;
+  final AppIcon icon;
+  final Color color;
+  final bool selected;
+  final VoidCallback onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      selected: selected,
+      child: SizedBox(
+        width: 56,
+        height: 56,
+        child: IconButton(
+          tooltip: tooltip,
+          onPressed: onPressed,
+          style: IconButton.styleFrom(
+            backgroundColor: selected ? color : Colors.transparent,
+            side: BorderSide(color: color, width: 2),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
+          ),
+          icon: icon.widget(
+            size: 28,
+            color: selected ? const Color(0xFF0B1611) : color,
+          ),
+        ),
+      ),
     );
   }
 }
@@ -619,81 +712,357 @@ class _LetterChipPainter extends CustomPainter {
       old.letter != letter || old.state != state;
 }
 
+/// Fin de la vuelta: recuento de aciertos y fallos y resumen para aprender (las falladas
+/// con su respuesta y el resultado de cada letra). Solo es un registro: sin fichas.
 class _Finished extends StatelessWidget {
-  const _Finished({required this.onAgain});
+  const _Finished({required this.review, required this.onAgain});
+
+  final AbecedarioReview review;
   final VoidCallback onAgain;
 
   @override
-  Widget build(BuildContext context) => LayoutBuilder(
-    builder: (context, box) => SingleChildScrollView(
-      child: ConstrainedBox(
-        constraints: BoxConstraints(
-          minHeight: box.hasBoundedHeight ? box.maxHeight : 0,
-        ),
-        child: Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              BounceIn(
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
+  Widget build(BuildContext context) {
+    final marked = review.hits + review.misses > 0;
+    final missed = review.missed;
+    return Column(
+      children: [
+        Expanded(
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                BounceIn(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const LetterChip(
+                        'A',
+                        size: 40,
+                        state: LetterChipState.done,
+                      ),
+                      const SizedBox(width: 8),
+                      const Jockey(pose: JockeyPose.celebra, size: 80),
+                      const SizedBox(width: 8),
+                      const LetterChip(
+                        'Z',
+                        size: 40,
+                        state: LetterChipState.current,
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 12),
+                Text(
+                  'Llegasteis a la Z',
+                  textAlign: TextAlign.center,
+                  textScaler: MediaQuery.textScalerOf(
+                    context,
+                  ).clamp(maxScaleFactor: 1.5),
+                  style: const TextStyle(
+                    fontFamily: AppFonts.display,
+                    fontWeight: FontWeight.w400,
+                    fontSize: 28,
+                    height: 1.2,
+                  ),
+                ),
+                const SizedBox(height: 16),
+                Row(
                   children: [
-                    const LetterChip(
-                      'A',
-                      size: 48,
-                      state: LetterChipState.done,
+                    Expanded(
+                      child: _Stat(
+                        key: const ValueKey('stat-hits'),
+                        value: review.hits,
+                        label: 'Aciertos',
+                        color: AppColors.success,
+                      ),
                     ),
                     const SizedBox(width: 8),
-                    const Jockey(pose: JockeyPose.celebra, size: 96),
-                    const SizedBox(width: 8),
-                    const LetterChip(
-                      'Z',
-                      size: 48,
-                      state: LetterChipState.current,
+                    Expanded(
+                      child: _Stat(
+                        key: const ValueKey('stat-misses'),
+                        value: review.misses,
+                        label: 'Fallos',
+                        color: AppColors.danger,
+                      ),
                     ),
+                    if (marked && review.unmarked > 0) ...[
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: _Stat(
+                          key: const ValueKey('stat-unmarked'),
+                          value: review.unmarked,
+                          label: 'Sin marcar',
+                          color: AppColors.textMuted,
+                        ),
+                      ),
+                    ],
                   ],
                 ),
+                const SizedBox(height: 20),
+                if (!marked)
+                  const Text(
+                    'No anotasteis aciertos ni fallos. En la próxima vuelta '
+                    'marcadlos al desvelar cada respuesta y aquí tendréis qué repasar.',
+                    key: ValueKey('review-empty'),
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: AppColors.textMuted, height: 1.35),
+                  )
+                else ...[
+                  const _SectionTitle('Para repasar'),
+                  const SizedBox(height: 8),
+                  if (missed.isEmpty)
+                    const Text(
+                      'Sin fallos: nada que repasar.',
+                      key: ValueKey('review-no-misses'),
+                      style: TextStyle(color: AppColors.textMuted),
+                    )
+                  else
+                    for (final e in missed) _MissedCard(entry: e),
+                  const SizedBox(height: 16),
+                  const _SectionTitle('Todas las letras'),
+                  const SizedBox(height: 8),
+                  for (final row in review.rows) _ResultRow(row: row),
+                ],
+                const SizedBox(height: 8),
+              ],
+            ),
+          ),
+        ),
+        const SizedBox(height: 12),
+        Row(
+          children: [
+            Expanded(
+              child: OutlinedButton(
+                onPressed: () => context.go('/'),
+                child: const Text('Menú'),
               ),
-              const SizedBox(height: 16),
-              Text(
-                'Llegasteis a la Z',
-                textAlign: TextAlign.center,
-                textScaler: MediaQuery.textScalerOf(
-                  context,
-                ).clamp(maxScaleFactor: 1.5),
-                style: const TextStyle(
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: FilledButton(
+                style: FilledButton.styleFrom(
+                  backgroundColor: abecedarioColor,
+                  foregroundColor: Colors.black,
+                ),
+                onPressed: onAgain,
+                child: const Text('Otra vuelta'),
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+}
+
+class _SectionTitle extends StatelessWidget {
+  const _SectionTitle(this.text);
+
+  final String text;
+
+  @override
+  Widget build(BuildContext context) => Semantics(
+    header: true,
+    child: Text(
+      text,
+      style: const TextStyle(
+        fontFamily: AppFonts.display,
+        fontSize: 20,
+        height: 1.2,
+        color: AppColors.gold,
+      ),
+    ),
+  );
+}
+
+/// Recuadro con un recuento (aciertos, fallos o sin marcar).
+class _Stat extends StatelessWidget {
+  const _Stat({
+    super.key,
+    required this.value,
+    required this.label,
+    required this.color,
+  });
+
+  final int value;
+  final String label;
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      container: true,
+      label: '$label: $value',
+      excludeSemantics: true,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
+        decoration: BoxDecoration(
+          color: AppColors.surface,
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: color.withValues(alpha: 0.7)),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(
+                '$value',
+                style: TextStyle(
                   fontFamily: AppFonts.display,
-                  fontWeight: FontWeight.w400,
-                  fontSize: 28,
-                  height: 1.2,
+                  fontSize: 34,
+                  height: 1.1,
+                  color: color,
                 ),
               ),
-              const SizedBox(height: 28),
-              Row(
+            ),
+            FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(
+                label,
+                style: const TextStyle(
+                  fontWeight: FontWeight.w700,
+                  color: AppColors.textMuted,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// Una letra fallada con su pista, su definición y la respuesta correcta para repasar.
+class _MissedCard extends StatelessWidget {
+  const _MissedCard({required this.entry});
+
+  final AbecedarioEntry entry;
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      container: true,
+      label:
+          '${entry.clue}. ${entry.definition}. Respuesta correcta: ${entry.answer}',
+      excludeSemantics: true,
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 10),
+        padding: const EdgeInsets.all(12),
+        decoration: BoxDecoration(
+          color: AppColors.surface,
+          borderRadius: BorderRadius.circular(18),
+          border: Border.all(color: AppColors.danger, width: 1.5),
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            LetterChip(entry.letter, size: 36, state: LetterChipState.done),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Expanded(
-                    child: OutlinedButton(
-                      onPressed: () => context.go('/'),
-                      child: const Text('Menú'),
+                  Text(
+                    entry.clue.toUpperCase(),
+                    style: const TextStyle(
+                      color: abecedarioColor,
+                      fontWeight: FontWeight.w900,
+                      letterSpacing: 1,
+                      fontSize: 12,
                     ),
                   ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: FilledButton(
-                      style: FilledButton.styleFrom(
-                        backgroundColor: abecedarioColor,
-                        foregroundColor: Colors.black,
+                  const SizedBox(height: 4),
+                  Text(
+                    entry.definition,
+                    style: const TextStyle(fontSize: 15, height: 1.3),
+                  ),
+                  const SizedBox(height: 8),
+                  Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 6,
+                    ),
+                    decoration: BoxDecoration(
+                      color: AppColors.success.withValues(alpha: 0.18),
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(color: AppColors.success),
+                    ),
+                    child: Text(
+                      entry.answer.toUpperCase(),
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w900,
                       ),
-                      onPressed: onAgain,
-                      child: const Text('Otra vuelta'),
                     ),
                   ),
                 ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
-    ),
-  );
+    );
+  }
+}
+
+/// Fila compacta del resumen: letra, palabra y resultado (acertada, fallada o sin marcar).
+class _ResultRow extends StatelessWidget {
+  const _ResultRow({required this.row});
+
+  final AbecedarioReviewRow row;
+
+  @override
+  Widget build(BuildContext context) {
+    final mark = row.mark;
+    final status = switch (mark) {
+      AbecedarioMark.hit => 'acertada',
+      AbecedarioMark.miss => 'fallada',
+      null => 'sin marcar',
+    };
+    return Semantics(
+      container: true,
+      label: '${row.entry.letter}: ${row.entry.answer}, $status',
+      excludeSemantics: true,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 4),
+        child: Row(
+          children: [
+            LetterChip(
+              row.entry.letter,
+              size: 32,
+              state: mark == AbecedarioMark.hit
+                  ? LetterChipState.done
+                  : LetterChipState.pending,
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Text(
+                row.entry.answer,
+                style: TextStyle(
+                  fontWeight: FontWeight.w700,
+                  color: mark == null ? AppColors.textMuted : AppColors.text,
+                ),
+              ),
+            ),
+            const SizedBox(width: 8),
+            SizedBox(
+              width: 28,
+              child: Center(
+                child: switch (mark) {
+                  AbecedarioMark.hit => AppIcon.check.widget(size: 22),
+                  AbecedarioMark.miss => AppIcon.cancel.widget(size: 22),
+                  null => const Text(
+                    '–',
+                    style: TextStyle(color: AppColors.textMuted),
+                  ),
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }

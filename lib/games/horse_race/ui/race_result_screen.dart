@@ -7,8 +7,6 @@ import '../../../app/app_icons.dart';
 import '../../../app/theme.dart';
 import '../../../core/consequences/consequence_banner.dart';
 import '../../../core/consequences/consequences.dart';
-import '../../../core/consequences/retos_filter.dart';
-import '../../../core/content/prompts.dart';
 import '../../../core/players/player.dart';
 import '../../../core/players/player_widgets.dart';
 import '../../../core/players/players_controller.dart';
@@ -21,8 +19,6 @@ import '../domain/cards.dart';
 import '../race_result.dart';
 import '../race_texts.dart';
 import 'race_widgets.dart';
-
-const _retosAsset = 'assets/content/es/retos.json';
 
 class RaceResultScreen extends ConsumerStatefulWidget {
   const RaceResultScreen({super.key});
@@ -141,12 +137,6 @@ class _RaceResultScreenState extends ConsumerState<RaceResultScreen> {
     final players = ref.watch(playersProvider);
     final byId = {for (final p in players) p.id: p};
     final mode = ref.watch(settingsProvider.select((s) => s.consequenceMode));
-    final adult = ref.watch(settingsProvider.select((s) => s.adultConfirmed));
-    final retosPrompts = ref.watch(promptsProvider(_retosAsset)).asData?.value;
-    final retoPools = RetoPools.fromPrompts(
-      retosPrompts,
-      adultConfirmed: adult,
-    );
 
     final known = [
       for (final o in result.outcomes)
@@ -242,7 +232,6 @@ class _RaceResultScreenState extends ConsumerState<RaceResultScreen> {
                         outcomes: outcomeByPlayer,
                         reasons: reasons,
                         mode: mode,
-                        retoPools: retoPools,
                       ),
                     ],
                     if (winners.isEmpty)
@@ -572,8 +561,8 @@ class _WinnerTicket extends StatelessWidget {
 }
 
 /// Quién paga (o a quién le toca) y por qué, un boleto por jugador con el sello "PAGA" (Fichas) o
-/// "LE TOCA" (Retos y Sorbos). Misma lógica que `ConsequenceBanner`, más el motivo. En Retos y
-/// Sorbos no se muestra lo que va a la Copa (D19). No hay transferencias entre jugadores.
+/// "LE TOCA" (Sorbos). Misma lógica que `ConsequenceBanner`, más el motivo. En Sorbos no se
+/// muestra lo que va a la Copa (D19). No hay transferencias entre jugadores.
 class _Payers extends StatelessWidget {
   const _Payers({
     required this.losses,
@@ -581,7 +570,6 @@ class _Payers extends StatelessWidget {
     required this.outcomes,
     required this.reasons,
     required this.mode,
-    required this.retoPools,
   });
 
   final Map<String, int> losses;
@@ -589,22 +577,15 @@ class _Payers extends StatelessWidget {
   final Map<String, BetOutcome> outcomes;
   final Map<String, List<String>> reasons;
   final ConsequenceMode mode;
-  /// En Retos, un solo reto por jugador: su nivel sale de las fichas perdidas (min con 3;
-  /// el All-in es el nivel máximo).
-  final RetoPools retoPools;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    var retoIndex = 0;
     var stampIndex = 0;
     final rows = <Widget>[];
     for (final e in losses.entries) {
       final loss = resolveLoss(e.value, mode);
       if (loss.amount == 0) continue;
-      final reto = mode == ConsequenceMode.retos
-          ? retoPools.pick(loss.amount, retoIndex++)
-          : null;
       final why = reasons[e.key]?.join(' · ');
       final player = players[e.key];
       final outcome = outcomes[e.key];
@@ -668,15 +649,6 @@ class _Payers extends StatelessWidget {
                           ],
                         ),
                         if (why != null) Text(why, style: muted),
-                        if (reto != null) ...[
-                          const SizedBox(height: 4),
-                          Text(
-                            reto,
-                            style: theme.textTheme.bodyMedium?.copyWith(
-                              color: raceInk,
-                            ),
-                          ),
-                        ],
                       ],
                     ),
                   ),

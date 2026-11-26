@@ -29,6 +29,7 @@ Future<_Env> _pump(
   Widget home, {
   bool withScores = true,
   Duration wait = const Duration(seconds: 4),
+  Map<String, Object> prefsValues = const {},
   Map<String, int>? r1,
   Map<String, String> ids = const {
     'Ana': 'p1',
@@ -46,6 +47,7 @@ Future<_Env> _pump(
           'color': ids.keys.toList().indexOf(e.key),
         },
     ]),
+    ...prefsValues,
   });
   final prefs = await SharedPreferences.getInstance();
   final shared = <String>[];
@@ -158,6 +160,41 @@ void main() {
       findsOneWidget,
     );
     expect(find.byTooltip('Compartir la Copa'), findsNothing);
+  });
+
+  testWidgets('en Retos la Copa no ofrece la Carrera pero conserva lo ya anotado y no falla', (
+    tester,
+  ) async {
+    tester.view.physicalSize = const Size(800, 3000);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.reset);
+    // La sesión trae rondas de la Carrera (anotadas antes de cambiar a Retos).
+    await _pump(
+      tester,
+      const CupScreen(),
+      prefsValues: {'settings.consequenceMode.v1': 'retos'},
+    );
+    expect(tester.takeException(), isNull);
+    expect(find.text('Podio'), findsOneWidget);
+    expect(find.text('Va en cabeza: Luis'), findsOneWidget);
+    expect(find.text('Cuentan: El Infiltrado'), findsOneWidget);
+    expect(find.textContaining('Carrera de caballos'), findsNWidgets(1)); // solo en "Por juego"
+    expect(find.text('Aquí cuentan los votos. Manda quien acaba con más fichas.'), findsOneWidget);
+    expect(find.textContaining('apuestas'), findsNothing);
+  });
+
+  testWidgets('en Retos el estado vacío de la Copa solo cita los juegos disponibles', (
+    tester,
+  ) async {
+    await _pump(
+      tester,
+      const CupScreen(),
+      withScores: false,
+      prefsValues: {'settings.consequenceMode.v1': 'retos'},
+    );
+    expect(find.text('Aún no hay rondas que cuenten'), findsOneWidget);
+    expect(find.textContaining('Jugad a El Infiltrado y aquí saldrá quién manda.'), findsOneWidget);
+    expect(find.textContaining('Carrera'), findsNothing);
   });
 
   testWidgets('compartir envía el texto de la Copa', (tester) async {
@@ -317,8 +354,13 @@ void podiumTests() {
         ),
       );
 
-      AppFeedback.vibrationEnabled = false;
-      await _pump(tester, const CupScreen());
+      // La Copa lee los ajustes y `SettingsController` sincroniza `AppFeedback`: la vibración
+      // se apaga por el ajuste guardado, no con el estático a mano.
+      await _pump(
+        tester,
+        const CupScreen(),
+        prefsValues: {'settings.vibration.v1': false},
+      );
       expect(haptics, isEmpty);
 
       AppFeedback.vibrationEnabled = true;

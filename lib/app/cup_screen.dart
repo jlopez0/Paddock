@@ -7,6 +7,7 @@ import 'package:material_ui/material_ui.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../core/audio/app_sound.dart';
+import '../core/consequences/consequences.dart';
 import '../core/help/how_to_play.dart';
 import '../core/players/player.dart';
 import '../core/players/player_widgets.dart';
@@ -15,6 +16,7 @@ import '../core/session/cup_presentation.dart';
 import '../core/session/session_controller.dart';
 import '../core/session/session_score.dart';
 import '../core/settings/app_feedback.dart';
+import '../core/settings/settings_controller.dart';
 import '../games/registry.dart';
 import 'app_icons.dart';
 import 'app_info.dart';
@@ -50,13 +52,22 @@ bool _celebrates(RankGroup leaders) => leaders.total > 0;
 String _noPositiveTitle(bool finished) =>
     finished ? 'Nadie ha acabado en positivo' : 'Nadie va en positivo';
 
-const _howItWorks =
-    'Aquí cuentan las apuestas y los votos. Manda quien acaba con más fichas.';
+/// Juegos que apuntan a la Copa y se ofrecen con [mode] (sin Carrera en Retos, D21). Sale
+/// del registro: nada fijo en el texto. Lo ya anotado de una noche no se borra al cambiar de modo.
+List<String> _countingTitles(ConsequenceMode mode) => [
+  for (final g in gamesFor(mode))
+    if (g.scoresCup) g.title,
+];
 
-/// Juegos que apuntan a la Copa, generado desde el registro (nada fijo en el texto).
-String get _countingLine =>
-    'Cuentan: ${joinNames([for (final g in gameModules)
-      if (g.scoresCup) g.title])}';
+/// "Aquí cuentan las apuestas y los votos" si hay Carrera; solo "los votos" sin ella.
+String _howItWorks(ConsequenceMode mode) {
+  final bets = gamesFor(mode).any((g) => g.id == 'carrera');
+  return 'Aquí cuentan ${bets ? 'las apuestas y los votos' : 'los votos'}. '
+      'Manda quien acaba con más fichas.';
+}
+
+String _countingLine(ConsequenceMode mode) =>
+    'Cuentan: ${joinNames(_countingTitles(mode))}';
 
 const _removedPlayer = 'Jugador retirado';
 
@@ -164,6 +175,7 @@ class CupScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final session = ref.watch(sessionProvider);
     final players = ref.watch(playersProvider);
+    final mode = ref.watch(settingsProvider.select((s) => s.consequenceMode));
     return Scaffold(
       appBar: AppBar(
         title: const AppTitle('Copa de la noche'),
@@ -179,8 +191,9 @@ class CupScreen extends ConsumerWidget {
       ),
       body: SafeArea(
         child: session.isEmpty
-            ? const _EmptyCup()
+            ? _EmptyCup(mode: mode)
             : _CupBody(
+                mode: mode,
                 session: session,
                 players: players,
                 finished: ref.read(sessionProvider.notifier).isStale,
@@ -193,7 +206,9 @@ class CupScreen extends ConsumerWidget {
 }
 
 class _EmptyCup extends StatelessWidget {
-  const _EmptyCup();
+  const _EmptyCup({required this.mode});
+
+  final ConsequenceMode mode;
 
   @override
   Widget build(BuildContext context) => Center(
@@ -216,7 +231,7 @@ class _EmptyCup extends StatelessWidget {
           const SizedBox(height: 8),
           // Los juegos que suman salen del registro: nada fijo en el texto.
           Text(
-            'Jugad a ${joinNames([for (final g in gameModules) if (g.scoresCup) g.title])} y aquí saldrá quién manda.',
+            'Jugad a ${joinNames(_countingTitles(mode))} y aquí saldrá quién manda.',
             textAlign: TextAlign.center,
             style: const TextStyle(color: AppColors.textMuted),
           ),
@@ -228,6 +243,7 @@ class _EmptyCup extends StatelessWidget {
 
 class _CupBody extends StatefulWidget {
   const _CupBody({
+    required this.mode,
     required this.session,
     required this.players,
     required this.finished,
@@ -235,6 +251,7 @@ class _CupBody extends StatefulWidget {
     required this.onNewNight,
   });
 
+  final ConsequenceMode mode;
   final Session session;
   final List<Player> players;
   final bool finished;
@@ -306,13 +323,16 @@ class _CupBodyState extends State<_CupBody> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                _howItWorks,
-                style: TextStyle(color: AppColors.textMuted, fontSize: 13),
+              Text(
+                _howItWorks(widget.mode),
+                style: const TextStyle(
+                  color: AppColors.textMuted,
+                  fontSize: 13,
+                ),
               ),
               const SizedBox(height: 4),
               Text(
-                _countingLine,
+                _countingLine(widget.mode),
                 style: const TextStyle(
                   color: AppColors.textMuted,
                   fontSize: 13,

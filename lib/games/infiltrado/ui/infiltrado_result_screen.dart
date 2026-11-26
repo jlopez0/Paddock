@@ -206,9 +206,10 @@ class _Outcome extends ConsumerWidget {
         .watch(promptsProvider('assets/content/es/retos.json'))
         .asData
         ?.value;
-    final retos = retosPrompts == null
-        ? null
-        : filterRetos(retosPrompts, adultConfirmed: adult);
+    final retoPools = RetoPools.fromPrompts(
+      retosPrompts,
+      adultConfirmed: adult,
+    );
     // Si la Copa ya no tiene esta ronda (Nueva noche), el resultado no dice que está anotada.
     final inCup = ref.watch(
       sessionProvider.select((s) => s.hasRound(game.roundId)),
@@ -330,7 +331,7 @@ class _Outcome extends ConsumerWidget {
                 ConsequenceBanner(
                   losses: losses,
                   mode: mode,
-                  retos: retos,
+                  retoPools: retoPools,
                   inCup: inCup,
                 ),
               ],

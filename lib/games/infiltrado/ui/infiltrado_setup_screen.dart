@@ -25,7 +25,7 @@ String _consequenceTail(ConsequenceMode mode) {
     case ConsequenceMode.puntos:
       return 'si lo pilláis, paga 2 fichas; si se escapa, los demás pagan 1 cada uno.';
     case ConsequenceMode.retos:
-      return 'si lo pilláis, le tocan 2 retos; si se escapa, 1 reto a cada uno de los demás.';
+      return 'si lo pilláis, le toca un reto picante; si se escapa, un reto suave a cada uno de los demás.';
     case ConsequenceMode.sorbos:
       return 'si lo pilláis, le tocan 2 sorbos; si se escapa, 1 a cada uno de los demás. Siempre o agua o reto.';
   }

@@ -134,8 +134,11 @@ class _PromptDeckPlayScreenState extends ConsumerState<PromptDeckPlayScreen> {
   int _index = 0;
   bool _forward = true;
 
-  /// Apuesta anunciada por cada carta (solo en [PromptPayMode.stake]).
+  /// Intensidad 1 a 3 de cada carta (en [PromptPayMode.stake] y [PromptPayMode.fixed]).
   List<int> _stakes = const [];
+
+  /// Punto de partida aleatorio de la rotación de retos: no sale siempre el mismo primero.
+  int _retoBase = 0;
 
   /// Cartas ya vistas en esta sesión de pantalla: la partida siguiente no las repite.
   Set<String> _played = {};
@@ -151,13 +154,14 @@ class _PromptDeckPlayScreenState extends ConsumerState<PromptDeckPlayScreen> {
     );
     _deck = draw.cards;
     _played = draw.played;
-    _stakes = widget.game.payMode == PromptPayMode.stake
-        ? rollStakes(draw.cards.length, random)
-        : const [];
+    _stakes = widget.game.payMode == PromptPayMode.none
+        ? const []
+        : rollStakes(draw.cards.length, random);
+    _retoBase = random.nextInt(1000);
     _index = 0;
   }
 
-  /// Apuesta de la carta [index], o `null` si el juego no anuncia apuestas.
+  /// Intensidad de la carta [index], o `null` si el juego no tiene consecuencia.
   int? _stakeAt(int index) =>
       index >= 0 && index < _stakes.length ? _stakes[index] : null;
 
@@ -344,7 +348,10 @@ class _PromptDeckPlayScreenState extends ConsumerState<PromptDeckPlayScreen> {
                               : _PromptCard(
                                   game: game,
                                   prompt: deck[_index],
-                                  stake: _stakeAt(_index),
+                                  // El titular solo existe en las cartas de apuesta.
+                                  stake: game.payMode == PromptPayMode.stake
+                                      ? _stakeAt(_index)
+                                      : null,
                                   mode: mode,
                                 ),
                         ),
@@ -352,20 +359,24 @@ class _PromptDeckPlayScreenState extends ConsumerState<PromptDeckPlayScreen> {
                     ),
                   ),
                 ),
-                if (!finished && _stakeAt(_index) != null)
+                if (!finished &&
+                    game.payMode == PromptPayMode.stake &&
+                    _stakeAt(_index) != null)
                   _ConsequenceSection(
                     bannerKey: const ValueKey('stake-banner'),
                     who: _ConsequenceSection.stakeWho,
                     chips: _stakeAt(_index)!,
-                    cardIndex: _index,
+                    retoOffset: _retoBase + _index,
                     retoOnly: true,
                   ),
-                if (!finished && game.payMode == PromptPayMode.fixed)
+                if (!finished &&
+                    game.payMode == PromptPayMode.fixed &&
+                    _stakeAt(_index) != null)
                   _ConsequenceSection(
                     bannerKey: const ValueKey('fixed-banner'),
                     who: _ConsequenceSection.fixedWho,
-                    chips: kPromptFixedChips,
-                    cardIndex: _index,
+                    chips: _stakeAt(_index)!,
+                    retoOffset: _retoBase + _index,
                   ),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(20, 0, 20, 16),
@@ -407,24 +418,27 @@ class _PromptDeckPlayScreenState extends ConsumerState<PromptDeckPlayScreen> {
 
 /// Lo que le toca a [who] en Retos y Sorbos, con el tope de 3 y, en Sorbos, la alternativa
 /// de agua o reto siempre visible (todo lo resuelve [ConsequenceBanner]). Sirve al "más
-/// señalado" de una apuesta y a "Quien lo haya hecho" de Yo nunca. En modo Fichas no
-/// muestra nada: no se anota nada en la Copa y la mesa lo resuelve sola.
+/// señalado" de una apuesta y a "Quien lo haya hecho" de Yo nunca. En Retos sale UN reto
+/// cuyo nivel depende de la intensidad [chips] (1 suave, 2 picante, 3 atrevido con +18).
+/// En modo Fichas no muestra nada: no se anota nada en la Copa y la mesa lo resuelve sola.
 class _ConsequenceSection extends ConsumerWidget {
   const _ConsequenceSection({
     required this.bannerKey,
     required this.who,
     required this.chips,
-    required this.cardIndex,
+    required this.retoOffset,
     this.retoOnly = false,
   });
 
-  /// La cantidad ya la dice el titular de la carta: aquí solo el reto concreto.
+  /// El titular de la carta ya dice la cantidad: aquí solo el reto concreto.
   final bool retoOnly;
 
   final Key bannerKey;
   final String who;
   final int chips;
-  final int cardIndex;
+
+  /// Rotación de retos: distinta en cada carta para no repetir el mismo reto.
+  final int retoOffset;
 
   /// Quién paga una apuesta: nadie en concreto, lo decide la mesa al señalar.
   static const stakeWho = 'El más señalado';
@@ -444,16 +458,10 @@ class _ConsequenceSection extends ConsumerWidget {
     final retosPrompts = mode == ConsequenceMode.retos
         ? ref.watch(promptsProvider(promptRetosAsset)).asData?.value
         : null;
-    final retosAll = retosPrompts == null
-        ? null
-        : filterRetos(retosPrompts, adultConfirmed: adult);
-    // Se rota el mazo según la carta para no repetir siempre el primer reto.
-    final retos = (retosAll == null || retosAll.isEmpty)
-        ? retosAll
-        : [
-            ...retosAll.skip((cardIndex * 3) % retosAll.length),
-            ...retosAll.take((cardIndex * 3) % retosAll.length),
-          ];
+    final retoPools = RetoPools.fromPrompts(
+      retosPrompts,
+      adultConfirmed: adult,
+    );
     final maxHeight = MediaQuery.sizeOf(context).height * 0.3;
     return Padding(
       padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
@@ -470,7 +478,8 @@ class _ConsequenceSection extends ConsumerWidget {
             key: bannerKey,
             losses: {who: chips},
             mode: mode,
-            retos: retos,
+            retoPools: retoPools,
+            retoOffset: retoOffset,
             retoOnly: retoOnly,
           ),
         ),
@@ -567,7 +576,7 @@ class _PromptCard extends StatelessWidget {
   }
 }
 
-/// "¡Por 2 retos!" o "Por 2 sorbos · o agua o reto" sobre la pregunta. Es la única
+/// "¡Por un reto!" o "Por 2 sorbos · o agua o reto" sobre la pregunta. Es la única
 /// fuente de la cantidad (sin icono de ficha: el texto ya habla de retos o sorbos).
 /// Nunca se pinta en modo Fichas.
 class _StakeHeadline extends StatelessWidget {

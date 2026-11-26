@@ -143,9 +143,10 @@ class _RaceResultScreenState extends ConsumerState<RaceResultScreen> {
     final mode = ref.watch(settingsProvider.select((s) => s.consequenceMode));
     final adult = ref.watch(settingsProvider.select((s) => s.adultConfirmed));
     final retosPrompts = ref.watch(promptsProvider(_retosAsset)).asData?.value;
-    final retos = retosPrompts == null
-        ? null
-        : filterRetos(retosPrompts, adultConfirmed: adult);
+    final retoPools = RetoPools.fromPrompts(
+      retosPrompts,
+      adultConfirmed: adult,
+    );
 
     final known = [
       for (final o in result.outcomes)
@@ -241,7 +242,7 @@ class _RaceResultScreenState extends ConsumerState<RaceResultScreen> {
                         outcomes: outcomeByPlayer,
                         reasons: reasons,
                         mode: mode,
-                        retos: retos,
+                        retoPools: retoPools,
                       ),
                     ],
                     if (winners.isEmpty)
@@ -580,7 +581,7 @@ class _Payers extends StatelessWidget {
     required this.outcomes,
     required this.reasons,
     required this.mode,
-    required this.retos,
+    required this.retoPools,
   });
 
   final Map<String, int> losses;
@@ -588,12 +589,13 @@ class _Payers extends StatelessWidget {
   final Map<String, BetOutcome> outcomes;
   final Map<String, List<String>> reasons;
   final ConsequenceMode mode;
-  final List<String>? retos;
+  /// En Retos, un solo reto por jugador: su nivel sale de las fichas perdidas (min con 3;
+  /// el All-in es el nivel máximo).
+  final RetoPools retoPools;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final pool = (retos == null || retos!.isEmpty) ? kFallbackRetos : retos!;
     var retoIndex = 0;
     var stampIndex = 0;
     final rows = <Widget>[];
@@ -601,7 +603,7 @@ class _Payers extends StatelessWidget {
       final loss = resolveLoss(e.value, mode);
       if (loss.amount == 0) continue;
       final reto = mode == ConsequenceMode.retos
-          ? pool[retoIndex++ % pool.length]
+          ? retoPools.pick(loss.amount, retoIndex++)
           : null;
       final why = reasons[e.key]?.join(' · ');
       final player = players[e.key];

@@ -5,8 +5,12 @@ enum ConsequenceMode { puntos, retos, sorbos }
 /// Máximo de fichas en una apuesta normal.
 const int kMaxChipsPerBet = 5;
 
-/// Tope de retos o sorbos por ronda en los modos retos y sorbos.
+/// Tope de sorbos por evento (y nivel máximo de reto) en los modos retos y sorbos.
 const int kRoundCap = 3;
+
+/// Cantidad de un evento en Retos: siempre UN reto, nunca un número (D20). Lo que cambia
+/// con la intensidad es el nivel del reto, no cuántos son.
+const String kUnReto = 'Un reto';
 
 /// Lo que paga un jugador tras perder [chips] fichas.
 class ConsequenceLoss {
@@ -14,7 +18,8 @@ class ConsequenceLoss {
 
   final ConsequenceMode mode;
 
-  /// Puntos (fichas), retos o sorbos, según [mode].
+  /// Puntos (fichas) o sorbos según [mode]. En retos es la intensidad 1 a 3 (el nivel del
+  /// único reto que toca), no una cantidad de retos.
   final int amount;
 
   /// En sorbos, la alternativa "agua o reto" debe estar siempre a la vista.
@@ -32,7 +37,8 @@ class ConsequenceLoss {
 }
 
 /// Traduce las [chips] perdidas a lo que paga el jugador en [mode].
-/// puntos = fichas; retos y sorbos = `min(fichas, kRoundCap)`. Negativos cuentan como 0.
+/// puntos = fichas; sorbos = `min(fichas, kRoundCap)`; retos = intensidad `min(fichas, kRoundCap)`
+/// (nivel del reto, ver `RetoPools`). Negativos cuentan como 0.
 ConsequenceLoss resolveLoss(int chips, ConsequenceMode mode) {
   final c = chips < 0 ? 0 : chips;
   switch (mode) {

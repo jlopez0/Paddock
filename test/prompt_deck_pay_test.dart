@@ -150,23 +150,46 @@ void main() {
       expect(find.textContaining('reto'), findsNothing);
     });
 
-    testWidgets('modo Retos: banner fijo con 1 reto', (tester) async {
+    testWidgets('modo Retos: banner fijo con "Un reto" y nunca un número', (
+      tester,
+    ) async {
       await _pump(tester, _game(), mode: 'retos');
       expect(find.byKey(const ValueKey('fixed-banner')), findsOneWidget);
       expect(find.text('Quien lo haya hecho'), findsOneWidget);
-      expect(find.text('1 reto'), findsOneWidget);
+      expect(find.text('Un reto'), findsOneWidget);
+      expect(find.textContaining(RegExp(r'\d reto')), findsNothing);
       expect(find.text('Reto de prueba'), findsOneWidget);
+      // El titular de la carta es solo de las cartas de apuesta: no se duplica.
+      expect(find.textContaining('¡Por'), findsNothing);
     });
 
     testWidgets(
-      'modo Sorbos: 1 sorbo con la alternativa de agua o reto a la vista',
+      'modo Sorbos: intensidad 1 a 3 con la alternativa de agua o reto a la vista',
       (tester) async {
         await _pump(tester, _game(), mode: 'sorbos', adult: true);
         expect(find.byKey(const ValueKey('fixed-banner')), findsOneWidget);
         expect(find.text('Quien lo haya hecho'), findsOneWidget);
-        expect(find.text('1 sorbo · o agua o reto'), findsOneWidget);
+        expect(
+          find.textContaining(RegExp(r'^[123] sorbos? · o agua o reto$')),
+          findsOneWidget,
+        );
+        expect(find.textContaining('o agua o reto'), findsOneWidget);
+        expect(find.textContaining('Por '), findsNothing);
       },
     );
+
+    testWidgets('la intensidad de Sorbos es de 1 a 3 en todas las cartas', (
+      tester,
+    ) async {
+      await _pump(tester, _game(), mode: 'sorbos', adult: true);
+      for (var i = 0; i < 3; i++) {
+        expect(
+          find.textContaining(RegExp(r'^[123] sorbos? · o agua o reto$')),
+          findsOneWidget,
+        );
+        await _next(tester);
+      }
+    });
 
     testWidgets('el banner sigue en la carta siguiente y sin jugadores', (
       tester,
@@ -245,17 +268,15 @@ void main() {
       expect(find.textContaining('−', findRichText: true), findsNothing);
     });
 
-    testWidgets('modo Retos: titular "¡Por N retos!" sin ficha ni cantidad repetida', (
+    testWidgets('modo Retos: titular "¡Por un reto!" sin ficha ni número', (
       tester,
     ) async {
       await _pump(tester, stakeGame(), mode: 'retos');
-      expect(
-        find.textContaining(RegExp(r'^¡Por [123] retos?!$')),
-        findsOneWidget,
-      );
+      expect(find.text('¡Por un reto!'), findsOneWidget);
       expect(find.textContaining('ficha'), findsNothing);
       expect(find.byType(ChipToken), findsNothing);
-      expect(find.textContaining(RegExp(r'^[123] retos?$')), findsNothing);
+      expect(find.textContaining(RegExp(r'\d reto')), findsNothing);
+      expect(find.text('Un reto'), findsNothing);
     });
 
     testWidgets('modo Sorbos: una sola vez la apuesta, con "o agua o reto" y sin ficha', (
@@ -290,7 +311,7 @@ void main() {
       await _pump(tester, stakeGame(), mode: 'retos');
       expect(find.byKey(const ValueKey('stake-banner')), findsOneWidget);
       expect(find.text('El más señalado'), findsOneWidget);
-      expect(find.textContaining(RegExp(r'^[123] retos?$')), findsNothing);
+      expect(find.text('Un reto'), findsNothing);
       expect(find.text('Reto de prueba'), findsOneWidget);
     });
 

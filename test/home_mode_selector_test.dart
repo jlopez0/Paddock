@@ -76,7 +76,7 @@ void main() {
     await tester.tap(find.text('Retos'));
     await tester.pumpAndSettle();
     expect(c.read(settingsProvider).consequenceMode, ConsequenceMode.retos);
-    expect(find.text('Lo que pierdes se cumple con retos. Hasta 3 por ronda.'),
+    expect(find.text('Lo que pierdes se cumple con un reto. Más fuerte cuanto más pierdes.'),
         findsOneWidget);
   });
 

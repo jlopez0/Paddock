@@ -119,10 +119,11 @@ void main() {
       }
     });
 
-    test('Retos: "¡Por N retos!" en singular y plural', () {
-      expect(stakeHeadline(1, ConsequenceMode.retos), '¡Por 1 reto!');
-      expect(stakeHeadline(2, ConsequenceMode.retos), '¡Por 2 retos!');
-      expect(stakeHeadline(3, ConsequenceMode.retos), '¡Por 3 retos!');
+    test('Retos: "¡Por un reto!" sea cual sea la intensidad', () {
+      for (final n in [1, 2, 3, 9]) {
+        expect(stakeHeadline(n, ConsequenceMode.retos), '¡Por un reto!');
+      }
+      expect(stakeHeadline(0, ConsequenceMode.retos), isNull);
     });
 
     test('Sorbos: sin exclamación, con agua o reto y con tope de 3', () {

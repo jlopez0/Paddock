@@ -1,29 +1,26 @@
 import 'package:material_ui/material_ui.dart';
 
 import 'consequences.dart';
+import 'retos_filter.dart';
 
-/// Retos de reserva por si `retos.json` no carga o queda vacío.
-const List<String> kFallbackRetos = [
-  'Cuenta un chiste en menos de 20 segundos.',
-  'Haz un cumplido sincero a la persona de tu derecha.',
-  'Imita a un animal hasta que alguien lo adivine.',
-  'Di tres cosas que te gusten del grupo.',
-  'Canta el estribillo de una canción conocida.',
-  'Haz tu mejor cara de sorpresa durante 10 segundos.',
-];
+export 'retos_filter.dart' show kFallbackRetos;
 
 /// Muestra lo que paga cada jugador según el [mode] activo.
 ///
 /// [losses] es `{jugador: fichas perdidas}`. Los jugadores con 0 fichas no se
 /// muestran. En Sorbos la alternativa "o agua o reto" siempre está visible.
-/// [retos] es la lista de la que salen los retos en modo Retos; si es null
-/// o está vacía se usa [kFallbackRetos].
+/// En Retos cada jugador ve UN reto (nunca "N retos") del nivel que marca su
+/// intensidad: [retoPools] reparte los retos por nivel (D20) y [retoOffset] rota la
+/// elección (p. ej. por carta). [retos] es una lista plana que solo se usa si no hay
+/// [retoPools]; sin ninguna de las dos se usa [kFallbackRetos].
 class ConsequenceBanner extends StatelessWidget {
   const ConsequenceBanner({
     super.key,
     required this.losses,
     required this.mode,
     this.retos,
+    this.retoPools,
+    this.retoOffset = 0,
     this.retoOnly = false,
     this.inCup = true,
   });
@@ -39,7 +36,13 @@ class ConsequenceBanner extends StatelessWidget {
   final ConsequenceMode mode;
   final List<String>? retos;
 
-  /// Texto de la cantidad para [loss] (p. ej. "−2 en la Copa", "2 retos").
+  /// Retos por nivel; manda sobre [retos].
+  final RetoPools? retoPools;
+
+  /// Desplazamiento de la rotación de retos (se suma al orden de la fila).
+  final int retoOffset;
+
+  /// Texto de la cantidad para [loss] (p. ej. "−2 en la Copa", "Un reto").
   static String amountText(ConsequenceLoss loss, {bool inCup = true}) {
     final n = loss.amount;
     switch (loss.mode) {
@@ -47,7 +50,7 @@ class ConsequenceBanner extends StatelessWidget {
         if (!inCup) return n == 1 ? '−1 ficha' : '−$n fichas';
         return '−$n en la Copa';
       case ConsequenceMode.retos:
-        return n == 1 ? '1 reto' : '$n retos';
+        return kUnReto;
       case ConsequenceMode.sorbos:
         return '${n == 1 ? '1 sorbo' : '$n sorbos'} · o agua o reto';
     }
@@ -55,14 +58,14 @@ class ConsequenceBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final pool = (retos == null || retos!.isEmpty) ? kFallbackRetos : retos!;
+    final pools = retoPools ?? RetoPools.flat(retos);
     final rows = <Widget>[];
     var retoIndex = 0;
     for (final e in losses.entries) {
       final loss = resolveLoss(e.value, mode);
       if (loss.amount == 0) continue;
       final reto = mode == ConsequenceMode.retos
-          ? pool[retoIndex++ % pool.length]
+          ? pools.pick(loss.amount, retoOffset + retoIndex++)
           : null;
       rows.add(
         _Row(

@@ -33,14 +33,16 @@ DeckDraw drawDeck({
   );
 }
 
-/// Una apuesta de 1 a [kRoundCap] fichas por cada carta de la partida.
+/// Una intensidad de 1 a [kRoundCap] por cada carta de la partida (apuesta de ¿Quién es
+/// más probable? y consecuencia de Yo nunca).
 List<int> rollStakes(int count, Random random) => [
   for (var i = 0; i < count; i++) 1 + random.nextInt(kRoundCap),
 ];
 
 /// Titular de la apuesta de una carta según el modo, con el tope de [kRoundCap] ya aplicado.
-/// Fichas: nada (null), no se ve ninguna apuesta. Retos: "¡Por 2 retos!". Sorbos: sin
-/// exclamación y con la alternativa siempre visible: "Por 2 sorbos · o agua o reto".
+/// Fichas: nada (null), no se ve ninguna apuesta. Retos: "¡Por un reto!" (el nivel del reto
+/// lo marca la intensidad, nunca se dice un número). Sorbos: sin exclamación y con la
+/// alternativa siempre visible: "Por 2 sorbos · o agua o reto".
 String? stakeHeadline(int stake, ConsequenceMode mode) {
   final n = resolveLoss(stake, mode).amount;
   if (n == 0) return null;
@@ -48,7 +50,7 @@ String? stakeHeadline(int stake, ConsequenceMode mode) {
     case ConsequenceMode.puntos:
       return null;
     case ConsequenceMode.retos:
-      return '¡Por $n ${n == 1 ? 'reto' : 'retos'}!';
+      return '¡Por un reto!';
     case ConsequenceMode.sorbos:
       return 'Por $n ${n == 1 ? 'sorbo' : 'sorbos'} · o agua o reto';
   }

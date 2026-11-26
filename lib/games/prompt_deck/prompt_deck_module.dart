@@ -24,17 +24,16 @@ enum PromptPayMode {
   /// Sin consecuencia (¿Qué preferirías?).
   none,
 
-  /// Consecuencia fija de [kPromptFixedChips] ficha para quien lo haya hecho (Yo nunca).
-  /// En Retos y Sorbos, banner fijo bajo la carta; en Fichas, nada.
+  /// Cada carta lleva una intensidad aleatoria de 1 a 3 (D20) que paga quien lo haya hecho
+  /// (Yo nunca). En Retos y Sorbos, banner "Quien lo haya hecho" bajo la carta (un reto del
+  /// nivel que toca, o "N sorbos · o agua o reto"); en Fichas, nada. El titular no se
+  /// repite en la carta: solo en [stake].
   fixed,
 
-  /// Cada carta anuncia una apuesta (en Retos y Sorbos, "¡Por 2 retos!" o "Por 2 sorbos"; en Fichas no se muestra) y la mesa la resuelve sola
-  /// (¿Quién es más probable?).
+  /// Cada carta anuncia una apuesta (en Retos "¡Por un reto!", en Sorbos "Por 2 sorbos";
+  /// en Fichas no se muestra) y la mesa la resuelve sola (¿Quién es más probable?).
   stake,
 }
-
-/// Fichas de la consecuencia fija de [PromptPayMode.fixed].
-const int kPromptFixedChips = 1;
 
 /// Juego de "mazo de cartas de texto". Sirve para cualquier juego que consista
 /// en ir pasando cartas leídas de un fichero JSON: basta con crear una instancia

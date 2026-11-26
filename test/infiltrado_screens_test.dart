@@ -285,7 +285,7 @@ void main() {
     testWidgets('el texto de reglas sigue el modo: "paga 2 fichas" solo en Fichas', (tester) async {
       final cases = {
         'puntos': ('si lo pilláis, paga 2 fichas; si se escapa, los demás pagan 1 cada uno.', true),
-        'retos': ('si lo pilláis, le tocan 2 retos; si se escapa, 1 reto a cada uno de los demás.', false),
+        'retos': ('si lo pilláis, le toca un reto picante; si se escapa, un reto suave a cada uno de los demás.', false),
         'sorbos': ('si lo pilláis, le tocan 2 sorbos; si se escapa, 1 a cada uno de los demás. Siempre o agua o reto.', false),
       };
       for (final e in cases.entries) {
@@ -324,7 +324,8 @@ void main() {
       );
       expect(find.text('Ya cuenta en la Copa de la noche.'), findsOneWidget);
       expect(find.text('Fichas anotadas en la Copa de la noche.'), findsNothing);
-      expect(find.text('2 retos'), findsOneWidget);
+      expect(find.text('Un reto'), findsOneWidget);
+      expect(find.textContaining(RegExp(r'\d reto')), findsNothing);
     });
 
     testWidgets('si el infiltrado acierta la palabra gana y los demás pierden 1', (tester) async {

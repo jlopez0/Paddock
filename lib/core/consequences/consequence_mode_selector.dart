@@ -18,7 +18,7 @@ String consequenceModeDescription(ConsequenceMode mode) => switch (mode) {
   ConsequenceMode.puntos =>
     'Se juega por honor. Nadie cumple nada fuera de la app.',
   ConsequenceMode.retos =>
-    'Lo que pierdes se cumple con retos. Hasta 3 por ronda.',
+    'Lo que pierdes se cumple con un reto. Más fuerte cuanto más pierdes.',
   ConsequenceMode.sorbos =>
     'Opcional y solo +18. Hasta 3 por ronda · o agua o reto.',
 };

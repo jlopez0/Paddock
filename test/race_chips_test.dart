@@ -330,6 +330,21 @@ void main() {
       expect(find.text('2 sorbos · o agua o reto'), findsOneWidget);
     });
 
+    testWidgets('modo retos: cada perdedor ve "Un reto" (nunca "N retos"), sea cual sea la apuesta', (tester) async {
+      await pump(
+        tester,
+        mode: 'retos',
+        bets: const [
+          Bet(playerId: 'p0', suit: Suit.copas, chips: 3),
+          Bet(playerId: 'p1', suit: Suit.oros, chips: 2),
+          Bet(playerId: 'p2', suit: Suit.bastos, chips: Bet.allIn),
+        ],
+      );
+      await tester.pump(const Duration(seconds: 2));
+      expect(find.text('Un reto', skipOffstage: false), findsNWidgets(2));
+      expect(find.textContaining(RegExp(r'\d retos?'), skipOffstage: false), findsNothing);
+    });
+
     testWidgets('modo sorbos: el boleto no estrecha "3 sorbos · o agua o reto" junto al nombre', (tester) async {
       await pump(
         tester,
@@ -441,7 +456,7 @@ void main() {
         mode: 'retos',
         bets: const [Bet(playerId: 'p0', suit: Suit.copas, chips: Bet.allIn)],
       );
-      expect(find.textContaining('Reparte 2 All-in · hasta 3 retos cada uno (0/2)'), findsOneWidget);
+      expect(find.textContaining('Reparte 2 All-in · un reto a cada uno (0/2)'), findsOneWidget);
       expect(find.textContaining('En la Copa, cada All-in vale'), findsNothing);
     });
 
@@ -459,7 +474,7 @@ void main() {
     test('All-in según el modo', () {
       expect(allInShareText(ConsequenceMode.puntos, 2), 'Reparte 2 All-in a 2 personas distintas');
       expect(allInShareText(ConsequenceMode.puntos, 1), 'Reparte 1 All-in a 1 persona');
-      expect(allInShareText(ConsequenceMode.retos, 2), 'Reparte 2 All-in · hasta 3 retos cada uno');
+      expect(allInShareText(ConsequenceMode.retos, 2), 'Reparte 2 All-in · un reto a cada uno');
       expect(allInShareText(ConsequenceMode.sorbos, 2), 'Reparte 2 All-in · hasta 3 sorbos cada uno · o agua o reto');
     });
 
@@ -467,7 +482,7 @@ void main() {
       expect(losersTitle(ConsequenceMode.sorbos), 'Les toca');
       expect(losersTitle(ConsequenceMode.retos), 'Les toca');
       expect(losersTitle(ConsequenceMode.puntos), 'Pagan');
-      expect(losersLine(ConsequenceMode.retos, {'Ana': 2, 'Luis': 10}), 'Les toca: Ana (2 retos), Luis (3 retos)');
+      expect(losersLine(ConsequenceMode.retos, {'Ana': 2, 'Luis': 10}), 'Les toca: Ana (un reto), Luis (un reto)');
       expect(losersLine(ConsequenceMode.sorbos, {'Ana': 2}), 'Les toca: Ana (2 sorbos · o agua o reto)');
       expect(losersLine(ConsequenceMode.sorbos, {'Ana': 10}), 'Les toca: Ana (3 sorbos · o agua o reto)');
       expect(losersLine(ConsequenceMode.puntos, {'Ana': 2}), 'Pagan: Ana (−2)');
@@ -520,13 +535,13 @@ void main() {
       expect(stakeCaption(ConsequenceMode.puntos), 'fichas');
       expect(stakeCaption(ConsequenceMode.sorbos), 'apuesta');
       expect(stakeCapNote(ConsequenceMode.puntos), isNull);
-      expect(stakeCapNote(ConsequenceMode.retos), 'Hasta 3 por ronda');
+      expect(stakeCapNote(ConsequenceMode.retos), 'Un reto: más fuerte cuanto más apuestas');
       expect(stakeCapNote(ConsequenceMode.sorbos), 'Hasta 3 por ronda · o agua o reto');
       expect(allInA11yText(ConsequenceMode.puntos), 'All-in, 10 fichas');
-      expect(allInA11yText(ConsequenceMode.retos), 'All-in, 3 retos');
+      expect(allInA11yText(ConsequenceMode.retos), 'All-in, un reto de nivel máximo');
       expect(allInA11yText(ConsequenceMode.sorbos), 'All-in, 3 sorbos, o agua o reto');
       expect(allInButtonText(ConsequenceMode.puntos), 'All-in  ·  10 fichas');
-      expect(allInButtonText(ConsequenceMode.retos), 'All-in  ·  3 retos');
+      expect(allInButtonText(ConsequenceMode.retos), 'All-in  ·  reto máximo');
       expect(allInButtonText(ConsequenceMode.sorbos), 'All-in  ·  3 sorbos');
       expect(cupNoteText(ConsequenceMode.puntos), 'Fichas anotadas en la Copa de la noche.');
       expect(cupNoteText(ConsequenceMode.retos), 'Ya cuenta en la Copa de la noche.');
@@ -605,7 +620,7 @@ void main() {
     });
 
     for (final (mode, button, note, a11y) in [
-      ('retos', 'All-in  ·  3 retos', 'Hasta 3 por ronda', 'All-in, 3 retos'),
+      ('retos', 'All-in  ·  reto máximo', 'Un reto: más fuerte cuanto más apuestas', 'All-in, un reto de nivel máximo'),
       ('sorbos', 'All-in  ·  3 sorbos', 'Hasta 3 por ronda · o agua o reto', 'All-in, 3 sorbos, o agua o reto'),
     ]) {
       testWidgets('en $mode el selector de apuesta no dice "ficha", enseña el tope y no cambia el rango', (tester) async {

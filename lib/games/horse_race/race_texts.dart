@@ -23,7 +23,7 @@ String allInShareText(ConsequenceMode mode, int targets) {
     case ConsequenceMode.puntos:
       return 'Reparte $targets All-in a $who';
     case ConsequenceMode.retos:
-      return 'Reparte $targets All-in · hasta $kRoundCap retos cada uno';
+      return 'Reparte $targets All-in · un reto a cada uno';
     case ConsequenceMode.sorbos:
       return 'Reparte $targets All-in · hasta $kRoundCap sorbos cada uno · o agua o reto';
   }
@@ -69,8 +69,9 @@ String betReasonText(ConsequenceMode mode, Bet b, {bool failed = false}) {
 String losersTitle(ConsequenceMode mode) =>
     mode == ConsequenceMode.puntos ? 'Pagan' : 'Les toca';
 
-/// Línea de quiénes pierden: "Pagan: Ana (−2)" en Fichas, "Les toca: Ana (2 retos)" en Retos
-/// y "Les toca: Ana (2 sorbos · o agua o reto)" en Sorbos (con el tope de [kRoundCap] aplicado).
+/// Línea de quiénes pierden: "Pagan: Ana (−2)" en Fichas, "Les toca: Ana (un reto)" en Retos
+/// (siempre uno, de nivel según la apuesta) y "Les toca: Ana (2 sorbos · o agua o reto)" en
+/// Sorbos (con el tope de [kRoundCap] aplicado).
 String losersLine(ConsequenceMode mode, Map<String, int> byName) {
   if (mode == ConsequenceMode.puntos) {
     return chipsLine('Pagan', byName, gain: false);
@@ -84,10 +85,7 @@ String losersLine(ConsequenceMode mode, Map<String, int> byName) {
 }
 
 String _amountText(ConsequenceMode mode, int n) =>
-    mode == ConsequenceMode.retos ? retosText(n) : sorbosText(n);
-
-/// "2 retos".
-String retosText(int n) => n == 1 ? '1 reto' : '$n retos';
+    mode == ConsequenceMode.retos ? kUnReto.toLowerCase() : sorbosText(n);
 
 /// "2 sorbos · o agua o reto".
 String sorbosText(int n) =>
@@ -110,13 +108,14 @@ String whoPaysLabel(ConsequenceMode mode) =>
     mode == ConsequenceMode.puntos ? '¿Quién paga?' : '¿A quién le toca?';
 
 /// Nota bajo la cabecera `Boletos` en Retos y Sorbos. El número del selector va sin unidad
-/// (el rango sigue siendo 1 a 5): lo que se juega lo fija este tope, no la cifra.
+/// (el rango sigue siendo 1 a 5): en Retos la apuesta solo decide el nivel del único reto
+/// (a más apuesta, más fuerte); en Sorbos fija el tope.
 String? stakeCapNote(ConsequenceMode mode) {
   switch (mode) {
     case ConsequenceMode.puntos:
       return null;
     case ConsequenceMode.retos:
-      return 'Hasta $kRoundCap por ronda';
+      return 'Un reto: más fuerte cuanto más apuestas';
     case ConsequenceMode.sorbos:
       return 'Hasta $kRoundCap por ronda · o agua o reto';
   }
@@ -138,7 +137,7 @@ String allInA11yText(ConsequenceMode mode) {
     case ConsequenceMode.puntos:
       return 'All-in, $kAllInChips fichas';
     case ConsequenceMode.retos:
-      return 'All-in, $kRoundCap retos';
+      return 'All-in, un reto de nivel máximo';
     case ConsequenceMode.sorbos:
       return 'All-in, $kRoundCap sorbos, o agua o reto';
   }
@@ -150,7 +149,7 @@ String allInButtonText(ConsequenceMode mode) {
     case ConsequenceMode.puntos:
       return 'All-in  ·  $kAllInChips fichas';
     case ConsequenceMode.retos:
-      return 'All-in  ·  $kRoundCap retos';
+      return 'All-in  ·  reto máximo';
     case ConsequenceMode.sorbos:
       return 'All-in  ·  $kRoundCap sorbos';
   }

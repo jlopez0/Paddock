@@ -48,7 +48,7 @@ Las cartas y las palabras del Infiltrado se adaptan al grupo:
 Consecuencias a tu manera
 Perder fichas significa lo que decidáis en Ajustes:
 - Fichas (por defecto): se restan de la Copa.
-- Retos: un reto por cada ficha perdida, con un máximo de 3 por ronda.
+- Retos: un reto por evento, más fuerte cuanto más se pierde.
 - Consecuencias opcionales +18, desactivadas de serie, con tope por ronda y la alternativa de agua o reto siempre a la vista. Nadie está obligado a nada.
 
 Pensada para la mesa

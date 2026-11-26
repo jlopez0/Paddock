@@ -162,7 +162,7 @@ Solo cambia la entrada `carrera` (mismo esquema y mismos ids):
 | **Ficha / fichas** | Unidad de todo lo que se gana o se pierde. "1 ficha", "3 fichas". Es también la etiqueta del modo (antes "Puntos") | puntos (la etiqueta ya no se muestra como "Puntos"), créditos, monedas |
 | **All-in** | Apuesta máxima. Vale **10 fichas** en la Copa. Plural invariable: "2 All-in" | "×2", all in, allin |
 | **Pagar / pagan** | Perder fichas, solo en modo Fichas (Carrera, Infiltrado). En las cartas es neutro: "Al más señalado le toca lo que diga la carta" (D19) | "bebe", "le toca beber" (fuera del modo Sorbos); "Pagan" en Retos y Sorbos |
-| **Les toca / le toca** | En Retos y Sorbos, sustituye a "Pagan". "Les toca: Ana (2 retos)"; "Les toca: Ana (2 sorbos · o agua o reto)" (D19) | "Pagan", "¿Quién paga?" en Retos y Sorbos |
+| **Les toca / le toca** | En Retos y Sorbos, sustituye a "Pagan". "Les toca: Ana (un reto)"; "Les toca: Ana (2 sorbos · o agua o reto)" (D19, D20) | "Pagan", "¿Quién paga?" en Retos y Sorbos |
 | **Cuentan** | Lo que suma a la Copa. Texto vigente: `docs/research/textos_copa_c.md`. Solo dentro de la Copa: "Cuentan: Carrera de caballos y El Infiltrado" | "suman" o "Suman a la Copa" en la home; "Sin marcador" |
 | **Cobrar / cobran** | Ganar fichas en la Carrera, solo en modo Fichas. "Ana cobra 3 fichas". En Retos y Sorbos: "Aciertan" / "Ana acierta" / sello "ACIERTA" | "reparte" cuando no hay All-in; "Cobran" en Retos y Sorbos |
 | **Repartir** | Solo para All-in y para roles del Infiltrado. "Reparte 2 All-in" | Para ganancias normales |
@@ -198,7 +198,7 @@ Reglas de estilo para cualquier texto nuevo:
 | Setup de Trivia y Geografía | `Jugar · N preguntas` | `Jugar` | Con "Todas" el número era el tamaño del banco |
 | Setup de Geografía | `Tu récord: 8/10` | `Tu récord: 8` | Igual |
 | Setup del Infiltrado | `N palabras en el mazo` | (solo sale el aviso "No quedan palabras con estos niveles.") | Igual |
-| ¿Quién es más probable? (carta) | `¿Quién paga?` y chips | En Fichas, nada; en Retos `¡Por 2 retos!`; en Sorbos `Por 2 sorbos · o agua o reto` (1 a 3) | La Copa deja de restar por ser señalado |
+| ¿Quién es más probable? (carta) | `¿Quién paga?` y chips | En Fichas, nada; en Retos `¡Por un reto!` (D20: nunca un número; el nivel del reto sale de la intensidad 1-3); en Sorbos `Por 2 sorbos · o agua o reto` (1 a 3) | La Copa deja de restar por ser señalado |
 | ¿Quién es más probable? (Retos/Sorbos) | banner por jugador marcado | banner "El más señalado" con tope de 3; en Sorbos, "o agua o reto" visible | Se mantiene el tope y la alternativa |
 | Final de partida de cartas | `Se acabó el mazo` / `Barajar de nuevo` | `Fin de la partida` / `Otra partida` | Partida de duración fija |
 
@@ -214,13 +214,13 @@ Dos capas: la consecuencia va en la unidad del modo (`reto(s)` o `sorbo(s) · o 
 | Motivo | Apostó 3 fichas a Oros | Apostó a Oros | Apostó a Oros |
 | Cabecera de quien falla / sello | Pagan / PAGA | Les toca / LE TOCA | Les toca / LE TOCA |
 | Nadie acierta | Nadie acertó. Pagan todos. | Nadie acertó. Les toca a todos. | Nadie acertó. Les toca a todos · o agua o reto. |
-| Reparto del All-in | Reparte 2 All-in a 2 personas distintas | Reparte 2 All-in · hasta 3 retos cada uno | Reparte 2 All-in · hasta 3 sorbos cada uno · o agua o reto |
+| Reparto del All-in | Reparte 2 All-in a 2 personas distintas | Reparte 2 All-in · un reto a cada uno | Reparte 2 All-in · hasta 3 sorbos cada uno · o agua o reto |
 | Línea por boleto `−N en la Copa` y `cada All-in vale 10 fichas` | (nada / sí) | quitadas | quitadas |
 | Nota sobre `Ver Copa` (Carrera e Infiltrado) | Fichas anotadas en la Copa de la noche. | Ya cuenta en la Copa de la noche. | Ya cuenta en la Copa de la noche. |
 | Selector de apuesta: rótulo, tooltips, etiqueta | fichas · Bajar apuesta / Subir apuesta · 2 fichas | apuesta · Bajar apuesta / Subir apuesta · Apuesta de 2 | apuesta · Bajar apuesta / Subir apuesta · Apuesta de 2 |
-| Nota bajo `Boletos` | (nada) | Hasta 3 por ronda | Hasta 3 por ronda · o agua o reto |
-| Botón All-in | All-in  ·  10 fichas | All-in  ·  3 retos | All-in  ·  3 sorbos |
-| Infiltrado (reglas) | si lo pilláis, paga 2 fichas; si se escapa, los demás pagan 1 cada uno. | si lo pilláis, le tocan 2 retos; si se escapa, 1 reto a cada uno de los demás. | si lo pilláis, le tocan 2 sorbos; si se escapa, 1 a cada uno de los demás. Siempre o agua o reto. |
+| Nota bajo `Boletos` | (nada) | Un reto: más fuerte cuanto más apuestas | Hasta 3 por ronda · o agua o reto |
+| Botón All-in | All-in  ·  10 fichas | All-in  ·  reto máximo | All-in  ·  3 sorbos |
+| Infiltrado (reglas) | si lo pilláis, paga 2 fichas; si se escapa, los demás pagan 1 cada uno. | si lo pilláis, le toca un reto picante; si se escapa, un reto suave a cada uno de los demás. | si lo pilláis, le tocan 2 sorbos; si se escapa, 1 a cada uno de los demás. Siempre o agua o reto. |
 
 Iguales en los tres modos: `Acertar gana el doble` (con subtítulo "Quien acierta suma el doble en la Copa"), `Elige palo, apuesta y que corra tu caballo` (home), estadísticas `en contra` / `a favor`, etiqueta accesible `Apuesta de N` de la ficha dibujada.
 
@@ -232,3 +232,16 @@ Pendiente de Javier: rango de la apuesta (hoy 1 a 5, con tope 3 al pagar; en Ret
 
 ## Cambio de nombre (2026-11-26, D16)
 - La app se llama **Habinson**. El lema de la home pasa de "Se abre el paddock" a **"Se abre la noche"** (`lib/app/home_screen.dart`), porque "paddock" ya no es el nombre de la casa.
+
+## Retos: un solo reto por evento (D20, 2026-11-26)
+En Retos nunca se escribe "N retos". Cada evento con consecuencia muestra UN reto de `retos.json` cuyo nivel depende de la intensidad (1 suave, 2 picante, 3 o más atrevido con +18; sin +18, picante).
+
+| Dónde | Texto en Retos |
+|---|---|
+| Cantidad en banner / boleto | `Un reto` (en `losersLine`: `Les toca: Ana (un reto)`) |
+| Titular de carta de apuesta (¿Quién es más probable?) | `¡Por un reto!` |
+| Yo nunca ("Quien lo haya hecho") | `Un reto` + el reto de nivel según la intensidad aleatoria 1 a 3 de la carta (sin titular en la carta) |
+| Selector de modo (home y Ajustes) | `Lo que pierdes se cumple con un reto. Más fuerte cuanto más pierdes.` |
+| Carrera: nota bajo `Boletos` | `Un reto: más fuerte cuanto más apuestas` |
+| Carrera: All-in (botón / accesible / reparto) | `All-in  ·  reto máximo` / `All-in, un reto de nivel máximo` / `Reparte 2 All-in · un reto a cada uno` |
+| Infiltrado (reglas) | `si lo pilláis, le toca un reto picante; si se escapa, un reto suave a cada uno de los demás.` |

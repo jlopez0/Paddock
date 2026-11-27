@@ -30,7 +30,7 @@ Lo validan `test/content_test.dart` y `test/extra_content_test.dart` (leen el JS
 - ¿Quién es más probable?: `texto` sin el prefijo "¿Quién es más probable que", sin "¿?" y sin punto final.
 
 Cifras (suave · picante · atrevido):
-- Yo nunca: 100 · 100 · 80 (280).
+- Yo nunca: 100 · 99 · 78 (277).
 - ¿Qué preferirías?: 65 · 33 · 22 (120).
 - ¿Quién es más probable?: 64 · 40 · 24 (128). Mínimo del test: 120 y 50 en Suave.
 
@@ -62,7 +62,8 @@ Cifras (suave · picante · atrevido):
 En `test/content_test.dart`:
 - Alcohol/borracheras, nombres de bebidas, drogas e insultos: en **todos** los JSON de `assets/content/es/` (trivia, abecedario y geografía incluidos).
 - Términos explícitos: mazos de cartas, retos e infiltrado.
-- Contexto escolar o de menores: Picante y Atrevido.
+- Términos explícitos por frase (`juguete erótico`): mazos de cartas.
+- Contexto escolar o de menores: Picante y Atrevido. También la frase "primera vez" y familia (padres, madre, hermano…) junto a algo íntimo (íntimo, cama, apasionado).
 - Vocabulario de ligue: solo Suave.
 
 Si aparece algo nuevo que no debería estar, se añade a la lista (no se debilita).

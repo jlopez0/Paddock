@@ -60,6 +60,8 @@ const idsRetirados = {
   'yn283', 'yn284', 'yn285', 'yn286', 'yn288', 'yn289', 'yn291', 'yn293', 'yn295', 'yn296',
   'yn297', 'yn298', 'yn300', 'yn301', 'yn310', 'yn312', 'yn314', 'yn315', 'yn316', 'yn321',
   'yn322', 'yn323', 'yn324', 'yn325', 'yn326', 'yn329',
+  // Auditoría de edad (2026-11-27): contexto familiar o de "primera vez".
+  'yn108', 'yn116', 'yn318',
 };
 
 /// Prohibido en todo el contenido (normas de Google Play y App Store):
@@ -95,8 +97,34 @@ const explicitasExactas = {
   'virginidad', 'genitales', 'pezones', 'pezón', 'orgía', 'trío', 'bukkake', 'hentai',
   'cubana', 'mamada', 'corrido', 'corrida', 'semen', 'erección', 'gatillazo', 'lubricante',
   'vello', 'púbico', 'tirarme', 'masturbado', 'desnudo', 'desnuda',
-  'desnudo/a', 'menor', 'menores', 'colegio', 'instituto',
+  'desnudo/a', 'menor', 'menores', 'colegio', 'instituto', 'kamasutra', 'striptease',
 };
+
+/// Frases prohibidas en los mazos de cartas (el test de palabras no las ve).
+const explicitasFrases = ['juguete erótico', 'juguetes eróticos'];
+
+/// Frases que en Picante y Atrevido remiten a menores o a la familia.
+const menoresFrases = ['primera vez'];
+
+/// En Picante y Atrevido, "padres" no puede ir junto a algo íntimo.
+const familiaPalabras = {'padres', 'padre', 'madre', 'hermano', 'hermana'};
+const intimoPalabras = {'íntimo', 'íntima', 'cama', 'apasionado', 'apasionada'};
+
+/// Devuelve la primera frase prohibida encontrada (o la combinación), o null.
+String? buscaFrase(String texto, List<String> frases) {
+  final t = texto.toLowerCase();
+  for (final f in frases) {
+    if (t.contains(f)) return f;
+  }
+  return null;
+}
+
+String? buscaFamiliaIntima(String texto) {
+  final ws = palabras(texto).toSet();
+  final f = ws.intersection(familiaPalabras);
+  final i = ws.intersection(intimoPalabras);
+  return f.isNotEmpty && i.isNotEmpty ? '${f.first} + ${i.first}' : null;
+}
 const explicitasRaices = ['masturb', 'porn', 'desnud', 'sexo', 'follar', 'follam', 'eyacul', 'vagin'];
 
 /// En Picante y Atrevido (ligue, sugerente): nada que remita al colegio o a menores.
@@ -155,6 +183,11 @@ void main() {
     expect(buscaProhibida('me he enamorado de un profesor', escolarExactas, escolarRaices), 'profesor');
     expect(buscaProhibida('a principio de curso', escolarExactas, escolarRaices), 'curso');
     expect(buscaProhibida('una copa de vino', bebidasExactas, const []), 'vino');
+    expect(buscaProhibida('he consultado el Kamasutra', explicitasExactas, explicitasRaices), 'kamasutra');
+    expect(buscaFrase('he tenido un juguete erótico', explicitasFrases), isNotNull);
+    expect(buscaFrase('mi primera vez', menoresFrases), isNotNull);
+    expect(buscaFamiliaIntima('un momento íntimo en casa de mis padres'), isNotNull);
+    expect(buscaFamiliaIntima('una primera cita cenando con sus padres'), isNull);
   });
 
   test('hay mazos de cartas registrados y los ids de juego son únicos', () {
@@ -228,8 +261,18 @@ void main() {
       test('Picante y Atrevido sin contexto escolar ni de menores', () {
         for (final p in lista.where((p) => p['nivel'] != 'suave')) {
           final texto = campos.map((c) => p[c] as String).join(' ');
-          final mala = buscaProhibida(texto, escolarExactas, escolarRaices);
+          final mala = buscaProhibida(texto, escolarExactas, escolarRaices) ??
+              buscaFrase(texto, menoresFrases) ??
+              buscaFamiliaIntima(texto);
           expect(mala, isNull, reason: '${p['id']} (${p['nivel']}): "$mala" en "$texto"');
+        }
+      });
+
+      test('lista negra de frases explícitas', () {
+        for (final p in lista) {
+          final texto = campos.map((c) => p[c] as String).join(' ');
+          final mala = buscaFrase(texto, explicitasFrases);
+          expect(mala, isNull, reason: '${p['id']}: "$mala" en "$texto"');
         }
       });
 

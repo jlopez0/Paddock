@@ -1,5 +1,7 @@
 # Ficha de tienda (es-ES) · Habinson v1.0
 
+**Desde el 27/11/2026 esta ficha es la de Google Play (Android).** La del App Store, sin Sorbos (build `SORBOS=false`), está en `docs/store/ficha_es_ios.md`.
+
 Fuentes: `docs/PLAN_PUBLICACION.md` (Fase 6), `docs/CONTENIDO.md`, `docs/decisions.md`, `docs/privacidad.html` y los textos de la app (`lib/`). No describe nada que la app no haga.
 
 ## Título
@@ -12,7 +14,7 @@ Fuentes: `docs/PLAN_PUBLICACION.md` (Fase 6), `docs/CONTENIDO.md`, `docs/decisio
   - Alternativa corta (la anterior): `Carreras, trivia y retos en grupo` · 33/80.
 - **App Store (subtítulo, máx. 30):** `Carreras, trivia y retos` · 24/30.
 
-## Descripción larga (Google Play y App Store)
+## Descripción larga (Google Play)
 
 Unos 2.100 caracteres con saltos de línea (límite: 4.000). Recuento a mano, línea a línea; margen de sobra.
 
